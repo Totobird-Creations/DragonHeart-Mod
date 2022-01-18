@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "id": "dragonsarise",
+  "id": "dragonheart",
   "version": "${version}",
 
-  "name": "Dragons Arise",
+  "name": "Dragonheart",
   "description": "Dragon Mod for Minecraft Fabric 1.18.1",
   "authors": [
     "Totobird Creations"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/Totobird-Creations/",
+    "sources": "https://github.com/Totobird-Creations/DragonHeart-Mod"
   },
 
   "license": "MIT",
@@ -19,11 +19,14 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.totobirdcreations.dragonsarise.DragonsArise"
+      "net.totobirdcreations.dragonheart.DragonHeart"
+    ],
+    "client": [
+      "net.totobirdcreations.dragonheart.DragonHeartClient"
     ]
   },
   "mixins": [
-    "dragonsarise.mixins.json"
+    "dragonheart.mixins.json"
   ],
 
   "depends": {

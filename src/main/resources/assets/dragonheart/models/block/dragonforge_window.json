@@ -1,0 +1,146 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "dragonheart:block/dragonforge_bricks_base_window",
+		"1": "dragonheart:block/dragonforge_bricks_base",
+		"particle": "dragonheart:block/dragonforge_bricks_base_window"
+	},
+	"elements": [
+		{
+			"name": "outer_north",
+			"from": [0, 0, 0],
+			"to": [16, 16, 0],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#bricks"}
+			}
+		},
+		{
+			"name": "outer_east",
+			"from": [16, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"east": {"uv": [0, 0, 16, 16], "texture": "#bricks"}
+			}
+		},
+		{
+			"name": "outer_south",
+			"from": [0, 0, 16],
+			"to": [16, 16, 16],
+			"faces": {
+				"south": {"uv": [0, 0, 16, 16], "texture": "#bricks"}
+			}
+		},
+		{
+			"name": "outer_west",
+			"from": [0, 0, 0],
+			"to": [0, 16, 16],
+			"faces": {
+				"west": {"uv": [0, 0, 16, 16], "texture": "#bricks"}
+			}
+		},
+		{
+			"name": "up_north",
+			"from": [0, 16, 0],
+			"to": [16, 16, 3],
+			"faces": {
+				"up": {"uv": [0, 0, 16, 3], "texture": "#window"},
+				"down": {"uv": [0, 13, 16, 16], "texture": "#window"}
+			}
+		},
+		{
+			"name": "up_east",
+			"from": [13, 16, 3],
+			"to": [16, 16, 13],
+			"faces": {
+				"up": {"uv": [13, 3, 16, 13], "texture": "#window"},
+				"down": {"uv": [13, 3, 16, 13], "texture": "#window"}
+			}
+		},
+		{
+			"name": "up_south",
+			"from": [0, 16, 13],
+			"to": [16, 16, 16],
+			"faces": {
+				"up": {"uv": [0, 13, 16, 16], "texture": "#window"},
+				"down": {"uv": [0, 0, 16, 3], "texture": "#window"}
+			}
+		},
+		{
+			"name": "up_west",
+			"from": [0, 16, 3],
+			"to": [3, 16, 13],
+			"faces": {
+				"up": {"uv": [0, 3, 3, 13], "texture": "#window"},
+				"down": {"uv": [0, 2, 3, 12], "texture": "#window"}
+			}
+		},
+		{
+			"name": "inner_north",
+			"from": [0, 0, 14],
+			"to": [16, 16, 14],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#bricks"}
+			}
+		},
+		{
+			"name": "inner_east",
+			"from": [14, 0, 0],
+			"to": [14, 16, 16],
+			"faces": {
+				"west": {"uv": [0, 0, 16, 16], "texture": "#bricks"}
+			}
+		},
+		{
+			"name": "inner_south",
+			"from": [0, 0, 2],
+			"to": [16, 16, 2],
+			"faces": {
+				"south": {"uv": [0, 0, 16, 16], "texture": "#bricks"}
+			}
+		},
+		{
+			"name": "inner_west",
+			"from": [2, 0, 0],
+			"to": [2, 16, 16],
+			"faces": {
+				"east": {"uv": [0, 0, 16, 16], "texture": "#bricks"}
+			}
+		},
+		{
+			"name": "down_north",
+			"from": [0, 0, 0],
+			"to": [16, 0, 3],
+			"faces": {
+				"up": {"uv": [0, 0, 16, 3], "texture": "#window"},
+				"down": {"uv": [0, 13, 16, 16], "texture": "#window"}
+			}
+		},
+		{
+			"name": "down_east",
+			"from": [13, 0, 3],
+			"to": [16, 0, 13],
+			"faces": {
+				"up": {"uv": [13, 3, 16, 13], "texture": "#window"},
+				"down": {"uv": [13, 3, 16, 13], "texture": "#window"}
+			}
+		},
+		{
+			"name": "down_south",
+			"from": [0, 0, 13],
+			"to": [16, 0, 16],
+			"faces": {
+				"up": {"uv": [0, 13, 16, 16], "texture": "#window"},
+				"down": {"uv": [0, 0, 16, 3], "texture": "#window"}
+			}
+		},
+		{
+			"name": "down_west",
+			"from": [0, 0, 3],
+			"to": [3, 0, 13],
+			"faces": {
+				"up": {"uv": [0, 3, 3, 13], "texture": "#window"},
+				"down": {"uv": [0, 2, 3, 12], "texture": "#window"}
+			}
+		}
+	]
+}

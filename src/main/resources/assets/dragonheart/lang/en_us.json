@@ -1,0 +1,63 @@
+{
+  "_comment0" : "Dragon Griefing Blocks",
+  "block.dragonheart.burned"                         : "Ash",
+  "block.dragonheart.frozen"                         : "Ice Splinters",
+  "block.dragonheart.electrified"                    : "Electrified Cracks",
+
+  "_comment1" : "Dragon Forge Blocks",
+  "block.dragonheart.dragonforge_bricks_base"        : "Dragon Forge Bricks",
+  "block.dragonheart.dragonforge_aperture_base"      : "Dragon Forge Aperture",
+  "block.dragonheart.dragonforge_core_base"          : "Dragon Forge Core",
+  "block.dragonheart.dragonforge_hatch_base"         : "Dragon Forge Hatch",
+  "block.dragonheart.dragonforge_support_base"       : "Dragon Forge Support",
+  "block.dragonheart.dragonforge_bricks_fire"        : "Fire Dragon Forge Bricks",
+  "block.dragonheart.dragonforge_aperture_fire"      : "Fire Dragon Forge Aperture",
+  "block.dragonheart.dragonforge_core_fire"          : "Fire Dragon Forge Core",
+  "block.dragonheart.dragonforge_hatch_fire"         : "Fire Dragon Forge Hatch",
+  "block.dragonheart.dragonforge_support_fire"       : "Fire Dragon Forge Support",
+  "block.dragonheart.dragonforge_bricks_ice"         : "Ice Dragon Forge Bricks",
+  "block.dragonheart.dragonforge_aperture_ice"       : "Ice Dragon Forge Aperture",
+  "block.dragonheart.dragonforge_core_ice"           : "Ice Dragon Forge Core",
+  "block.dragonheart.dragonforge_hatch_ice"          : "Ice Dragon Forge Hatch",
+  "block.dragonheart.dragonforge_support_ice"        : "Ice Dragon Forge Support",
+  "block.dragonheart.dragonforge_bricks_lightning"   : "Lightning Dragon Forge Bricks",
+  "block.dragonheart.dragonforge_aperture_lightning" : "Lightning Dragon Forge Aperture",
+  "block.dragonheart.dragonforge_core_lightning"     : "Lightning Dragon Forge Core",
+  "block.dragonheart.dragonforge_hatch_lightning"    : "Lightning Dragon Forge Hatch",
+  "block.dragonheart.dragonforge_support_lightning"  : "Lightning Dragon Forge Support",
+
+  "_comment2" : "Misc Items",
+  "item.dragonheart.dragonbone"                      : "Dragon Bone",
+  "item.dragonheart.dragonscale"                     : "Dragon Scales",
+  "item.dragonheart.dragonblood_fire"                : "Fire Dragon Blood",
+  "item.dragonheart.dragonblood_ice"                 : "Ice Dragon Blood",
+  "item.dragonheart.dragonblood_lightning"           : "Lightning Dragon Blood",
+
+  "_comment3" : "Sword Itmes",
+  "item.dragonheart.dragonbone_sword"                : "Dragon Bone Sword",
+  "item.dragonheart.dragonbone_sword_infusable"      : "Infusable Dragon Bone Sword",
+  "item.dragonheart.dragonbone_sword_fire"           : "Fire Dragon Bone Sword",
+  "item.dragonheart.dragonbone_sword_ice"            : "Ice Dragon Bone Sword",
+  "item.dragonheart.dragonbone_sword_lightning"      : "Lightning Dragon Bone Sword",
+
+  "tooltip.dragonheart.dragonbone_sword_lightning.0" : "Strikes mobs with lightning if exposed to the sky.",
+  "tooltip.dragonheart.dragonbone_sword_lightning.1" : "If raining, the mob will be instantly killed.",
+
+  "_comment4" : "Dragon Forge Items",
+  "item.dragonheart.dragonforge_powercell"           : "Dragon Forge Powercell",
+  "item.dragonheart.dragonforge_powercell_fire"      : "Fire Dragon Forge Powercell",
+  "item.dragonheart.dragonforge_powercell_ice"       : "Ice Dragon Forge Powercell",
+  "item.dragonheart.dragonforge_powercell_lightning" : "Lightning Dragon Forge Powercell",
+
+  "_comment5" : "Item Groups",
+  "itemGroup.dragonheart.dragonforge"                : "Dragon Forges",
+
+  "_comment6" : "Status Effects",
+  "effect.dragonheart.frozen"                        : "Frozen",
+
+  "_comment7" : "Screen Display Names",
+  "container.dragonheart.dragonforge_core_base"      : "§fDragon Forge§r",
+  "container.dragonheart.dragonforge_core_fire"      : "§fFire Dragon Forge§r",
+  "container.dragonheart.dragonforge_core_ice"       : "§fIce Dragon Forge§r",
+  "container.dragonheart.dragonforge_core_lightning" : "§fLightning Dragon Forge§r"
+}

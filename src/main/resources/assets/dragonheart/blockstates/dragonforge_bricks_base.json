@@ -1,0 +1,13 @@
+{
+    "variants" : {
+        "vent=false" : {
+            "model" : "dragonheart:block/dragonforge_bricks_base"
+        },
+        "vent=true,powered=false" : {
+            "model" : "dragonheart:block/dragonforge_bricks_base_vent_off"
+        },
+        "vent=true,powered=true" : {
+            "model" : "dragonheart:block/dragonforge_bricks_base_vent_on"
+        }
+    }
+}

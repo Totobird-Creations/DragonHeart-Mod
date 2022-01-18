@@ -1,0 +1,15 @@
+{
+    "type" : "dragonsarise:dragonforge",
+    "forgetype" : "fire",
+    "ingredients" : [
+        {
+            "item" : "dragonsarise:dragonbone_sword"
+        },
+        {
+            "item" : "dragonsarise:dragonblood_fire"
+        }
+    ],
+    "output" : {
+        "item" : "dragonsarise:dragonbone_sword_fire"
+    }
+}

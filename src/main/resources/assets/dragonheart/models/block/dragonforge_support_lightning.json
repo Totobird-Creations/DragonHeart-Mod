@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "dragonheart:block/dragonforge_support_lightning"
+  }
+}

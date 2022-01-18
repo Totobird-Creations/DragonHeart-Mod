@@ -1,0 +1,10 @@
+{
+    "variants" : {
+        "active=false" : {
+            "model" : "dragonheart:block/dragonforge_core_base_off"
+        },
+        "active=true" : {
+            "model" : "dragonheart:block/dragonforge_core_base_on"
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "dragonheart:item/dragonscale",
+    "layer1": "dragonheart:item/dragonscale_overlay"
+  }
+}

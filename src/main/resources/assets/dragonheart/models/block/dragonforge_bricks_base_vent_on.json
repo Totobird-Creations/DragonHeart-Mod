@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "dragonheart:block/dragonforge_bricks_base",
+    "bottom": "dragonheart:block/dragonforge_bricks_base",
+    "side": "dragonheart:block/dragonforge_bricks_base_vent_on"
+  }
+}

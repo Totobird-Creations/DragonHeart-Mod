@@ -1,0 +1,7 @@
+{
+  "parent": "dragonheart:block/dragonforge_window",
+  "textures": {
+    "bricks": "dragonheart:block/dragonforge_bricks_fire",
+    "window": "dragonheart:block/dragonforge_bricks_fire_window"
+  }
+}
