@@ -3,8 +3,7 @@
 
 ---
 
-#### Mod State
--           | 1.0.0
+Mod State   | 1.0.0
 ------------|-------
 Playable    | No
 
