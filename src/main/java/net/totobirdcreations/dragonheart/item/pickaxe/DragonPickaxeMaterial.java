@@ -1,10 +1,9 @@
-package net.totobirdcreations.dragonheart.item.sword;
+package net.totobirdcreations.dragonheart.item.pickaxe;
 
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 
-public class DragonboneSwordItemMaterial implements ToolMaterial {
-    public static final DragonboneSwordItemMaterial INSTANCE = new DragonboneSwordItemMaterial();
+public class DragonPickaxeMaterial implements ToolMaterial {
 
     @Override
     public int getDurability() {
@@ -12,18 +11,18 @@ public class DragonboneSwordItemMaterial implements ToolMaterial {
     }
     @Override
     public float getMiningSpeedMultiplier() {
-        return 0.0f;
+        return 10.0f;
     }
     @Override
     public float getAttackDamage() {
         return 25.0f - 1.0f;
     }
     public float getAttackSpeed() {
-        return 1.6f - 4.0f;
+        return -2.8f;
     }
     @Override
     public int getMiningLevel() {
-        return 0;
+        return 5;
     }
     @Override
     public int getEnchantability() {

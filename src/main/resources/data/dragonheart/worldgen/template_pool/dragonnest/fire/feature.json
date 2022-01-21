@@ -1,0 +1,24 @@
+{
+  "name" : "dragonheart:dragonnest/fire/feature",
+  "fallback" : "minecraft:empty",
+  "elements" : [
+    {
+      "weight" : 1,
+      "element" : {
+        "location" : "dragonheart:dragonnest/fire/brick_pile",
+        "processors" : "minecraft:empty",
+        "projection" : "rigid",
+        "element_type" : "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight" : 24,
+      "element" : {
+        "location" : "minecraft:air",
+        "processors" : "minecraft:empty",
+        "projection" : "rigid",
+        "element_type" : "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

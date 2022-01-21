@@ -39,16 +39,21 @@ public class DragonforgeCoreTypeRecipe implements Recipe<SimpleInventory> {
     private final ItemStack                 output;
     private final DefaultedList<Ingredient> ingredients;
     private final RequiredForgeType         type;
+    private final int                       timeTicks;
 
-    public DragonforgeCoreTypeRecipe(Identifier identifier, ItemStack output, DefaultedList<Ingredient> ingredients, RequiredForgeType type) {
+    public DragonforgeCoreTypeRecipe(Identifier identifier, ItemStack output, DefaultedList<Ingredient> ingredients, RequiredForgeType type, int timeTicks) {
         this.identifier  = identifier;
         this.output      = output;
         this.ingredients = ingredients;
         this.type        = type;
+        this.timeTicks   = timeTicks;
     }
 
     public RequiredForgeType getRequiredForgeType() {
         return type;
+    }
+    public int               getTimeTicks()         {
+        return timeTicks;
     }
 
     @Override

@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "dragonheart:item/dragonbone_sword_ice"
-  }
+	"parent": "dragonheart:item/handheld_32",
+	"textures": {
+		"layer0": "dragonheart:item/dragonbone_sword_ice"
+	}
 }

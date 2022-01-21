@@ -18,6 +18,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.DragonHeart;
+import net.totobirdcreations.dragonheart.block.DragonforgeCoreType;
 import net.totobirdcreations.dragonheart.recipe.DragonforgeCoreTypeRecipe;
 import net.totobirdcreations.dragonheart.recipe.DragonforgeCoreTypeRecipe.RequiredForgeType;
 import net.totobirdcreations.dragonheart.recipe.DragonforgeCoreTypeRecipeType;
@@ -127,11 +128,18 @@ public class DragonforgeCoreTypeBlockEntity extends BlockEntity implements Named
         Optional<DragonforgeCoreTypeRecipe> match = world.getRecipeManager()
                 .getFirstMatch(DragonforgeCoreTypeRecipeType.INSTANCE, inventory, world);
 
-        return
+        if (
+                world.getBlockState(entity.getPos()).get(DragonforgeCoreType.POWERED) &&
                 match.isPresent() &&
                 entity.isCorrectForgeType(match.get().getRequiredForgeType()) &&
                 canInsertAmountIntoOutputSlot(inventory, match.get()) &&
-                canInsertItemIntoOutputSlot(inventory, match.get());
+                canInsertItemIntoOutputSlot(inventory, match.get())
+        ) {
+            entity.maxProgress = match.get().getTimeTicks();
+            return true;
+        } else {
+            return false;
+        }
 
     }
 

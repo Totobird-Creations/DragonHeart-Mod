@@ -13,10 +13,12 @@ public class ModItems {
 
     public static void register() {
         DragonHeart.LOGGER.info("Registering items.");
-        SwordItems       .register();
         MiscItems        .register();
         StaffItems       .register();
         DragonforgeItems .register();
+
+        SwordItems       .register();
+        PickaxeItems     .register();
     }
 
 }

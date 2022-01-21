@@ -21,7 +21,10 @@ public class DragonforgeCoreTypeRecipeSerializer implements RecipeSerializer<Dra
     public DragonforgeCoreTypeRecipe read(Identifier id, JsonObject json) {
 
         ItemStack                 output      = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "output"));
+
         String                    forgeType   = JsonHelper.getString(json, "forgetype");
+
+        int                       timeTicks   = JsonHelper.getInt(json, "time");
 
         JsonArray                 ingredients = JsonHelper.getArray(json, "ingredients");
         DefaultedList<Ingredient> inputs      = DefaultedList.ofSize(2, Ingredient.EMPTY);
@@ -29,7 +32,7 @@ public class DragonforgeCoreTypeRecipeSerializer implements RecipeSerializer<Dra
             inputs.set(i, Ingredient.fromJson(ingredients.get(i)));
         }
 
-        return new DragonforgeCoreTypeRecipe(id, output, inputs, DragonforgeCoreTypeRecipe.RequiredForgeType.getFromString(forgeType));
+        return new DragonforgeCoreTypeRecipe(id, output, inputs, DragonforgeCoreTypeRecipe.RequiredForgeType.getFromString(forgeType), timeTicks);
 
     }
 
@@ -42,8 +45,13 @@ public class DragonforgeCoreTypeRecipeSerializer implements RecipeSerializer<Dra
             inputs.set(i, Ingredient.fromPacket(buf));
         }
 
-        ItemStack output = buf.readItemStack();
-        return new DragonforgeCoreTypeRecipe(id, output, inputs, buf.readEnumConstant(RequiredForgeType.class));
+        ItemStack         output            = buf.readItemStack();
+
+        RequiredForgeType requiredForgeType = buf.readEnumConstant(RequiredForgeType.class);
+
+        int               timeTicks         = buf.readInt();
+
+        return new DragonforgeCoreTypeRecipe(id, output, inputs, requiredForgeType, timeTicks);
 
     }
 
@@ -57,7 +65,10 @@ public class DragonforgeCoreTypeRecipeSerializer implements RecipeSerializer<Dra
         }
 
         buf.writeItemStack(recipe.getOutput());
+
         buf.writeEnumConstant(recipe.getRequiredForgeType());
+
+        buf.writeInt(recipe.getTimeTicks());
 
     }
 

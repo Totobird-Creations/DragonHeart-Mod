@@ -35,27 +35,38 @@
 
   "_comment3" : "Sword Itmes",
   "item.dragonheart.dragonbone_sword"                : "Dragon Bone Sword",
-  "item.dragonheart.dragonbone_sword_infusable"      : "Infusable Dragon Bone Sword",
   "item.dragonheart.dragonbone_sword_fire"           : "Fire Dragon Bone Sword",
   "item.dragonheart.dragonbone_sword_ice"            : "Ice Dragon Bone Sword",
   "item.dragonheart.dragonbone_sword_lightning"      : "Lightning Dragon Bone Sword",
+  "item.dragonheart.dragonsteel_sword_fire"          : "Fire Dragon Steel Sword",
+  "item.dragonheart.dragonsteel_sword_ice"           : "Ice Dragon Steel Sword",
+  "item.dragonheart.dragonsteel_sword_lightning"     : "Lightning Dragon Steel Sword",
+
+  "_comment4" : "Sword Itmes",
+  "item.dragonheart.dragonbone_pickaxe"              : "Dragon Bone Pickaxe",
+  "item.dragonheart.dragonbone_pickaxe_fire"         : "Fire Dragon Bone Pickaxe",
+  "item.dragonheart.dragonbone_pickaxe_ice"          : "Ice Dragon Bone Pickaxe",
+  "item.dragonheart.dragonbone_pickaxe_lightning"    : "Lightning Dragon Bone Pickaxe",
+  "item.dragonheart.dragonsteel_pickaxe_fire"        : "Fire Dragon Steel Pickaxe",
+  "item.dragonheart.dragonsteel_pickaxe_ice"         : "Ice Dragon Steel Pickaxe",
+  "item.dragonheart.dragonsteel_pickaxe_lightning"   : "Lightning Dragon Steel Pickaxe",
 
   "tooltip.dragonheart.dragonbone_sword_lightning.0" : "Strikes mobs with lightning if exposed to the sky.",
   "tooltip.dragonheart.dragonbone_sword_lightning.1" : "If raining, the mob will be instantly killed.",
 
-  "_comment4" : "Dragon Forge Items",
+  "_comment5" : "Dragon Forge Items",
   "item.dragonheart.dragonforge_powercell"           : "Dragon Forge Powercell",
   "item.dragonheart.dragonforge_powercell_fire"      : "Fire Dragon Forge Powercell",
   "item.dragonheart.dragonforge_powercell_ice"       : "Ice Dragon Forge Powercell",
   "item.dragonheart.dragonforge_powercell_lightning" : "Lightning Dragon Forge Powercell",
 
-  "_comment5" : "Item Groups",
+  "_comment6" : "Item Groups",
   "itemGroup.dragonheart.dragonforge"                : "Dragon Forges",
 
-  "_comment6" : "Status Effects",
+  "_comment7" : "Status Effects",
   "effect.dragonheart.frozen"                        : "Frozen",
 
-  "_comment7" : "Screen Display Names",
+  "_comment8" : "Screen Display Names",
   "container.dragonheart.dragonforge_core_base"      : "§fDragon Forge§r",
   "container.dragonheart.dragonforge_core_fire"      : "§fFire Dragon Forge§r",
   "container.dragonheart.dragonforge_core_ice"       : "§fIce Dragon Forge§r",
