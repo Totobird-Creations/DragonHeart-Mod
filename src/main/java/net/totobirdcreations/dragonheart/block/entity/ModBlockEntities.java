@@ -7,7 +7,10 @@ import net.minecraft.util.registry.Registry;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.DragonforgeBlocks;
 
+
+
 public class ModBlockEntities {
+
 
     public static final BlockEntityType DRAGONFORGE_CORE_BASE = Registry.register(
             Registry.BLOCK_ENTITY_TYPE,
@@ -45,8 +48,12 @@ public class ModBlockEntities {
             ).build(null)
     );
 
+
     public static void register() {
+
         DragonHeart.LOGGER.info("Registering block entities.");
+
     }
+
 
 }

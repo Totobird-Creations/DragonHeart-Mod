@@ -13,17 +13,25 @@ import net.minecraft.world.World;
 
 import static net.totobirdcreations.dragonheart.block.entity.DragonforgeCoreBaseBlockEntity.*;
 
+
+
 public class DragonforgeCoreBaseScreenHandler extends ScreenHandler {
 
-    private final Inventory        inventory;
-    private final World            world;
-    private final PropertyDelegate propertyDelegate;
+
+    public final Inventory        inventory;
+    public final World            world;
+    public final PropertyDelegate propertyDelegate;
+
 
     public DragonforgeCoreBaseScreenHandler(int syncId, PlayerInventory playerInventory) {
+
         this(syncId, playerInventory, new SimpleInventory(1), new ArrayPropertyDelegate(3));
+
     }
 
+
     public DragonforgeCoreBaseScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
+
         super(ModScreens.DRAGONFORGE_CORE_BASE, syncId);
         checkSize(inventory, 1);
         this.inventory        = inventory;
@@ -37,15 +45,26 @@ public class DragonforgeCoreBaseScreenHandler extends ScreenHandler {
         addPlayerHotbar(playerInventory);
 
         addProperties(propertyDelegate);
+
     }
 
+
     public boolean isConverting() {
+
         return propertyDelegate.get(DELEGATE_PROGRESS) > 0 && getConversionMode() != CONVERSIONMODE_NONE;
+
     }
+
+
     public int getConversionMode() {
+
         return propertyDelegate.get(DELEGATE_CONVERSIONMODE);
+
     }
+
+
     public int getScaledProgress() {
+
         int progress    = propertyDelegate.get(DELEGATE_PROGRESS);
         int maxProgress = propertyDelegate.get(DELEGATE_MAXPROGRESS);
         int textureSize = 40;
@@ -54,15 +73,21 @@ public class DragonforgeCoreBaseScreenHandler extends ScreenHandler {
         } else {
             return 0;
         }
+
     }
+
 
     @Override
     public boolean canUse(PlayerEntity player) {
+
         return inventory.canPlayerUse(player);
+
     }
+
 
     @Override
     public ItemStack transferSlot(PlayerEntity player, int invSlot) {
+
         ItemStack newStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(invSlot);
         if (slot != null && slot.hasStack()) {
@@ -84,20 +109,28 @@ public class DragonforgeCoreBaseScreenHandler extends ScreenHandler {
         }
 
         return newStack;
+
     }
 
-    private void addPlayerInventory(PlayerInventory playerInventory) {
+
+    public void addPlayerInventory(PlayerInventory playerInventory) {
+
         for (int i = 0; i < 3; ++i) {
             for (int l = 0; l < 9; ++l) {
                 this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 86 + i * 18));
             }
         }
+
     }
 
-    private void addPlayerHotbar(PlayerInventory playerInventory) {
+
+    public void addPlayerHotbar(PlayerInventory playerInventory) {
+
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 144));
         }
+
     }
+
 
 }

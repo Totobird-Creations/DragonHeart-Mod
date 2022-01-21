@@ -7,23 +7,30 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 
+
+
 public class DragonforgeCoreTypeScreen extends HandledScreen<DragonforgeCoreTypeScreenHandler> {
 
 
     public DragonforgeCoreTypeScreen(DragonforgeCoreTypeScreenHandler handler, PlayerInventory inventory, Text title) {
+
         super(handler, inventory, title);
+
     }
 
 
     @Override
     public void init() {
+
         super.init();
         titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
+
     }
 
 
     @Override
     public void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
+
         RenderSystem.setShader        (GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor   (1.0f, 1.0f, 1.0f, 1.0f);
         RenderSystem.setShaderTexture (0, handler.getScreenTexture());
@@ -35,14 +42,17 @@ public class DragonforgeCoreTypeScreen extends HandledScreen<DragonforgeCoreType
             int progress = handler.getScaledProgress();
             this.drawTexture(matrices, x + 80, y + 35 + (14 - progress), 176, 14 - progress, 16, progress);
         }
+
     }
 
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+
         renderBackground(matrices);
         super.render(matrices, mouseX, mouseY, delta);
         drawMouseoverTooltip(matrices, mouseX, mouseY);
+
     }
 
 

@@ -13,39 +13,59 @@ import net.minecraft.world.WorldAccess;
 import net.totobirdcreations.dragonheart.block.util.ItemBlock;
 import org.jetbrains.annotations.Nullable;
 
+
+
 public class DragonforgeWindow extends AbstractGlassBlock {
+
 
     public Block[]   coreBlocks;
     public ItemBlock brickBlock;
 
-    protected DragonforgeWindow(Settings settings) {
+
+    public DragonforgeWindow(Settings settings) {
+
         super(settings);
+
     }
 
+
     public void setDependencyBlocks(ItemBlock brickBlock, Block[] coreBlocks) {
+
         this.brickBlock = brickBlock;
         this.coreBlocks = coreBlocks;
+
     }
+
 
     @Override
     public PistonBehavior getPistonBehavior(BlockState state) {
+
         return PistonBehavior.BLOCK;
+
     }
+
 
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+
         update(world, pos, state);
         super.onPlaced(world, pos, state, placer, itemStack);
         DragonforgeStructureBlock.updateNearby(world, pos, state, coreBlocks);
+
     }
+
 
     @Override
     public void onBroken(WorldAccess worldAccess, BlockPos pos, BlockState state) {
+
         super.onBroken(worldAccess, pos, state);
         DragonforgeStructureBlock.updateNearby((World)worldAccess, pos, state, coreBlocks);
+
     }
 
+
     public void update(World world, BlockPos pos, BlockState state) {
+
         BlockState[] blockStates = {
                 world.getBlockState(pos.add(1, 0, 0)),
                 world.getBlockState(pos.add(-1, 0, 0)),
@@ -70,10 +90,16 @@ public class DragonforgeWindow extends AbstractGlassBlock {
             BlockState newBlockState = world.getBlockState(pos);
             ((DragonforgeBrick)newBlockState.getBlock()).update(world, pos, newBlockState);
         }
+
     }
+
 
     @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+
         return new ItemStack(brickBlock.item);
+
     }
+
+
 }

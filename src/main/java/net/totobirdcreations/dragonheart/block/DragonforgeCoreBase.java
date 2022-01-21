@@ -12,39 +12,46 @@ import net.totobirdcreations.dragonheart.block.entity.DragonforgeCoreBaseBlockEn
 import net.totobirdcreations.dragonheart.block.entity.ModBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
+
+
 public class DragonforgeCoreBase extends DragonforgeCore {
 
+
     public DragonforgeCoreBase(Settings settings) {
+
         super(settings);
+
     }
+
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+
         return new DragonforgeCoreBaseBlockEntity(pos, state);
+
     }
+
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+
         return checkType(type, ModBlockEntities.DRAGONFORGE_CORE_BASE, DragonforgeCoreBaseBlockEntity::tick);
+
     }
+
 
     @Override
     public void openScreen(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+
         if (! world.isClient()) {
             NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
             if (screenHandlerFactory != null) {
                 player.openHandledScreen(screenHandlerFactory);
             }
         }
+
     }
 
-    /*@Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        super.onStateReplaced(state, world, pos, newState, moved);
-        if (state.getBlock() != newState.getBlock()) {
-            entity.progress =
-        }
-    }*/
 
 }

@@ -3,84 +3,92 @@ package net.totobirdcreations.dragonheart.item;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.totobirdcreations.dragonheart.item.pickaxe.DragonbonePickaxeMaterial;
-import net.totobirdcreations.dragonheart.item.pickaxe.DragonsteelPickaxeMaterial;
 import net.totobirdcreations.dragonheart.item.pickaxe.*;
 
 import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
 
+
+
 public class PickaxeItems {
 
-    public static final Item DRAGONBONE_PICKAXE = registerItem(
-            "dragonbone_pickaxe",
-            new DragonPickaxe(
+
+    public static final Item PICKAXE_DRAGONBONE = registerItem(
+            "pickaxe_dragonbone",
+            new Pickaxe(
                     new FabricItemSettings()
                             .group     (ItemGroup.TOOLS)
                             .fireproof (),
-                    DragonbonePickaxeMaterial.INSTANCE
+                    PickaxeMaterial.PREFORGED
             )
     );
 
-    public static final Item DRAGONBONE_PICKAXE_FIRE = registerItem(
-            "dragonbone_pickaxe_fire",
-            new DragonPickaxeFire(
+    public static final Item PICKAXE_DRAGONBONE_FIRE = registerItem(
+            "pickaxe_dragonbone_fire",
+            new PickaxeFire(
                     new FabricItemSettings()
                             .group     (ItemGroup.TOOLS)
                             .fireproof (),
-                    DragonbonePickaxeMaterial.INSTANCE
+                    PickaxeMaterial.DRAGONBONE
             )
     );
 
-    public static final Item DRAGONBONE_PICKAXE_ICE = registerItem(
-            "dragonbone_pickaxe_ice",
-            new DragonPickaxeIce(
+    public static final Item PICKAXE_DRAGONBONE_ICE = registerItem(
+            "pickaxe_dragonbone_ice",
+            new PickaxeIce(
                     new FabricItemSettings()
                             .group     (ItemGroup.TOOLS)
                             .fireproof (),
-                    DragonbonePickaxeMaterial.INSTANCE
+                    PickaxeMaterial.DRAGONBONE
             )
     );
 
-    public static final Item DRAGONBONE_PICKAXE_LIGHTNING = registerItem(
-            "dragonbone_pickaxe_lightning",
-            new DragonPickaxeLightning(
+    public static final Item PICKAXE_DRAGONBONE_LIGHTNING = registerItem(
+            "pickaxe_dragonbone_lightning",
+            new PickaxeLightning(
                     new FabricItemSettings()
                             .group     (ItemGroup.TOOLS)
                             .fireproof (),
-                    DragonbonePickaxeMaterial.INSTANCE
+                    PickaxeMaterial.DRAGONBONE
             )
     );
 
-    public static final Item DRAGONSTEEL_PICKAXE_FIRE = registerItem(
-            "dragonsteel_pickaxe_fire",
-            new DragonPickaxeFire(
+
+    public static final Item PICKAXE_DRAGONSTEEL_FIRE = registerItem(
+            "pickaxe_dragonsteel_fire",
+            new PickaxeFire(
                     new FabricItemSettings()
                             .group     (ItemGroup.TOOLS)
                             .fireproof (),
-                    DragonsteelPickaxeMaterial.INSTANCE
+                    PickaxeMaterial.DRAGONSTEEL
             )
     );
 
-    public static final Item DRAGONSTEEL_PICKAXE_ICE = registerItem(
-            "dragonsteel_pickaxe_ice",
-            new DragonPickaxeIce(
+    public static final Item PICKAXE_DRAGONSTEEL_ICE = registerItem(
+            "pickaxe_dragonsteel_ice",
+            new PickaxeIce(
                     new FabricItemSettings()
                             .group     (ItemGroup.TOOLS)
                             .fireproof (),
-                    DragonsteelPickaxeMaterial.INSTANCE
+                    PickaxeMaterial.DRAGONSTEEL
             )
     );
 
-    public static final Item DRAGONSTEEL_PICKAXE_LIGHTNING = registerItem(
-            "dragonsteel_pickaxe_lightning",
-            new DragonPickaxeLightning(
+    public static final Item PICKAXE_DRAGONSTEEL_LIGHTNING = registerItem(
+            "pickaxe_dragonsteel_lightning",
+            new PickaxeLightning(
                     new FabricItemSettings()
                             .group     (ItemGroup.TOOLS)
                             .fireproof (),
-                    DragonsteelPickaxeMaterial.INSTANCE
+                    PickaxeMaterial.DRAGONSTEEL
             )
     );
 
-    public static void register() {}
+
+    public static void register() {
+
+
+
+    }
+
 
 }

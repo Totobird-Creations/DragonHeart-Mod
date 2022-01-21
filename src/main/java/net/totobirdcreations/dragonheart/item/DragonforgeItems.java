@@ -8,7 +8,10 @@ import net.totobirdcreations.dragonheart.item.misc.Dragonscale;
 
 import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
 
+
+
 public class DragonforgeItems {
+
 
     public static final Item DRAGONFORGE_POWERCELL = registerItem(
             "dragonforge_powercell",
@@ -50,6 +53,12 @@ public class DragonforgeItems {
             )
     );
 
-    public static void register() {}
+
+    public static void register() {
+
+
+
+    }
+
 
 }

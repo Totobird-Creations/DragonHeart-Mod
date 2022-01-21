@@ -7,78 +7,88 @@ import net.totobirdcreations.dragonheart.item.sword.*;
 
 import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
 
+
+
 public class SwordItems {
 
-    public static final Item DRAGONBONE_SWORD = registerItem(
-            "dragonbone_sword",
-            new DragonSword(
+
+    public static final Item SWORD_DRAGONBONE = registerItem(
+            "sword_dragonbone",
+            new Sword(
                     new FabricItemSettings()
                             .group     (ItemGroup.COMBAT)
                             .fireproof (),
-                    DragonboneSwordMaterial.INSTANCE
+                    SwordMaterial.DRAGONBONE
             )
     );
 
-    public static final Item DRAGONBONE_SWORD_FIRE = registerItem(
-            "dragonbone_sword_fire",
-            new DragonSwordFire(
+    public static final Item SWORD_DRAGONBONE_FIRE = registerItem(
+            "sword_dragonbone_fire",
+            new SwordFire(
                     new FabricItemSettings()
                             .group     (ItemGroup.COMBAT)
                             .fireproof (),
-                    DragonboneSwordMaterial.INSTANCE
+                    SwordMaterial.DRAGONBONE
             )
     );
 
-    public static final Item DRAGONBONE_SWORD_ICE = registerItem(
-            "dragonbone_sword_ice",
-            new DragonSwordIce(
+    public static final Item SWORD_DRAGONBONE_ICE = registerItem(
+            "sword_dragonbone_ice",
+            new SwordIce(
                     new FabricItemSettings()
                             .group     (ItemGroup.COMBAT)
                             .fireproof (),
-                    DragonboneSwordMaterial.INSTANCE
+                    SwordMaterial.DRAGONBONE
             )
     );
 
-    public static final Item DRAGONBONE_SWORD_LIGHTNING = registerItem(
-            "dragonbone_sword_lightning",
-            new DragonSwordLightning(
+    public static final Item SWORD_DRAGONBONE_LIGHTNING = registerItem(
+            "sword_dragonbone_lightning",
+            new SwordLightning(
                     new FabricItemSettings()
                             .group     (ItemGroup.COMBAT)
                             .fireproof (),
-                    DragonboneSwordMaterial.INSTANCE
+                    SwordMaterial.DRAGONBONE
             )
     );
 
-    public static final Item DRAGONSTEEL_SWORD_FIRE = registerItem(
-            "dragonsteel_sword_fire",
-            new DragonSwordFire(
+
+    public static final Item SWORD_DRAGONSTEEL_FIRE = registerItem(
+            "sword_dragonsteel_fire",
+            new SwordFire(
                     new FabricItemSettings()
                             .group     (ItemGroup.COMBAT)
                             .fireproof (),
-                    DragonsteelSwordMaterial.INSTANCE
+                    SwordMaterial.DRAGONSTEEL
             )
     );
 
-    public static final Item DRAGONSTEEL_SWORD_ICE = registerItem(
-            "dragonsteel_sword_ice",
-            new DragonSwordIce(
+    public static final Item SWORD_DRAGONSTEEL_ICE = registerItem(
+            "sword_dragonsteel_ice",
+            new SwordIce(
                     new FabricItemSettings()
                             .group     (ItemGroup.COMBAT)
                             .fireproof (),
-                    DragonsteelSwordMaterial.INSTANCE
+                    SwordMaterial.DRAGONSTEEL
             )
     );
 
-    public static final Item DRAGONSTEEL_SWORD_LIGHTNING = registerItem(
-            "dragonsteel_sword_lightning",
-            new DragonSwordLightning(
+    public static final Item SWORD_DRAGONSTEEL_LIGHTNING = registerItem(
+            "sword_dragonsteel_lightning",
+            new SwordLightning(
                     new FabricItemSettings()
                             .group     (ItemGroup.COMBAT)
                             .fireproof (),
-                    DragonsteelSwordMaterial.INSTANCE
+                    SwordMaterial.DRAGONSTEEL
             )
     );
 
-    public static void register() {}
+
+    public static void register() {
+
+
+
+    }
+
 
 }

@@ -10,12 +10,18 @@ import net.totobirdcreations.dragonheart.soundevent.ModSoundEvents;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
+
 public class DragonHeart implements ModInitializer {
+
+
 	public static final String MOD_ID = "dragonheart";
 	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
+
 	@Override
 	public void onInitialize() {
+
 		LOGGER.info("Initializing.");
 
 		ModBlocks         .register();
@@ -26,5 +32,8 @@ public class DragonHeart implements ModInitializer {
 		ModRecipes        .register();
 
 		LOGGER.info("Initialized.");
+
 	}
+
+
 }

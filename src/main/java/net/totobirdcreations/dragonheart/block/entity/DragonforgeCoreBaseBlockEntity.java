@@ -25,28 +25,42 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
+
+
 public class DragonforgeCoreBaseBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory {
 
-    public  DefaultedList<ItemStack> items       = DefaultedList.ofSize(1, ItemStack.EMPTY);
 
-    public static final int              DELEGATE_PROGRESS        = 0;
-    public static final int              DELEGATE_MAXPROGRESS     = 1;
-    public static final int              DELEGATE_CONVERSIONMODE  = 2;
+    public static final int DELEGATE_PROGRESS        = 0;
+    public static final int DELEGATE_MAXPROGRESS     = 1;
+    public static final int DELEGATE_CONVERSIONMODE  = 2;
 
-    public static final int              CONVERSIONMODE_NONE      = 0;
-    public static final int              CONVERSIONMODE_FIRE      = 1;
-    public static final int              CONVERSIONMODE_ICE       = 2;
-    public static final int              CONVERSIONMODE_LIGHTNING = 3;
+    public static final int CONVERSIONMODE_NONE      = 0;
+    public static final int CONVERSIONMODE_FIRE      = 1;
+    public static final int CONVERSIONMODE_ICE       = 2;
+    public static final int CONVERSIONMODE_LIGHTNING = 3;
 
-    public              int              progress                 = 0;
-    public              int              maxProgress              = 200;
-    public              int              conversionMode           = CONVERSIONMODE_NONE;
-    public              boolean          completedConversion      = false;
-    public              boolean          isDischarging            = false;
+    enum ConversionType {
+        BRICKS,
+        APERTURE,
+        HATCH,
+        SUPPORT,
+        CORE,
+        WINDOW
+    }
 
-    protected     final PropertyDelegate propertyDelegate;
+
+    public  DefaultedList<ItemStack> items               = DefaultedList.ofSize(1, ItemStack.EMPTY);
+    public  int                      progress            = 0;
+    public  int                      maxProgress         = 200;
+    public  int                      conversionMode      = CONVERSIONMODE_NONE;
+    public  boolean                  completedConversion = false;
+    public  boolean                  isDischarging       = false;
+
+    public final PropertyDelegate propertyDelegate;
+
 
     public DragonforgeCoreBaseBlockEntity(BlockPos pos, BlockState state) {
+
         super(ModBlockEntities.DRAGONFORGE_CORE_BASE, pos, state);
         this.propertyDelegate = new PropertyDelegate() {
             @Override
@@ -71,43 +85,61 @@ public class DragonforgeCoreBaseBlockEntity extends BlockEntity implements Named
                 return 3;
             }
         };
+
     }
+
 
     @Override
     public Text getDisplayName() {
+
         return new TranslatableText("container." + DragonHeart.MOD_ID + ".dragonforge_core_base");
+
     }
+
 
     @Override
     public DefaultedList<ItemStack> getItems() {
+
         return items;
+
     }
+
 
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+
         return new DragonforgeCoreBaseScreenHandler(syncId, inv, this, this.propertyDelegate);
+
     }
+
 
     @Override
     public void readNbt(NbtCompound nbt) {
+
         super.readNbt(nbt);
         Inventories.readNbt(nbt, items);
         progress = nbt.getShort("progress");
         completedConversion = nbt.getBoolean("completedConversion");
         conversionMode = nbt.getShort("conversionMode");
+
     }
+
 
     @Override
     public void writeNbt(NbtCompound nbt) {
+
         nbt.putShort("conversionMode", (short)conversionMode);
         nbt.putBoolean("completedConversion", completedConversion);
         nbt.putShort("progress", (short)progress);
         Inventories.writeNbt(nbt, items);
         super.writeNbt(nbt);
+
     }
 
+
     public static void tick(World world, BlockPos pos, BlockState state, DragonforgeCoreBaseBlockEntity entity) {
+
         int newConversionMode = entity.getTargetConversionMode();
         entity.isDischarging = ((entity.progress <= 0 && newConversionMode == CONVERSIONMODE_NONE) || (entity.progress > 0 && newConversionMode != entity.conversionMode) || (! state.get(DragonforgeCore.POWERED)) || (entity.completedConversion));
         if (entity.progress <= 0) {
@@ -126,17 +158,12 @@ public class DragonforgeCoreBaseBlockEntity extends BlockEntity implements Named
             entity.completedConversion = true;
             entity.convert(world, pos, state, entity);
         }
+
     }
 
-    enum ConversionType {
-        BRICKS,
-        APERTURE,
-        HATCH,
-        SUPPORT,
-        CORE,
-        WINDOW
-    }
+
     public void convert(World world, BlockPos pos, BlockState state, DragonforgeCoreBaseBlockEntity entity) {
+
         int currentConversionMode = getTargetConversionMode();
         entity.removeStack(0, 1);
         boolean shouldConvertSelf = true;
@@ -237,9 +264,12 @@ public class DragonforgeCoreBaseBlockEntity extends BlockEntity implements Named
         } else if (conversionType == ConversionType.WINDOW) {
             ((DragonforgeWindow)newBlockState.getBlock()).update(world, blockPosition, newBlockState);
         }
+
     }
 
+
     public int getTargetConversionMode() {
+
         if (getStack(0).isOf(DragonforgeItems.DRAGONFORGE_POWERCELL_FIRE)) {
             return CONVERSIONMODE_FIRE;
         } else if (getStack(0).isOf(DragonforgeItems.DRAGONFORGE_POWERCELL_ICE)) {
@@ -249,6 +279,8 @@ public class DragonforgeCoreBaseBlockEntity extends BlockEntity implements Named
         } else {
             return CONVERSIONMODE_NONE;
         }
+
     }
+
 
 }

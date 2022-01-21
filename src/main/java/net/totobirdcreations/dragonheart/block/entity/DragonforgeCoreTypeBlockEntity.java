@@ -27,20 +27,23 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
+
+
 public class DragonforgeCoreTypeBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory {
 
-    public   static final int                      DELEGATE_PROGRESS    = 0;
-    public   static final int                      DELEGATE_MAXPROGRESS = 1;
 
+    public   static final int DELEGATE_PROGRESS    = 0;
+    public   static final int DELEGATE_MAXPROGRESS = 1;
 
-    public                DefaultedList<ItemStack> items                = DefaultedList.ofSize(3, ItemStack.EMPTY);
+    public DefaultedList<ItemStack> items       = DefaultedList.ofSize(3, ItemStack.EMPTY);
+    public int                      progress    = 0;
+    public int                      maxProgress = 140;
 
-    protected       final PropertyDelegate         propertyDelegate;
-    public                int                      progress             = 0;
-    public                int                      maxProgress          = 140;
+    public final PropertyDelegate propertyDelegate;
 
 
     public DragonforgeCoreTypeBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+
         super(type, pos, state);
         this.propertyDelegate = new PropertyDelegate() {
             @Override
@@ -63,41 +66,52 @@ public class DragonforgeCoreTypeBlockEntity extends BlockEntity implements Named
                 return 2;
             }
         };
+
     }
 
 
     @Override
     public Text getDisplayName() {
+
         return new TranslatableText("container." + DragonHeart.MOD_ID + ".dragonforge_core_base");
+
     }
 
 
     @Override
     public DefaultedList<ItemStack> getItems() {
+
         return items;
+
     }
 
 
     @Override
     public void readNbt(NbtCompound nbt) {
+
         progress = nbt.getShort("progress");
         Inventories.readNbt(nbt, items);
         super.readNbt(nbt);
+
     }
 
 
     @Override
     public void writeNbt(NbtCompound nbt) {
+
         super.writeNbt(nbt);
         Inventories.writeNbt(nbt, items);
         nbt.putShort("progress", (short)progress);
+
     }
 
 
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+
         return null;
+
     }
 
 
@@ -105,6 +119,7 @@ public class DragonforgeCoreTypeBlockEntity extends BlockEntity implements Named
 
 
     public static void tick(World world, BlockPos pos, BlockState state, DragonforgeCoreTypeBlockEntity entity) {
+
         if (hasRecipe(entity)) {
             entity.progress++;
             if (entity.progress > entity.maxProgress) {
@@ -114,6 +129,7 @@ public class DragonforgeCoreTypeBlockEntity extends BlockEntity implements Named
         } else {
             entity.progress = 0;
         }
+
     }
 
 
@@ -145,7 +161,9 @@ public class DragonforgeCoreTypeBlockEntity extends BlockEntity implements Named
 
 
     public boolean isCorrectForgeType(RequiredForgeType requiredForgeType) {
+
         return requiredForgeType == RequiredForgeType.ANY;
+
     }
 
 
@@ -170,12 +188,16 @@ public class DragonforgeCoreTypeBlockEntity extends BlockEntity implements Named
 
 
     public static boolean canInsertAmountIntoOutputSlot(SimpleInventory inventory, DragonforgeCoreTypeRecipe recipe) {
+
         return inventory.getStack(2).getCount() + recipe.getOutput().getCount() <= inventory.getStack(2).getMaxCount();
+
     }
 
 
     public static boolean canInsertItemIntoOutputSlot(SimpleInventory inventory, DragonforgeCoreTypeRecipe recipe) {
+
         return inventory.getStack(2).getItem() == recipe.getOutput().getItem() || inventory.getStack(2).isEmpty();
+
     }
 
 

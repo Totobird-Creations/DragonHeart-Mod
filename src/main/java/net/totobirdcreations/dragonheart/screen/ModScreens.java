@@ -6,7 +6,10 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.DragonHeart;
 
+
+
 public class ModScreens {
+
 
     public static ScreenHandlerType<DragonforgeCoreBaseScreenHandler> DRAGONFORGE_CORE_BASE = ScreenHandlerRegistry.registerSimple(
             new Identifier(DragonHeart.MOD_ID, "dragonforge_core_base"),
@@ -28,12 +31,16 @@ public class ModScreens {
             DragonforgeCoreLightningScreenHandler::new
     );
 
+
     public static void register() {
+
         DragonHeart.LOGGER.info("Registering screens.");
         ScreenRegistry.register(DRAGONFORGE_CORE_BASE      , DragonforgeCoreBaseScreen::new);
         ScreenRegistry.register(DRAGONFORGE_CORE_FIRE      , DragonforgeCoreTypeScreen::new);
         ScreenRegistry.register(DRAGONFORGE_CORE_ICE       , DragonforgeCoreTypeScreen::new);
         ScreenRegistry.register(DRAGONFORGE_CORE_LIGHTNING , DragonforgeCoreTypeScreen::new);
+
     }
+
 
 }

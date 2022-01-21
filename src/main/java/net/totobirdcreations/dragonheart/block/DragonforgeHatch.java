@@ -9,14 +9,21 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+
+
 public class DragonforgeHatch extends DragonforgePowerable {
 
+
     public DragonforgeHatch(Settings settings) {
+
         super(settings);
+
     }
+
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+
         BlockPos[] blockPositions = {
                 pos.add(1, 0, 0),
                 pos.add(-1, 0, 0),
@@ -48,6 +55,8 @@ public class DragonforgeHatch extends DragonforgePowerable {
             ((DragonforgeCore)coreBlockState.getBlock()).openScreen(coreBlockState, world, coreBlockPos, player);
         }
         return ActionResult.SUCCESS;
+
     }
+
 
 }

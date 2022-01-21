@@ -4,9 +4,13 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.totobirdcreations.dragonheart.DragonHeart;
 
+
+
 public class ModRecipes {
 
+
     public static void register() {
+
         DragonHeart.LOGGER.info("Registering recipes.");
 
         Registry.register(
@@ -22,5 +26,6 @@ public class ModRecipes {
         );
 
     }
+
 
 }

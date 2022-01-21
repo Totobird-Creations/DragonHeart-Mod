@@ -10,30 +10,47 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
+
+
 public class DragonforgeStructureBlock extends Dragonforge {
+
 
     public Block[] coreBlocks;
 
+
     public DragonforgeStructureBlock(Settings settings) {
+
         super(settings);
+
     }
 
+
     public void setDependencyBlocks(Block[] coreBlocks) {
+
         this.coreBlocks = coreBlocks;
+
     }
+
 
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+
         updateNearby(world, pos, state, coreBlocks);
+
     }
+
 
     @Override
     public void onBroken(WorldAccess worldAccess, BlockPos pos, BlockState state) {
+
         super.onBroken(worldAccess, pos, state);
         updateNearby((World)worldAccess, pos, state, coreBlocks);
+
     }
 
+
     public static void updateNearby(World world, BlockPos pos, BlockState state, Block[] coreBlocks) {
+
         BlockPos[] blockPositions = {
                 pos.add(-1, -1, -1),
                 pos.add(-1, -1, 0),
@@ -74,6 +91,8 @@ public class DragonforgeStructureBlock extends Dragonforge {
                 }
             }
         }
+
     }
+
 
 }

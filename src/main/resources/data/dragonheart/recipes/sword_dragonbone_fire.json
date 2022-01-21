@@ -1,0 +1,16 @@
+{
+    "type" : "dragonheart:dragonforge",
+    "forgetype" : "fire",
+    "time" : 300,
+    "ingredients" : [
+        {
+            "item" : "dragonheart:sword_dragonbone"
+        },
+        {
+            "item" : "dragonheart:dragonblood_fire"
+        }
+    ],
+    "output" : {
+        "item" : "dragonheart:sword_dragonbone_fire"
+    }
+}

@@ -8,6 +8,8 @@ import net.totobirdcreations.dragonheart.item.staff.StaffIce;
 
 import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
 
+
+
 public class StaffItems {
 
 
@@ -20,7 +22,6 @@ public class StaffItems {
             )
     );
 
-
     public static final Item STAFF_ICE = registerItem(
             "staff_ice",
             new StaffIce(
@@ -31,6 +32,12 @@ public class StaffItems {
     );
 
 
-    public static void register() {}
+
+    public static void register() {
+
+
+
+    }
+
 
 }

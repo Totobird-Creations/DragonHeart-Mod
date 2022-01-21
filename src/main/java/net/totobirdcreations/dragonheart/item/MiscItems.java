@@ -7,7 +7,10 @@ import net.totobirdcreations.dragonheart.item.misc.Dragonscale;
 
 import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
 
+
+
 public class MiscItems {
+
 
     public static final Item DRAGONBONE = registerItem(
             "dragonbone",
@@ -26,6 +29,7 @@ public class MiscItems {
                             .fireproof ()
             )
     );
+
 
     public static final Item DRAGONBLOOD_FIRE = registerItem(
             "dragonblood_fire",
@@ -54,6 +58,12 @@ public class MiscItems {
             )
     );
 
-    public static void register() {}
+
+    public static void register() {
+
+
+
+    }
+
 
 }

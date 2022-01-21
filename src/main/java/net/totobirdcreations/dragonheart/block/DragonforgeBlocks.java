@@ -13,12 +13,16 @@ import net.totobirdcreations.dragonheart.item.group.ModItemGroups;
 import static net.totobirdcreations.dragonheart.block.ModBlocks.registerBlock;
 import static net.totobirdcreations.dragonheart.block.ModBlocks.registerBlockWithoutItem;
 
+
+
 public class DragonforgeBlocks {
 
-    private static boolean never(BlockState blockState, BlockView blockView, BlockPos blockPos) {
-        return false;
-    }
 
+    public static boolean never(BlockState blockState, BlockView blockView, BlockPos blockPos) {
+
+        return false;
+
+    }
 
 
     public static final ItemBlock DRAGONFORGE_BRICKS_BASE = registerBlock(
@@ -26,26 +30,31 @@ public class DragonforgeBlocks {
             new DragonforgeBrick(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_APERTURE_BASE = registerBlock(
             "dragonforge_aperture_base",
             new DragonforgeAperture(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_HATCH_BASE = registerBlock(
             "dragonforge_hatch_base",
             new DragonforgeHatch(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_SUPPORT_BASE = registerBlock(
             "dragonforge_support_base",
             new DragonforgeStructureBlock(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_CORE_BASE = registerBlock(
             "dragonforge_core_base",
             new DragonforgeCoreBase(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f).luminance(DragonforgeCore::getLuminance)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final Block DRAGONFORGE_WINDOW_BASE = registerBlockWithoutItem(
             "dragonforge_window_base",
             new DragonforgeWindow(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f).nonOpaque().solidBlock(DragonforgeBlocks::never).blockVision(DragonforgeBlocks::never))
@@ -57,26 +66,31 @@ public class DragonforgeBlocks {
             new DragonforgeBrick(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_APERTURE_FIRE = registerBlock(
             "dragonforge_aperture_fire",
             new DragonforgeAperture(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_HATCH_FIRE = registerBlock(
             "dragonforge_hatch_fire",
             new DragonforgeHatch(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_SUPPORT_FIRE = registerBlock(
             "dragonforge_support_fire",
             new DragonforgeStructureBlock(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_CORE_FIRE = registerBlock(
             "dragonforge_core_fire",
             new DragonforgeCoreType(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f).luminance(DragonforgeCore::getLuminance)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final Block DRAGONFORGE_WINDOW_FIRE = registerBlockWithoutItem(
             "dragonforge_window_fire",
             new DragonforgeWindow(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f).nonOpaque().solidBlock(DragonforgeBlocks::never).blockVision(DragonforgeBlocks::never))
@@ -88,26 +102,31 @@ public class DragonforgeBlocks {
             new DragonforgeBrick(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_APERTURE_ICE = registerBlock(
             "dragonforge_aperture_ice",
             new DragonforgeAperture(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_HATCH_ICE = registerBlock(
             "dragonforge_hatch_ice",
             new DragonforgeHatch(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_SUPPORT_ICE = registerBlock(
             "dragonforge_support_ice",
             new DragonforgeStructureBlock(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_CORE_ICE = registerBlock(
             "dragonforge_core_ice",
             new DragonforgeCoreType(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f).luminance(DragonforgeCore::getLuminance)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final Block DRAGONFORGE_WINDOW_ICE = registerBlockWithoutItem(
             "dragonforge_window_ice",
             new DragonforgeWindow(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f).nonOpaque().solidBlock(DragonforgeBlocks::never).blockVision(DragonforgeBlocks::never))
@@ -119,34 +138,39 @@ public class DragonforgeBlocks {
             new DragonforgeBrick(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_APERTURE_LIGHTNING = registerBlock(
             "dragonforge_aperture_lightning",
             new DragonforgeAperture(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_HATCH_LIGHTNING = registerBlock(
             "dragonforge_hatch_lightning",
             new DragonforgeHatch(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_SUPPORT_LIGHTNING = registerBlock(
             "dragonforge_support_lightning",
             new DragonforgeStructureBlock(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final ItemBlock DRAGONFORGE_CORE_LIGHTNING = registerBlock(
             "dragonforge_core_lightning",
             new DragonforgeCoreType(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f).luminance(DragonforgeCore::getLuminance)),
             ModItemGroups.DRAGONFORGE
     );
+
     public static final Block DRAGONFORGE_WINDOW_LIGHTNING = registerBlockWithoutItem(
             "dragonforge_window_lightning",
             new DragonforgeWindow(FabricBlockSettings.of(Material.STONE).hardness(10.0f).resistance(1200.0f).nonOpaque().solidBlock(DragonforgeBlocks::never).blockVision(DragonforgeBlocks::never))
     );
 
 
-
     public static void register() {
+
         DragonHeart.LOGGER.info("Test");
         Block[] base_cores = {
                 DRAGONFORGE_CORE_BASE.block
@@ -292,6 +316,8 @@ public class DragonforgeBlocks {
         ( ( DragonforgeBrick          ) DRAGONFORGE_BRICKS_LIGHTNING   .block ).setDependencyBlocks( DRAGONFORGE_WINDOW_LIGHTNING , lightning_cores );
         ( ( DragonforgeWindow         ) DRAGONFORGE_WINDOW_LIGHTNING          ).setDependencyBlocks( DRAGONFORGE_BRICKS_LIGHTNING , lightning_cores );
         ( ( DragonforgeStructureBlock ) DRAGONFORGE_SUPPORT_LIGHTNING  .block ).setDependencyBlocks( lightning_cores                                );
+
     }
+
 
 }

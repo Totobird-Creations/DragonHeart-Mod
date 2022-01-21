@@ -13,30 +13,43 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 
+
 public class DragonforgeBrick extends DragonforgePowerable {
 
-    public static final BooleanProperty VENT        = BooleanProperty.of("vent");
 
-    public              Block           windowBlock = null;
+    public static final BooleanProperty VENT = BooleanProperty.of("vent");
+
+    public Block windowBlock = null;
+
 
     public DragonforgeBrick(Settings settings) {
+
         super(settings);
         this.setDefaultState(this.getDefaultState().with(VENT, false));
+
     }
 
+
     public void setDependencyBlocks(Block windowBlock, Block[] coreBlocks) {
+
         this.windowBlock = windowBlock;
         this.coreBlocks  = coreBlocks;
+
     }
+
 
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+
         update(world, pos, state);
         super.onPlaced(world, pos, state, placer, itemStack);
+
     }
+
 
     @Override
     public void update(World world, BlockPos pos, BlockState state) {
+
         BlockState[] blockStates = {
                 world.getBlockState(pos.add(1, 0, 0)),
                 world.getBlockState(pos.add(-1, 0, 0)),
@@ -85,12 +98,17 @@ public class DragonforgeBrick extends DragonforgePowerable {
             world.setBlockState(pos, state.with(VENT, shouldHaveVent).with(POWERED, shouldBePowered), Block.NOTIFY_ALL);
 
         }
+
     }
 
+
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    public void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+
         super.appendProperties(builder);
         builder.add(VENT);
+
     }
+
 
 }

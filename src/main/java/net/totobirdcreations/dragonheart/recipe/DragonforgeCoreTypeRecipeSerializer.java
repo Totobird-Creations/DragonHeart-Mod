@@ -12,7 +12,11 @@ import net.minecraft.util.JsonHelper;
 import net.minecraft.util.collection.DefaultedList;
 import net.totobirdcreations.dragonheart.recipe.DragonforgeCoreTypeRecipe.RequiredForgeType;
 
+
+
 public class DragonforgeCoreTypeRecipeSerializer implements RecipeSerializer<DragonforgeCoreTypeRecipe> {
+
+
     public static final DragonforgeCoreTypeRecipeSerializer INSTANCE   = new DragonforgeCoreTypeRecipeSerializer();
     public static final String                              IDENTIFIER = DragonforgeCoreTypeRecipeType.IDENTIFIER;
 

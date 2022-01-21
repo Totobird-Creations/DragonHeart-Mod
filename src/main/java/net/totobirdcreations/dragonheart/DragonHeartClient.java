@@ -10,6 +10,8 @@ import net.totobirdcreations.dragonheart.item.MiscItems;
 import net.totobirdcreations.dragonheart.item.misc.Dragonscale;
 import net.totobirdcreations.dragonheart.screen.ModScreens;
 
+
+
 @Environment(EnvType.CLIENT)
 public class DragonHeartClient implements ClientModInitializer {
 

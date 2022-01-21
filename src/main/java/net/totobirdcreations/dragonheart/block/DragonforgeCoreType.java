@@ -14,16 +14,21 @@ import net.totobirdcreations.dragonheart.block.entity.DragonforgeCoreLightningBl
 import net.totobirdcreations.dragonheart.block.entity.ModBlockEntities;
 import org.jetbrains.annotations.Nullable;
 
+
+
 public class DragonforgeCoreType extends DragonforgeCore {
 
 
     public DragonforgeCoreType(Settings settings) {
+
         super(settings);
+
     }
 
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+
         if (state.isOf(DragonforgeBlocks.DRAGONFORGE_CORE_FIRE.block)) {
             return new DragonforgeCoreFireBlockEntity(pos, state);
         } else if (state.isOf(DragonforgeBlocks.DRAGONFORGE_CORE_ICE.block)) {
@@ -33,12 +38,14 @@ public class DragonforgeCoreType extends DragonforgeCore {
         } else {
             return null;
         }
+
     }
 
 
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+
         if (state.isOf(DragonforgeBlocks.DRAGONFORGE_CORE_FIRE.block)) {
             return checkType(type, ModBlockEntities.DRAGONFORGE_CORE_FIRE, DragonforgeCoreFireBlockEntity::tick);
         } else if (state.isOf(DragonforgeBlocks.DRAGONFORGE_CORE_ICE.block)) {
@@ -48,19 +55,21 @@ public class DragonforgeCoreType extends DragonforgeCore {
         } else {
             return null;
         }
+
     }
 
 
     @Override
     public void openScreen(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+
         if (! world.isClient()) {
             NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
             if (screenHandlerFactory != null) {
                 player.openHandledScreen(screenHandlerFactory);
             }
         }
-    }
 
+    }
 
 
 }

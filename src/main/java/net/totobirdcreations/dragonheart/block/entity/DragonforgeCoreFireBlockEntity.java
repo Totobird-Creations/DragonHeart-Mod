@@ -13,33 +13,43 @@ import net.totobirdcreations.dragonheart.recipe.DragonforgeCoreTypeRecipe.Requir
 import net.totobirdcreations.dragonheart.screen.DragonforgeCoreFireScreenHandler;
 import org.jetbrains.annotations.Nullable;
 
+
+
 public class DragonforgeCoreFireBlockEntity extends DragonforgeCoreTypeBlockEntity {
 
 
     public DragonforgeCoreFireBlockEntity(BlockPos pos, BlockState state) {
+
         super(ModBlockEntities.DRAGONFORGE_CORE_FIRE, pos, state);
+
     }
 
 
     @Override
     public Text getDisplayName() {
+
         return new TranslatableText("container." + DragonHeart.MOD_ID + ".dragonforge_core_fire");
+
     }
 
 
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+
         return new DragonforgeCoreFireScreenHandler(syncId, inv, this, this.propertyDelegate);
+
     }
 
 
     @Override
     public boolean isCorrectForgeType(RequiredForgeType requiredForgeType) {
+
         return requiredForgeType == DragonforgeCoreTypeRecipe.RequiredForgeType.ANY ||
                 requiredForgeType == RequiredForgeType.FIRE ||
                 requiredForgeType == RequiredForgeType.FIRE_OR_ICE ||
                 requiredForgeType == RequiredForgeType.FIRE_OR_LIGHTNING;
+
     }
 
 
