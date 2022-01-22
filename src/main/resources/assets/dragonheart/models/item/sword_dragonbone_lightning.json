@@ -1,5 +1,5 @@
 {
-	"parent": "dragonheart:item/handheld_32",
+	"parent": "dragonheart:item/sword",
 	"textures": {
 		"layer0": "dragonheart:item/sword_dragonbone_lightning"
 	}

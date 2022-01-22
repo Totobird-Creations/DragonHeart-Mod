@@ -1,0 +1,16 @@
+{
+    "type" : "dragonheart:dragonforge",
+    "forgetype" : "ice",
+    "time" : 300,
+    "ingredients" : [
+        {
+            "item" : "dragonheart:sword_dragonbone_ice"
+        },
+        {
+            "item" : "minecraft:netherite_ingot"
+        }
+    ],
+    "output" : {
+        "item" : "dragonheart:sword_dragonsteel_ice"
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "type" : "dragonheart:dragonforge",
+    "forgetype" : "lightning",
+    "time" : 300,
+    "ingredients" : [
+        {
+            "item" : "dragonheart:pickaxe_dragonbone_lightning"
+        },
+        {
+            "item" : "minecraft:netherite_ingot"
+        }
+    ],
+    "output" : {
+        "item" : "dragonheart:pickaxe_dragonsteel_lightning"
+    }
+}

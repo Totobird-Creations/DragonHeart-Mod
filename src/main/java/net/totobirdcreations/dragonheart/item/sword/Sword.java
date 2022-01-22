@@ -2,7 +2,7 @@ package net.totobirdcreations.dragonheart.item.sword;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.SwordItem;
-
+import net.totobirdcreations.dragonheart.item.material.SwordMaterial;
 
 
 public class Sword extends SwordItem {

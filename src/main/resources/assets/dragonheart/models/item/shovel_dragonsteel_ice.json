@@ -1,0 +1,6 @@
+{
+	"parent": "dragonheart:item/shovel",
+	"textures": {
+		"layer0": "dragonheart:item/shovel_dragonsteel_ice"
+	}
+}

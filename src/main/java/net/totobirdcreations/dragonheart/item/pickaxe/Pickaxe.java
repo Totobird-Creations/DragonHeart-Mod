@@ -1,7 +1,7 @@
 package net.totobirdcreations.dragonheart.item.pickaxe;
 
 import net.minecraft.item.PickaxeItem;
-
+import net.totobirdcreations.dragonheart.item.material.PickaxeMaterial;
 
 
 public class Pickaxe extends PickaxeItem {

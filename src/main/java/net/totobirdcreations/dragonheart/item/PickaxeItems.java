@@ -3,6 +3,7 @@ package net.totobirdcreations.dragonheart.item;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.totobirdcreations.dragonheart.item.material.PickaxeMaterial;
 import net.totobirdcreations.dragonheart.item.pickaxe.*;
 
 import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;

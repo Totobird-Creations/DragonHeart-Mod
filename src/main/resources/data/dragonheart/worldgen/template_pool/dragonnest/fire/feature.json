@@ -14,7 +14,7 @@
     {
       "weight" : 24,
       "element" : {
-        "location" : "minecraft:air",
+        "location" : "minecraft:empty",
         "processors" : "minecraft:empty",
         "projection" : "rigid",
         "element_type" : "minecraft:single_pool_element"

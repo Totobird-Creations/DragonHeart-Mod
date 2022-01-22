@@ -1,0 +1,16 @@
+{
+    "type" : "dragonheart:dragonforge",
+    "forgetype" : "lightning",
+    "time" : 300,
+    "ingredients" : [
+        {
+            "item" : "dragonheart:shovel_dragonbone"
+        },
+        {
+            "item" : "dragonheart:dragonblood_lightning"
+        }
+    ],
+    "output" : {
+        "item" : "dragonheart:shovel_dragonbone_lightning"
+    }
+}

@@ -270,11 +270,11 @@ public class DragonforgeCoreBaseBlockEntity extends BlockEntity implements Named
 
     public int getTargetConversionMode() {
 
-        if (getStack(0).isOf(DragonforgeItems.DRAGONFORGE_POWERCELL_FIRE)) {
+        if (getStack(0).isOf(DragonforgeItems.POWERCELL_FIRE)) {
             return CONVERSIONMODE_FIRE;
-        } else if (getStack(0).isOf(DragonforgeItems.DRAGONFORGE_POWERCELL_ICE)) {
+        } else if (getStack(0).isOf(DragonforgeItems.POWERCELL_ICE)) {
             return CONVERSIONMODE_ICE;
-        } else if (getStack(0).isOf(DragonforgeItems.DRAGONFORGE_POWERCELL_LIGHTNING)) {
+        } else if (getStack(0).isOf(DragonforgeItems.POWERCELL_LIGHTNING)) {
             return CONVERSIONMODE_LIGHTNING;
         } else {
             return CONVERSIONMODE_NONE;

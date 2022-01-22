@@ -1,0 +1,6 @@
+{
+	"parent": "dragonheart:item/handheld",
+	"textures": {
+		"layer0": "dragonheart:item/bonehilt"
+	}
+}

@@ -1,0 +1,16 @@
+{
+    "type" : "dragonheart:dragonforge",
+    "forgetype" : "ice",
+    "time" : 300,
+    "ingredients" : [
+        {
+            "item" : "dragonheart:pickaxe_dragonbone_ice"
+        },
+        {
+            "item" : "minecraft:netherite_ingot"
+        }
+    ],
+    "output" : {
+        "item" : "dragonheart:pickaxe_dragonsteel_ice"
+    }
+}

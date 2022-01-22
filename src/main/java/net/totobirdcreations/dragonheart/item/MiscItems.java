@@ -21,6 +21,24 @@ public class MiscItems {
             )
     );
 
+    public static final Item DRAGONSTONE = registerItem(
+            "dragonstone",
+            new Item(
+                    new FabricItemSettings()
+                            .group     (ItemGroup.MISC)
+                            .fireproof ()
+            )
+    );
+
+    public static final Item BONEHILT = registerItem(
+            "bonehilt",
+            new Item(
+                    new FabricItemSettings()
+                            .group     (ItemGroup.MISC)
+                            .fireproof ()
+            )
+    );
+
     public static final Item DRAGONSCALE = registerItem(
             "dragonscale",
             new Dragonscale(

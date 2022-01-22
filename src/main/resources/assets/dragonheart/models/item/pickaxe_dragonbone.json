@@ -1,5 +1,5 @@
 {
-	"parent": "dragonheart:item/handheld_32",
+	"parent": "dragonheart:item/pickaxe",
 	"textures": {
 		"layer0": "dragonheart:item/pickaxe_dragonbone"
 	}

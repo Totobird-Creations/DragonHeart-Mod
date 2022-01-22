@@ -1,0 +1,16 @@
+{
+    "type" : "dragonheart:dragonforge",
+    "forgetype" : "ice",
+    "time" : 300,
+    "ingredients" : [
+        {
+            "item" : "dragonheart:axe_dragonbone"
+        },
+        {
+            "item" : "dragonheart:dragonblood_ice"
+        }
+    ],
+    "output" : {
+        "item" : "dragonheart:axe_dragonbone_ice"
+    }
+}

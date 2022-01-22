@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "dragonheart:item/helmet_dragonbone_fire"
+  }
+}

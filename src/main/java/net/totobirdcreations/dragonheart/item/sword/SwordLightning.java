@@ -2,9 +2,8 @@ package net.totobirdcreations.dragonheart.item.sword;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
 import net.totobirdcreations.dragonheart.item.dragonevent.Lightning;
-
+import net.totobirdcreations.dragonheart.item.material.SwordMaterial;
 
 
 public class SwordLightning extends Sword {

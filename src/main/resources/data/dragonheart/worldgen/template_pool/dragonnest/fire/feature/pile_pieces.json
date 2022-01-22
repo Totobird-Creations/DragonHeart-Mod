@@ -14,7 +14,7 @@
     {
       "weight" : 1,
       "element" : {
-        "location" : "minecraft:empty",
+        "location" : "dragonheart:dragonnest/fire/brick_air_piece",
         "processors" : "minecraft:empty",
         "projection" : "rigid",
         "element_type" : "minecraft:single_pool_element"

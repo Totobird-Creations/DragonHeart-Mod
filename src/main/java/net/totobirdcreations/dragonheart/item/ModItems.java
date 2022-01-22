@@ -26,6 +26,10 @@ public class ModItems {
 
         SwordItems       .register();
         PickaxeItems     .register();
+        AxeItems         .register();
+        ShovelItems      .register();
+        HoeItems         .register();
+        ArmourItems      .register();
 
     }
 

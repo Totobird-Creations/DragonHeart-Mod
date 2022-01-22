@@ -2,8 +2,8 @@ package net.totobirdcreations.dragonheart.item.pickaxe;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.PickaxeItem;
 import net.totobirdcreations.dragonheart.item.dragonevent.Lightning;
+import net.totobirdcreations.dragonheart.item.material.PickaxeMaterial;
 
 public class PickaxeLightning extends Pickaxe {
 

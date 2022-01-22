@@ -14,7 +14,7 @@ public class DragonforgeItems {
 
 
     public static final Item DRAGONFORGE_POWERCELL = registerItem(
-            "dragonforge_powercell",
+            "powercell",
             new Dragonscale(
                     new FabricItemSettings()
                             .group     (ModItemGroups.DRAGONFORGE)
@@ -23,8 +23,8 @@ public class DragonforgeItems {
             )
     );
 
-    public static final Item DRAGONFORGE_POWERCELL_FIRE = registerItem(
-            "dragonforge_powercell_fire",
+    public static final Item POWERCELL_FIRE = registerItem(
+            "powercell_fire",
             new Dragonscale(
                     new FabricItemSettings()
                             .group     (ModItemGroups.DRAGONFORGE)
@@ -33,8 +33,8 @@ public class DragonforgeItems {
             )
     );
 
-    public static final Item DRAGONFORGE_POWERCELL_ICE = registerItem(
-            "dragonforge_powercell_ice",
+    public static final Item POWERCELL_ICE = registerItem(
+            "powercell_ice",
             new Dragonscale(
                     new FabricItemSettings()
                             .group     (ModItemGroups.DRAGONFORGE)
@@ -43,8 +43,8 @@ public class DragonforgeItems {
             )
     );
 
-    public static final Item DRAGONFORGE_POWERCELL_LIGHTNING = registerItem(
-            "dragonforge_powercell_lightning",
+    public static final Item POWERCELL_LIGHTNING = registerItem(
+            "powercell_lightning",
             new Dragonscale(
                     new FabricItemSettings()
                             .group     (ModItemGroups.DRAGONFORGE)

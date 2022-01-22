@@ -1,0 +1,16 @@
+{
+    "type" : "dragonheart:dragonforge",
+    "forgetype" : "fire",
+    "time" : 300,
+    "ingredients" : [
+        {
+            "item" : "dragonheart:hoe_dragonbone_fire"
+        },
+        {
+            "item" : "minecraft:netherite_ingot"
+        }
+    ],
+    "output" : {
+        "item" : "dragonheart:hoe_dragonsteel_fire"
+    }
+}

@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:husbandry/obtain_netherite_hoe",
+  "display": {
+    "icon": {
+      "item": "dragonheart:hoe_dragonsteel_lightning",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancement.dragonheart.hoe_dragonsteel_lightning.title"
+    },
+    "description": {
+      "translate": "advancement.dragonheart.hoe_dragonsteel_lightning.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 300
+  },
+  "criteria": {
+    "hoe_dragonsteel_lightning": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "dragonheart:hoe_dragonsteel_lightning"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "hoe_dragonsteel_lightning"
+    ]
+  ]
+}

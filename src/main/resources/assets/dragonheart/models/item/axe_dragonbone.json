@@ -1,0 +1,6 @@
+{
+	"parent": "dragonheart:item/axe",
+	"textures": {
+		"layer0": "dragonheart:item/axe_dragonbone"
+	}
+}

@@ -1,0 +1,19 @@
+{
+    "type" : "minecraft:crafting_shaped",
+    "pattern" : [
+        "#",
+        "#",
+        "+"
+    ],
+    "key" : {
+        "#" : {
+            "item" : "dragonheart:dragonbone"
+        },
+        "+" : {
+            "item" : "dragonheart:bonehilt"
+        }
+    },
+    "result" : {
+        "item" : "dragonheart:sword_dragonbone"
+    }
+}
