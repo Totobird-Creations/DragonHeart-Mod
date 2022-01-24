@@ -1,0 +1,45 @@
+{
+  "replace": false,
+  "values": [
+    "dragonheart:dragonforge_bricks_base",
+    "dragonheart:dragonforge_aperture_base",
+    "dragonheart:dragonforge_core_base",
+    "dragonheart:dragonforge_hatch_base",
+    "dragonheart:dragonforge_support_base",
+    "dragonheart:dragonforge_window_base",
+    "dragonheart:dragonforge_bricks_fire",
+    "dragonheart:dragonforge_aperture_fire",
+    "dragonheart:dragonforge_core_fire",
+    "dragonheart:dragonforge_hatch_fire",
+    "dragonheart:dragonforge_support_fire",
+    "dragonheart:dragonforge_window_fire",
+    "dragonheart:dragonforge_bricks_ice",
+    "dragonheart:dragonforge_aperture_ice",
+    "dragonheart:dragonforge_core_ice",
+    "dragonheart:dragonforge_hatch_ice",
+    "dragonheart:dragonforge_support_ice",
+    "dragonheart:dragonforge_window_ice",
+    "dragonheart:dragonforge_bricks_lightning",
+    "dragonheart:dragonforge_aperture_lightning",
+    "dragonheart:dragonforge_core_lightning",
+    "dragonheart:dragonforge_hatch_lightning",
+    "dragonheart:dragonforge_support_lightning",
+    "dragonheart:dragonforge_window_lightning",
+
+    "minecraft:ancient_debris",
+    "minecraft:netherite_block",
+
+    "minecraft:bedrock",
+
+    "minecraft:barrier",
+    "minecraft:end_portal",
+    "minecraft:end_portal_frame",
+    "minecraft:end_gateway",
+    "minecraft:command_block",
+    "minecraft:repeating_command_block",
+    "minecraft:chain_command_block",
+    "minecraft:structure_block",
+    "minecraft:jigsaw",
+    "minecraft:moving_piston"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+	"parent": "minecraft:item/handheld",
+	"textures": {
+	},
+	"display": {
+		"gui": {
+			"scale" : [1.2, 1.2, 1.2]
+		},
+		"fixed": {
+			"scale" : [1.2, 1.2, 1.2]
+		}
+	}
+}

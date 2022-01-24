@@ -1,0 +1,6 @@
+{
+	"parent": "dragonheart:item/sword",
+	"textures": {
+		"layer0": "dragonheart:item/staff_lightning"
+	}
+}

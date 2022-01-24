@@ -48,6 +48,18 @@ public class ModBlockEntities {
             ).build(null)
     );
 
+    public static final BlockEntityType DRAGONFORGE_APERTURE = Registry.register(
+            Registry.BLOCK_ENTITY_TYPE,
+            new Identifier(DragonHeart.MOD_ID, "dragonforge_aperture"),
+            FabricBlockEntityTypeBuilder.create(
+                    DragonforgeApertureBlockEntity::new,
+                    DragonforgeBlocks.DRAGONFORGE_APERTURE_BASE.block,
+                    DragonforgeBlocks.DRAGONFORGE_APERTURE_FIRE.block,
+                    DragonforgeBlocks.DRAGONFORGE_APERTURE_ICE.block,
+                    DragonforgeBlocks.DRAGONFORGE_APERTURE_LIGHTNING.block
+            ).build(null)
+    );
+
 
     public static void register() {
 

@@ -2,7 +2,7 @@ package net.totobirdcreations.dragonheart.item.material;
 
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
-
+import net.totobirdcreations.dragonheart.item.MiscItems;
 
 
 public enum ShovelMaterial implements ToolMaterial {
@@ -79,7 +79,7 @@ public enum ShovelMaterial implements ToolMaterial {
     @Override
     public Ingredient getRepairIngredient() {
 
-        return null;
+        return Ingredient.EMPTY;
 
     }
 

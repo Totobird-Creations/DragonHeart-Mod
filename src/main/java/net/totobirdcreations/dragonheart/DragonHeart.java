@@ -1,8 +1,10 @@
 package net.totobirdcreations.dragonheart;
 
 import net.fabricmc.api.ModInitializer;
+import net.totobirdcreations.dragonheart.block.ModBlockTags;
 import net.totobirdcreations.dragonheart.block.ModBlocks;
 import net.totobirdcreations.dragonheart.effect.ModStatusEffects;
+import net.totobirdcreations.dragonheart.entity.ModEntities;
 import net.totobirdcreations.dragonheart.item.ModItems;
 import net.totobirdcreations.dragonheart.item.group.ModItemGroups;
 import net.totobirdcreations.dragonheart.recipe.ModRecipes;
@@ -25,11 +27,13 @@ public class DragonHeart implements ModInitializer {
 		LOGGER.info("Initializing.");
 
 		ModBlocks         .register();
+		ModBlockTags      .register();
 		ModSoundEvents    .register();
 		ModItems          .register();
 		ModItemGroups     .register();
 		ModStatusEffects  .register();
 		ModRecipes        .register();
+		ModEntities       .register();
 
 		LOGGER.info("Initialized.");
 

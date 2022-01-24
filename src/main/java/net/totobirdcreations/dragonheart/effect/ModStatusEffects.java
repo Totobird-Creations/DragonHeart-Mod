@@ -1,5 +1,7 @@
 package net.totobirdcreations.dragonheart.effect;
 
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -12,6 +14,9 @@ public class ModStatusEffects {
 
     public static final StatusEffect FROZEN = registerStatusEffect(
             "frozen", new FrozenStatusEffect()
+                    .addAttributeModifier( EntityAttributes.GENERIC_MOVEMENT_SPEED , "7107DE5E-7CE8-4030-940E-514C1F160890" , -1.0f  , EntityAttributeModifier.Operation.MULTIPLY_TOTAL )
+                    .addAttributeModifier( EntityAttributes.GENERIC_ATTACK_SPEED   , "55FCED67-E92A-486E-9800-B47F202C4386" , -0.75f , EntityAttributeModifier.Operation.MULTIPLY_TOTAL )
+                    .addAttributeModifier( EntityAttributes.GENERIC_ATTACK_DAMAGE  , "22653B89-116E-49DC-9B6B-9971489B5BE5" , -1.0f  , EntityAttributeModifier.Operation.MULTIPLY_TOTAL )
     );
 
     public static final StatusEffect CHARGED = registerStatusEffect(

@@ -31,6 +31,8 @@ public class ModItems {
         HoeItems         .register();
         ArmourItems      .register();
 
+        HiddenItems      .register();
+
     }
 
 

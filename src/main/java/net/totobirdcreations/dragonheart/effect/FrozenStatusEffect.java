@@ -28,6 +28,10 @@ public class FrozenStatusEffect extends StatusEffect {
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
 
         entity.setVelocity(0.0, -3.0, 0.0);
+        if (entity.isOnFire()) {
+            entity.removeStatusEffect(ModStatusEffects.FROZEN);
+            entity.extinguish();
+        }
 
     }
 

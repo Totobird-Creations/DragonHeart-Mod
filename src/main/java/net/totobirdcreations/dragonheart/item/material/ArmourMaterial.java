@@ -5,6 +5,7 @@ import net.minecraft.item.ArmorMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.totobirdcreations.dragonheart.item.MiscItems;
 
 
 public enum ArmourMaterial implements ArmorMaterial {
@@ -72,7 +73,7 @@ public enum ArmourMaterial implements ArmorMaterial {
     @Override
     public Ingredient getRepairIngredient() {
 
-        return null;
+        return Ingredient.EMPTY;
 
     }
 

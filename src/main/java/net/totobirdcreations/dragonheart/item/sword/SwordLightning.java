@@ -2,7 +2,7 @@ package net.totobirdcreations.dragonheart.item.sword;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.totobirdcreations.dragonheart.item.dragonevent.Lightning;
+import net.totobirdcreations.dragonheart.dragonevent.Lightning;
 import net.totobirdcreations.dragonheart.item.material.SwordMaterial;
 
 
@@ -19,7 +19,7 @@ public class SwordLightning extends Sword {
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 
-        Lightning.hit(stack, target, attacker);
+        Lightning.hit(stack, target, attacker, true);
         return super.postHit(stack, target, attacker);
 
     }

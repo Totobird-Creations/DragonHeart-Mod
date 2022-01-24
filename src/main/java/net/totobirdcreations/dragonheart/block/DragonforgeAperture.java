@@ -1,33 +1,103 @@
 package net.totobirdcreations.dragonheart.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
+import net.totobirdcreations.dragonheart.block.entity.DragonforgeApertureBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.ModBlockEntities;
+import org.jetbrains.annotations.Nullable;
+
+import static net.totobirdcreations.dragonheart.block.DragonforgeStructureBlock.updateNearby;
 
 
 
-public class DragonforgeAperture extends DragonforgePowerable {
+public class DragonforgeAperture extends BlockWithEntity implements BlockEntityProvider {
+
+
+    public static final BooleanProperty POWERED = BooleanProperty.of("powered");
+
+    public Block[] coreBlocks;
 
 
     public DragonforgeAperture(Settings settings) {
 
         super(settings);
+        this.setDefaultState(this.getDefaultState().with(POWERED, false));
+
+    }
+
+
+    public void setDependencyBlocks(Block[] coreBlocks) {
+
+        this.coreBlocks = coreBlocks;
 
     }
 
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 
-        BlockState blockState = world.getBlockState(pos);
-        world.setBlockState(pos, blockState.with(DragonforgePowerable.POWERED, ! blockState.get(DragonforgePowerable.POWERED)), Block.NOTIFY_ALL);
+        builder.add(POWERED);
+
+    }
+
+
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+
+        return new DragonforgeApertureBlockEntity(pos, state);
+
+    }
+
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+
+        return BlockRenderType.MODEL;
+
+    }
+
+
+    @Override
+    public PistonBehavior getPistonBehavior(BlockState state) {
+
+        return PistonBehavior.BLOCK;
+
+    }
+
+
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+
         update(world, pos, state);
-        return ActionResult.SUCCESS;
+        super.onPlaced(world, pos, state, placer, itemStack);
+
+    }
+
+
+    @Override
+    public void onBroken(WorldAccess worldAccess, BlockPos pos, BlockState state) {
+
+        super.onBroken(worldAccess, pos, state);
+        updateNearby((World)worldAccess, pos, state, coreBlocks);
+
+    }
+
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+
+        return checkType(type, ModBlockEntities.DRAGONFORGE_APERTURE, DragonforgeApertureBlockEntity::tick);
 
     }
 
