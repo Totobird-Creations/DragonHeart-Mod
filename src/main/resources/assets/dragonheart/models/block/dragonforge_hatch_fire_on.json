@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "top": "dragonheart:block/dragonforge_bricks_fire",
-    "bottom": "dragonheart:block/dragonforge_bricks_fire",
-    "side": "dragonheart:block/dragonforge_hatch_fire_on"
-  }
-}

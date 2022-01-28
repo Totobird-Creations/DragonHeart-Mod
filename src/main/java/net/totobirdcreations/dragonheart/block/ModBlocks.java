@@ -35,6 +35,12 @@ public class ModBlocks {
             ItemGroup.BUILDING_BLOCKS
     );
 
+    public static final ItemBlock DRAGONBONEBLOCK = registerBlock(
+            "dragonboneblock",
+            new Block(FabricBlockSettings.copy(Blocks.BONE_BLOCK)),
+            ItemGroup.DECORATIONS
+    );
+
 
     public static ItemBlock registerBlock(String name, Block block, ItemGroup group) {
 
