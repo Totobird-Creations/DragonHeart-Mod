@@ -48,6 +48,33 @@ public class MiscItems {
             )
     );
 
+    public static final Item DRAGONHEART_FIRE = registerItem(
+            "dragonheart_fire",
+            new Dragonscale(
+                    new FabricItemSettings()
+                            .group     (ItemGroup.MISC)
+                            .fireproof ()
+            )
+    );
+
+    public static final Item DRAGONHEART_ICE = registerItem(
+            "dragonheart_ice",
+            new Dragonscale(
+                    new FabricItemSettings()
+                            .group     (ItemGroup.MISC)
+                            .fireproof ()
+            )
+    );
+
+    public static final Item DRAGONHEART_LIGHTNING = registerItem(
+            "dragonheart_lightning",
+            new Dragonscale(
+                    new FabricItemSettings()
+                            .group     (ItemGroup.MISC)
+                            .fireproof ()
+            )
+    );
+
 
     public static final Item DRAGONBLOOD_FIRE = registerItem(
             "dragonblood_fire",
