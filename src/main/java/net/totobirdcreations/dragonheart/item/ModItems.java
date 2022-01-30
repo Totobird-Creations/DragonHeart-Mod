@@ -21,8 +21,8 @@ public class ModItems {
 
         DragonHeart.LOGGER.info("Registering items.");
         MiscItems        .register();
-        StaffItems       .register();
         DragonforgeItems .register();
+        FoodItems        .register();
 
         SwordItems       .register();
         PickaxeItems     .register();
@@ -30,6 +30,7 @@ public class ModItems {
         ShovelItems      .register();
         HoeItems         .register();
         ArmourItems      .register();
+        StaffItems       .register();
 
         HiddenItems      .register();
 

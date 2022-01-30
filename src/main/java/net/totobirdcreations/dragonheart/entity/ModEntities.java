@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.totobirdcreations.dragonheart.DragonHeart;
@@ -34,6 +35,14 @@ public class ModEntities {
                     .build()
     );
 
+
+    /*public static final EntityType<SeaSerpent> SEA_SERPENT = EntityType.register(
+            new Identifier(DragonHeart.MOD_ID, "sea_serpent"),
+            EntityType.Builder.create(SeaSerpent::new, SpawnGroup.MONSTER)
+                    .makeFireImmune()
+                    .setDimensions(16.0f, 8.0f)
+                    .maxTrackingRange(10)
+    );*/
 
 
     public static void register() {
