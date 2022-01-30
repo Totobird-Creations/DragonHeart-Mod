@@ -3,7 +3,7 @@ name: Critical Bug Report
 about: Create a report to help us fix crashes and security holes.
 title: "[CRITICAL BUG] Title Here"
 labels: Critical Bug
-assignees: ''
+assignees: Totobird-Creations
 
 ---
 
