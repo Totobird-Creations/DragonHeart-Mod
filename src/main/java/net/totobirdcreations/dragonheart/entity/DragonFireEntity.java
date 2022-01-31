@@ -1,16 +1,17 @@
 package net.totobirdcreations.dragonheart.entity;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.world.World;
 
 
 
-public class SeaSerpent extends MobEntity {
+public class DragonFireEntity extends DragonEntity {
 
 
-    public SeaSerpent(EntityType<? extends MobEntity> entityType, World world) {
+    public DragonFireEntity(EntityType<? extends DragonEntity> entityType, World world) {
+
         super(entityType, world);
+
     }
 
 

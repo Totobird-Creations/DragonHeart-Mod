@@ -4,6 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;
@@ -14,6 +15,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
+import net.totobirdcreations.dragonheart.entity.DragonFireEntityModel;
+import net.totobirdcreations.dragonheart.entity.DragonFireEntityRenderer;
 import net.totobirdcreations.dragonheart.entity.ModEntities;
 import net.totobirdcreations.dragonheart.item.MiscItems;
 import net.totobirdcreations.dragonheart.item.misc.Dragonscale;
@@ -30,6 +33,8 @@ public class DragonHeartClient implements ClientModInitializer {
     public static final EntityModelLayer DRAGONBREATH_FIRE = new EntityModelLayer(new Identifier(DragonHeart.MOD_ID, "dragonbreath_fire"), "main");
     public static final EntityModelLayer DRAGONBREATH_ICE  = new EntityModelLayer(new Identifier(DragonHeart.MOD_ID, "dragonbreath_ice"), "main");
 
+    public static final EntityModelLayer DRAGON_FIRE       = new EntityModelLayer(new Identifier(DragonHeart.MOD_ID, "dragon_fire"), "main");
+
 
     @Override
     public void onInitializeClient() {
@@ -44,6 +49,13 @@ public class DragonHeartClient implements ClientModInitializer {
                 ModEntities.DRAGONBREATH_ICE_TYPE,
                 (context) -> {return new FlyingItemEntityRenderer(context);}
         );
+
+        EntityRendererRegistry.register(
+                ModEntities.DRAGON_FIRE,
+                (context) -> {return new DragonFireEntityRenderer(context);}
+        );
+        EntityModelLayerRegistry.registerModelLayer(DRAGON_FIRE, DragonFireEntityModel::getTexturedModelData);
+
         receiveEntityPacket();
 
         ModScreens.register();
