@@ -3,6 +3,7 @@ package net.totobirdcreations.dragonheart;
 import net.fabricmc.api.ModInitializer;
 import net.totobirdcreations.dragonheart.block.ModBlockTags;
 import net.totobirdcreations.dragonheart.block.ModBlocks;
+import net.totobirdcreations.dragonheart.command.ModCommands;
 import net.totobirdcreations.dragonheart.effect.ModStatusEffects;
 import net.totobirdcreations.dragonheart.entity.ModEntities;
 import net.totobirdcreations.dragonheart.item.ModItems;
@@ -11,7 +12,8 @@ import net.totobirdcreations.dragonheart.recipe.ModRecipes;
 import net.totobirdcreations.dragonheart.soundevent.ModSoundEvents;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import software.bernie.example.GeckoLibMod;
+import software.bernie.geckolib3.GeckoLib;
 
 
 public class DragonHeart implements ModInitializer {
@@ -26,6 +28,9 @@ public class DragonHeart implements ModInitializer {
 
 		LOGGER.info("Initializing.");
 
+		GeckoLibMod.DISABLE_IN_DEV = true;
+		GeckoLib.initialize();
+
 		ModBlocks         .register();
 		ModBlockTags      .register();
 		ModSoundEvents    .register();
@@ -34,6 +39,7 @@ public class DragonHeart implements ModInitializer {
 		ModStatusEffects  .register();
 		ModRecipes        .register();
 		ModEntities       .register();
+		ModCommands       .register();
 
 		LOGGER.info("Initialized.");
 

@@ -3,6 +3,7 @@ package net.totobirdcreations.dragonheart.item;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.totobirdcreations.dragonheart.item.misc.Dragonbucket;
 import net.totobirdcreations.dragonheart.item.misc.Dragonscale;
 
 import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
@@ -97,6 +98,42 @@ public class MiscItems {
     public static final Item DRAGONBLOOD_LIGHTNING = registerItem(
             "dragonblood_lightning",
             new Item(
+                    new FabricItemSettings()
+                            .group     (ItemGroup.MISC)
+                            .fireproof ()
+            )
+    );
+
+    public static final Item DRAGONBUCKET = registerItem(
+            "dragonbucket",
+            new Item(
+                    new FabricItemSettings()
+                            .group     (ItemGroup.MISC)
+                            .fireproof ()
+            )
+    );
+
+    public static final Item DRAGONBUCKET_FIRE = registerItem(
+            "dragonbucket_fire",
+            new Dragonbucket(
+                    new FabricItemSettings()
+                            .group     (ItemGroup.MISC)
+                            .fireproof ()
+            )
+    );
+
+    public static final Item DRAGONBUCKET_ICE = registerItem(
+            "dragonbucket_ice",
+            new Dragonbucket(
+                    new FabricItemSettings()
+                            .group     (ItemGroup.MISC)
+                            .fireproof ()
+            )
+    );
+
+    public static final Item DRAGONBUCKET_LIGHTNING = registerItem(
+            "dragonbucket_lightning",
+            new Dragonbucket(
                     new FabricItemSettings()
                             .group     (ItemGroup.MISC)
                             .fireproof ()

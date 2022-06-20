@@ -1,29 +1,43 @@
 package net.totobirdcreations.dragonheart.entity;
 
 
+import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.DragonHeartClient;
+import software.bernie.geckolib3.core.util.Color;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 
+public class DragonFireEntityRenderer extends GeoEntityRenderer<DragonEntity> {
 
-public class DragonFireEntityRenderer extends MobEntityRenderer<DragonFireEntity, DragonFireEntityModel> {
 
+    public DragonFireEntityRenderer(EntityRendererFactory.Context renderManager) {
 
-    public DragonFireEntityRenderer(EntityRendererFactory.Context context) {
-
-        super(context, new DragonFireEntityModel(context.getPart(DragonHeartClient.DRAGON_FIRE)), 0.5f);
+        super(renderManager, new DragonFireEntityModel());
 
     }
 
 
     @Override
-    public Identifier getTexture(DragonFireEntity entity) {
+    public Identifier getTexture(DragonEntity entity) {
 
         return new Identifier(DragonHeart.MOD_ID, "textures/entity/dragon/fire.png");
 
+    }
+
+
+
+    @Override
+    public Color getRenderColor(DragonEntity entity, float ticks, MatrixStack stackIn, VertexConsumerProvider renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn) {
+        int colour = entity.getDataTracker().get(entity.COLOUR);
+        return Color.ofRGB(
+                ((colour >> 16) & 0xff) / 255.0f,
+                ((colour >>  8) & 0xff) / 255.0f,
+                ((colour      ) & 0xff) / 255.0f
+        );
     }
 
 
