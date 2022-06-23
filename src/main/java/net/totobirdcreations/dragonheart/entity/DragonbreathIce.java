@@ -61,7 +61,7 @@ public class DragonbreathIce extends Dragonbreath {
 
         super.tick();
 
-        if (ModBlockTags.DRAGON_ICEABLE.contains(getWorld().getBlockState(getBlockPos()).getBlock())) {
+        if (getWorld().getBlockState(getBlockPos()).isIn(ModBlockTags.DRAGON_ICEABLE)) {
             world.setBlockState(getBlockPos(), Blocks.PACKED_ICE.getDefaultState());
             kill();
         }
@@ -104,7 +104,7 @@ public class DragonbreathIce extends Dragonbreath {
             world.sendEntityStatus(this, (byte)3);
             BlockPos pos   = hitResult.getBlockPos();
 
-            if (! ModBlockTags.DRAGON_UNGRIEFABLE.contains(world.getBlockState(pos).getBlock())) {
+            if (! world.getBlockState(pos).isIn(ModBlockTags.DRAGON_UNGRIEFABLE)) {
                 world.setBlockState(pos, griefBlock.getDefaultState());
             }
 

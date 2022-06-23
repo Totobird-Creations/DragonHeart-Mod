@@ -39,8 +39,9 @@ public class ModEntities {
     public static final EntityType<DragonFireEntity> DRAGON_FIRE = Registry.register(
             Registry.ENTITY_TYPE,
             new Identifier(DragonHeart.MOD_ID, "dragon_fire"),
-            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, DragonFireEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.75f, 0.75f)).build()
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, DragonFireEntity::new)
+                    .dimensions(EntityDimensions.fixed(5.0f, 2.0f))
+                    .build()
     );
 
 

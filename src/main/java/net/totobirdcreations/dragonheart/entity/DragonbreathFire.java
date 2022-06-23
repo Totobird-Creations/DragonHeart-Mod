@@ -61,7 +61,7 @@ public class DragonbreathFire extends Dragonbreath {
 
         super.tick();
 
-        if (ModBlockTags.DRAGON_EVAPORATABLE.contains(getWorld().getBlockState(getBlockPos()).getBlock())) {
+        if (getWorld().getBlockState(getBlockPos()).isIn(ModBlockTags.DRAGON_EVAPORATABLE)) {
             world.setBlockState(getBlockPos(), Blocks.AIR.getDefaultState());
             kill();
         }
@@ -104,7 +104,7 @@ public class DragonbreathFire extends Dragonbreath {
             world.sendEntityStatus(this, (byte)3);
             BlockPos pos   = hitResult.getBlockPos();
 
-            if (! ModBlockTags.DRAGON_UNGRIEFABLE.contains(world.getBlockState(pos).getBlock())) {
+            if (! world.getBlockState(pos).isIn(ModBlockTags.DRAGON_UNGRIEFABLE)) {
                 world.setBlockState(pos, griefBlock.getDefaultState());
             }
 

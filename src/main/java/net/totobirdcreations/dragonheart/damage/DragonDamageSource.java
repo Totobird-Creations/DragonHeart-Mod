@@ -3,7 +3,6 @@ package net.totobirdcreations.dragonheart.damage;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 
 
@@ -56,7 +55,7 @@ public class DragonDamageSource extends DamageSource {
         /*if (livingEntity != null) {
             return new TranslatableText(string + ".entity", entity.getDisplayName(), livingEntity.getDisplayName());
         }*/
-        return new TranslatableText(string, entity.getDisplayName());
+        return Text.translatable(string, entity.getDisplayName());
     }
 
 

@@ -13,7 +13,6 @@ import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -73,7 +72,7 @@ public class DragonforgeCoreTypeBlockEntity extends BlockEntity implements Named
     @Override
     public Text getDisplayName() {
 
-        return new TranslatableText("container." + DragonHeart.MOD_ID + ".dragonforge_core_base");
+        return Text.translatable("container." + DragonHeart.MOD_ID + ".dragonforge_core_base");
 
     }
 

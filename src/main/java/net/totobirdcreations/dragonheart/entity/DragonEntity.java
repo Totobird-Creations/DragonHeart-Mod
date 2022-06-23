@@ -3,10 +3,15 @@ package net.totobirdcreations.dragonheart.entity;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.goal.LookAroundGoal;
+import net.minecraft.entity.ai.goal.LookAtEntityGoal;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.FlyingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LocalDifficulty;
@@ -31,6 +36,7 @@ public class DragonEntity extends FlyingEntity implements IAnimatable {
     public static final TrackedData<Integer>  HUNGER_LEVEL;
     public static final TrackedData<Integer>  COLOUR;
     public static final TrackedData<Integer>  STATE;
+    public static final TrackedData<Float>    AGE;
 
     public enum DragonState {
         SLEEP,
@@ -82,6 +88,16 @@ public class DragonEntity extends FlyingEntity implements IAnimatable {
         HUNGER_LEVEL    = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER   );
         COLOUR          = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER   );
         STATE           = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER   );
+        AGE             = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.FLOAT     );
+    }
+
+    public static DefaultAttributeContainer.Builder setAttributes() {
+        return createMobAttributes()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH           , 1000.0d )
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE        , 50.0f   )
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK     , 3.0f    )
+                .add(EntityAttributes.GENERIC_ATTACK_SPEED         , 3.0f    )
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE , 1.0f    );
     }
 
 
@@ -108,16 +124,9 @@ public class DragonEntity extends FlyingEntity implements IAnimatable {
         AnimationBuilder builder   = new AnimationBuilder();
         PlayState        playState = PlayState.CONTINUE;
 
-        if (event.isMoving()) {
-            if (state.toString() != event.getController().getCurrentAnimation().animationName) {
-                playState = PlayState.STOP;
-                event.getController().clearAnimationCache();
-            }
-        } else {
-            switch (state) {
-                case STAND -> builder.addAnimation("stand" , true);
-                case FLY   -> builder.addAnimation("fly"   , true);
-            }
+        switch (state) {
+            case STAND -> builder.addAnimation("animation.dragon.stand" , true);
+            case FLY   -> builder.addAnimation("animation.dragon.fly"   , true);
         }
 
         event.getController().transitionLengthTicks = 20;
@@ -151,6 +160,7 @@ public class DragonEntity extends FlyingEntity implements IAnimatable {
         this.dataTracker.startTracking( HUNGER_LEVEL    , 0                     );
         this.dataTracker.startTracking( COLOUR          , 0                     );
         this.dataTracker.startTracking( STATE           , 0                     );
+        this.dataTracker.startTracking( AGE             , 0.0f                  );
 
     }
 
@@ -163,15 +173,17 @@ public class DragonEntity extends FlyingEntity implements IAnimatable {
         nbt.putInt      ( "HungerLevel"    , dataTracker.get(HUNGER_LEVEL)                                );
         nbt.putInt      ( "Colour"         , dataTracker.get(COLOUR)                                      );
         nbt.putInt      ( "State"          , dataTracker.get(STATE)                                       );
+        nbt.putFloat    ( "Age"            , dataTracker.get(AGE)                                         );
 
     }
 
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
 
-        dataTracker.set( STATE           , nbt.getInt("State"          ));
-        dataTracker.set( COLOUR          , nbt.getInt("Colour"         ));
-        dataTracker.set( HUNGER_LEVEL    , nbt.getInt("HungerLever"    ));
+        dataTracker.set( AGE             , nbt.getFloat("Age"            ));
+        dataTracker.set( STATE           , nbt.getInt  ("State"          ));
+        dataTracker.set( COLOUR          , nbt.getInt  ("Colour"         ));
+        dataTracker.set( HUNGER_LEVEL    , nbt.getInt  ("HungerLever"    ));
         int[] spawnPos = nbt.getIntArray("SpawnPos");
         if (spawnPos.length == 3) {
             dataTracker.set(SPAWN_POS, new BlockPos(spawnPos[0], spawnPos[1], spawnPos[2]));
@@ -191,6 +203,7 @@ public class DragonEntity extends FlyingEntity implements IAnimatable {
         dataTracker.set( HUNGER_LEVEL    , 20 * 60 * 15  );
         dataTracker.set( COLOUR          , 16777215      );
         dataTracker.set( STATE           , 0             );
+        dataTracker.set( AGE             , 0.0f          );
         super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         return entityData;
 
@@ -199,9 +212,14 @@ public class DragonEntity extends FlyingEntity implements IAnimatable {
 
     @Override
     public boolean hasNoGravity() {
+       return false;
+    }
 
-        return false;
 
+    @Override
+    public void initGoals() {
+        this.goalSelector.add(0, new LookAtEntityGoal(this, PlayerEntity.class, 16.0f));
+        this.goalSelector.add(1, new LookAroundGoal(this));
     }
 
 

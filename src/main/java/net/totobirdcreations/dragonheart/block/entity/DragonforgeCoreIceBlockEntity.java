@@ -5,7 +5,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.recipe.DragonforgeCoreTypeRecipe;
@@ -28,7 +27,7 @@ public class DragonforgeCoreIceBlockEntity extends DragonforgeCoreTypeBlockEntit
     @Override
     public Text getDisplayName() {
 
-        return new TranslatableText("container." + DragonHeart.MOD_ID + ".dragonforge_core_ice");
+        return Text.translatable("container." + DragonHeart.MOD_ID + ".dragonforge_core_ice");
 
     }
 

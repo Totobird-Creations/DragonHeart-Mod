@@ -24,7 +24,7 @@ public class DragonFireEntityRenderer extends GeoEntityRenderer<DragonEntity> {
     @Override
     public Identifier getTexture(DragonEntity entity) {
 
-        return new Identifier(DragonHeart.MOD_ID, "textures/entity/dragon/fire.png");
+        return DragonFireEntityModel.TEXTURE;
 
     }
 

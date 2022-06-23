@@ -8,11 +8,12 @@ import net.totobirdcreations.dragonheart.DragonHeart;
 
 public class DragonFireEntityModel extends DragonEntityModel {
 
+    public static Identifier TEXTURE = new Identifier(DragonHeart.MOD_ID, "textures/entity/dragon/fire.png");
 
     @Override
-    public Identifier getTextureLocation(DragonEntity object) {
+    public Identifier getTextureResource(DragonEntity object) {
 
-        return new Identifier(DragonHeart.MOD_ID, "textures/entity/dragon/fire.png");
+        return TEXTURE;
 
     }
 
