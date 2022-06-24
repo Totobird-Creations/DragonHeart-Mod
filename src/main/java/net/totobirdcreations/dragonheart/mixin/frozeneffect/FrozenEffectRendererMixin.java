@@ -16,7 +16,7 @@ public class FrozenEffectRendererMixin {
     @ModifyVariable(method = "getRenderLayer", at = @At("STORE"), ordinal = 0)
     public Identifier overrideIdentifier(Identifier object, LivingEntity entity) {
         if (((FrozenEffectEntityInterface)entity).isIced()) {
-            return new Identifier("minecraft", "textures/block/packed_ice.png");
+            return new Identifier("dragonheart", "textures/misc/frozen_entity.png");
         } else {
             return ((LivingEntityRenderer)(Object)this).getTexture(entity);
         }

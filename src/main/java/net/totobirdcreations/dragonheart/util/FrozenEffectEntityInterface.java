@@ -8,4 +8,6 @@ public interface FrozenEffectEntityInterface {
 
     void setIced(Boolean value);
 
+    float getAndResetStoredDamage();
+
 }

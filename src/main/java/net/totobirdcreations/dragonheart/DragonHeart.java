@@ -28,7 +28,7 @@ public class DragonHeart implements ModInitializer {
 
 		LOGGER.info("Initializing.");
 
-		GeckoLibMod.DISABLE_IN_DEV = true;
+		//GeckoLibMod.DISABLE_IN_DEV = true;
 		GeckoLib.initialize();
 
 		ModBlocks         .register();

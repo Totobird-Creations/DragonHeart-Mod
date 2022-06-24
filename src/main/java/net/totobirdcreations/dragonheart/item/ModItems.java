@@ -30,9 +30,6 @@ public class ModItems {
         ShovelItems      .register();
         HoeItems         .register();
         ArmourItems      .register();
-        StaffItems       .register();
-
-        HiddenItems      .register();
 
     }
 

@@ -6,15 +6,14 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import net.totobirdcreations.dragonheart.DragonHeart;
 import software.bernie.geckolib3.core.util.Color;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 
-public class DragonFireEntityRenderer extends GeoEntityRenderer<DragonEntity> {
+public class DragonEntityRenderer extends GeoEntityRenderer<DragonEntity> {
 
 
-    public DragonFireEntityRenderer(EntityRendererFactory.Context renderManager) {
+    public DragonEntityRenderer(EntityRendererFactory.Context renderManager) {
 
         super(renderManager, new DragonFireEntityModel());
 

@@ -14,25 +14,19 @@ public class DragonEntityModel extends AnimatedGeoModel<DragonEntity> {
 
     @Override
     public Identifier getModelResource(DragonEntity object) {
-
         return new Identifier(DragonHeart.MOD_ID, "geo/entity/dragon.geo.json");
-
     }
 
 
     @Override
     public Identifier getTextureResource(DragonEntity object) {
-
         return new Identifier(DragonHeart.MOD_ID, "textures/entity/dragon/fire.png");
-
     }
 
 
     @Override
     public Identifier getAnimationResource(DragonEntity entity) {
-
         return new Identifier(DragonHeart.MOD_ID, "animations/entity/dragon.animation.json");
-
     }
 
     @Override

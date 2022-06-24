@@ -1,5 +1,6 @@
 package net.totobirdcreations.dragonheart.item.misc;
 
+import net.minecraft.item.DyeableItem;
 import net.minecraft.item.Item;
 
 

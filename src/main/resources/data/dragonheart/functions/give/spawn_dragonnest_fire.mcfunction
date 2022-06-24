@@ -1,1 +1,0 @@
-give @s minecraft:jigsaw{BlockEntityTag: {joint: "rollable", name: "", pool: "dragonheart:dragonnest/fire/base", final_state: "minecraft:structure_void", id: "minecraft:jigsaw", target: "dragonheart:dragonnest/fire/base"}}

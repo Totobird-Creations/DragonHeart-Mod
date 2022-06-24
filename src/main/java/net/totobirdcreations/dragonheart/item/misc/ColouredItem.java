@@ -9,11 +9,11 @@ import net.minecraft.nbt.NbtCompound;
 public interface ColouredItem extends DyeableItem {
 
 
-    public static final int DEFAULT_COLOR = 16777215;
+    int DEFAULT_COLOR = 16777215;
 
 
     @Override
-    default public int getColor(ItemStack stack) {
+    default int getColor(ItemStack stack) {
 
         NbtCompound nbtCompound = stack.getSubNbt(DISPLAY_KEY);
         if (nbtCompound != null && nbtCompound.contains(COLOR_KEY, 99)) {

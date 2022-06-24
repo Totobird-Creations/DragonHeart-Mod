@@ -1,16 +1,16 @@
 package net.totobirdcreations.dragonheart.entity;
 
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.FlyingEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
@@ -27,7 +27,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 
-public class DragonEntity extends FlyingEntity implements IAnimatable {
+public class DragonEntity extends MobEntity implements IAnimatable {
 
 
     public AnimationFactory animationFactory = new AnimationFactory(this);
@@ -39,46 +39,28 @@ public class DragonEntity extends FlyingEntity implements IAnimatable {
     public static final TrackedData<Float>    AGE;
 
     public enum DragonState {
-        SLEEP,
-        STAND,
-        WALK,
-        FLY,
-        DIVE;
+        NEST;
 
         public int toInt() {
             return switch (this) {
-                case SLEEP -> 0;
-                case STAND -> 1;
-                case WALK  -> 2;
-                case FLY   -> 3;
-                case DIVE  -> 4;
+                case NEST -> 0;
             };
         }
         public static DragonState fromInt(int from) {
             return switch (from) {
-                case    1 -> STAND;
-                case    2 -> WALK;
-                case    3 -> FLY;
-                case    4 -> DIVE;
-                default   -> SLEEP;
+                case    0 -> NEST;
+                default   -> NEST;
             };
         }
         public String toString() {
             return switch (this) {
-                case SLEEP -> "sleep";
-                case STAND -> "stand";
-                case WALK  -> "walk";
-                case FLY   -> "fly";
-                case DIVE  -> "dive";
+                case NEST -> "nest";
             };
         }
         public static DragonState fromString(String from) {
             return switch (from) {
-                case    "stand" -> STAND;
-                case    "walk"  -> WALK;
-                case    "fly"   -> FLY;
-                case    "dive"  -> DIVE;
-                default         -> SLEEP;
+                case    "nest" -> NEST;
+                default        -> NEST;
             };
         }
     }
@@ -101,7 +83,7 @@ public class DragonEntity extends FlyingEntity implements IAnimatable {
     }
 
 
-    public DragonEntity(EntityType<? extends FlyingEntity> entityType, World world) {
+    public DragonEntity(EntityType<? extends MobEntity> entityType, World world) {
 
         super(entityType, world);
         this.ignoreCameraFrustum = true;
@@ -111,9 +93,7 @@ public class DragonEntity extends FlyingEntity implements IAnimatable {
 
 
     public void setState(DragonState state) {
-
         this.dataTracker.set(STATE, state.toInt());
-
     }
 
 
@@ -124,9 +104,10 @@ public class DragonEntity extends FlyingEntity implements IAnimatable {
         AnimationBuilder builder   = new AnimationBuilder();
         PlayState        playState = PlayState.CONTINUE;
 
-        switch (state) {
-            case STAND -> builder.addAnimation("animation.dragon.stand" , true);
-            case FLY   -> builder.addAnimation("animation.dragon.fly"   , true);
+        if (isOnGround()) {
+            builder.addAnimation("animation.dragon.stand", true);
+        } else {
+            builder.addAnimation("animation.dragon.fly", true);
         }
 
         event.getController().transitionLengthTicks = 20;
@@ -138,16 +119,12 @@ public class DragonEntity extends FlyingEntity implements IAnimatable {
 
     @Override
     public void registerControllers(AnimationData data) {
-
         data.addAnimationController(new AnimationController<DragonEntity>(this, "controller", 0, this::animationPredicate));
-
     }
 
     @Override
     public AnimationFactory getFactory() {
-
         return animationFactory;
-
     }
 
 
@@ -211,15 +188,16 @@ public class DragonEntity extends FlyingEntity implements IAnimatable {
 
 
     @Override
-    public boolean hasNoGravity() {
-       return false;
-    }
-
-
-    @Override
     public void initGoals() {
         this.goalSelector.add(0, new LookAtEntityGoal(this, PlayerEntity.class, 16.0f));
         this.goalSelector.add(1, new LookAroundGoal(this));
+    }
+
+
+
+    @Override
+    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+        return false;
     }
 
 

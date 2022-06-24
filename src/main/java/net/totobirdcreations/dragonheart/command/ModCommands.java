@@ -39,24 +39,8 @@ public class ModCommands {
                                                         .then(
                                                                 ((RequiredArgumentBuilder)argument("target", EntityArgumentType.entity()))
                                                                         .then (
-                                                                                literal("SLEEP")
-                                                                                    .executes(context -> DragonManagerSetState.sleep(context, (ServerCommandSource)(context.getSource()), EntityArgumentType.getEntity((CommandContext)context, "target")))
-                                                                        )
-                                                                        .then(
-                                                                                literal("STAND")
-                                                                                        .executes(context -> DragonManagerSetState.stand(context, (ServerCommandSource)(context.getSource()), EntityArgumentType.getEntity((CommandContext)context, "target")))
-                                                                        )
-                                                                        .then(
-                                                                                literal("WALK")
-                                                                                        .executes(context -> DragonManagerSetState.walk(context, (ServerCommandSource)(context.getSource()), EntityArgumentType.getEntity((CommandContext)context, "target")))
-                                                                        )
-                                                                        .then(
-                                                                                literal("FLY")
-                                                                                        .executes(context -> DragonManagerSetState.fly(context, (ServerCommandSource)(context.getSource()), EntityArgumentType.getEntity((CommandContext)context, "target")))
-                                                                        )
-                                                                        .then(
-                                                                                literal("DIVE")
-                                                                                        .executes(context -> DragonManagerSetState.dive(context, (ServerCommandSource)(context.getSource()), EntityArgumentType.getEntity((CommandContext)context, "target")))
+                                                                                literal("NEST")
+                                                                                    .executes(context -> DragonManagerSetState.nest(context, (ServerCommandSource)(context.getSource()), EntityArgumentType.getEntity((CommandContext)context, "target")))
                                                                         )
                                                         )
                                         )

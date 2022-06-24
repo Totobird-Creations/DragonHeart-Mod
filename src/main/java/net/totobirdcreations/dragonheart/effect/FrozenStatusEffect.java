@@ -4,9 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.util.math.Vec3d;
-import net.totobirdcreations.dragonheart.DragonHeart;
+import net.totobirdcreations.dragonheart.damage.ModDamageSources;
 import net.totobirdcreations.dragonheart.util.FrozenEffectEntityInterface;
 
 
@@ -26,8 +24,8 @@ public class FrozenStatusEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        entity.setVelocity(0.0, -3.0, 0.0);
-        entity.setFrozenTicks(200);
+        entity.setVelocity(0.0, -1.5, 0.0);
+        entity.setFrozenTicks(150);
         if (entity.isOnFire()) {
             entity.removeStatusEffect(ModStatusEffects.FROZEN);
             entity.extinguish();
@@ -37,13 +35,17 @@ public class FrozenStatusEffect extends StatusEffect {
 
     @Override
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        ((FrozenEffectEntityInterface)entity).setIced(true);
+        if (! entity.world.isClient()) {
+            ((FrozenEffectEntityInterface) entity).setIced(true);
+        }
     }
 
 
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
-        ((FrozenEffectEntityInterface)entity).setIced(false);
+        if (! entity.world.isClient()) {
+            ((FrozenEffectEntityInterface) entity).setIced(false);
+        }
     }
 
 

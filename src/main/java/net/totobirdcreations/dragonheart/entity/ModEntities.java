@@ -17,25 +17,6 @@ public class ModEntities {
     public static final Identifier SPAWN_PACKET = new Identifier(DragonHeart.MOD_ID, "spawn_packed");
 
 
-    public static final EntityType<DragonbreathFire> DRAGONBREATH_FIRE_TYPE = Registry.register(
-            Registry.ENTITY_TYPE,
-            new Identifier(DragonHeart.MOD_ID, "dragonbreath_fire"),
-            FabricEntityTypeBuilder.<DragonbreathFire>create(SpawnGroup.MISC, DragonbreathFire::new)
-                    .dimensions(EntityDimensions.fixed(0.25f, 0.25f))
-                    .trackRangeBlocks(4).trackedUpdateRate(10)
-                    .build()
-    );
-
-    public static final EntityType<DragonbreathIce> DRAGONBREATH_ICE_TYPE = Registry.register(
-            Registry.ENTITY_TYPE,
-            new Identifier(DragonHeart.MOD_ID, "dragonbreath_ice"),
-            FabricEntityTypeBuilder.<DragonbreathIce>create(SpawnGroup.MISC, DragonbreathIce::new)
-                    .dimensions(EntityDimensions.fixed(0.25f, 0.25f))
-                    .trackRangeBlocks(4).trackedUpdateRate(10)
-                    .build()
-    );
-
-
     public static final EntityType<DragonFireEntity> DRAGON_FIRE = Registry.register(
             Registry.ENTITY_TYPE,
             new Identifier(DragonHeart.MOD_ID, "dragon_fire"),
