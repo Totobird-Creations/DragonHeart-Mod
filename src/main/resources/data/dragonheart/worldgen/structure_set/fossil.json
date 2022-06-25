@@ -1,0 +1,16 @@
+{
+  "structures": [
+    {
+      "structure": "dragonheart:fossil",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1031972368,
+    "frequency_reduction_method": "legacy_type_1",
+    "frequency": 0.2,
+    "spacing": 8,
+    "separation": 4
+  }
+}

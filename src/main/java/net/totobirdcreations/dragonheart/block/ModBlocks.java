@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
+import net.minecraft.block.PillarBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
@@ -38,7 +39,7 @@ public class ModBlocks {
 
     public static final ItemBlock DRAGONBONEBLOCK = registerBlock(
             "dragonboneblock",
-            new Block(FabricBlockSettings.copy(Blocks.BONE_BLOCK)),
+            new PillarBlock(FabricBlockSettings.copy(Blocks.BONE_BLOCK)),
             ItemGroup.DECORATIONS
     );
 

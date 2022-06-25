@@ -5,10 +5,14 @@
   "compatibilityLevel": "JAVA_18",
   "mixins": [
     "DragonArmourMixin",
-    "frozeneffect.FrozenEffectEntityMixin"
+    "frozeneffect.FrozenEffectEntityMixin",
+    "frozeneffect.FrozenEffectLivingEntityMixin",
+    "frozeneffect.FrozenEffectPlayerEntityMixin"
   ],
   "client": [
-    "frozeneffect.FrozenEffectRendererMixin"
+    "frozeneffect.FrozenEffectRendererMixin",
+    "frozeneffect.FrozenEffectMouseMixin",
+    "frozeneffect.FrozenEffectKeyboardMixin"
   ],
   "injectors": {
     "defaultRequire": 1

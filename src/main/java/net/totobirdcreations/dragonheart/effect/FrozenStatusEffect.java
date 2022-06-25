@@ -1,11 +1,11 @@
 package net.totobirdcreations.dragonheart.effect;
 
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.totobirdcreations.dragonheart.damage.ModDamageSources;
-import net.totobirdcreations.dragonheart.util.FrozenEffectEntityInterface;
+import net.totobirdcreations.dragonheart.util.FrozenEffectLivingEntityInterface;
 
 
 public class FrozenStatusEffect extends StatusEffect {
@@ -36,7 +36,7 @@ public class FrozenStatusEffect extends StatusEffect {
     @Override
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (! entity.world.isClient()) {
-            ((FrozenEffectEntityInterface) entity).setIced(true);
+            ((FrozenEffectLivingEntityInterface) entity).setIced(true);
         }
     }
 
@@ -44,7 +44,10 @@ public class FrozenStatusEffect extends StatusEffect {
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (! entity.world.isClient()) {
-            ((FrozenEffectEntityInterface) entity).setIced(false);
+            ((FrozenEffectLivingEntityInterface) entity).setIced(false);
+            if (entity.getWorld().isClient()) {
+                KeyBinding.unpressAll();
+            }
         }
     }
 
