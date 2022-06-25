@@ -6,6 +6,7 @@ import net.totobirdcreations.dragonheart.block.ModBlocks;
 import net.totobirdcreations.dragonheart.command.ModCommands;
 import net.totobirdcreations.dragonheart.effect.ModStatusEffects;
 import net.totobirdcreations.dragonheart.entity.ModEntities;
+import net.totobirdcreations.dragonheart.gamerule.ModGamerules;
 import net.totobirdcreations.dragonheart.item.ModItems;
 import net.totobirdcreations.dragonheart.item.group.ModItemGroups;
 import net.totobirdcreations.dragonheart.recipe.ModRecipes;
@@ -28,7 +29,7 @@ public class DragonHeart implements ModInitializer {
 
 		LOGGER.info("Initializing.");
 
-		//GeckoLibMod.DISABLE_IN_DEV = true;
+		GeckoLibMod.DISABLE_IN_DEV = true;
 		GeckoLib.initialize();
 
 		ModBlocks         .register();
@@ -40,6 +41,7 @@ public class DragonHeart implements ModInitializer {
 		ModRecipes        .register();
 		ModEntities       .register();
 		ModCommands       .register();
+		ModGamerules      .register();
 
 		LOGGER.info("Initialized.");
 

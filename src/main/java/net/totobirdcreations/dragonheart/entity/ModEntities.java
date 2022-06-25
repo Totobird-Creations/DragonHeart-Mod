@@ -21,7 +21,7 @@ public class ModEntities {
             Registry.ENTITY_TYPE,
             new Identifier(DragonHeart.MOD_ID, "dragon_fire"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, DragonFireEntity::new)
-                    .dimensions(EntityDimensions.fixed(5.0f, 2.0f))
+                    .dimensions(EntityDimensions.fixed(3.0f, 2.0f))
                     .build()
     );
 

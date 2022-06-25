@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
@@ -41,8 +42,34 @@ public class ModBlocks {
             ItemGroup.DECORATIONS
     );
 
+    public static final ItemBlock DRAGONSTEELBLOCK_FIRE = registerBlockWithSettings(
+            "dragonsteelblock_fire",
+            new DragonsteelBlock(FabricBlockSettings.copy(Blocks.BONE_BLOCK).hardness(1.0f).resistance(1200.0f)),
+            ItemGroup.BUILDING_BLOCKS,
+            new FabricItemSettings().fireproof()
+    );
+
+    public static final ItemBlock DRAGONSTEELBLOCK_ICE = registerBlockWithSettings(
+            "dragonsteelblock_ice",
+            new DragonsteelBlock(FabricBlockSettings.copy(Blocks.BONE_BLOCK).hardness(1.0f).resistance(1200.0f)),
+            ItemGroup.BUILDING_BLOCKS,
+            new FabricItemSettings().fireproof()
+    );
+
+    public static final ItemBlock DRAGONSTEELBLOCK_LIGHTNING = registerBlockWithSettings(
+            "dragonsteelblock_lightning",
+            new DragonsteelBlock(FabricBlockSettings.copy(Blocks.BONE_BLOCK).hardness(1.0f).resistance(1200.0f)),
+            ItemGroup.BUILDING_BLOCKS,
+            new FabricItemSettings().fireproof()
+    );
+
 
     public static ItemBlock registerBlock(String name, Block block, ItemGroup group) {
+        return registerBlockWithSettings(name, block, group, new FabricItemSettings());
+    }
+
+
+    public static ItemBlock registerBlockWithSettings(String name, Block block, ItemGroup group, FabricItemSettings settings) {
 
         Block blockBlock = Registry.register(
                 Registry.BLOCK,
@@ -52,7 +79,7 @@ public class ModBlocks {
         BlockItem blockItem = Registry.register(
                 Registry.ITEM,
                 new Identifier(DragonHeart.MOD_ID, name),
-                new BlockItem(block, new FabricItemSettings().group(group))
+                new BlockItem(block, settings.group(group))
         );
         return new ItemBlock(blockBlock, blockItem);
 

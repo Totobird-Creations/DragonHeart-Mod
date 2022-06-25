@@ -22,6 +22,7 @@ import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.easing.EasingType;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
@@ -106,11 +107,12 @@ public class DragonEntity extends MobEntity implements IAnimatable {
 
         if (isOnGround()) {
             builder.addAnimation("animation.dragon.stand", true);
+            event.getController().transitionLengthTicks = 10;
         } else {
             builder.addAnimation("animation.dragon.fly", true);
+            event.getController().transitionLengthTicks = 10;
         }
 
-        event.getController().transitionLengthTicks = 20;
         event.getController().setAnimation(builder);
         return playState;
 
