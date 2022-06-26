@@ -1,7 +1,7 @@
 {
   "structures": [
     {
-      "structure": "dragonheart:fossil",
+      "structure": "dragonheart:fossil_indicator",
       "weight": 1
     }
   ],
