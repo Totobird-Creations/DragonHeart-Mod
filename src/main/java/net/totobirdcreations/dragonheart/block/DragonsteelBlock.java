@@ -53,7 +53,7 @@ public class DragonsteelBlock extends FacingBlock {
                 return 0.0F;
             } else {
                 int i = player.canHarvest(state) ? 30 : 100;
-                return player.getBlockBreakingSpeed(state) / f / (float)i / 5.0f;
+                return player.getBlockBreakingSpeed(state) / f / (float)i / 10.0f;
             }
         }
     }

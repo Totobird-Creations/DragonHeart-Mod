@@ -1,0 +1,96 @@
+{
+  "name": "dragonheart:nest/mound/ice",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dragonheart:nest/mound",
+        "processors": "dragonheart:nest/mound/stone"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dragonheart:nest/mound",
+        "processors": "dragonheart:nest/mound/coal"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dragonheart:nest/mound",
+        "processors": "dragonheart:nest/mound/iron"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dragonheart:nest/mound",
+        "processors": "dragonheart:nest/mound/emerald"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dragonheart:nest/mound",
+        "processors": "dragonheart:nest/mound/lapis"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dragonheart:nest/mound",
+        "processors": "dragonheart:nest/mound/ice"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dragonheart:nest/mound",
+        "processors": "dragonheart:nest/mound/clay"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dragonheart:nest/mound",
+        "processors": "dragonheart:nest/mound/end"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dragonheart:nest/mound",
+        "processors": "dragonheart:nest/mound/prismarine"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dragonheart:nest/mound",
+        "processors": "dragonheart:nest/mound/bone"
+      }
+    }
+  ]
+}

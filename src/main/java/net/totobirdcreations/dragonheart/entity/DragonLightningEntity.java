@@ -4,15 +4,14 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.world.World;
 
 
+public class DragonLightningEntity extends DragonEntity {
 
-public class DragonFireEntity extends DragonEntity {
-
-    public DragonFireEntity(EntityType<? extends DragonEntity> entityType, World world) {
+    public DragonLightningEntity(EntityType<? extends DragonEntity> entityType, World world) {
         super(entityType, world);
     }
 
     public DragonType getDragonType() {
-        return DragonType.FIRE;
+        return DragonType.LIGHTNING;
     }
 
 }

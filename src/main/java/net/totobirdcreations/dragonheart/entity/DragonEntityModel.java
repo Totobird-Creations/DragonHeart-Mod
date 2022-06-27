@@ -11,51 +11,53 @@ import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 public class DragonEntityModel extends AnimatedGeoModel<DragonEntity> {
 
+    public static Identifier TEXTURE = new Identifier(DragonHeart.MOD_ID, "textures/entity/dragon.png");
+
 
     @Override
-    public Identifier getModelResource(DragonEntity object) {
+    public Identifier getModelResource(DragonEntity entity) {
         return new Identifier(DragonHeart.MOD_ID, "geo/entity/dragon.geo.json");
     }
-
-
     @Override
-    public Identifier getTextureResource(DragonEntity object) {
-        return new Identifier(DragonHeart.MOD_ID, "textures/entity/dragon/fire.png");
-    }
-
-
+    public Identifier getTextureResource(DragonEntity entity) {return TEXTURE;}
     @Override
     public Identifier getAnimationResource(DragonEntity entity) {
         return new Identifier(DragonHeart.MOD_ID, "animations/entity/dragon.animation.json");
     }
 
+
     @Override
     public void setLivingAnimations(DragonEntity entity, Integer uniqueID, AnimationEvent customPredicate) {
         super.setLivingAnimations(entity, uniqueID, customPredicate);
-        AnimationProcessor processor = this.getAnimationProcessor();
-        IBone   body = processor.getBone("body0");
-        IBone[] bones = {
-                processor.getBone("neck0"),
-                processor.getBone("neck1"),
-                processor.getBone("neck2"),
-                processor.getBone("head")
-        };
 
-        EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
-        float sourcePitch = body.getRotationX();
-        float sourceYaw   = body.getRotationY();
-        float targetPitch = extraData.headPitch;
-        float targetYaw   = extraData.netHeadYaw;
-        for (int i=0;i< bones.length ;i++) {
-            IBone bone = bones[i];
-            bone.setRotationX(
-                    sourcePitch + (targetPitch - sourcePitch) * ((float)i / (float)bones.length)
-                        * (float) Math.PI / 180.0f
-            );
-            bone.setRotationY(
-                    sourceYaw + (targetYaw - sourceYaw) * ((float)i / (float)bones.length)
-                            * (float) Math.PI / 180.0f
-            );
+        DragonEntity.DragonState state = DragonEntity.DragonState.fromInt(entity.getDataTracker().get(entity.STATE));
+
+        if (state != DragonEntity.DragonState.SLEEP) {
+            AnimationProcessor processor = this.getAnimationProcessor();
+            IBone body = processor.getBone("body0");
+            IBone[] bones = {
+                    processor.getBone("neck0"),
+                    processor.getBone("neck1"),
+                    processor.getBone("neck2"),
+                    processor.getBone("head")
+            };
+
+            EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
+            float sourcePitch = body.getRotationX();
+            float sourceYaw = body.getRotationY();
+            float targetPitch = extraData.headPitch;
+            float targetYaw = extraData.netHeadYaw;
+            for (int i = 0; i < bones.length; i++) {
+                IBone bone = bones[i];
+                bone.setRotationX(
+                        sourcePitch + (targetPitch - sourcePitch) * ((float) i / (float) bones.length)
+                                * (float) Math.PI / 180.0f
+                );
+                bone.setRotationY(
+                        sourceYaw + (targetYaw - sourceYaw) * ((float) i / (float) bones.length)
+                                * (float) Math.PI / 180.0f
+                );
+            }
         }
     }
 

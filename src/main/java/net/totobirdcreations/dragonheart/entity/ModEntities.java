@@ -14,14 +14,29 @@ import net.totobirdcreations.dragonheart.DragonHeart;
 
 public class ModEntities {
 
-    public static final Identifier SPAWN_PACKET = new Identifier(DragonHeart.MOD_ID, "spawn_packed");
-
+    public static EntityDimensions DRAGON_DIMENSIONS = EntityDimensions.fixed(2.75f, 1.875f);
 
     public static final EntityType<DragonFireEntity> DRAGON_FIRE = Registry.register(
             Registry.ENTITY_TYPE,
             new Identifier(DragonHeart.MOD_ID, "dragon_fire"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, DragonFireEntity::new)
-                    .dimensions(EntityDimensions.fixed(3.0f, 2.0f))
+                    .dimensions(DRAGON_DIMENSIONS)
+                    .build()
+    );
+
+    public static final EntityType<DragonIceEntity> DRAGON_ICE = Registry.register(
+            Registry.ENTITY_TYPE,
+            new Identifier(DragonHeart.MOD_ID, "dragon_ice"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, DragonIceEntity::new)
+                    .dimensions(DRAGON_DIMENSIONS)
+                    .build()
+    );
+
+    public static final EntityType<DragonLightningEntity> DRAGON_LIGHTNING = Registry.register(
+            Registry.ENTITY_TYPE,
+            new Identifier(DragonHeart.MOD_ID, "dragon_lightning"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, DragonLightningEntity::new)
+                    .dimensions(DRAGON_DIMENSIONS)
                     .build()
     );
 
@@ -30,7 +45,9 @@ public class ModEntities {
 
         DragonHeart.LOGGER.info("Registering entities.");
 
-        FabricDefaultAttributeRegistry.register(DRAGON_FIRE, DragonFireEntity.createMobAttributes());
+        FabricDefaultAttributeRegistry.register( DRAGON_FIRE      , DragonFireEntity.createMobAttributes()      );
+        FabricDefaultAttributeRegistry.register( DRAGON_ICE       , DragonIceEntity.createMobAttributes()       );
+        FabricDefaultAttributeRegistry.register( DRAGON_LIGHTNING , DragonLightningEntity.createMobAttributes() );
 
     }
 

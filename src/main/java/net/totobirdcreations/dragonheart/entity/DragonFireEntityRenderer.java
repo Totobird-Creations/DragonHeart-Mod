@@ -6,16 +6,15 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import net.totobirdcreations.dragonheart.util.RGBColour;
 import software.bernie.geckolib3.core.util.Color;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 
-public abstract class DragonEntityRenderer extends GeoEntityRenderer<DragonEntity> {
+public class DragonFireEntityRenderer extends DragonEntityRenderer {
 
 
-    public DragonEntityRenderer(EntityRendererFactory.Context renderManager, DragonEntityModel model) {
-        super(renderManager, model);
+    public DragonFireEntityRenderer(EntityRendererFactory.Context renderManager) {
+        super(renderManager, new DragonEntityModel());
     }
 
 
@@ -25,9 +24,15 @@ public abstract class DragonEntityRenderer extends GeoEntityRenderer<DragonEntit
     }
 
 
+
     @Override
     public Color getRenderColor(DragonEntity entity, float ticks, MatrixStack stackIn, VertexConsumerProvider renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn) {
-        return (new RGBColour(entity.getDataTracker().get(entity.COLOUR))).toColor();
+        int colour = entity.getDataTracker().get(entity.COLOUR);
+        return Color.ofRGB(
+                ((colour >> 16) & 0xff) / 255.0f,
+                ((colour >>  8) & 0xff) / 255.0f,
+                ((colour      ) & 0xff) / 255.0f
+        );
     }
 
 
