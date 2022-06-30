@@ -18,7 +18,7 @@ public class DragonFireEntity extends DragonEntity {
 
     @Override
     public RGBColour getDefaultEyeColour() {
-        return new RGBColour(1.0f, 0.625f, 0.0f);
+        return new RGBColour(1.0f, 0.5f, 0.0f);
     }
 
 }

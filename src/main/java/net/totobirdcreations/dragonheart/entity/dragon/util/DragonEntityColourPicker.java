@@ -12,26 +12,50 @@ import java.util.UUID;
 
 public class DragonEntityColourPicker {
 
-    public static float                                         THRESHOLD  = 0.375f;
+    public static float                                         THRESHOLD  = 0.125f;
     public static long                                          SALT       = 193069481;
     public static int                                           DIGITS     = 4;
-    public static Curve                                         SATURATION = new Curve(0.625f, 0.25f);
-    public static HashMap<DragonEntity.DragonType, RGBColour[]> OPTIONS;
+    public static Curve                                         SATURATION = new Curve(0.875f, 0.25f);
+    public static HashMap<DragonEntity.DragonType, RGBColour[]> OPTIONS    = new HashMap();
 
     static {
-        OPTIONS = new HashMap();
         OPTIONS.put(DragonEntity.DragonType.FIRE, new RGBColour[]{
-                new RGBColour(1.0f  , 0.0f  , 0.0f ),
-                new RGBColour(1.0f  , 0.25f , 0.0f )
+                // Interval
+                new RGBColour( 1.0f  , 0.0f  , 0.25f ), // Pink-Red
+                new RGBColour( 1.0f  , 0.0f  , 0.0f  ),
+                new RGBColour( 1.0f  , 0.25f , 0.0f  ), // Red-Orange
+                new RGBColour( 1.0f  , 0.5f  , 0.0f  ),
+                new RGBColour( 1.0f  , 0.75f , 0.0f  ), // Orange-Yellow
+                // Special
+                new RGBColour( 0.0f  , 0.5f  , 0.0f  ), // Dark Green
+                new RGBColour( 0.5f  , 0.5f  , 0.5f  ), // Grey
         });
         OPTIONS.put(DragonEntity.DragonType.ICE, new RGBColour[]{
-                new RGBColour(0.0f  , 1.0f  , 1.0f ),
-                new RGBColour(0.0f  , 0.75f , 1.0f )
+                // Interval
+                new RGBColour( 0.25f , 1.0f  , 0.0f  ), // Yellow-Green
+                new RGBColour( 0.0f  , 1.0f  , 0.0f  ),
+                new RGBColour( 0.0f  , 1.0f  , 0.25f ),
+                new RGBColour( 0.0f  , 1.0f  , 0.5f  ), // Green-Blue
+                new RGBColour( 0.0f  , 1.0f  , 0.75f ),
+                new RGBColour( 0.0f  , 1.0f  , 1.0f  ), // Teal
+                new RGBColour( 0.0f  , 0.75f , 1.0f  ),
+                new RGBColour( 0.0f  , 0.5f  , 1.0f  ), // Blue
+                // Special
+                new RGBColour( 1.0f  , 1.0f  , 1.0f  ), // White
+                new RGBColour( 0.75f , 0.75f , 0.75f )
         });
         OPTIONS.put(DragonEntity.DragonType.LIGHTNING, new RGBColour[]{
-                new RGBColour(0.75f , 0.0f  , 1.0f ),
-                new RGBColour(1.0f  , 0.0f  , 1.0f ),
-                new RGBColour(1.0f  , 1.0f  , 1.0f )
+                // Interval
+                new RGBColour( 0.0f  , 0.25f , 1.0f  ), // Electric Blue
+                new RGBColour( 0.0f  , 0.0f  , 1.0f  ),
+                new RGBColour( 0.25f , 0.0f  , 1.0f  ),
+                new RGBColour( 0.5f  , 0.0f  , 1.0f  ),
+                new RGBColour( 0.75f , 0.0f  , 1.0f  ), // Purple
+                new RGBColour( 1.0f  , 0.0f  , 1.0f  ),
+                new RGBColour( 1.0f  , 0.0f  , 0.75f ),
+                new RGBColour( 1.0f  , 0.0f  , 0.5f  ), // Pink
+                // Special
+                new RGBColour( 0.0f  , 0.0f  , 0.0f  ), // Black
         });
     }
 
@@ -73,7 +97,7 @@ public class DragonEntityColourPicker {
             DragonEntity.DragonType key = (DragonEntity.DragonType)(OPTIONS.keySet().toArray()[k]);
             for (int o=0;o< OPTIONS.get(key).length ;o++) {
                 RGBColour other = OPTIONS.get(key)[o];
-                float  dist  = colour.distance(other);
+                float     dist  = colour.distance(other);
                 if (bestKey == DragonEntity.DragonType.NONE || dist < bestDist) {
                     bestKey  = key;
                     bestDist = dist;

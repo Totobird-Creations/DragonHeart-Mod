@@ -1,10 +1,13 @@
 package net.totobirdcreations.dragonheart.item;
 
+import net.fabricmc.fabric.api.item.v1.EquipmentSlotProvider;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ElytraItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.util.Rarity;
 import net.totobirdcreations.dragonheart.item.material.ArmourMaterial;
 
 import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
@@ -323,6 +326,16 @@ public class ArmourItems {
                     EquipmentSlot.FEET,
                     new FabricItemSettings()
                             .group     (ItemGroup.COMBAT)
+                            .fireproof ()
+            )
+    );
+
+    public static final Item ELYTRA_DRAGONSCALE = registerItem(
+            "elytra_dragonscale",
+            new ElytraItem(
+                    new FabricItemSettings()
+                            .group     (ItemGroup.TRANSPORTATION)
+                            .maxDamage (2500)
                             .fireproof ()
             )
     );

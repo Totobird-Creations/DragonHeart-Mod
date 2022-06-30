@@ -35,7 +35,10 @@ public class DragonArmourMixin {
     public Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
 
-    @Inject(method="<init>", at=@At(value="RETURN"))
+    @Inject(
+            method = "<init>",
+            at = @At("RETURN")
+    )
     public void constructor(ArmorMaterial material, EquipmentSlot slot, Item.Settings settings, CallbackInfo ci) {
         UUID uuid = MODIFIERS[slot.getEntitySlotId()];
         if (material instanceof ArmourMaterial) {

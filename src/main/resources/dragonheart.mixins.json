@@ -13,7 +13,8 @@
   "client": [
     "frozeneffect.FrozenEffectRendererMixin",
     "frozeneffect.FrozenEffectMouseMixin",
-    "frozeneffect.FrozenEffectKeyboardMixin"
+    "frozeneffect.FrozenEffectKeyboardMixin",
+    "capeelytra.AbstractClientPlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

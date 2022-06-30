@@ -45,7 +45,7 @@ public abstract class FrozenEffectPlayerEntityMixin extends Entity {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void isBlockBreakingRestricted(World world, BlockPos pos, GameMode gamemode, CallbackInfoReturnable callback) {
+    public void isBlockBreakingRestricted(World world, BlockPos pos, GameMode gamemode, CallbackInfoReturnable<Boolean> callback) {
         if (((FrozenEffectLivingEntityInterface)this).isIced()) {
             callback.setReturnValue(true);
         }
@@ -57,7 +57,7 @@ public abstract class FrozenEffectPlayerEntityMixin extends Entity {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void canPlaceOn(BlockPos pos, Direction facing, ItemStack stack, CallbackInfoReturnable callback) {
+    public void canPlaceOn(BlockPos pos, Direction facing, ItemStack stack, CallbackInfoReturnable<Boolean> callback) {
         if (((FrozenEffectLivingEntityInterface)this).isIced()) {
             callback.setReturnValue(false);
         }
@@ -69,7 +69,7 @@ public abstract class FrozenEffectPlayerEntityMixin extends Entity {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void canModifyBlocks(CallbackInfoReturnable callback) {
+    public void canModifyBlocks(CallbackInfoReturnable<Boolean> callback) {
         if (((FrozenEffectLivingEntityInterface)this).isIced()) {
             callback.setReturnValue(false);
         }
@@ -81,7 +81,7 @@ public abstract class FrozenEffectPlayerEntityMixin extends Entity {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void shouldCancelInteraction(CallbackInfoReturnable callback) {
+    public void shouldCancelInteraction(CallbackInfoReturnable<Boolean> callback) {
         if (((FrozenEffectLivingEntityInterface)this).isIced()) {
             callback.setReturnValue(true);
         }
@@ -93,7 +93,7 @@ public abstract class FrozenEffectPlayerEntityMixin extends Entity {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void interact(Entity entity, Hand hand, CallbackInfoReturnable callback) {
+    public void interact(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> callback) {
         if (((FrozenEffectLivingEntityInterface)this).isIced()) {
             callback.setReturnValue(ActionResult.FAIL);
         }
@@ -105,7 +105,7 @@ public abstract class FrozenEffectPlayerEntityMixin extends Entity {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void canEquip(ItemStack stack, CallbackInfoReturnable callback) {
+    public void canEquip(ItemStack stack, CallbackInfoReturnable<Boolean> callback) {
         if (((FrozenEffectLivingEntityInterface)this).isIced()) {
             callback.setReturnValue(false);
         }
@@ -117,7 +117,7 @@ public abstract class FrozenEffectPlayerEntityMixin extends Entity {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void canConsume(boolean ignoreHunger, CallbackInfoReturnable callback) {
+    public void canConsume(boolean ignoreHunger, CallbackInfoReturnable<Boolean> callback) {
         if (((FrozenEffectLivingEntityInterface)this).isIced()) {
             callback.setReturnValue(false);
         }

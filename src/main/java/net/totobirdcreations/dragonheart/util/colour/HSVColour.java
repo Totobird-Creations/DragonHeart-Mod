@@ -14,18 +14,6 @@ public class HSVColour {
         this.v = v;
     }
 
-    public float distance(HSVColour other) {
-        return this.toRgb().distance(other.toRgb());
-    }
-
-    public HSVColour greyscale() {
-        return new HSVColour(this.h, 0.0f, this.v);
-    }
-
-    public int asInt() {
-        return this.toRgb().asInt();
-    }
-
     public RGBColour toRgb() {
         if (this.s == 0) {
             return new RGBColour(this.v, this.v, this.v);

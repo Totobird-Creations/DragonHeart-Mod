@@ -107,7 +107,7 @@ public abstract class FrozenEffectLivingEntityMixin extends Entity implements Fr
             at = @At("HEAD"),
             cancellable = true
     )
-    public void isImmobile(CallbackInfoReturnable callback) {
+    public void isImmobile(CallbackInfoReturnable<Boolean> callback) {
         if (((FrozenEffectLivingEntityInterface)this).isIced()) {
             callback.setReturnValue(true);
         }
@@ -119,7 +119,7 @@ public abstract class FrozenEffectLivingEntityMixin extends Entity implements Fr
             at = @At("HEAD"),
             cancellable = true
     )
-    public void tryAttack(Entity target, CallbackInfoReturnable callback) {
+    public void tryAttack(Entity target, CallbackInfoReturnable<Boolean> callback) {
         if (((FrozenEffectLivingEntityInterface)this).isIced()) {
             callback.setReturnValue(false);
         }
@@ -131,7 +131,7 @@ public abstract class FrozenEffectLivingEntityMixin extends Entity implements Fr
             at = @At("HEAD"),
             cancellable = true
     )
-    public void isUsingItem(CallbackInfoReturnable callback) {
+    public void isUsingItem(CallbackInfoReturnable<Boolean> callback) {
         if (((FrozenEffectLivingEntityInterface)this).isIced()) {
             callback.setReturnValue(false);
         }

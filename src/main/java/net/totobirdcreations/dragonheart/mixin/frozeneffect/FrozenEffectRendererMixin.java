@@ -17,7 +17,11 @@ public abstract class FrozenEffectRendererMixin extends EntityRenderer {
         super(ctx);
     }
 
-    @ModifyVariable(method = "getRenderLayer", at = @At("STORE"), ordinal = 0)
+    @ModifyVariable(
+            method = "getRenderLayer",
+            at = @At("STORE"),
+            ordinal = 0
+    )
     public Identifier overrideIdentifier(Identifier object, LivingEntity entity) {
         if (((FrozenEffectLivingEntityInterface)entity).isIced()) {
             return new Identifier("dragonheart", "textures/misc/frozen_entity.png");

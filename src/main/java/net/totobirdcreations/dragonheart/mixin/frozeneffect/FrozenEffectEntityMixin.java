@@ -13,10 +13,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Entity.class)
 public abstract class FrozenEffectEntityMixin {
 
-    public boolean    frozenSneak = false;
+    public boolean frozenSneak = false;
 
 
-    @Inject(method = "tick", at = @At("TAIL"))
+    @Inject(
+            method = "tick",
+            at = @At("TAIL")
+    )
     public void tick(CallbackInfo callback) {
         if (((Object)this) instanceof LivingEntity) {
             if (! ((FrozenEffectLivingEntityInterface) this).isIced()) {
@@ -26,18 +29,18 @@ public abstract class FrozenEffectEntityMixin {
         }
     }
 
-    @Inject(
+    /*@Inject(
             method = "isSneaking()Z",
             at = @At("HEAD"),
             cancellable = true
     )
-    public void isSneaking(CallbackInfoReturnable callback) {
+    public void isSneaking(CallbackInfoReturnable<Boolean> callback) {
         if (((Object)this) instanceof LivingEntity) {
             if (! ((FrozenEffectLivingEntityInterface) this).isIced()) {
                 callback.setReturnValue(frozenSneak);
             }
         }
-    }
+    }*/
 
 
 }

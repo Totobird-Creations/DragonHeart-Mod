@@ -29,7 +29,10 @@ public abstract class DeafenedEffectLivingEntityMixin extends Entity implements 
     }
 
 
-    @Inject(method = "initDataTracker", at = @At("HEAD"))
+    @Inject(
+            method = "initDataTracker",
+            at = @At("HEAD")
+    )
     public void initDataTracker(CallbackInfo callback) {
         DataTracker dataTracker = this.getDataTracker();
         dataTracker.startTracking(DEAFENED, false);
@@ -47,14 +50,20 @@ public abstract class DeafenedEffectLivingEntityMixin extends Entity implements 
     }
 
 
-    @Inject(method = "writeCustomDataToNbt", at = @At(value = "RETURN"))
+    @Inject(
+            method = "writeCustomDataToNbt",
+            at = @At("RETURN")
+    )
     public void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callback) {
         DataTracker dataTracker = this.getDataTracker();
         nbt.putBoolean("Deafened", dataTracker.get(DEAFENED));
     }
 
 
-    @Inject(method = "readCustomDataFromNbt", at = @At(value = "RETURN"))
+    @Inject(
+            method = "readCustomDataFromNbt",
+            at = @At("RETURN")
+    )
     public void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callback) {
         DataTracker dataTracker = this.getDataTracker();
         dataTracker.set(DEAFENED, nbt.getBoolean("Deafened"));

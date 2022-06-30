@@ -24,15 +24,46 @@ public class RGBColour {
     }
 
     public float distance(RGBColour other) {
-        float dist_r = Math.abs(this.r - other.r);
-        float dist_g = Math.abs(this.g - other.g);
-        float dist_b = Math.abs(this.b - other.b);
-        return (dist_r + dist_g + dist_b) / 3.0f;
+        int lab1[] = this.toLab();
+        int lab2[] = other.toLab();
+        return (float)(Math.sqrt(
+                Math.pow(lab2[0] - lab1[0], 2.0f) +
+                Math.pow(lab2[1] - lab1[1], 2.0f) +
+                Math.pow(lab2[2] - lab1[2], 2.0f)
+        ));
     }
 
     public RGBColour greyscale() {
         float v = (this.r + this.g + this.b) / 3.0f;
         return new RGBColour(v, v, v);
+    }
+
+    public int[] toLab() {
+        float eps = 216.0f / 24389.0f;
+        float k   = 24389.0f / 27.0f;
+        float Xr  = 0.964221f;
+        float Yr  = 1.0f;
+        float Zr  = 0.825211f;
+        float r   = (float)(this.r <= 0.04045 ? this.r / 12.0f : Math.pow((this.r + 0.055f) / 1.055f, 2.4f));
+        float g   = (float)(this.g <= 0.04045 ? this.g / 12.0f : Math.pow((this.g + 0.055f) / 1.055f, 2.4f));
+        float b   = (float)(this.b <= 0.04045 ? this.b / 12.0f : Math.pow((this.b + 0.055f) / 1.055f, 2.4f));
+        float X = 0.436052025f * r + 0.385081593f * g + 0.143087414f * b;
+        float Y = 0.222491598f * r + 0.71688606f  * g + 0.060621486f * b;
+        float Z = 0.013929122f * r + 0.097097002f * g + 0.71418547f  * b;
+        float xr = X / Xr;
+        float yr = Y / Yr;
+        float zr = Z / Zr;
+        float fx = (float)(xr > eps ? Math.pow(xr, 1.0f / 3.0f) : (k * xr + 16.0f) / 116.0f);
+        float fy = (float)(yr > eps ? Math.pow(yr, 1.0f / 3.0f) : (k * yr + 16.0f) / 116.0f);
+        float fz = (float)(zr > eps ? Math.pow(zr, 1.0f / 3.0f) : (k * zr + 16.0f) / 116.0f);
+        float Ls = (116.0f * fy) - 16.0f;
+        float as = 500.0f * (fx - fy);
+        float bs = 200.0f * (fy - fz);
+        return new int[]{
+                (int)(2.55f * Ls + 0.5f),
+                (int)(as + 0.5f),
+                (int)(bs + 0.5f)
+        };
     }
 
     public int asInt() {

@@ -12,7 +12,9 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
@@ -26,10 +28,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.RaycastContext;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import net.minecraft.world.event.EntityPositionSource;
 import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.event.listener.EntityGameEventHandler;
@@ -52,6 +51,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -70,41 +70,19 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     public static int               ROAR_ANIMATION_LENGTH    = 41;
     public static float             ROAR_RADIUS              = 16.0f;
     public static float             ROAR_KNOCKBACK           = 100.0f;
-    public static int               ROAR_DESTROY_PER_TICK    = 8;
+    public static int               ROAR_DESTROY_PER_TICK    = 1;
     public static float             ROAR_DAMAGE              = 30.0f;
     public static float             JUMP_STRENGTH            = 1.0f;
+    public static int               STAGE_TICKS              = 600000;
+    public static int               MAX_STAGES               = 4;
+    public static int               MIN_BREED_STAGE          = 2;
+    public static int               MAX_TAME_STAGE           = 0;
 
     public AnimationFactory                          animationFactory = new AnimationFactory(this);
     public EntityGameEventHandler<VibrationListener> gameEventHandler = new EntityGameEventHandler(new VibrationListener(new EntityPositionSource(this, this.getStandingEyeHeight()), 16, this, (VibrationListener.Vibration)null, 0.0F, 0));
 
     public int        blinkCooldownTicks = BLINK_COOLDOWN_TICKS;
     public int        blinkTicks         = 0;
-
-    public static final TrackedData<BlockPos>            SPAWN_POS;
-    public static final TrackedData<Integer>             HUNGER_LEVEL;
-    public static final TrackedData<Integer>             COLOUR;
-    public static final TrackedData<Integer>             STATE;
-    public static final TrackedData<Float>               AGE;
-    public static final TrackedData<Integer>             WAKEUP_PROGRESS;
-    public static final TrackedData<Integer>             ROAR_TICKS;
-    public static final TrackedData<Boolean>             FLYING;
-    public static final TrackedData<Optional<UUID>>      TARGET;
-    public static final TrackedData<BlockPos>            TARGET_POSITION;
-    public static final TrackedData<Integer>             EYE_COLOUR;
-
-    static {
-        SPAWN_POS       = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BLOCK_POS     );
-        HUNGER_LEVEL    = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
-        COLOUR          = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
-        STATE           = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
-        AGE             = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.FLOAT         );
-        WAKEUP_PROGRESS = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
-        ROAR_TICKS      = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
-        FLYING          = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
-        TARGET          = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.OPTIONAL_UUID );
-        TARGET_POSITION = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BLOCK_POS     );
-        EYE_COLOUR      = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
-    }
 
     public enum DragonType {
         NONE,
@@ -165,6 +143,10 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     }
 
 
+    /*-------------
+    | Constructors |
+     -------------*/
+
     public DragonEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
         this.ignoreCameraFrustum = true;
@@ -172,8 +154,166 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     }
 
 
+    /*------------------
+    | Abstract Methods |
+     -----------------*/
+
     public abstract DragonType getDragonType();
     public abstract RGBColour  getDefaultEyeColour();
+
+
+    /*--------------
+    | Data Handling |
+     --------------*/
+
+    public static final TrackedData<BlockPos>       SPAWN_POS;
+    public static final TrackedData<Integer>        HUNGER_LEVEL;
+    public static final TrackedData<Integer>        COLOUR;
+    public static final TrackedData<Integer>        STATE;
+    public static final TrackedData<Float>          AGE;
+    public static final TrackedData<Integer>        WAKEUP_PROGRESS;
+    public static final TrackedData<Integer>        ROAR_TICKS;
+    public static final TrackedData<Boolean>        FLYING;
+    public static final TrackedData<Optional<UUID>> TARGET;
+    public static final TrackedData<BlockPos>       TARGET_POSITION;
+    public static final TrackedData<Integer>        EYE_COLOUR;
+    public static final TrackedData<Optional<UUID>> TAMED_OWNER;
+    public static final TrackedData<Boolean>        HAS_BREEDED;
+    public static final TrackedData<Boolean>        NATURAL_SPAWN;
+
+    static {
+        SPAWN_POS       = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BLOCK_POS     );
+        HUNGER_LEVEL    = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
+        COLOUR          = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
+        STATE           = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
+        AGE             = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.FLOAT         );
+        WAKEUP_PROGRESS = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
+        ROAR_TICKS      = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
+        FLYING          = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
+        TARGET          = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.OPTIONAL_UUID );
+        TARGET_POSITION = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BLOCK_POS     );
+        EYE_COLOUR      = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
+        TAMED_OWNER     = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.OPTIONAL_UUID );
+        HAS_BREEDED     = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
+        NATURAL_SPAWN   = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
+    }
+
+
+    @Override
+    public void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking( SPAWN_POS       , new BlockPos(0, 0, 0) );
+        this.dataTracker.startTracking( HUNGER_LEVEL    , 0                     );
+        this.dataTracker.startTracking( COLOUR          , 0                     );
+        this.dataTracker.startTracking( STATE           , 0                     );
+        this.dataTracker.startTracking( AGE             , 0.0f                  );
+        this.dataTracker.startTracking( WAKEUP_PROGRESS , 0                     );
+        this.dataTracker.startTracking( ROAR_TICKS      , 0                     );
+        this.dataTracker.startTracking( FLYING          , false                 );
+        this.dataTracker.startTracking( EYE_COLOUR      , 0                     );
+        this.dataTracker.startTracking( TAMED_OWNER     , null                  );
+        this.dataTracker.startTracking( HAS_BREEDED     , false                 );
+        this.dataTracker.startTracking( NATURAL_SPAWN   , false                 );
+    }
+
+
+    @Override
+    @Nullable
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        dataTracker.set( SPAWN_POS       , getBlockPos()                                                                   );
+        dataTracker.set( HUNGER_LEVEL    , 20 * 60 * 15                                                                    );
+        dataTracker.set( COLOUR          , DragonEntityColourPicker.chooseFromCategory(getDragonType(), getUuid()).asInt() );
+        dataTracker.set( STATE           , DragonState.SLEEP.toInt()                                                       );
+        dataTracker.set( AGE             , 0.0f                                                                            );
+        dataTracker.set( WAKEUP_PROGRESS , 0                                                                               );
+        dataTracker.set( ROAR_TICKS      , 0                                                                               );
+        dataTracker.set( FLYING          , false                                                                           );
+        dataTracker.set( EYE_COLOUR      , this.getDefaultEyeColour().asInt()                                              );
+        dataTracker.set( TAMED_OWNER     , Optional.empty()                                                                );
+        dataTracker.set( HAS_BREEDED     , false                                                                           );
+        dataTracker.set( NATURAL_SPAWN   , true                                                                            );
+        super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return entityData;
+    }
+
+
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+
+        nbt.putBoolean("Flying", dataTracker.get(FLYING));
+
+        nbt.putInt("RoarTicks", dataTracker.get(ROAR_TICKS));
+
+        nbt.putInt("WakeupProgress", dataTracker.get(WAKEUP_PROGRESS));
+
+        nbt.putFloat("Age", dataTracker.get(AGE));
+
+        nbt.putInt("State", dataTracker.get(STATE));
+
+        nbt.putInt("Colour", dataTracker.get(COLOUR));
+
+        nbt.putInt("HungerLevel", dataTracker.get(HUNGER_LEVEL));
+
+        BlockPos spawnPos = dataTracker.get(SPAWN_POS);
+        nbt.putIntArray("SpawnPos", new int[]{spawnPos.getX(), spawnPos.getY(), spawnPos.getZ()});
+
+        DataResult data = VibrationListener.createCodec(this).encodeStart(NbtOps.INSTANCE, this.gameEventHandler.getListener());
+        data.resultOrPartial(DragonHeart.LOGGER::error).ifPresent((element) -> {
+            nbt.put("vibrationListener", (NbtElement) element);
+        });
+
+        nbt.putInt("EyeColour", dataTracker.get(EYE_COLOUR));
+
+        Optional<UUID> tamedOwner = dataTracker.get(TAMED_OWNER);
+        if (tamedOwner.isPresent()) {
+            nbt.putUuid("TamedOwner", tamedOwner.get());
+        } else {
+            nbt.remove("TamedOwner");
+        }
+
+        nbt.putBoolean("HasBreeded", dataTracker.get(HAS_BREEDED));
+
+        nbt.putBoolean("NaturalSpawn", dataTracker.get(NATURAL_SPAWN));
+    }
+
+
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+
+        dataTracker.set(FLYING, nbt.getBoolean("Flying"));
+
+        dataTracker.set(ROAR_TICKS, nbt.getInt("RoarTicks"));
+
+        dataTracker.set(WAKEUP_PROGRESS, nbt.getInt("WakeupProgress"));
+
+        dataTracker.set(AGE, nbt.getFloat("Age"));
+
+        dataTracker.set(STATE, nbt.getInt("State"));
+
+        dataTracker.set(COLOUR, nbt.getInt("Colour"));
+
+        dataTracker.set(HUNGER_LEVEL, nbt.getInt("HungerLever"));
+
+        int[] spawnPos = nbt.getIntArray("SpawnPos");
+        if (spawnPos.length == 3) {
+            dataTracker.set(SPAWN_POS, new BlockPos(spawnPos[0], spawnPos[1], spawnPos[2]));
+        } else {
+            dataTracker.set(SPAWN_POS, getBlockPos());
+        }
+
+        DataResult data = VibrationListener.createCodec(this).parse(new Dynamic(NbtOps.INSTANCE, nbt.getCompound("vibrationListener")));
+        data.resultOrPartial(DragonHeart.LOGGER::error).ifPresent((element) -> {
+            this.gameEventHandler.setListener((VibrationListener) element, this.world);
+        });
+
+        dataTracker.set(EYE_COLOUR, nbt.getInt("EyeColour"));
+
+        dataTracker.set(TAMED_OWNER, nbt.contains("TamedOwner") ? Optional.of(nbt.getUuid("TamedOwner")) : Optional.empty());
+
+        dataTracker.set(HAS_BREEDED, nbt.getBoolean("HasBreeded"));
+
+        dataTracker.set(NATURAL_SPAWN, nbt.getBoolean("NaturalSpawn"));
+    }
 
 
     public void setState(DragonState state) {
@@ -190,17 +330,42 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         this.dataTracker.set(STATE, state.toInt());
     }
 
-
     public DragonState getState() {
-        return DragonState.fromInt(this.dataTracker.get(STATE));
+        return DragonState.fromInt(dataTracker.get(STATE));
     }
-
 
     public boolean eyesOpen() {
         return getState() != DragonState.SLEEP;
     }
 
+    public int getStage() {
+        return (int)(Math.max(Math.min(Math.floor(dataTracker.get(AGE) / STAGE_TICKS), MAX_STAGES), 0));
+    }
 
+    public boolean isTamed() {
+        return dataTracker.get(TAMED_OWNER).isPresent();
+    }
+
+    public boolean canBreed(DragonEntity other) {
+        return this._canBreed(other) && other._canBreed(this);
+    }
+
+    public boolean _canBreed(DragonEntity other) {
+        return this.isTamed() && ! dataTracker.get(HAS_BREEDED) && getStage() >= MIN_BREED_STAGE;
+    }
+
+    public boolean naturallySpawned() {
+        return dataTracker.get(NATURAL_SPAWN);
+    }
+
+    public void addAge(int amount) {
+        dataTracker.set(AGE, dataTracker.get(AGE) + amount);
+    }
+
+
+    /*-------------------
+    | Animation Handling |
+     -------------------*/
 
     public PlayState animationPredicate(AnimationEvent<DragonEntity> event) {
 
@@ -246,101 +411,9 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     }
 
 
-
-    @Override
-    public void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking( SPAWN_POS       , new BlockPos(0, 0, 0) );
-        this.dataTracker.startTracking( HUNGER_LEVEL    , 0                     );
-        this.dataTracker.startTracking( COLOUR          , 0                     );
-        this.dataTracker.startTracking( STATE           , 0                     );
-        this.dataTracker.startTracking( AGE             , 0.0f                  );
-        this.dataTracker.startTracking( WAKEUP_PROGRESS , 0                     );
-        this.dataTracker.startTracking( ROAR_TICKS      , 0                     );
-        this.dataTracker.startTracking( FLYING          , false                 );
-        this.dataTracker.startTracking( EYE_COLOUR      , 0                     );
-    }
-
-
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-
-        nbt.putBoolean("Flying", dataTracker.get(FLYING));
-
-        nbt.putInt("RoarTicks", dataTracker.get(ROAR_TICKS));
-
-        nbt.putInt("WakeupProgress", dataTracker.get(WAKEUP_PROGRESS));
-
-        nbt.putFloat("Age", dataTracker.get(AGE));
-
-        nbt.putInt("State", dataTracker.get(STATE));
-
-        nbt.putInt("Colour", dataTracker.get(COLOUR));
-
-        nbt.putInt("HungerLevel", dataTracker.get(HUNGER_LEVEL));
-
-        BlockPos spawnPos = dataTracker.get(SPAWN_POS);
-        nbt.putIntArray("SpawnPos", new int[]{spawnPos.getX(), spawnPos.getY(), spawnPos.getZ()});
-
-        DataResult data = VibrationListener.createCodec(this).encodeStart(NbtOps.INSTANCE, this.gameEventHandler.getListener());
-        data.resultOrPartial(DragonHeart.LOGGER::error).ifPresent((element) -> {
-            nbt.put("vibrationListener", (NbtElement) element);
-        });
-
-        nbt.putInt("EyeColour", dataTracker.get(EYE_COLOUR));
-    }
-
-
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-
-        dataTracker.set(FLYING, nbt.getBoolean("Flying"));
-
-        dataTracker.set(ROAR_TICKS, nbt.getInt("RoarTicks"));
-
-        dataTracker.set(WAKEUP_PROGRESS, nbt.getInt("WakeupProgress"));
-
-        dataTracker.set(AGE, nbt.getFloat("Age"));
-
-        dataTracker.set(STATE, nbt.getInt("State"));
-
-        dataTracker.set(COLOUR, nbt.getInt("Colour"));
-
-        dataTracker.set(HUNGER_LEVEL, nbt.getInt("HungerLever"));
-
-        int[] spawnPos = nbt.getIntArray("SpawnPos");
-        if (spawnPos.length == 3) {
-            dataTracker.set(SPAWN_POS, new BlockPos(spawnPos[0], spawnPos[1], spawnPos[2]));
-        } else {
-            dataTracker.set(SPAWN_POS, getBlockPos());
-        }
-
-        DataResult data = VibrationListener.createCodec(this).parse(new Dynamic(NbtOps.INSTANCE, nbt.getCompound("vibrationListener")));
-        data.resultOrPartial(DragonHeart.LOGGER::error).ifPresent((element) -> {
-            this.gameEventHandler.setListener((VibrationListener) element, this.world);
-        });
-
-        dataTracker.set(EYE_COLOUR, nbt.getInt("EyeColour"));
-    }
-
-
-    @Override
-    @Nullable
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        dataTracker.set( SPAWN_POS       , getBlockPos()                                                                   );
-        dataTracker.set( HUNGER_LEVEL    , 20 * 60 * 15                                                                    );
-        dataTracker.set( COLOUR          , DragonEntityColourPicker.chooseFromCategory(getDragonType(), getUuid()).asInt() );
-        dataTracker.set( STATE           , DragonState.SLEEP.toInt()                                                       );
-        dataTracker.set( AGE             , 0.0f                                                                            );
-        dataTracker.set( WAKEUP_PROGRESS , 0                                                                               );
-        dataTracker.set( ROAR_TICKS      , 0                                                                               );
-        dataTracker.set( FLYING          , false                                                                           );
-        dataTracker.set( EYE_COLOUR      , this.getDefaultEyeColour().asInt()                                              );
-        super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-        return entityData;
-    }
-
-
+    /*---------------------------------
+    | Physics, Despawn, and Resistance |
+     ---------------------------------*/
 
     @Override
     public boolean isPersistent() {
@@ -400,6 +473,9 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     public boolean hasNoGravity() {return dataTracker.get(FLYING);}
 
 
+    /*---
+    | AI |
+     ---*/
 
     public boolean isValidTarget(@Nullable Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
@@ -417,6 +493,13 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
 
 
     @Override
+    public void onPlayerCollision(PlayerEntity player) {
+        super.onPlayerCollision(player);
+        incrementWakeupProgress(true, player);
+    }
+
+
+    @Override
     public void initGoals() {
         //this.goalSelector.add(0, new LookAtEntityGoal(this, PlayerEntity.class, 16.0f));
         //this.goalSelector.add(1, new LookAroundGoal(this));
@@ -424,66 +507,14 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
 
 
     @Override
-    public TagKey<GameEvent> getTag() {
-        return VIBRATIONS;
-    }
-
-    @Override
-    public boolean triggersAvoidCriterion() {
-        return true;
-    }
-
-    @Override
-    public void updateEventHandler(BiConsumer<EntityGameEventHandler<?>, ServerWorld> callback) {
-        if (this.world instanceof ServerWorld serverWorld) {
-            callback.accept(this.gameEventHandler, serverWorld);
-        }
-    }
-
-    @Override
-    public boolean accepts(ServerWorld world, GameEventListener listener, BlockPos pos, GameEvent event, @Nullable GameEvent.Emitter emitter) {
-        if (! this.isAiDisabled() && ! this.isDead() && world.getWorldBorder().contains(pos) && ! this.isRemoved() && this.getState() == DragonState.SLEEP) {
-            Entity entity = emitter.sourceEntity();
-            if (entity instanceof LivingEntity livingEntity) {
-                if (! this.isValidTarget(livingEntity)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void accept(ServerWorld world, GameEventListener listener, BlockPos pos, GameEvent event, @Nullable Entity entity, @Nullable Entity sourceEntity, float distance) {
-        if (! this.isAiDisabled() && ! this.isDead() && world.getWorldBorder().contains(pos) && ! this.isRemoved()) {
-            if (entity instanceof LivingEntity livingEntity) {
-                if (this.isValidTarget(livingEntity)) {
-                    this.incrementWakeupProgress(false, sourceEntity instanceof LivingEntity ? sourceEntity : null);
-                }
-            } else {
-                this.incrementWakeupProgress(false, sourceEntity instanceof LivingEntity ? sourceEntity : null);
-            }
-        }
-    }
-
-
-
-    @Override
-    public void onPlayerCollision(PlayerEntity player) {
-        super.onPlayerCollision(player);
-        incrementWakeupProgress(true, player);
-    }
-
-
-
-    @Override
     public void tick() {
         if (this.world instanceof ServerWorld serverWorld) {
+            // Tick vibration handler.
             this.gameEventHandler.getListener().tick(serverWorld);
         }
 
-        if (!world.isClient()) {
+        // Server side.
+        if (! world.isClient()) {
             if (getState() == DragonState.ROAR) {
                 // Throw all nearby entities away & deafen them, depending on distance to them.
                 List<Entity> entities = world.getOtherEntities(this, Box.of(this.getPos(), ROAR_RADIUS, ROAR_RADIUS, ROAR_RADIUS));
@@ -537,6 +568,9 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
                 }
             }
 
+            // Tick age.
+            addAge(1);
+
         }
 
         // Client side blinking animation
@@ -577,6 +611,88 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
             dataTracker.set(ROAR_TICKS, ROAR_ANIMATION_LENGTH);
             setState(DragonState.ROAR);
         }
+    }
+
+
+    /*-------------------
+    | Vibration Handling |
+     -------------------*/
+
+
+    @Override
+    public TagKey<GameEvent> getTag() {
+        return VIBRATIONS;
+    }
+
+    @Override
+    public boolean triggersAvoidCriterion() {
+        return true;
+    }
+
+    @Override
+    public void updateEventHandler(BiConsumer<EntityGameEventHandler<?>, ServerWorld> callback) {
+        if (this.world instanceof ServerWorld serverWorld) {
+            callback.accept(this.gameEventHandler, serverWorld);
+        }
+    }
+
+    @Override
+    public boolean accepts(ServerWorld world, GameEventListener listener, BlockPos pos, GameEvent event, @Nullable GameEvent.Emitter emitter) {
+        if (! this.isAiDisabled() && ! this.isDead() && world.getWorldBorder().contains(pos) && ! this.isRemoved() && this.getState() == DragonState.SLEEP) {
+            Entity entity = emitter.sourceEntity();
+            if (entity instanceof LivingEntity livingEntity) {
+                if (! this.isValidTarget(livingEntity)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void accept(ServerWorld world, GameEventListener listener, BlockPos pos, GameEvent event, @Nullable Entity entity, @Nullable Entity sourceEntity, float distance) {
+        if (! this.isAiDisabled() && ! this.isDead() && world.getWorldBorder().contains(pos) && ! this.isRemoved()) {
+            if (entity instanceof LivingEntity livingEntity) {
+                if (this.isValidTarget(livingEntity)) {
+                    this.incrementWakeupProgress(false, sourceEntity instanceof LivingEntity ? sourceEntity : null);
+                }
+            } else {
+                this.incrementWakeupProgress(false, sourceEntity instanceof LivingEntity ? sourceEntity : null);
+            }
+        }
+    }
+
+
+    /*-------
+    | Taming |
+     -------*/
+
+    public boolean canTame() {
+        return ! naturallySpawned() && getStage() <= MAX_TAME_STAGE;
+    }
+
+
+    /*---------
+    | Breeding |
+     ---------*/
+
+    public boolean canBreedWith(Entity other) {
+        return(
+                other != this &&
+                other instanceof DragonEntity otherDragon &&
+                this.canBreed(otherDragon)
+        );
+    }
+
+    public void breed(ServerWorld world, AnimalEntity other) {
+        // TODO
+    }
+
+    @Nullable
+    public Item getBreedingItem() {
+        // TODO
+        return null;
     }
 
 
