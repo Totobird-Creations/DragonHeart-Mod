@@ -9,7 +9,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
-import net.totobirdcreations.dragonheart.util.FrozenEffectLivingEntityInterface;
+import net.totobirdcreations.dragonheart.util.effect.FrozenEffectLivingEntityInterface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -60,7 +60,7 @@ public abstract class FrozenEffectLivingEntityMixin extends Entity implements Fr
         return dataTracker.get(ICED);
     }
 
-    public void setIced(Boolean value) {
+    public void setIced(boolean value) {
         DataTracker dataTracker = this.getDataTracker();
         dataTracker.set(ICED, value);
     }

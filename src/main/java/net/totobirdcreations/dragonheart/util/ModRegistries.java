@@ -1,7 +1,7 @@
 package net.totobirdcreations.dragonheart.util;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.totobirdcreations.dragonheart.entity.DragonFireEntity;
+import net.totobirdcreations.dragonheart.entity.dragon.DragonFireEntity;
 import net.totobirdcreations.dragonheart.entity.ModEntities;
 
 public class ModRegistries {

@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.util;
+package net.totobirdcreations.dragonheart.util.colour;
 
 
 

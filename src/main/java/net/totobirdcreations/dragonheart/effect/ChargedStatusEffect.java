@@ -24,7 +24,6 @@ public class ChargedStatusEffect extends StatusEffect {
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
-
         return true;
 
     }
@@ -32,7 +31,6 @@ public class ChargedStatusEffect extends StatusEffect {
 
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-
         if (entity.isSubmergedInWater()) {
             World  world = entity.getWorld();
             double x     = entity.getX();
@@ -51,7 +49,6 @@ public class ChargedStatusEffect extends StatusEffect {
             entity.kill();
             world.getOtherEntities(entity, new Box(x - DISTANCE, y - DISTANCE, z - DISTANCE, x + DISTANCE, y + DISTANCE, z + DISTANCE));
         }
-
     }
 
 

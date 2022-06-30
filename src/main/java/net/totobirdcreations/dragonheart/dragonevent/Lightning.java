@@ -6,11 +6,13 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
 
 public class Lightning {
 
 
-    public static void hit(ItemStack stack, LivingEntity target, LivingEntity attacker, boolean sound) {
+    public static void hit(@Nullable ItemStack stack, LivingEntity target, LivingEntity attacker, boolean sound) {
 
         World world  = target.getWorld();
         // If server, strike lightning on target if it has view of the sky.

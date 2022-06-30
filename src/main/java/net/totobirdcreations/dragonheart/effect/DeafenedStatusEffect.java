@@ -5,14 +5,13 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.totobirdcreations.dragonheart.util.effect.FrozenEffectLivingEntityInterface;
+import net.totobirdcreations.dragonheart.util.effect.DeafenedEffectLivingEntityInterface;
 
 
-public class FrozenStatusEffect extends StatusEffect {
+public class DeafenedStatusEffect extends StatusEffect {
 
-
-    public FrozenStatusEffect() {
-        super(StatusEffectCategory.HARMFUL, 0xbfffff);
+    public DeafenedStatusEffect() {
+        super(StatusEffectCategory.HARMFUL, 0x5f3f3f);
     }
 
 
@@ -23,20 +22,9 @@ public class FrozenStatusEffect extends StatusEffect {
 
 
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-        entity.setVelocity(0.0, -1.5, 0.0);
-        entity.setFrozenTicks(150);
-        if (entity.isOnFire()) {
-            entity.removeStatusEffect(ModStatusEffects.FROZEN);
-            entity.extinguish();
-        }
-    }
-
-
-    @Override
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (! entity.world.isClient()) {
-            ((FrozenEffectLivingEntityInterface)entity).setIced(true);
+            ((DeafenedEffectLivingEntityInterface) entity).setDeafened(true);
         }
     }
 
@@ -44,11 +32,11 @@ public class FrozenStatusEffect extends StatusEffect {
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (! entity.world.isClient()) {
-            ((FrozenEffectLivingEntityInterface)entity).setIced(false);
-        } else {
-            KeyBinding.unpressAll();
+            ((DeafenedEffectLivingEntityInterface) entity).setDeafened(false);
+            if (entity.getWorld().isClient()) {
+                KeyBinding.unpressAll();
+            }
         }
     }
-
 
 }

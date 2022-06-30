@@ -10,9 +10,9 @@ import net.totobirdcreations.dragonheart.DragonHeart;
 public class ModBlockTags {
 
 
-    public static final TagKey<Block> DRAGON_UNGRIEFABLE  = TagKey.of(Registry.BLOCK_KEY, new Identifier(DragonHeart.MOD_ID, "dragon_ungriefable"));
-    public static final TagKey<Block> DRAGON_EVAPORATABLE = TagKey.of(Registry.BLOCK_KEY, new Identifier(DragonHeart.MOD_ID, "dragon_evaporatable"));
-    public static final TagKey<Block> DRAGON_ICEABLE       = TagKey.of(Registry.BLOCK_KEY, new Identifier(DragonHeart.MOD_ID, "dragon_iceable"));
+    public static final TagKey<Block> DRAGON_UNGRIEFABLE  = TagKey.of(Registry.BLOCK_KEY, new Identifier( DragonHeart.MOD_ID , "dragon_ungriefable"  ));
+    public static final TagKey<Block> DRAGON_EVAPORATABLE = TagKey.of(Registry.BLOCK_KEY, new Identifier( DragonHeart.MOD_ID , "dragon_evaporatable" ));
+    public static final TagKey<Block> DRAGON_ICEABLE      = TagKey.of(Registry.BLOCK_KEY, new Identifier( DragonHeart.MOD_ID , "dragon_iceable"      ));
 
 
     public static void register() {

@@ -10,7 +10,7 @@ import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
-import net.totobirdcreations.dragonheart.entity.DragonEntity;
+import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
 
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 import static net.minecraft.server.command.CommandManager.argument;

@@ -5,14 +5,14 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.text.Text;
 
 
-public class FrozenEffectRemovedSource extends DamageSource {
+public class RoarDamageSource extends DamageSource {
 
-    public FrozenEffectRemovedSource() {
-        super("FROZEN_EFFECT_REMOVED");
+    public RoarDamageSource() {
+        super("roar");
     }
 
     @Override
-    public FrozenEffectRemovedSource setScaledWithDifficulty() {
+    public RoarDamageSource setScaledWithDifficulty() {
 
         super.setScaledWithDifficulty();
         return this;
@@ -20,7 +20,7 @@ public class FrozenEffectRemovedSource extends DamageSource {
     }
 
     @Override
-    public FrozenEffectRemovedSource setFire() {
+    public RoarDamageSource setFire() {
 
         super.setFire();
         return this;
@@ -29,7 +29,7 @@ public class FrozenEffectRemovedSource extends DamageSource {
 
     @Override
     public Text getDeathMessage(LivingEntity entity) {
-        return Text.translatable("death.dragonheart.frozen_removed", entity.getDisplayName());
+        return Text.translatable("death.dragonheart.roar", entity.getDisplayName());
     }
 
 

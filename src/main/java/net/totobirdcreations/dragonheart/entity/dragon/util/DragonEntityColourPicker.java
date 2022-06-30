@@ -1,9 +1,10 @@
-package net.totobirdcreations.dragonheart.entity;
+package net.totobirdcreations.dragonheart.entity.dragon.util;
 
 import net.minecraft.util.math.random.Random;
+import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
 import net.totobirdcreations.dragonheart.util.Curve;
-import net.totobirdcreations.dragonheart.util.HSVColour;
-import net.totobirdcreations.dragonheart.util.RGBColour;
+import net.totobirdcreations.dragonheart.util.colour.HSVColour;
+import net.totobirdcreations.dragonheart.util.colour.RGBColour;
 
 import java.util.HashMap;
 import java.util.UUID;

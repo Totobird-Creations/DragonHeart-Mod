@@ -2,7 +2,7 @@ package net.totobirdcreations.dragonheart.mixin.frozeneffect;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.totobirdcreations.dragonheart.util.FrozenEffectLivingEntityInterface;
+import net.totobirdcreations.dragonheart.util.effect.FrozenEffectLivingEntityInterface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

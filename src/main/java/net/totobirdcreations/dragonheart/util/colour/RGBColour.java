@@ -1,11 +1,11 @@
-package net.totobirdcreations.dragonheart.util;
+package net.totobirdcreations.dragonheart.util.colour;
 
 
 import software.bernie.geckolib3.core.util.Color;
 
-import java.awt.*;
-
 public class RGBColour {
+
+    public static RGBColour WHITE = new RGBColour(1.0f, 1.0f, 1.0f);
 
     public float r;
     public float g;

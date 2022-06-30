@@ -9,7 +9,9 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.totobirdcreations.dragonheart.DragonHeart;
-
+import net.totobirdcreations.dragonheart.entity.dragon.DragonFireEntity;
+import net.totobirdcreations.dragonheart.entity.dragon.DragonIceEntity;
+import net.totobirdcreations.dragonheart.entity.dragon.DragonLightningEntity;
 
 
 public class ModEntities {

@@ -1,39 +1,43 @@
-package net.totobirdcreations.dragonheart.entity;
+package net.totobirdcreations.dragonheart.entity.dragon.render;
 
+import net.minecraft.particle.ShriekParticleEffect;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import net.totobirdcreations.dragonheart.DragonHeart;
+import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.AnimationProcessor;
 import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
+import java.util.Random;
 
-public class DragonEntityModel extends AnimatedGeoModel<DragonEntity> {
 
-    public static Identifier TEXTURE = new Identifier(DragonHeart.MOD_ID, "textures/entity/dragon.png");
+public class DragonEntityModel<T extends DragonEntity> extends AnimatedGeoModel<T> {
 
 
     @Override
     public Identifier getModelResource(DragonEntity entity) {
-        return new Identifier(DragonHeart.MOD_ID, "geo/entity/dragon.geo.json");
+        return DragonEntityRenderer.MODEL;
     }
     @Override
-    public Identifier getTextureResource(DragonEntity entity) {return TEXTURE;}
+    public Identifier getTextureResource(DragonEntity entity) {return DragonEntityRenderer.TEXTURE;}
     @Override
-    public Identifier getAnimationResource(DragonEntity entity) {
-        return new Identifier(DragonHeart.MOD_ID, "animations/entity/dragon.animation.json");
-    }
+    public Identifier getAnimationResource(DragonEntity entity) {return DragonEntityRenderer.ANIMATION;}
 
 
     @Override
-    public void setLivingAnimations(DragonEntity entity, Integer uniqueID, AnimationEvent customPredicate) {
+    public void setLivingAnimations(T entity, Integer uniqueID, AnimationEvent customPredicate) {
         super.setLivingAnimations(entity, uniqueID, customPredicate);
 
-        DragonEntity.DragonState state = DragonEntity.DragonState.fromInt(entity.getDataTracker().get(entity.STATE));
+        AnimationProcessor       processor = this.getAnimationProcessor();
+        DragonEntity.DragonState state     = entity.getState();
 
-        if (state != DragonEntity.DragonState.SLEEP) {
-            AnimationProcessor processor = this.getAnimationProcessor();
+        if (
+                state != DragonEntity.DragonState.SLEEP &&
+                state != DragonEntity.DragonState.ROAR
+        ) {
             IBone body = processor.getBone("body0");
             IBone[] bones = {
                     processor.getBone("neck0"),
@@ -58,6 +62,16 @@ public class DragonEntityModel extends AnimatedGeoModel<DragonEntity> {
                                 * (float) Math.PI / 180.0f
                 );
             }
+        }
+
+        if (state == DragonEntity.DragonState.ROAR) {
+            float yaw     = entity.getHeadYaw();
+            Vec3d forward = new Vec3d(Math.sin(yaw), 0.0f, Math.cos(yaw)).multiply(4.0f);
+            entity.world.addParticle(
+                    new ShriekParticleEffect(0),
+                    entity.getX() + forward.x, entity.getY() + 0.75f, entity.getZ() + forward.z,
+                    0.0f, 0.0f, 0.0f
+            );
         }
     }
 

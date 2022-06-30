@@ -5,7 +5,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
-import net.totobirdcreations.dragonheart.util.FrozenEffectLivingEntityInterface;
+import net.totobirdcreations.dragonheart.util.effect.FrozenEffectLivingEntityInterface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;

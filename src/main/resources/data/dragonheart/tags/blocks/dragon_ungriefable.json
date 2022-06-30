@@ -28,9 +28,13 @@
 
     "minecraft:ancient_debris",
     "minecraft:netherite_block",
+    "minecraft:reinforced_deepslate",
+
+    "minecraft:air",
+    "minecraft:cave_air",
+    "minecraft:void_air",
 
     "minecraft:bedrock",
-
     "minecraft:barrier",
     "minecraft:end_portal",
     "minecraft:end_portal_frame",
@@ -39,6 +43,7 @@
     "minecraft:repeating_command_block",
     "minecraft:chain_command_block",
     "minecraft:structure_block",
+    "minecraft:structure_void",
     "minecraft:jigsaw",
     "minecraft:moving_piston"
   ]

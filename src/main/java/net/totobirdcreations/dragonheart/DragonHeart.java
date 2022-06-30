@@ -1,6 +1,7 @@
 package net.totobirdcreations.dragonheart;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.totobirdcreations.dragonheart.block.ModBlockTags;
 import net.totobirdcreations.dragonheart.block.ModBlocks;
 import net.totobirdcreations.dragonheart.command.ModCommands;
@@ -20,8 +21,9 @@ import software.bernie.geckolib3.GeckoLib;
 public class DragonHeart implements ModInitializer {
 
 
-	public static final String MOD_ID = "dragonheart";
-	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+	public static final String  MOD_ID = "dragonheart";
+	public static final Logger  LOGGER = LogManager.getLogger(MOD_ID);
+	public static       boolean DEVENV;
 
 
 	@Override
@@ -29,8 +31,13 @@ public class DragonHeart implements ModInitializer {
 
 		LOGGER.info("Initializing.");
 
-		GeckoLibMod.DISABLE_IN_DEV = true;
-		GeckoLib.initialize();
+		DEVENV = FabricLoader.getInstance().isDevelopmentEnvironment();
+
+		if (DEVENV) {
+			LOGGER.info("Suppressing GeckoLibMod.");
+			GeckoLibMod.DISABLE_IN_DEV = true;
+			GeckoLib.initialize();
+		}
 
 		ModBlocks         .register();
 		ModBlockTags      .register();
