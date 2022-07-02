@@ -10,18 +10,14 @@ public class SwordLightning extends Sword {
 
 
     public SwordLightning(Settings settings, SwordMaterial material) {
-
         super(settings, material);
-
     }
 
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-
-        Lightning.hit(stack, target, attacker, true);
+        Lightning.hit(target);
         return super.postHit(stack, target, attacker);
-
     }
 
 

@@ -7,6 +7,7 @@ import net.totobirdcreations.dragonheart.entity.ModEntities;
 public class ModRegistries {
 
     public static void registerEntityAttributes() {
+        // TODO : Do something about this warning.
         FabricDefaultAttributeRegistry.register(ModEntities.DRAGON_FIRE, DragonFireEntity.setAttributes());
     }
 

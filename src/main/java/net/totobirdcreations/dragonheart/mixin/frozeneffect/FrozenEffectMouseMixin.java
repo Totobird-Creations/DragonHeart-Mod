@@ -17,6 +17,7 @@ public abstract class FrozenEffectMouseMixin {
 
     @Shadow public abstract boolean isCursorLocked();
 
+
     @Redirect(
             method = "updateMouse",
             at = @At(

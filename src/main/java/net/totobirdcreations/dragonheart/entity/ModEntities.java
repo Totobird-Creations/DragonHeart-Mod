@@ -9,6 +9,7 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.totobirdcreations.dragonheart.DragonHeart;
+import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonFireEntity;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonIceEntity;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonLightningEntity;
@@ -16,13 +17,11 @@ import net.totobirdcreations.dragonheart.entity.dragon.DragonLightningEntity;
 
 public class ModEntities {
 
-    public static EntityDimensions DRAGON_DIMENSIONS = EntityDimensions.fixed(2.75f, 1.875f);
-
     public static final EntityType<DragonFireEntity> DRAGON_FIRE = Registry.register(
             Registry.ENTITY_TYPE,
             new Identifier(DragonHeart.MOD_ID, "dragon_fire"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, DragonFireEntity::new)
-                    .dimensions(DRAGON_DIMENSIONS)
+                    .dimensions(DragonEntity.DIMENSIONS)
                     .build()
     );
 
@@ -30,7 +29,7 @@ public class ModEntities {
             Registry.ENTITY_TYPE,
             new Identifier(DragonHeart.MOD_ID, "dragon_ice"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, DragonIceEntity::new)
-                    .dimensions(DRAGON_DIMENSIONS)
+                    .dimensions(DragonEntity.DIMENSIONS)
                     .build()
     );
 
@@ -38,7 +37,7 @@ public class ModEntities {
             Registry.ENTITY_TYPE,
             new Identifier(DragonHeart.MOD_ID, "dragon_lightning"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, DragonLightningEntity::new)
-                    .dimensions(DRAGON_DIMENSIONS)
+                    .dimensions(DragonEntity.DIMENSIONS)
                     .build()
     );
 
@@ -47,6 +46,7 @@ public class ModEntities {
 
         DragonHeart.LOGGER.info("Registering entities.");
 
+        // TODO : Figure out what causes this warning.
         FabricDefaultAttributeRegistry.register( DRAGON_FIRE      , DragonFireEntity.createMobAttributes()      );
         FabricDefaultAttributeRegistry.register( DRAGON_ICE       , DragonIceEntity.createMobAttributes()       );
         FabricDefaultAttributeRegistry.register( DRAGON_LIGHTNING , DragonLightningEntity.createMobAttributes() );

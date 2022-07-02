@@ -3,12 +3,12 @@ package net.totobirdcreations.dragonheart.entity.dragon.ai;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
-import net.minecraft.entity.player.PlayerEntity;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
 
 import java.util.EnumSet;
 
 
+// TODO : Use this.
 public class DragonEntityPursueGoal extends Goal {
 
     public DragonEntity entity;
@@ -35,9 +35,7 @@ public class DragonEntityPursueGoal extends Goal {
             LivingEntity target = this.entity.getTarget();
             if (this.entity.isValidTarget(target)) {
                 this.path = this.entity.getNavigation().findPathTo(target, 0);
-                if (this.path != null) {
-                    return true;
-                }
+                return this.path != null;
             }
         }
         return false;
@@ -48,6 +46,7 @@ public class DragonEntityPursueGoal extends Goal {
     public boolean shouldContinue() {
         LivingEntity target = entity.getTarget();
         if (this.entity.isValidTarget(target)) {
+            assert target != null;
             if (this.entity.isInWalkTargetRange(target.getBlockPos())) {
                 return true;
             }

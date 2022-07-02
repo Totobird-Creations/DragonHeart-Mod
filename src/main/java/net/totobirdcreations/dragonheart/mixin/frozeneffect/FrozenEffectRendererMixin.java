@@ -12,11 +12,12 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 
 @Mixin(LivingEntityRenderer.class)
-public abstract class FrozenEffectRendererMixin extends EntityRenderer {
+public abstract class FrozenEffectRendererMixin extends EntityRenderer<LivingEntity> {
     public FrozenEffectRendererMixin(EntityRendererFactory.Context ctx) {
         super(ctx);
     }
 
+    // TODO : Suppress these invalid errors.
     @ModifyVariable(
             method = "getRenderLayer",
             at = @At("STORE"),

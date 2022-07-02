@@ -16,9 +16,7 @@ public class ChargedStatusEffect extends StatusEffect {
 
 
     public ChargedStatusEffect() {
-
         super(StatusEffectCategory.HARMFUL, 0xbf00ff);
-
     }
 
 

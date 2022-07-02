@@ -13,10 +13,8 @@ public class ItemBlock {
 
 
     public ItemBlock(Block block, Item item) {
-
         this.block = block;
         this.item  = item;
-
     }
 
 

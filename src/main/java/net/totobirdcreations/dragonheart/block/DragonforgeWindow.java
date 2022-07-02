@@ -23,59 +23,42 @@ public class DragonforgeWindow extends AbstractGlassBlock {
 
 
     public DragonforgeWindow(Settings settings) {
-
         super(settings);
-
     }
 
 
     public void setDependencyBlocks(ItemBlock brickBlock, Block[] coreBlocks) {
-
         this.brickBlock = brickBlock;
         this.coreBlocks = coreBlocks;
-
     }
 
 
+    @SuppressWarnings("deprecation")
     @Override
     public PistonBehavior getPistonBehavior(BlockState state) {
-
         return PistonBehavior.BLOCK;
-
     }
 
 
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-
-        update(world, pos, state);
+        update(world, pos);
         super.onPlaced(world, pos, state, placer, itemStack);
-        DragonforgeStructureBlock.updateNearby(world, pos, state, coreBlocks);
-
+        DragonforgeStructureBlock.updateNearby(world, pos, coreBlocks);
     }
 
 
     @Override
     public void onBroken(WorldAccess worldAccess, BlockPos pos, BlockState state) {
-
         super.onBroken(worldAccess, pos, state);
-        DragonforgeStructureBlock.updateNearby((World)worldAccess, pos, state, coreBlocks);
-
+        DragonforgeStructureBlock.updateNearby((World)worldAccess, pos, coreBlocks);
     }
 
 
-    public void update(World world, BlockPos pos, BlockState state) {
-
-        BlockState[] blockStates = {
-                world.getBlockState(pos.add(1, 0, 0)),
-                world.getBlockState(pos.add(-1, 0, 0)),
-                world.getBlockState(pos.add(0, 0, 1)),
-                world.getBlockState(pos.add(0, 0, -1))
-        };
+    public void update(World world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos.add(0, -1, 0));
         boolean shouldHaveWindow = false;
-        for (int i = 0; i < coreBlocks.length; i++) {
-            Block coreBlock = coreBlocks[i];
+        for (Block coreBlock : coreBlocks) {
             if (blockState.isOf(coreBlock)) {
                 shouldHaveWindow = true;
             }
@@ -90,15 +73,12 @@ public class DragonforgeWindow extends AbstractGlassBlock {
             BlockState newBlockState = world.getBlockState(pos);
             ((DragonforgeBrick)newBlockState.getBlock()).update(world, pos, newBlockState);
         }
-
     }
 
 
     @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-
         return new ItemStack(brickBlock.item);
-
     }
 
 

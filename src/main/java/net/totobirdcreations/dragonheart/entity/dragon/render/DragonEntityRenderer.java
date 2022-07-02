@@ -1,6 +1,7 @@
 package net.totobirdcreations.dragonheart.entity.dragon.render;
 
 
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -27,8 +28,8 @@ public abstract class DragonEntityRenderer<T extends DragonEntity> extends GeoEn
 
     public DragonEntityRenderer(EntityRendererFactory.Context renderManager, DragonEntityModel<T> model) {
         super(renderManager, model);
-        this.addLayer(new DragonEntityEyesRenderer(this));
-        this.addLayer(new DragonEntityNoColourRenderer(this));
+        this.addLayer(new DragonEntityEyesRenderer<>(this));
+        this.addLayer(new DragonEntityNoColourRenderer<>(this));
 
     }
 
@@ -40,9 +41,15 @@ public abstract class DragonEntityRenderer<T extends DragonEntity> extends GeoEn
 
 
     @Override
-    public Color getRenderColor(DragonEntity entity, float ticks, MatrixStack stackIn, VertexConsumerProvider renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn) {
-        return (new RGBColour(entity.getDataTracker().get(entity.COLOUR))).toColor();
+    public Color getRenderColor(DragonEntity entity, float ticks, MatrixStack stack, VertexConsumerProvider buffer, VertexConsumer builder, int packedLight) {
+        return (new RGBColour(entity.getDataTracker().get(DragonEntity.COLOUR))).toColor();
     }
 
+    @Override
+    public void render(T entity, float entityYaw, float ticks, MatrixStack stack, VertexConsumerProvider buffer, int packedLight) {
+        float scale = entity.getScale();
+        stack.scale(scale, scale, scale);
+        super.render(entity, entityYaw, ticks, stack, buffer, packedLight);
+    }
 
 }

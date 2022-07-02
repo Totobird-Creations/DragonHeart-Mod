@@ -49,9 +49,9 @@ public class DragonHeartClient implements ClientModInitializer, ShaderEffectRend
     public void onInitializeClient() {
 
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> ((Dragonscale)stack.getItem()).getColor(stack), MiscItems.DRAGONSCALE);
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> getDragonBucketItemColour(stack, tintIndex), MiscItems.DRAGONBUCKET_ICE);
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> getDragonBucketItemColour(stack, tintIndex), MiscItems.DRAGONBUCKET_FIRE);
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> getDragonBucketItemColour(stack, tintIndex), MiscItems.DRAGONBUCKET_LIGHTNING);
+        ColorProviderRegistry.ITEM.register( this::getDragonBucketItemColour, MiscItems.DRAGONBUCKET_ICE       );
+        ColorProviderRegistry.ITEM.register( this::getDragonBucketItemColour, MiscItems.DRAGONBUCKET_FIRE      );
+        ColorProviderRegistry.ITEM.register( this::getDragonBucketItemColour, MiscItems.DRAGONBUCKET_LIGHTNING );
 
         EntityRendererRegistry.register(ModEntities.DRAGON_FIRE      , DragonFireEntityRenderer::new      );
         EntityRendererRegistry.register(ModEntities.DRAGON_ICE       , DragonIceEntityRenderer::new       );
@@ -74,6 +74,7 @@ public class DragonHeartClient implements ClientModInitializer, ShaderEffectRend
     @Override
     public void renderShaderEffects(float tickDelta) {
         ClientPlayerEntity player     = MinecraftClient.getInstance().player;
+        assert player != null;
         boolean            isDeafened = ((DeafenedEffectLivingEntityInterface)player).isDeafened();
         deafenedShaderAmount          = Math.min(Math.max(deafenedShaderAmount + (isDeafened ? tickDelta * 0.1f : -tickDelta * 0.02f), 0.0f), 1.0f);
         if (deafenedShaderAmount > 0.0) {

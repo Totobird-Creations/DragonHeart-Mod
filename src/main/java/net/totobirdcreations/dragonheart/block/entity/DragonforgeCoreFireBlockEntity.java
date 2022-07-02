@@ -18,37 +18,29 @@ public class DragonforgeCoreFireBlockEntity extends DragonforgeCoreTypeBlockEnti
 
 
     public DragonforgeCoreFireBlockEntity(BlockPos pos, BlockState state) {
-
         super(ModBlockEntities.DRAGONFORGE_CORE_FIRE, pos, state);
-
     }
 
 
     @Override
     public Text getDisplayName() {
-
         return Text.translatable("container." + DragonHeart.MOD_ID + ".dragonforge_core_fire");
-
     }
 
 
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-
         return new DragonforgeCoreFireScreenHandler(syncId, inv, this, this.propertyDelegate);
-
     }
 
 
     @Override
     public boolean isCorrectForgeType(RequiredForgeType requiredForgeType) {
-
         return requiredForgeType == DragonforgeCoreTypeRecipe.RequiredForgeType.ANY ||
                 requiredForgeType == RequiredForgeType.FIRE ||
                 requiredForgeType == RequiredForgeType.FIRE_OR_ICE ||
                 requiredForgeType == RequiredForgeType.FIRE_OR_LIGHTNING;
-
     }
 
 

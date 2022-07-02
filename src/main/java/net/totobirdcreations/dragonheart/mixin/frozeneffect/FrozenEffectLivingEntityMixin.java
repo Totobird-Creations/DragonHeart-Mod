@@ -32,6 +32,7 @@ public abstract class FrozenEffectLivingEntityMixin extends Entity implements Fr
 
     @Shadow public abstract float getBodyYaw();
 
+
     public FrozenEffectLivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
     }
@@ -39,7 +40,7 @@ public abstract class FrozenEffectLivingEntityMixin extends Entity implements Fr
     private static final TrackedData<Boolean> ICED;
 
     static {
-        ICED = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+        ICED = DataTracker.registerData(FrozenEffectLivingEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
     }
 
     public float   frozenHeadYaw = 0.0f;

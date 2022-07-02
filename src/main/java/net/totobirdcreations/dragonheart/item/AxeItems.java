@@ -13,6 +13,7 @@ import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
 public class AxeItems {
 
 
+    @SuppressWarnings("unused")
     public static final Item AXE_DRAGONBONE = registerItem(
             "axe_dragonbone",
             new Axe(
@@ -23,6 +24,7 @@ public class AxeItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item AXE_DRAGONBONE_FIRE = registerItem(
             "axe_dragonbone_fire",
             new AxeFire(
@@ -33,6 +35,7 @@ public class AxeItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item AXE_DRAGONBONE_ICE = registerItem(
             "axe_dragonbone_ice",
             new AxeIce(
@@ -43,6 +46,7 @@ public class AxeItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item AXE_DRAGONBONE_LIGHTNING = registerItem(
             "axe_dragonbone_lightning",
             new AxeLightning(
@@ -54,6 +58,7 @@ public class AxeItems {
     );
 
 
+    @SuppressWarnings("unused")
     public static final Item AXE_DRAGONSTEEL_FIRE = registerItem(
             "axe_dragonsteel_fire",
             new AxeFire(
@@ -64,6 +69,7 @@ public class AxeItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item AXE_DRAGONSTEEL_ICE = registerItem(
             "axe_dragonsteel_ice",
             new AxeIce(
@@ -74,6 +80,7 @@ public class AxeItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item AXE_DRAGONSTEEL_LIGHTNING = registerItem(
             "axe_dragonsteel_lightning",
             new AxeLightning(
@@ -85,11 +92,7 @@ public class AxeItems {
     );
 
 
-    public static void register() {
-
-
-
-    }
+    public static void register() {}
 
 
 }

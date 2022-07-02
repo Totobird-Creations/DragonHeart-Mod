@@ -27,19 +27,15 @@ public class ModItemGroups {
 
 
     public static ItemGroup registerItemGroup(String name, Item item) {
-
         return FabricItemGroupBuilder.build(
                 new Identifier(DragonHeart.MOD_ID, name),
                 () -> new ItemStack(item)
         );
-
     }
 
 
     public static void register() {
-
         DragonHeart.LOGGER.info("Registering item groups.");
-
     }
 
 

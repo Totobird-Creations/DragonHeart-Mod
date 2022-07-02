@@ -10,18 +10,14 @@ public class HoeLightning extends Hoe {
 
 
     public HoeLightning(Settings settings, HoeMaterial material) {
-
         super(settings, material);
-
     }
 
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-
-        Lightning.hit(stack, target, attacker, true);
+        Lightning.hit(target);
         return super.postHit(stack, target, attacker);
-
     }
 
 

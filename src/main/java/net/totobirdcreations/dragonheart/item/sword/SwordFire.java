@@ -10,18 +10,14 @@ public class SwordFire extends Sword {
 
 
     public SwordFire(Settings settings, SwordMaterial material) {
-
         super(settings, material);
-
     }
 
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-
-        Fire.hit(stack, target, attacker, true);
+        Fire.hit(target, true);
         return super.postHit(stack, target, attacker);
-
     }
 
 

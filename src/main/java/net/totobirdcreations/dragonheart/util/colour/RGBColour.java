@@ -5,8 +5,6 @@ import software.bernie.geckolib3.core.util.Color;
 
 public class RGBColour {
 
-    public static RGBColour WHITE = new RGBColour(1.0f, 1.0f, 1.0f);
-
     public float r;
     public float g;
     public float b;
@@ -24,8 +22,8 @@ public class RGBColour {
     }
 
     public float distance(RGBColour other) {
-        int lab1[] = this.toLab();
-        int lab2[] = other.toLab();
+        int[] lab1 = this.toLab();
+        int[] lab2 = other.toLab();
         return (float)(Math.sqrt(
                 Math.pow(lab2[0] - lab1[0], 2.0f) +
                 Math.pow(lab2[1] - lab1[1], 2.0f) +

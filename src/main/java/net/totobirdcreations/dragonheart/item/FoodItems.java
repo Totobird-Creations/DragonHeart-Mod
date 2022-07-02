@@ -11,6 +11,7 @@ import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
 public class FoodItems {
 
 
+    @SuppressWarnings("unused")
     public static final Item DRAGONMEAT_FIRE = registerItem(
             "dragonmeat_fire",
             new Item(
@@ -22,6 +23,7 @@ public class FoodItems {
     );
 
 
+    @SuppressWarnings("unused")
     public static final Item DRAGONMEAT_ICE = registerItem(
             "dragonmeat_ice",
             new Item(
@@ -33,6 +35,7 @@ public class FoodItems {
     );
 
 
+    @SuppressWarnings("unused")
     public static final Item DRAGONMEAT_LIGHTNING = registerItem(
             "dragonmeat_lightning",
             new Item(
@@ -44,11 +47,15 @@ public class FoodItems {
     );
 
 
-    public static void register() {
+    public static final Item DRAGONMEAL = registerItem(
+            "dragonmeal",
+            new Item(
+                    new FabricItemSettings().group(ItemGroup.FOOD)
+            )
+    );
 
 
-
-    }
+    public static void register() {}
 
 
 }

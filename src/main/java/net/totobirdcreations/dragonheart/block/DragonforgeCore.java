@@ -35,77 +35,63 @@ public class DragonforgeCore extends BlockWithEntity implements BlockEntityProvi
 
 
     public DragonforgeCore(Settings settings) {
-
         super(settings);
         this.setDefaultState(this.getDefaultState().with(POWERED, false).with(ACTIVE, false));
-
     }
 
 
     public void setDependencyBlocks(Block[] brickBlocks, Block[] hatchBlocks, Block[] apertureBlocks, Block[] windowBlocks, Block[] supportBlocks) {
-
         this.brickBlocks    = brickBlocks;
         this.hatchBlocks    = hatchBlocks;
         this.apertureBlocks = apertureBlocks;
         this.windowBlocks   = windowBlocks;
         this.supportBlocks  = supportBlocks;
-
     }
 
 
     public static int getLuminance(BlockState state) {
-
         if (state.get(ACTIVE)) {
             return 15;
         } else {
             return 0;
         }
-
     }
 
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-
         return new DragonforgeCoreBaseBlockEntity(pos, state);
-
     }
 
 
     @Override
     public BlockRenderType getRenderType(BlockState state) {
-
         return BlockRenderType.MODEL;
-
     }
 
 
+    @SuppressWarnings("deprecation")
     @Override
     public PistonBehavior getPistonBehavior(BlockState state) {
-
         return PistonBehavior.BLOCK;
-
     }
 
 
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-
         super.onPlaced(world, pos, state, placer, itemStack);
         update(world, pos);
-
     }
 
 
     @Override
     public void onBroken(WorldAccess worldAccess, BlockPos pos, BlockState state) {
-
         super.onBroken(worldAccess, pos, state);
         update((World)worldAccess, pos);
-
     }
 
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
 
@@ -139,8 +125,7 @@ public class DragonforgeCore extends BlockWithEntity implements BlockEntityProvi
         };
         for (int i = 0; i < blockStates.length; i++) {
             BlockState blockState = blockStates[i];
-            for (int j = 0; j < apertureBlocks.length; j++) {
-                Block apertureBlock = apertureBlocks[j];
+            for (Block apertureBlock : apertureBlocks) {
                 if (blockState.isOf(apertureBlock)) {
                     isValidConstruction = true;
                     apertureBlockState = blockState;
@@ -153,12 +138,14 @@ public class DragonforgeCore extends BlockWithEntity implements BlockEntityProvi
                     } else if (i == 2) {
                         south = apertureBlocks;
                         north = hatchBlocks;
-                    } else if (i == 3) {
+                    } else { // i == 3
                         north = apertureBlocks;
                         south = hatchBlocks;
                     }
                 }
-                if (isValidConstruction) {break;}
+                if (isValidConstruction) {
+                    break;
+                }
             }
             if (isValidConstruction) {break;}
         }
@@ -222,23 +209,20 @@ public class DragonforgeCore extends BlockWithEntity implements BlockEntityProvi
                 pos.add(0, 0, -1),
                 pos.add(0, 1, 0)
         };
-        for (int i = 0; i < blockPositions.length; i++) {
-            BlockPos   blockPosition = blockPositions[i];
-            BlockState blockState    = world.getBlockState(blockPosition);
-            boolean    done          = false;
-            for (int j = 0; j < brickBlocks.length; j++) {
-                Block block = brickBlocks[j];
+        for (BlockPos blockPosition : blockPositions) {
+            BlockState blockState = world.getBlockState(blockPosition);
+            boolean done = false;
+            for (Block block : brickBlocks) {
                 if (blockState.isOf(block)) {
-                    ((DragonforgePowerable)blockState.getBlock()).update(world, blockPosition, blockState);
+                    ((DragonforgePowerable) blockState.getBlock()).update(world, blockPosition, blockState);
                     done = true;
                 }
                 if (done) {
                     break;
                 }
             }
-            if (! done) {
-                for (int j = 0; j < hatchBlocks.length; j++) {
-                    Block block = hatchBlocks[j];
+            if (!done) {
+                for (Block block : hatchBlocks) {
                     if (blockState.isOf(block)) {
                         ((DragonforgePowerable) blockState.getBlock()).update(world, blockPosition, blockState);
                         done = true;
@@ -248,11 +232,10 @@ public class DragonforgeCore extends BlockWithEntity implements BlockEntityProvi
                     }
                 }
             }
-            if (! done) {
-                for (int j = 0; j < windowBlocks.length; j++) {
-                    Block block = windowBlocks[j];
+            if (!done) {
+                for (Block block : windowBlocks) {
                     if (blockState.isOf(block)) {
-                        ((DragonforgeWindow) blockState.getBlock()).update(world, blockPosition, blockState);
+                        ((DragonforgeWindow) blockState.getBlock()).update(world, blockPosition);
                         done = true;
                     }
                     if (done) {
@@ -266,13 +249,10 @@ public class DragonforgeCore extends BlockWithEntity implements BlockEntityProvi
 
 
     public boolean validate(BlockState[] blockStates, Block[] blocks) {
-
         boolean isValid = true;
-        for (int i = 0; i < blockStates.length; i++) {
-            BlockState blockState = blockStates[i];
+        for (BlockState blockState : blockStates) {
             isValid = false;
-            for (int j = 0; j < blocks.length; j++) {
-                Block block = blocks[j];
+            for (Block block : blocks) {
                 if (blockState.isOf(block)) {
                     isValid = true;
                 }
@@ -280,21 +260,19 @@ public class DragonforgeCore extends BlockWithEntity implements BlockEntityProvi
                     break;
                 }
             }
-            if (! isValid) {
+            if (!isValid) {
                 break;
             }
         }
         return isValid;
-
     }
 
 
+    @SuppressWarnings("deprecation")
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-
         openScreen(state, world, pos, player);
         return ActionResult.SUCCESS;
-
     }
 
 
@@ -303,9 +281,7 @@ public class DragonforgeCore extends BlockWithEntity implements BlockEntityProvi
 
     @Override
     public void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-
         builder.add(POWERED, ACTIVE);
-
     }
 
 }

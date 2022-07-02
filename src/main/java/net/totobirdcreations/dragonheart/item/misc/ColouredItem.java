@@ -14,13 +14,11 @@ public interface ColouredItem extends DyeableItem {
 
     @Override
     default int getColor(ItemStack stack) {
-
         NbtCompound nbtCompound = stack.getSubNbt(DISPLAY_KEY);
         if (nbtCompound != null && nbtCompound.contains(COLOR_KEY, 99)) {
             return nbtCompound.getInt(COLOR_KEY);
         }
         return DEFAULT_COLOR;
-
     }
 
 

@@ -35,6 +35,7 @@ public class DragonsteelBlock extends FacingBlock {
         return this.getDefaultState().with(FACING, ctx.getSide());
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public float calcBlockBreakingDelta(BlockState state, PlayerEntity player, BlockView world, BlockPos pos) {
         Vec3d          start  = player.getEyePos();

@@ -17,55 +17,48 @@ public class DragonforgeApertureBlockEntity extends BlockEntity {
 
 
     public DragonforgeApertureBlockEntity(BlockPos pos, BlockState state) {
-
         super(ModBlockEntities.DRAGONFORGE_APERTURE, pos, state);
-
     }
 
 
     @Override
     public void readNbt(NbtCompound nbt) {
-
         super.readNbt(nbt);
         power = nbt.getShort("power");
         if (power >= 1) {
-            world.setBlockState(pos, world.getBlockState(pos).with(DragonforgeAperture.POWERED, true));
-            updateNearby(world, pos, world.getBlockState(pos), ((DragonforgeAperture)world.getBlockState(pos).getBlock()).coreBlocks);
+            assert world != null;
+            this.world.setBlockState(pos, world.getBlockState(pos).with(DragonforgeAperture.POWERED, true));
+            updateNearby(world, pos, ((DragonforgeAperture) world.getBlockState(pos).getBlock()).coreBlocks);
         }
-
     }
 
 
     @Override
     public void writeNbt(NbtCompound nbt) {
-
         nbt.putShort("power", (short)power);
         super.writeNbt(nbt);
-
     }
 
 
     public void breathedOn() {
-
         if (power <= 0) {
+            assert world != null;
             world.setBlockState(pos, world.getBlockState(pos).with(DragonforgeAperture.POWERED, true));
-            updateNearby(world, pos, world.getBlockState(pos), ((DragonforgeAperture)world.getBlockState(pos).getBlock()).coreBlocks);
+            updateNearby(world, pos, ((DragonforgeAperture)world.getBlockState(pos).getBlock()).coreBlocks);
         }
         power = 20;
-
     }
 
 
+    @SuppressWarnings("unused")
     public static void tick(World world, BlockPos pos, BlockState state, DragonforgeApertureBlockEntity entity) {
-
         if (entity.power >= 1) {
             entity.power -= 1;
             if (entity.power <= 0) {
                 world.setBlockState(pos, world.getBlockState(pos).with(DragonforgeAperture.POWERED, false));
-                updateNearby(world, pos, world.getBlockState(pos), ((DragonforgeAperture)world.getBlockState(pos).getBlock()).coreBlocks);
+                updateNearby(world, pos, ((DragonforgeAperture) world.getBlockState(pos).getBlock()).coreBlocks);
             }
         }
-
     }
 
 

@@ -13,18 +13,14 @@ public class RoarDamageSource extends DamageSource {
 
     @Override
     public RoarDamageSource setScaledWithDifficulty() {
-
         super.setScaledWithDifficulty();
         return this;
-
     }
 
     @Override
     public RoarDamageSource setFire() {
-
         super.setFire();
         return this;
-
     }
 
     @Override

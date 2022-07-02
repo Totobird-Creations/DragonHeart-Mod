@@ -22,9 +22,7 @@ public class DragonforgeCoreFireScreenHandler extends DragonforgeCoreTypeScreenH
 
     @Override
     public ForgeType getForgeType() {
-
         return ForgeType.FIRE;
-
     }
 
 

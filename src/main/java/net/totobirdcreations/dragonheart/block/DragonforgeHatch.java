@@ -15,15 +15,13 @@ public class DragonforgeHatch extends DragonforgePowerable {
 
 
     public DragonforgeHatch(Settings settings) {
-
         super(settings);
-
     }
 
 
+    @SuppressWarnings("deprecation")
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-
         BlockPos[] blockPositions = {
                 pos.add(1, 0, 0),
                 pos.add(-1, 0, 0),
@@ -32,11 +30,9 @@ public class DragonforgeHatch extends DragonforgePowerable {
         };
         BlockPos coreBlockPos = null;
         boolean    passed     = true;
-        for (int i = 0; i < blockPositions.length; i++) {
-            BlockPos   blockPos   = blockPositions[i];
+        for (BlockPos blockPos : blockPositions) {
             BlockState blockState = world.getBlockState(blockPos);
-            for (int j = 0; j < coreBlocks.length; j++) {
-                Block coreBlock = coreBlocks[j];
+            for (Block coreBlock : coreBlocks) {
                 if (blockState.isOf(coreBlock)) {
                     if (coreBlockPos != null) {
                         passed = false;
@@ -46,7 +42,7 @@ public class DragonforgeHatch extends DragonforgePowerable {
                     }
                 }
             }
-            if (! passed) {
+            if (!passed) {
                 break;
             }
         }
@@ -55,7 +51,6 @@ public class DragonforgeHatch extends DragonforgePowerable {
             ((DragonforgeCore)coreBlockState.getBlock()).openScreen(coreBlockState, world, coreBlockPos, player);
         }
         return ActionResult.SUCCESS;
-
     }
 
 

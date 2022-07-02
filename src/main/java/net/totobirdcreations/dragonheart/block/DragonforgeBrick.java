@@ -23,33 +23,26 @@ public class DragonforgeBrick extends DragonforgePowerable {
 
 
     public DragonforgeBrick(Settings settings) {
-
         super(settings);
         this.setDefaultState(this.getDefaultState().with(VENT, false));
-
     }
 
 
     public void setDependencyBlocks(Block windowBlock, Block[] coreBlocks) {
-
         this.windowBlock = windowBlock;
         this.coreBlocks  = coreBlocks;
-
     }
 
 
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-
         update(world, pos, state);
         super.onPlaced(world, pos, state, placer, itemStack);
-
     }
 
 
     @Override
     public void update(World world, BlockPos pos, BlockState state) {
-
         BlockState[] blockStates = {
                 world.getBlockState(pos.add(1, 0, 0)),
                 world.getBlockState(pos.add(-1, 0, 0)),
@@ -58,8 +51,7 @@ public class DragonforgeBrick extends DragonforgePowerable {
         };
         BlockState blockState = world.getBlockState(pos.add(0, -1, 0));
         boolean shouldHaveWindow = false;
-        for (int i = 0; i < coreBlocks.length; i++) {
-            Block coreBlock = coreBlocks[i];
+        for (Block coreBlock : coreBlocks) {
             if (blockState.isOf(coreBlock)) {
                 shouldHaveWindow = true;
             }
@@ -73,16 +65,15 @@ public class DragonforgeBrick extends DragonforgePowerable {
             Clearable.clear(blockEntity);
             world.setBlockState(pos, windowBlock.getDefaultState());
             BlockState newBlockState = world.getBlockState(pos);
-            ((DragonforgeWindow)newBlockState.getBlock()).update(world, pos, newBlockState);
+            ((DragonforgeWindow)newBlockState.getBlock()).update(world, pos);
 
         } else {
 
             boolean shouldHaveVent = false;
             boolean shouldBePowered = false;
-            for (int i = 0; i < blockStates.length; i++) {
-                blockState = blockStates[i];
-                for (int j = 0; j < coreBlocks.length; j++) {
-                    Block coreBlock = coreBlocks[j];
+            for (BlockState value : blockStates) {
+                blockState = value;
+                for (Block coreBlock : coreBlocks) {
                     if (blockState.isOf(coreBlock)) {
                         shouldHaveVent = true;
                         if (blockState.get(DragonforgeCore.POWERED)) {
@@ -98,16 +89,13 @@ public class DragonforgeBrick extends DragonforgePowerable {
             world.setBlockState(pos, state.with(VENT, shouldHaveVent).with(POWERED, shouldBePowered), Block.NOTIFY_ALL);
 
         }
-
     }
 
 
     @Override
     public void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-
         super.appendProperties(builder);
         builder.add(VENT);
-
     }
 
 

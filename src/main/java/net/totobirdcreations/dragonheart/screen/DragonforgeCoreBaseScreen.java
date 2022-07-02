@@ -18,24 +18,19 @@ public class DragonforgeCoreBaseScreen extends HandledScreen<DragonforgeCoreBase
 
 
     public DragonforgeCoreBaseScreen(DragonforgeCoreBaseScreenHandler handler, PlayerInventory inventory, Text title) {
-
         super(handler, inventory, title);
-
     }
 
 
     @Override
     public void init() {
-
         super.init();
         titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
-
     }
 
 
     @Override
     public void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
-
         RenderSystem.setShader        (GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor   (1.0f, 1.0f, 1.0f, 1.0f);
         RenderSystem.setShaderTexture (0, TEXTURE);
@@ -48,17 +43,14 @@ public class DragonforgeCoreBaseScreen extends HandledScreen<DragonforgeCoreBase
             int conversionMode = handler.getConversionMode();
             this.drawTexture(matrices, x + 68, y + 24 + (40 - progress), 176, 40 * (conversionMode) - progress, 40, progress);
         }
-
     }
 
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-
         renderBackground(matrices);
         super.render(matrices, mouseX, mouseY, delta);
         drawMouseoverTooltip(matrices, mouseX, mouseY);
-
     }
 
 

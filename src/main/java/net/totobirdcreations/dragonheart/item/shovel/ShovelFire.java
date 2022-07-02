@@ -10,18 +10,14 @@ public class ShovelFire extends Shovel {
 
 
     public ShovelFire(Settings settings, ShovelMaterial material) {
-
         super(settings, material);
-
     }
 
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-
-        Fire.hit(stack, target, attacker, true);
+        Fire.hit(target, true);
         return super.postHit(stack, target, attacker);
-
     }
 
 

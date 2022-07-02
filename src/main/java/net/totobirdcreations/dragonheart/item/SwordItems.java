@@ -9,10 +9,10 @@ import net.totobirdcreations.dragonheart.item.sword.*;
 import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
 
 
-
 public class SwordItems {
 
 
+    @SuppressWarnings("unused")
     public static final Item SWORD_DRAGONBONE = registerItem(
             "sword_dragonbone",
             new Sword(
@@ -23,6 +23,7 @@ public class SwordItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item SWORD_DRAGONBONE_FIRE = registerItem(
             "sword_dragonbone_fire",
             new SwordFire(
@@ -33,6 +34,7 @@ public class SwordItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item SWORD_DRAGONBONE_ICE = registerItem(
             "sword_dragonbone_ice",
             new SwordIce(
@@ -43,6 +45,7 @@ public class SwordItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item SWORD_DRAGONBONE_LIGHTNING = registerItem(
             "sword_dragonbone_lightning",
             new SwordLightning(
@@ -54,6 +57,7 @@ public class SwordItems {
     );
 
 
+    @SuppressWarnings("unused")
     public static final Item SWORD_DRAGONSTEEL_FIRE = registerItem(
             "sword_dragonsteel_fire",
             new SwordFire(
@@ -64,6 +68,7 @@ public class SwordItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item SWORD_DRAGONSTEEL_ICE = registerItem(
             "sword_dragonsteel_ice",
             new SwordIce(
@@ -74,6 +79,7 @@ public class SwordItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item SWORD_DRAGONSTEEL_LIGHTNING = registerItem(
             "sword_dragonsteel_lightning",
             new SwordLightning(
@@ -85,11 +91,7 @@ public class SwordItems {
     );
 
 
-    public static void register() {
-
-
-
-    }
+    public static void register() {}
 
 
 }

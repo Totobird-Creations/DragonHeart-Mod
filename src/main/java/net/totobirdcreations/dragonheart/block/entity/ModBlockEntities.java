@@ -12,7 +12,7 @@ import net.totobirdcreations.dragonheart.block.DragonforgeBlocks;
 public class ModBlockEntities {
 
 
-    public static final BlockEntityType DRAGONFORGE_CORE_BASE = Registry.register(
+    public static final BlockEntityType<DragonforgeCoreBaseBlockEntity> DRAGONFORGE_CORE_BASE = Registry.register(
             Registry.BLOCK_ENTITY_TYPE,
             new Identifier(DragonHeart.MOD_ID, "dragonforge_core_base"),
             FabricBlockEntityTypeBuilder.create(
@@ -21,7 +21,7 @@ public class ModBlockEntities {
             ).build(null)
     );
 
-    public static final BlockEntityType DRAGONFORGE_CORE_FIRE = Registry.register(
+    public static final BlockEntityType<DragonforgeCoreFireBlockEntity> DRAGONFORGE_CORE_FIRE = Registry.register(
             Registry.BLOCK_ENTITY_TYPE,
             new Identifier(DragonHeart.MOD_ID, "dragonforge_core_fire"),
             FabricBlockEntityTypeBuilder.create(
@@ -30,7 +30,7 @@ public class ModBlockEntities {
             ).build(null)
     );
 
-    public static final BlockEntityType DRAGONFORGE_CORE_ICE = Registry.register(
+    public static final BlockEntityType<DragonforgeCoreIceBlockEntity> DRAGONFORGE_CORE_ICE = Registry.register(
             Registry.BLOCK_ENTITY_TYPE,
             new Identifier(DragonHeart.MOD_ID, "dragonforge_core_ice"),
             FabricBlockEntityTypeBuilder.create(
@@ -39,7 +39,7 @@ public class ModBlockEntities {
             ).build(null)
     );
 
-    public static final BlockEntityType DRAGONFORGE_CORE_LIGHTNING = Registry.register(
+    public static final BlockEntityType<DragonforgeCoreLightningBlockEntity> DRAGONFORGE_CORE_LIGHTNING = Registry.register(
             Registry.BLOCK_ENTITY_TYPE,
             new Identifier(DragonHeart.MOD_ID, "dragonforge_core_lightning"),
             FabricBlockEntityTypeBuilder.create(
@@ -48,7 +48,7 @@ public class ModBlockEntities {
             ).build(null)
     );
 
-    public static final BlockEntityType DRAGONFORGE_APERTURE = Registry.register(
+    public static final BlockEntityType<DragonforgeApertureBlockEntity> DRAGONFORGE_APERTURE = Registry.register(
             Registry.BLOCK_ENTITY_TYPE,
             new Identifier(DragonHeart.MOD_ID, "dragonforge_aperture"),
             FabricBlockEntityTypeBuilder.create(
@@ -62,9 +62,7 @@ public class ModBlockEntities {
 
 
     public static void register() {
-
         DragonHeart.LOGGER.info("Registering block entities.");
-
     }
 
 

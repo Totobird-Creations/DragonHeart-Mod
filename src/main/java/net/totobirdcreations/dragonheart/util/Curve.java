@@ -20,8 +20,7 @@ public class Curve {
         float t  = x * delta - x + 2.0f * delta - 2.0f * delta * a;
         t       /= delta - 2.0f * delta * a + 1.0f;
         float u  = -t / 2.0f + 0.5f;
-        float v  = u + (0.5f - u) * mute;
-        return v;
+        return u + (0.5f - u) * mute;
     }
 
 }

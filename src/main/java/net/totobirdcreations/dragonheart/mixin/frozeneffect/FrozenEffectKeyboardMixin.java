@@ -21,8 +21,8 @@ public abstract class FrozenEffectKeyboardMixin {
             cancellable = true
     )
     public void onKey(long window, int key, int scancode, int action, int modifiers, CallbackInfo callback) {
-        boolean detected = false;
-        if (MinecraftClient.getInstance().options.forwardKey.matchesKey(key, scancode) ||
+        boolean detected = (
+                MinecraftClient.getInstance().options.forwardKey.matchesKey(key, scancode) ||
                 MinecraftClient.getInstance().options.leftKey.matchesKey(key, scancode) ||
                 MinecraftClient.getInstance().options.backKey.matchesKey(key, scancode) ||
                 MinecraftClient.getInstance().options.rightKey.matchesKey(key, scancode) ||
@@ -34,17 +34,17 @@ public abstract class FrozenEffectKeyboardMixin {
                 MinecraftClient.getInstance().options.useKey.matchesKey(key, scancode) ||
                 MinecraftClient.getInstance().options.attackKey.matchesKey(key, scancode) ||
                 MinecraftClient.getInstance().options.pickItemKey.matchesKey(key, scancode)
-        ) {
-            detected = true;
-        }
-        if (detected) {
+        );
+        if (! detected) {
             KeyBinding[] keys = MinecraftClient.getInstance().options.hotbarKeys;
-            for (int i=0;i< keys.length ;i++) {
-                if (keys[i].matchesKey(key, scancode)) {
+            for (KeyBinding keyBinding : keys) {
+                if (keyBinding.matchesKey(key, scancode)) {
                     detected = true;
                     break;
                 }
             }
+        }
+        if (detected) {
             callback.cancel();
         }
     }

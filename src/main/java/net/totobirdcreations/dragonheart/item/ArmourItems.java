@@ -1,13 +1,10 @@
 package net.totobirdcreations.dragonheart.item;
 
-import net.fabricmc.fabric.api.item.v1.EquipmentSlotProvider;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ElytraItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.util.Rarity;
 import net.totobirdcreations.dragonheart.item.material.ArmourMaterial;
 
 import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
@@ -16,6 +13,7 @@ import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
 
 public class ArmourItems {
 
+    @SuppressWarnings("unused")
     public static final Item HELMET_DRAGONBONE = registerItem(
             "helmet_dragonbone",
             new ArmorItem(
@@ -27,6 +25,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item CHESTPLATE_DRAGONBONE = registerItem(
             "chestplate_dragonbone",
             new ArmorItem(
@@ -38,6 +37,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item LEGGINGS_DRAGONBONE = registerItem(
             "leggings_dragonbone",
             new ArmorItem(
@@ -49,6 +49,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item BOOTS_DRAGONBONE = registerItem(
             "boots_dragonbone",
             new ArmorItem(
@@ -61,6 +62,7 @@ public class ArmourItems {
     );
 
 
+    @SuppressWarnings("unused")
     public static final Item HELMET_DRAGONBONE_FIRE = registerItem(
             "helmet_dragonbone_fire",
             new ArmorItem(
@@ -72,6 +74,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item CHESTPLATE_DRAGONBONE_FIRE = registerItem(
             "chestplate_dragonbone_fire",
             new ArmorItem(
@@ -83,6 +86,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item LEGGINGS_DRAGONBONE_FIRE = registerItem(
             "leggings_dragonbone_fire",
             new ArmorItem(
@@ -94,6 +98,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item BOOTS_DRAGONBONE_FIRE = registerItem(
             "boots_dragonbone_fire",
             new ArmorItem(
@@ -106,6 +111,7 @@ public class ArmourItems {
     );
 
 
+    @SuppressWarnings("unused")
     public static final Item HELMET_DRAGONBONE_ICE = registerItem(
             "helmet_dragonbone_ice",
             new ArmorItem(
@@ -117,6 +123,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item CHESTPLATE_DRAGONBONE_ICE = registerItem(
             "chestplate_dragonbone_ice",
             new ArmorItem(
@@ -128,6 +135,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item LEGGINGS_DRAGONBONE_ICE = registerItem(
             "leggings_dragonbone_ice",
             new ArmorItem(
@@ -139,6 +147,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item BOOTS_DRAGONBONE_ICE = registerItem(
             "boots_dragonbone_ice",
             new ArmorItem(
@@ -151,6 +160,7 @@ public class ArmourItems {
     );
 
 
+    @SuppressWarnings("unused")
     public static final Item HELMET_DRAGONBONE_LIGHTNING = registerItem(
             "helmet_dragonbone_lightning",
             new ArmorItem(
@@ -162,6 +172,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item CHESTPLATE_DRAGONBONE_LIGHTNING = registerItem(
             "chestplate_dragonbone_lightning",
             new ArmorItem(
@@ -173,6 +184,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item LEGGINGS_DRAGONBONE_LIGHTNING = registerItem(
             "leggings_dragonbone_lightning",
             new ArmorItem(
@@ -184,6 +196,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item BOOTS_DRAGONBONE_LIGHTNING = registerItem(
             "boots_dragonbone_lightning",
             new ArmorItem(
@@ -196,6 +209,7 @@ public class ArmourItems {
     );
 
 
+    @SuppressWarnings("unused")
     public static final Item HELMET_DRAGONSTEEL_FIRE = registerItem(
             "helmet_dragonsteel_fire",
             new ArmorItem(
@@ -207,6 +221,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item CHESTPLATE_DRAGONSTEEL_FIRE = registerItem(
             "chestplate_dragonsteel_fire",
             new ArmorItem(
@@ -218,6 +233,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item LEGGINGS_DRAGONSTEEL_FIRE = registerItem(
             "leggings_dragonsteel_fire",
             new ArmorItem(
@@ -229,6 +245,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item BOOTS_DRAGONSTEEL_FIRE = registerItem(
             "boots_dragonsteel_fire",
             new ArmorItem(
@@ -241,6 +258,7 @@ public class ArmourItems {
     );
 
 
+    @SuppressWarnings("unused")
     public static final Item HELMET_DRAGONSTEEL_ICE = registerItem(
             "helmet_dragonsteel_ice",
             new ArmorItem(
@@ -252,6 +270,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item CHESTPLATE_DRAGONSTEEL_ICE = registerItem(
             "chestplate_dragonsteel_ice",
             new ArmorItem(
@@ -263,6 +282,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item LEGGINGS_DRAGONSTEEL_ICE = registerItem(
             "leggings_dragonsteel_ice",
             new ArmorItem(
@@ -274,6 +294,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item BOOTS_DRAGONSTEEL_ICE = registerItem(
             "boots_dragonsteel_ice",
             new ArmorItem(
@@ -286,6 +307,7 @@ public class ArmourItems {
     );
 
 
+    @SuppressWarnings("unused")
     public static final Item HELMET_DRAGONSTEEL_LIGHTNING = registerItem(
             "helmet_dragonsteel_lightning",
             new ArmorItem(
@@ -297,6 +319,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item CHESTPLATE_DRAGONSTEEL_LIGHTNING = registerItem(
             "chestplate_dragonsteel_lightning",
             new ArmorItem(
@@ -308,6 +331,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item LEGGINGS_DRAGONSTEEL_LIGHTNING = registerItem(
             "leggings_dragonsteel_lightning",
             new ArmorItem(
@@ -319,6 +343,7 @@ public class ArmourItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item BOOTS_DRAGONSTEEL_LIGHTNING = registerItem(
             "boots_dragonsteel_lightning",
             new ArmorItem(
@@ -330,20 +355,8 @@ public class ArmourItems {
             )
     );
 
-    public static final Item ELYTRA_DRAGONSCALE = registerItem(
-            "elytra_dragonscale",
-            new ElytraItem(
-                    new FabricItemSettings()
-                            .group     (ItemGroup.TRANSPORTATION)
-                            .maxDamage (2500)
-                            .fireproof ()
-            )
-    );
 
-
-    public static void register() {
-
-    }
+    public static void register() {}
 
 
 }

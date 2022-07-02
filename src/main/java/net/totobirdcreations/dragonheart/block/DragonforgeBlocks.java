@@ -19,9 +19,7 @@ public class DragonforgeBlocks {
 
 
     public static boolean never(BlockState blockState, BlockView blockView, BlockPos blockPos) {
-
         return false;
-
     }
 
 

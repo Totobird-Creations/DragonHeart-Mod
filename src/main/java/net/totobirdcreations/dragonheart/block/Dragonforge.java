@@ -10,17 +10,14 @@ public class Dragonforge extends Block {
 
 
     public Dragonforge(Settings settings) {
-
         super(settings);
-
     }
 
 
+    @SuppressWarnings("deprecation")
     @Override
     public PistonBehavior getPistonBehavior(BlockState state) {
-
         return PistonBehavior.BLOCK;
-
     }
 
 

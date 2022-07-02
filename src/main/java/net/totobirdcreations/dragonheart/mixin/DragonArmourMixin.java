@@ -29,10 +29,10 @@ public class DragonArmourMixin {
 
     @Shadow
     @Final
-    public static UUID[] MODIFIERS;
+    private static UUID[] MODIFIERS;
 
     @Shadow @Final @Mutable
-    public Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
+    private Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
 
     @Inject(

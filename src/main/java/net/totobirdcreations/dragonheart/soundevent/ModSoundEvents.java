@@ -8,9 +8,7 @@ public class ModSoundEvents {
 
 
     public static void register() {
-
         DragonHeart.LOGGER.info("Registering sound events.");
-
     }
 
 

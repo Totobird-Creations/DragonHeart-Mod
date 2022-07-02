@@ -9,10 +9,10 @@ import net.totobirdcreations.dragonheart.item.pickaxe.*;
 import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
 
 
-
 public class PickaxeItems {
 
 
+    @SuppressWarnings("unused")
     public static final Item PICKAXE_DRAGONBONE = registerItem(
             "pickaxe_dragonbone",
             new Pickaxe(
@@ -23,6 +23,7 @@ public class PickaxeItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item PICKAXE_DRAGONBONE_FIRE = registerItem(
             "pickaxe_dragonbone_fire",
             new PickaxeFire(
@@ -33,6 +34,7 @@ public class PickaxeItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item PICKAXE_DRAGONBONE_ICE = registerItem(
             "pickaxe_dragonbone_ice",
             new PickaxeIce(
@@ -43,6 +45,7 @@ public class PickaxeItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item PICKAXE_DRAGONBONE_LIGHTNING = registerItem(
             "pickaxe_dragonbone_lightning",
             new PickaxeLightning(
@@ -54,6 +57,7 @@ public class PickaxeItems {
     );
 
 
+    @SuppressWarnings("unused")
     public static final Item PICKAXE_DRAGONSTEEL_FIRE = registerItem(
             "pickaxe_dragonsteel_fire",
             new PickaxeFire(
@@ -64,6 +68,7 @@ public class PickaxeItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item PICKAXE_DRAGONSTEEL_ICE = registerItem(
             "pickaxe_dragonsteel_ice",
             new PickaxeIce(
@@ -74,6 +79,7 @@ public class PickaxeItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item PICKAXE_DRAGONSTEEL_LIGHTNING = registerItem(
             "pickaxe_dragonsteel_lightning",
             new PickaxeLightning(
@@ -85,11 +91,7 @@ public class PickaxeItems {
     );
 
 
-    public static void register() {
-
-
-
-    }
+    public static void register() {}
 
 
 }

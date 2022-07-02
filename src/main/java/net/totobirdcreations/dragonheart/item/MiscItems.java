@@ -9,7 +9,6 @@ import net.totobirdcreations.dragonheart.item.misc.Dragonscale;
 import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
 
 
-
 public class MiscItems {
 
 
@@ -22,6 +21,7 @@ public class MiscItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item DRAGONSTONE = registerItem(
             "dragonstone",
             new Item(
@@ -31,6 +31,7 @@ public class MiscItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item BONEHILT = registerItem(
             "bonehilt",
             new Item(
@@ -40,6 +41,7 @@ public class MiscItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item DRAGONSCALE = registerItem(
             "dragonscale",
             new Dragonscale(
@@ -49,6 +51,7 @@ public class MiscItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item DRAGONHEART_FIRE = registerItem(
             "dragonheart_fire",
             new Dragonscale(
@@ -58,6 +61,7 @@ public class MiscItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item DRAGONHEART_ICE = registerItem(
             "dragonheart_ice",
             new Dragonscale(
@@ -67,6 +71,7 @@ public class MiscItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item DRAGONHEART_LIGHTNING = registerItem(
             "dragonheart_lightning",
             new Dragonscale(
@@ -77,6 +82,7 @@ public class MiscItems {
     );
 
 
+    @SuppressWarnings("unused")
     public static final Item DRAGONBLOOD_FIRE = registerItem(
             "dragonblood_fire",
             new Item(
@@ -86,6 +92,7 @@ public class MiscItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item DRAGONBLOOD_ICE = registerItem(
             "dragonblood_ice",
             new Item(
@@ -95,6 +102,7 @@ public class MiscItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item DRAGONBLOOD_LIGHTNING = registerItem(
             "dragonblood_lightning",
             new Item(
@@ -104,6 +112,7 @@ public class MiscItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item DRAGONBUCKET = registerItem(
             "dragonbucket",
             new Item(
@@ -113,6 +122,7 @@ public class MiscItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item DRAGONBUCKET_FIRE = registerItem(
             "dragonbucket_fire",
             new Dragonbucket(
@@ -122,6 +132,7 @@ public class MiscItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item DRAGONBUCKET_ICE = registerItem(
             "dragonbucket_ice",
             new Dragonbucket(
@@ -131,6 +142,7 @@ public class MiscItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item DRAGONBUCKET_LIGHTNING = registerItem(
             "dragonbucket_lightning",
             new Dragonbucket(
@@ -141,11 +153,7 @@ public class MiscItems {
     );
 
 
-    public static void register() {
-
-
-
-    }
+    public static void register() {}
 
 
 }

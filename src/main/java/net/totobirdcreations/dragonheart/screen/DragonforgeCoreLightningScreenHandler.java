@@ -22,9 +22,7 @@ public class DragonforgeCoreLightningScreenHandler extends DragonforgeCoreTypeSc
 
     @Override
     public ForgeType getForgeType() {
-
         return ForgeType.LIGHTNING;
-
     }
 
 

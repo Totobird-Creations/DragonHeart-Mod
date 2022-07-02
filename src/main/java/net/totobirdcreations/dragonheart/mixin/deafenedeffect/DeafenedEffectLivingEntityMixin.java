@@ -25,7 +25,7 @@ public abstract class DeafenedEffectLivingEntityMixin extends Entity implements 
     private static final TrackedData<Boolean> DEAFENED;
 
     static {
-        DEAFENED = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+        DEAFENED = DataTracker.registerData(DeafenedEffectLivingEntityMixin.class, TrackedDataHandlerRegistry.BOOLEAN);
     }
 
 

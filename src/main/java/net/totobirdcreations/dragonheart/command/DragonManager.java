@@ -17,9 +17,10 @@ import static net.minecraft.server.command.CommandManager.argument;
 
 
 public class DragonManager {
+    // TODO : Do something about this mess of warnings.
 
 
-    public static LiteralArgumentBuilder getBrigadier() {
+    public static LiteralArgumentBuilder<ServerCommandSource> getBrigadier() {
         return literal("dragonmanager")
                 .requires(source -> ((CommandSource)source).hasPermissionLevel(2))
                 .then(
@@ -30,11 +31,11 @@ public class DragonManager {
                                                         literal("state")
                                                                 .then (
                                                                         literal("SLEEP")
-                                                                                .executes(context -> DragonManager.setStateSleep(context, (ServerCommandSource)context.getSource(), EntityArgumentType.getEntity((CommandContext)context, "target")))
+                                                                                .executes(context -> DragonManager.setStateSleep((ServerCommandSource)context.getSource(), EntityArgumentType.getEntity((CommandContext)context, "target")))
                                                                 )
                                                                 .then (
                                                                         literal("NEST")
-                                                                                .executes(context -> DragonManager.setStateNest(context, (ServerCommandSource)(context.getSource()), EntityArgumentType.getEntity((CommandContext)context, "target")))
+                                                                                .executes(context -> DragonManager.setStateNest((ServerCommandSource)(context.getSource()), EntityArgumentType.getEntity((CommandContext)context, "target")))
                                                                 )
                                                 )
                                 )
@@ -42,25 +43,24 @@ public class DragonManager {
                                         literal("get")
                                                 .then(
                                                         literal("state")
-                                                                .executes(context -> DragonManager.getState(context, (ServerCommandSource)context.getSource(), EntityArgumentType.getEntity((CommandContext)context, "target")))
+                                                                .executes(context -> DragonManager.getState((ServerCommandSource)context.getSource(), EntityArgumentType.getEntity((CommandContext)context, "target")))
                                                 )
                                 )
                 );
     }
 
 
-    public static int setStateSleep(CommandContext context, ServerCommandSource source, Entity entity) throws CommandSyntaxException {
-        return setStateGeneric(context, source, entity, DragonEntity.DragonState.SLEEP);
+    public static int setStateSleep(ServerCommandSource source, Entity entity) throws CommandSyntaxException {
+        return setStateGeneric(source, entity, DragonEntity.DragonState.SLEEP);
     }
-    public static int setStateNest(CommandContext context, ServerCommandSource source, Entity entity) throws CommandSyntaxException {
-        return setStateGeneric(context, source, entity, DragonEntity.DragonState.NEST);
+    public static int setStateNest(ServerCommandSource source, Entity entity) throws CommandSyntaxException {
+        return setStateGeneric(source, entity, DragonEntity.DragonState.NEST);
     }
-    public static int setStateGeneric(CommandContext context, ServerCommandSource source, Entity entity, DragonEntity.DragonState state) throws CommandSyntaxException {
+    public static int setStateGeneric(ServerCommandSource source, Entity entity, DragonEntity.DragonState state) throws CommandSyntaxException {
         if (! (entity instanceof DragonEntity)) {
             throw new SimpleCommandExceptionType(Text.translatable("command.dragonheart.dragonmanager.target.not_dragon", entity.getDisplayName())).create();
         }
-        DragonEntity dragon = (DragonEntity)entity;
-        dragon.setState(state);
+        ((DragonEntity)entity).setState(state);
         source.sendFeedback(
                 Text.translatable(
                         "command.dragonheart.dragonmanager.set.state",
@@ -75,11 +75,10 @@ public class DragonManager {
     }
 
 
-    public static int getState(CommandContext context, ServerCommandSource source, Entity entity) throws CommandSyntaxException {
+    public static int getState(ServerCommandSource source, Entity entity) throws CommandSyntaxException {
         if (! (entity instanceof DragonEntity)) {
             throw new SimpleCommandExceptionType(Text.translatable("command.dragonheart.dragonmanager.target.not_dragon", entity.getDisplayName())).create();
         }
-        DragonEntity             dragon = (DragonEntity)entity;
         DragonEntity.DragonState state  = DragonEntity.DragonState.fromInt(entity.getDataTracker().get(DragonEntity.STATE));
         source.sendFeedback(
                 Text.translatable(

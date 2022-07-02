@@ -18,37 +18,29 @@ public class DragonforgeCoreLightningBlockEntity extends DragonforgeCoreTypeBloc
 
 
     public DragonforgeCoreLightningBlockEntity(BlockPos pos, BlockState state) {
-
         super(ModBlockEntities.DRAGONFORGE_CORE_LIGHTNING, pos, state);
-
     }
 
 
     @Override
     public Text getDisplayName() {
-
         return Text.translatable("container." + DragonHeart.MOD_ID + ".dragonforge_core_lightning");
-
     }
 
 
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-
         return new DragonforgeCoreLightningScreenHandler(syncId, inv, this, this.propertyDelegate);
-
     }
 
 
     @Override
     public boolean isCorrectForgeType(RequiredForgeType requiredForgeType) {
-
         return requiredForgeType == DragonforgeCoreTypeRecipe.RequiredForgeType.ANY ||
                 requiredForgeType == DragonforgeCoreTypeRecipe.RequiredForgeType.LIGHTNING ||
                 requiredForgeType == DragonforgeCoreTypeRecipe.RequiredForgeType.FIRE_OR_LIGHTNING ||
                 requiredForgeType == DragonforgeCoreTypeRecipe.RequiredForgeType.ICE_OR_LIGHTNING;
-
     }
 
 

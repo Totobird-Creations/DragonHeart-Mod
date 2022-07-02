@@ -5,7 +5,6 @@ import net.minecraft.item.ArmorMaterial;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.totobirdcreations.dragonheart.item.MiscItems;
 
 
 public enum ArmourMaterial implements ArmorMaterial {
@@ -28,77 +27,59 @@ public enum ArmourMaterial implements ArmorMaterial {
 
 
     ArmourMaterial(int durability, int[] protection, String name, float toughness, float knockbackResistance) {
-
         this.durability          = durability;
         this.protection          = protection;
         this.name                = name;
         this.toughness           = toughness;
         this.knockbackResistance = knockbackResistance;
-
     }
 
 
     @Override
     public int getDurability(EquipmentSlot slot) {
-
         return durability;
-
     }
 
 
     @Override
     public int getProtectionAmount(EquipmentSlot slot) {
-
         return protection[slot.getEntitySlotId()];
-
     }
 
 
     @Override
     public int getEnchantability() {
-
         return 0;
-
     }
 
 
     @Override
     public SoundEvent getEquipSound() {
-
         return SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE;
-
     }
 
 
     @Override
     public Ingredient getRepairIngredient() {
-
         return Ingredient.EMPTY;
-
     }
 
 
     @Override
     public String getName() {
-
         return name;
-
     }
 
 
     @Override
     public float getToughness() {
-
         return toughness;
-
     }
 
 
     @Override
     public float getKnockbackResistance() {
-
         return knockbackResistance;
-
     }
 
 

@@ -10,18 +10,14 @@ public class ShovelIce extends Shovel {
 
 
     public ShovelIce(Settings settings, ShovelMaterial material) {
-
         super(settings, material);
-
     }
 
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-
-        Ice.hit(stack, target, attacker, true);
+        Ice.hit(target, attacker, true);
         return super.postHit(stack, target, attacker);
-
     }
 
 

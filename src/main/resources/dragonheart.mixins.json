@@ -14,7 +14,7 @@
     "frozeneffect.FrozenEffectRendererMixin",
     "frozeneffect.FrozenEffectMouseMixin",
     "frozeneffect.FrozenEffectKeyboardMixin",
-    "capeelytra.AbstractClientPlayerEntityMixin"
+    "AbstractClientPlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

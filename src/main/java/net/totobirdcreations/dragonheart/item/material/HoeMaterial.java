@@ -20,67 +20,51 @@ public enum HoeMaterial implements ToolMaterial {
 
 
     HoeMaterial(int itemDurability, float miningSpeed, float attackDamage, float attackSpeed) {
-
         this.itemDurability = itemDurability;
         this.miningSpeed    = miningSpeed;
         this.attackDamage   = attackDamage;
         this.attackSpeed    = attackSpeed;
-
     }
 
 
     @Override
     public int getDurability() {
-
         return this.itemDurability;
-
     }
 
 
     @Override
     public float getMiningSpeedMultiplier() {
-
         return this.miningSpeed;
-
     }
 
 
     @Override
     public float getAttackDamage() {
-
         return this.attackDamage - 1.0f;
-
     }
 
 
     public float getAttackSpeed() {
-
         return this.attackSpeed - 4.0f;
-
     }
 
 
     @Override
     public int getMiningLevel() {
-
         return 5;
-
     }
 
 
     @Override
     public int getEnchantability() {
-
         return 0;
-
     }
 
 
     @Override
     public Ingredient getRepairIngredient() {
-
         return Ingredient.EMPTY;
-
     }
 
 

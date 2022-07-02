@@ -8,9 +8,7 @@ public class Dragonscale extends Item implements ColouredItem {
 
 
     public Dragonscale(Settings settings) {
-
         super(settings);
-
     }
 
 

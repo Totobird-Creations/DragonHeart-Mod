@@ -45,9 +45,7 @@ public class DragonforgeCoreTypeRecipeSerializer implements RecipeSerializer<Dra
     public DragonforgeCoreTypeRecipe read(Identifier id, PacketByteBuf buf) {
 
         DefaultedList<Ingredient> inputs = DefaultedList.ofSize(buf.readInt(), Ingredient.EMPTY);
-        for (int i = 0; i < inputs.size(); i++) {
-            inputs.set(i, Ingredient.fromPacket(buf));
-        }
+        inputs.replaceAll(ignored -> Ingredient.fromPacket(buf));
 
         ItemStack         output            = buf.readItemStack();
 
@@ -67,7 +65,6 @@ public class DragonforgeCoreTypeRecipeSerializer implements RecipeSerializer<Dra
         for (Ingredient ingredient : recipe.getIngredients()) {
             ingredient.write(buf);
         }
-
         buf.writeItemStack(recipe.getOutput());
 
         buf.writeEnumConstant(recipe.getRequiredForgeType());

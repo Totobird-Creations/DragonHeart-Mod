@@ -13,10 +13,9 @@ import java.util.UUID;
 public class DragonEntityColourPicker {
 
     public static float                                         THRESHOLD  = 0.125f;
-    public static long                                          SALT       = 193069481;
     public static int                                           DIGITS     = 4;
     public static Curve                                         SATURATION = new Curve(0.875f, 0.25f);
-    public static HashMap<DragonEntity.DragonType, RGBColour[]> OPTIONS    = new HashMap();
+    public static HashMap<DragonEntity.DragonType, RGBColour[]> OPTIONS    = new HashMap<>();
 
     static {
         OPTIONS.put(DragonEntity.DragonType.FIRE, new RGBColour[]{
@@ -69,9 +68,7 @@ public class DragonEntityColourPicker {
     }
 
     public static RGBColour adjust(RGBColour colour) {
-        if (colour.greyscale().r >= THRESHOLD) {
-            return colour;
-        } else {
+        if (colour.greyscale().r < THRESHOLD) {
             if (colour.r < THRESHOLD) {
                 colour.r = THRESHOLD;
             }
@@ -81,8 +78,8 @@ public class DragonEntityColourPicker {
             if (colour.b < THRESHOLD) {
                 colour.b = THRESHOLD;
             }
-            return colour;
         }
+        return colour;
     }
 
     public static RGBColour choose(Random rand) {
@@ -108,8 +105,7 @@ public class DragonEntityColourPicker {
     }
 
     public static RGBColour chooseFromCategory(DragonEntity.DragonType category, UUID uuid) {
-        long   sugar = Integer.parseUnsignedInt(uuid.toString().split("-")[0], 16);
-        Random rand  = Random.create(SALT + sugar);
+        Random rand  = Random.create(DragonSalt.COLOUR + UuidOp.uuidToInt(uuid));
 
         while (true) {
             RGBColour               colour  = choose(rand);

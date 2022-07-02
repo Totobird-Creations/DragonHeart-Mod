@@ -22,9 +22,7 @@ public class DragonforgeCoreIceScreenHandler extends DragonforgeCoreTypeScreenHa
 
     @Override
     public ForgeType getForgeType() {
-
         return ForgeType.ICE;
-
     }
 
 

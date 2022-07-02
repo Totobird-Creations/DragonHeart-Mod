@@ -10,18 +10,14 @@ public class HoeIce extends Hoe {
 
 
     public HoeIce(Settings settings, HoeMaterial material) {
-
         super(settings, material);
-
     }
 
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-
-        Ice.hit(stack, target, attacker, true);
+        Ice.hit(target, attacker, true);
         return super.postHit(stack, target, attacker);
-
     }
 
 

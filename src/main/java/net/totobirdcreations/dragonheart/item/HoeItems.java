@@ -9,10 +9,10 @@ import net.totobirdcreations.dragonheart.item.material.HoeMaterial;
 import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
 
 
-
 public class HoeItems {
 
 
+    @SuppressWarnings("unused")
     public static final Item HOE_DRAGONBONE = registerItem(
             "hoe_dragonbone",
             new Hoe(
@@ -23,6 +23,7 @@ public class HoeItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item HOE_DRAGONBONE_FIRE = registerItem(
             "hoe_dragonbone_fire",
             new HoeFire(
@@ -33,6 +34,7 @@ public class HoeItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item HOE_DRAGONBONE_ICE = registerItem(
             "hoe_dragonbone_ice",
             new HoeIce(
@@ -43,6 +45,7 @@ public class HoeItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item HOE_DRAGONBONE_LIGHTNING = registerItem(
             "hoe_dragonbone_lightning",
             new HoeLightning(
@@ -54,6 +57,7 @@ public class HoeItems {
     );
 
 
+    @SuppressWarnings("unused")
     public static final Item HOE_DRAGONSTEEL_FIRE = registerItem(
             "hoe_dragonsteel_fire",
             new HoeFire(
@@ -64,6 +68,7 @@ public class HoeItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item HOE_DRAGONSTEEL_ICE = registerItem(
             "hoe_dragonsteel_ice",
             new HoeIce(
@@ -74,6 +79,7 @@ public class HoeItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item HOE_DRAGONSTEEL_LIGHTNING = registerItem(
             "hoe_dragonsteel_lightning",
             new HoeLightning(
@@ -85,11 +91,7 @@ public class HoeItems {
     );
 
 
-    public static void register() {
-
-
-
-    }
+    public static void register() {}
 
 
 }

@@ -12,6 +12,7 @@ import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
 public class ShovelItems {
 
 
+    @SuppressWarnings("unused")
     public static final Item SHOVEL_DRAGONBONE = registerItem(
             "shovel_dragonbone",
             new Shovel(
@@ -22,6 +23,7 @@ public class ShovelItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item SHOVEL_DRAGONBONE_FIRE = registerItem(
             "shovel_dragonbone_fire",
             new ShovelFire(
@@ -32,6 +34,7 @@ public class ShovelItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item SHOVEL_DRAGONBONE_ICE = registerItem(
             "shovel_dragonbone_ice",
             new ShovelIce(
@@ -42,6 +45,7 @@ public class ShovelItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item SHOVEL_DRAGONBONE_LIGHTNING = registerItem(
             "shovel_dragonbone_lightning",
             new ShovelLightning(
@@ -53,6 +57,7 @@ public class ShovelItems {
     );
 
 
+    @SuppressWarnings("unused")
     public static final Item SHOVEL_DRAGONSTEEL_FIRE = registerItem(
             "shovel_dragonsteel_fire",
             new ShovelFire(
@@ -63,6 +68,7 @@ public class ShovelItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item SHOVEL_DRAGONSTEEL_ICE = registerItem(
             "shovel_dragonsteel_ice",
             new ShovelIce(
@@ -73,6 +79,7 @@ public class ShovelItems {
             )
     );
 
+    @SuppressWarnings("unused")
     public static final Item SHOVEL_DRAGONSTEEL_LIGHTNING = registerItem(
             "shovel_dragonsteel_lightning",
             new ShovelLightning(
@@ -84,11 +91,7 @@ public class ShovelItems {
     );
 
 
-    public static void register() {
-
-
-
-    }
+    public static void register() {}
 
 
 }

@@ -6,7 +6,6 @@ import net.minecraft.util.registry.Registry;
 import net.totobirdcreations.dragonheart.DragonHeart;
 
 
-
 public class ModItems {
 
     public static Item registerItem(String name, Item item) {

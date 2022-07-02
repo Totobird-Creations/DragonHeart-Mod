@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.mixin.capeelytra;
+package net.totobirdcreations.dragonheart.mixin;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.AbstractClientPlayerEntity;

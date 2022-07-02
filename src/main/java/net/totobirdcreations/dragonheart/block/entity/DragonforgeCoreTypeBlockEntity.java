@@ -42,22 +42,22 @@ public class DragonforgeCoreTypeBlockEntity extends BlockEntity implements Named
 
 
     public DragonforgeCoreTypeBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-
         super(type, pos, state);
+
         this.propertyDelegate = new PropertyDelegate() {
             @Override
             public int get(int index) {
-                switch (index) {
-                    case DELEGATE_PROGRESS    : return DragonforgeCoreTypeBlockEntity.this.progress;
-                    case DELEGATE_MAXPROGRESS : return DragonforgeCoreTypeBlockEntity.this.maxProgress;
-                    default : return 0;
-                }
+                return switch (index) {
+                    case DELEGATE_PROGRESS    -> DragonforgeCoreTypeBlockEntity.this.progress;
+                    case DELEGATE_MAXPROGRESS -> DragonforgeCoreTypeBlockEntity.this.maxProgress;
+                    default                   -> 0;
+                };
             }
             @Override
             public void set(int index, int value) {
                 switch (index) {
-                    case DELEGATE_PROGRESS    : DragonforgeCoreTypeBlockEntity.this.progress    = value ; break;
-                    case DELEGATE_MAXPROGRESS : DragonforgeCoreTypeBlockEntity.this.maxProgress = value ; break;
+                    case DELEGATE_PROGRESS    -> DragonforgeCoreTypeBlockEntity.this.progress    = value;
+                    case DELEGATE_MAXPROGRESS -> DragonforgeCoreTypeBlockEntity.this.maxProgress = value;
                 }
             }
             @Override
@@ -65,60 +65,49 @@ public class DragonforgeCoreTypeBlockEntity extends BlockEntity implements Named
                 return 2;
             }
         };
-
     }
 
 
     @Override
     public Text getDisplayName() {
-
         return Text.translatable("container." + DragonHeart.MOD_ID + ".dragonforge_core_base");
-
     }
 
 
     @Override
     public DefaultedList<ItemStack> getItems() {
-
         return items;
-
     }
 
 
     @Override
     public void readNbt(NbtCompound nbt) {
-
         progress = nbt.getShort("progress");
         Inventories.readNbt(nbt, items);
         super.readNbt(nbt);
-
     }
 
 
     @Override
     public void writeNbt(NbtCompound nbt) {
-
         super.writeNbt(nbt);
         Inventories.writeNbt(nbt, items);
         nbt.putShort("progress", (short)progress);
-
     }
 
 
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-
         return null;
-
     }
 
 
 
 
 
+    @SuppressWarnings("unused")
     public static void tick(World world, BlockPos pos, BlockState state, DragonforgeCoreTypeBlockEntity entity) {
-
         if (hasRecipe(entity)) {
             entity.progress++;
             if (entity.progress > entity.maxProgress) {
@@ -128,7 +117,6 @@ public class DragonforgeCoreTypeBlockEntity extends BlockEntity implements Named
         } else {
             entity.progress = 0;
         }
-
     }
 
 
@@ -140,6 +128,7 @@ public class DragonforgeCoreTypeBlockEntity extends BlockEntity implements Named
             inventory.setStack(i, entity.getStack(i));
         }
 
+        assert world != null;
         Optional<DragonforgeCoreTypeRecipe> match = world.getRecipeManager()
                 .getFirstMatch(DragonforgeCoreTypeRecipeType.INSTANCE, inventory, world);
 
@@ -160,9 +149,7 @@ public class DragonforgeCoreTypeBlockEntity extends BlockEntity implements Named
 
 
     public boolean isCorrectForgeType(RequiredForgeType requiredForgeType) {
-
         return requiredForgeType == RequiredForgeType.ANY;
-
     }
 
 
@@ -174,6 +161,7 @@ public class DragonforgeCoreTypeBlockEntity extends BlockEntity implements Named
             inventory.setStack(i, entity.getStack(i));
         }
 
+        assert world != null;
         Optional<DragonforgeCoreTypeRecipe> match = world.getRecipeManager()
                 .getFirstMatch(DragonforgeCoreTypeRecipeType.INSTANCE, inventory, world);
 
@@ -187,16 +175,12 @@ public class DragonforgeCoreTypeBlockEntity extends BlockEntity implements Named
 
 
     public static boolean canInsertAmountIntoOutputSlot(SimpleInventory inventory, DragonforgeCoreTypeRecipe recipe) {
-
         return inventory.getStack(2).getCount() + recipe.getOutput().getCount() <= inventory.getStack(2).getMaxCount();
-
     }
 
 
     public static boolean canInsertItemIntoOutputSlot(SimpleInventory inventory, DragonforgeCoreTypeRecipe recipe) {
-
         return inventory.getStack(2).getItem() == recipe.getOutput().getItem() || inventory.getStack(2).isEmpty();
-
     }
 
 

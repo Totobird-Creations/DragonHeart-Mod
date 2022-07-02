@@ -2,7 +2,6 @@ package net.totobirdcreations.dragonheart.item.material;
 
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
-import net.totobirdcreations.dragonheart.item.MiscItems;
 
 
 public enum SwordMaterial implements ToolMaterial {
@@ -19,66 +18,50 @@ public enum SwordMaterial implements ToolMaterial {
 
 
     SwordMaterial(int itemDurability, float attackDamage, float attackSpeed) {
-
         this.itemDurability  = itemDurability;
         this.attackDamage    = attackDamage;
         this.attackSpeed     = attackSpeed;
-
     }
 
 
     @Override
     public int getDurability() {
-
         return this.itemDurability;
-
     }
 
 
     @Override
     public float getMiningSpeedMultiplier() {
-
         return 1.0f;
-
     }
 
 
     @Override
     public float getAttackDamage() {
-
         return this.attackDamage - 1.0f;
-
     }
 
 
     public float getAttackSpeed() {
-
         return this.attackSpeed - 4.0f;
-
     }
 
 
     @Override
     public int getMiningLevel() {
-
         return -1;
-
     }
 
 
     @Override
     public int getEnchantability() {
-
         return 0;
-
     }
 
 
     @Override
     public Ingredient getRepairIngredient() {
-
         return Ingredient.EMPTY;
-
     }
 
 

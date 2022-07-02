@@ -19,7 +19,6 @@ import software.bernie.example.GeckoLibMod;
 import software.bernie.geckolib3.GeckoLib;
 
 import javax.annotation.Nullable;
-import java.util.UUID;
 
 
 public class DragonHeart implements ModInitializer {
@@ -35,7 +34,7 @@ public class DragonHeart implements ModInitializer {
 
 		public enum Type {
 			CAPE,
-			ELYTRA;
+			ELYTRA
 		}
 
 		@Nullable

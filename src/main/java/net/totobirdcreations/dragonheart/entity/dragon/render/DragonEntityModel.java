@@ -3,7 +3,6 @@ package net.totobirdcreations.dragonheart.entity.dragon.render;
 import net.minecraft.particle.ShriekParticleEffect;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
-import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.AnimationProcessor;
@@ -11,9 +10,8 @@ import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
-import java.util.Random;
 
-
+// TODO : Do something about the warnings.
 public class DragonEntityModel<T extends DragonEntity> extends AnimatedGeoModel<T> {
 
 
@@ -46,7 +44,7 @@ public class DragonEntityModel<T extends DragonEntity> extends AnimatedGeoModel<
                     processor.getBone("head")
             };
 
-            EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
+            EntityModelData extraData = (EntityModelData)(customPredicate.getExtraDataOfType(EntityModelData.class).get(0));
             float sourcePitch = body.getRotationX();
             float sourceYaw = body.getRotationY();
             float targetPitch = extraData.headPitch;
