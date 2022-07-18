@@ -4,8 +4,6 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.totobirdcreations.dragonheart.entity.ModEntities;
-import net.totobirdcreations.dragonheart.item.misc.Dragonbucket;
-import net.totobirdcreations.dragonheart.item.misc.Dragonscale;
 
 import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
 
@@ -18,6 +16,7 @@ public class MiscItems {
             new Item(
                 new FabricItemSettings()
                         .group     (ItemGroup.MISC)
+                        .maxCount  (16)
                         .fireproof ()
             )
     );
@@ -28,6 +27,7 @@ public class MiscItems {
             new Item(
                     new FabricItemSettings()
                             .group     (ItemGroup.MISC)
+                            .maxCount  (16)
                             .fireproof ()
             )
     );
@@ -38,6 +38,7 @@ public class MiscItems {
             new Item(
                     new FabricItemSettings()
                             .group     (ItemGroup.MISC)
+                            .maxCount  (1)
                             .fireproof ()
             )
     );
@@ -48,6 +49,7 @@ public class MiscItems {
             new Dragonscale(
                     new FabricItemSettings()
                             .group     (ItemGroup.MISC)
+                            .maxCount  (48)
                             .fireproof ()
             )
     );
@@ -58,6 +60,7 @@ public class MiscItems {
             new Dragonscale(
                     new FabricItemSettings()
                             .group     (ItemGroup.MISC)
+                            .maxCount  (32)
                             .fireproof ()
             )
     );
@@ -68,6 +71,7 @@ public class MiscItems {
             new Dragonscale(
                     new FabricItemSettings()
                             .group     (ItemGroup.MISC)
+                            .maxCount  (32)
                             .fireproof ()
             )
     );
@@ -78,37 +82,7 @@ public class MiscItems {
             new Dragonscale(
                     new FabricItemSettings()
                             .group     (ItemGroup.MISC)
-                            .fireproof ()
-            )
-    );
-
-
-    @SuppressWarnings("unused")
-    public static final Item DRAGONBLOOD_FIRE = registerItem(
-            "dragonblood_fire",
-            new Item(
-                    new FabricItemSettings()
-                            .group     (ItemGroup.MISC)
-                            .fireproof ()
-            )
-    );
-
-    @SuppressWarnings("unused")
-    public static final Item DRAGONBLOOD_ICE = registerItem(
-            "dragonblood_ice",
-            new Item(
-                    new FabricItemSettings()
-                            .group     (ItemGroup.MISC)
-                            .fireproof ()
-            )
-    );
-
-    @SuppressWarnings("unused")
-    public static final Item DRAGONBLOOD_LIGHTNING = registerItem(
-            "dragonblood_lightning",
-            new Item(
-                    new FabricItemSettings()
-                            .group     (ItemGroup.MISC)
+                            .maxCount  (32)
                             .fireproof ()
             )
     );
@@ -119,6 +93,7 @@ public class MiscItems {
             new Item(
                     new FabricItemSettings()
                             .group     (ItemGroup.MISC)
+                            .maxCount  (1)
                             .fireproof ()
             )
     );
@@ -129,6 +104,7 @@ public class MiscItems {
             new Dragonbucket(
                     new FabricItemSettings()
                             .group     (ItemGroup.MISC)
+                            .maxCount  (1)
                             .fireproof ()
             )
     );
@@ -139,6 +115,7 @@ public class MiscItems {
             new Dragonbucket(
                     new FabricItemSettings()
                             .group     (ItemGroup.MISC)
+                            .maxCount  (1)
                             .fireproof ()
             )
     );
@@ -149,15 +126,17 @@ public class MiscItems {
             new Dragonbucket(
                     new FabricItemSettings()
                             .group     (ItemGroup.MISC)
+                            .maxCount  (1)
                             .fireproof ()
             )
     );
 
     public static final Item DRAGONEGG_FIRE = registerItem(
             "dragonegg_fire",
-            new Dragonegg(
+            new Dragonegg<>(
                     new FabricItemSettings()
                             .group     (ItemGroup.MISC)
+                            .maxCount  (1)
                             .fireproof (),
                     ModEntities.DRAGONEGG_FIRE
             )
@@ -165,9 +144,10 @@ public class MiscItems {
 
     public static final Item DRAGONEGG_ICE = registerItem(
             "dragonegg_ice",
-            new Dragonegg(
+            new Dragonegg<>(
                     new FabricItemSettings()
                             .group     (ItemGroup.MISC)
+                            .maxCount  (1)
                             .fireproof (),
                     ModEntities.DRAGONEGG_ICE
             )
@@ -175,9 +155,10 @@ public class MiscItems {
 
     public static final Item DRAGONEGG_LIGHTNING = registerItem(
             "dragonegg_lightning",
-            new Dragonegg(
+            new Dragonegg<>(
                     new FabricItemSettings()
                             .group     (ItemGroup.MISC)
+                            .maxCount  (1)
                             .fireproof (),
                     ModEntities.DRAGONEGG_LIGHTNING
             )

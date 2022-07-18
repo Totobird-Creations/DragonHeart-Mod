@@ -8,14 +8,15 @@
     "frozeneffect.FrozenEffectEntityMixin",
     "frozeneffect.FrozenEffectLivingEntityMixin",
     "frozeneffect.FrozenEffectPlayerEntityMixin",
-    "deafenedeffect.DeafenedEffectLivingEntityMixin"
+    "deafenedeffect.DeafenedEffectLivingEntityMixin",
+    "BrewingRecipeRegistryMixin",
+    "ItemGroupMixin"
   ],
   "client": [
     "titlescreen.TitleScreenMixin",
     "titlescreen.TitleScreenInterface",
     "frozeneffect.FrozenEffectRendererMixin",
     "frozeneffect.FrozenEffectMouseMixin",
-    "frozeneffect.FrozenEffectKeyboardMixin",
     "AbstractClientPlayerEntityMixin"
   ],
   "injectors": {

@@ -44,17 +44,4 @@ public abstract class FrozenEffectMouseMixin {
         }
     }
 
-
-    @Inject(
-            method = "onMouseScroll(JDD)V",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    public void onMouseScroll(long window, double horizontal, double vertical, CallbackInfo callback) {
-        ClientPlayerEntity player = MinecraftClient.getInstance().player;
-        if (player != null && ((FrozenEffectLivingEntityInterface) player).isIced() && isCursorLocked()) {
-            callback.cancel();
-        }
-    }
-
 }

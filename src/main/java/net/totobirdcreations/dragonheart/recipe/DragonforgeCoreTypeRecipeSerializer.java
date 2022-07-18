@@ -17,8 +17,7 @@ import net.totobirdcreations.dragonheart.recipe.DragonforgeCoreTypeRecipe.Requir
 public class DragonforgeCoreTypeRecipeSerializer implements RecipeSerializer<DragonforgeCoreTypeRecipe> {
 
 
-    public static final DragonforgeCoreTypeRecipeSerializer INSTANCE   = new DragonforgeCoreTypeRecipeSerializer();
-    public static final String                              IDENTIFIER = DragonforgeCoreTypeRecipeType.IDENTIFIER;
+    public static final DragonforgeCoreTypeRecipeSerializer INSTANCE = new DragonforgeCoreTypeRecipeSerializer();
 
 
     @Override

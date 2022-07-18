@@ -43,7 +43,10 @@
   "custom": {
     "modmenu": {
       "links": {
-        "modmenu.wiki": "https://github.com/Totobird-Creations/DragonHeart-Mod/wiki"
+        "modmenu.discord"         : "https://discord.gg/fdfD4YkPcF",
+        "modmenu.wiki"            : "https://github.com/Totobird-Creations/DragonHeart-Mod/wiki",
+        "modmenu.github_releases" : "https://github.com/Totobird-Creations/DragonHeart-Mod/releases",
+        "modmenu.modrinth"        : "https://modrinth.com/mod/dragonheart"
       }
     }
   }

@@ -45,9 +45,10 @@ public abstract class DragonEntityRenderer<T extends DragonEntity> extends GeoEn
         return (new RGBColour(entity.getDataTracker().get(DragonEntity.COLOUR))).toColor();
     }
 
+
     @Override
     public void render(T entity, float entityYaw, float ticks, MatrixStack stack, VertexConsumerProvider buffer, int packedLight) {
-        float scale = entity.getScale();
+        float scale = entity.getModelScale();
         stack.scale(scale, scale, scale);
         super.render(entity, entityYaw, ticks, stack, buffer, packedLight);
     }

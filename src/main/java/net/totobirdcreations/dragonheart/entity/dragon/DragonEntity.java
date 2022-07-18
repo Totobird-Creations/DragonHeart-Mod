@@ -69,10 +69,6 @@ import java.util.function.BiConsumer;
 
 public abstract class DragonEntity extends HostileEntity implements IAnimatable, VibrationListener.Callback {
 
-    public static int   BLINK_COOLDOWN_TICKS = 50;
-    public static int   BLINK_TICKS          = 5;
-    public static float BLINK_CHANCE         = 1.0f;
-
     public static TagKey<GameEvent>    VIBRATIONS               = TagKey.of(Registry.GAME_EVENT_KEY, new Identifier(DragonHeart.MOD_ID, "dragon_can_listen"));
     public static int                  WAKEUP_VIBRATIONS_NEEDED = 5;
     public static int                  ROAR_ANIMATION_LENGTH    = 41;
@@ -96,19 +92,23 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         HEAL_ITEMS.put( Items.ENCHANTED_GOLDEN_APPLE , 250.0f );
         HEAL_ITEMS.put( FoodItems.DRAGONMEAL         , 43.75f );
     }
-    public static float                MIN_SCALE                = 0.125f;
-    public static float                MAX_SCALE                = 1.0f;
-    public static int                  MIN_BREED_STAGE          = 2;
-    public static int                  MAX_SHOULDER_STAGE       = 0;
-    public static int                  MIN_MOUNT_STAGE          = 2;
-    public static int                  MIN_XP_DROP_STAGE        = 2;
-    public static float                MIN_SOUND_PITCH          = 1.5f;
-    public static float                MAX_SOUND_PITCH          = 1.0f;
+    public static int   MIN_BREED_STAGE    = 2;
+    public static int   MAX_SHOULDER_STAGE = 0;
+    public static int   MIN_MOUNT_STAGE    = 2;
+    public static int   MIN_XP_DROP_STAGE  = 2;
+    public static float MIN_SOUND_PITCH    = 1.5f;
+    public static float MAX_SOUND_PITCH    = 1.0f;
 
-    public static EntityDimensions     DIMENSIONS               = EntityDimensions.changing(2.75f, 1.625f);
-    public static float                EYE_HEIGHT               = 1.5f;
-    public static float                MIN_WIDTH                = 1.0f;
-    public static float                MIN_HEIGHT               = 0.5f;
+    public static float            MIN_MODEL_SCALE = 0.125f;
+    public static float            MAX_MODEL_SCALE = 1.0f;
+    public static float            EYE_HEIGHT      = 1.5f;
+    public static EntityDimensions MAX_DIMENSIONS  = EntityDimensions.changing(2.75f, 1.625f);
+    public static float            MIN_BOX_WIDTH   = 1.0f;
+    public static float            MIN_BOX_HEIGHT  = 0.5f;
+
+    public static int   BLINK_COOLDOWN_TICKS = 200; // 5s
+    public static int   BLINK_TICKS          = 5;   // 0.25s
+    public static float BLINK_CHANCE         = 0.0025f;
 
     public int        blinkCooldownTicks = BLINK_COOLDOWN_TICKS;
     public int        blinkTicks         = 0;
@@ -124,7 +124,8 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         SLEEP,
         ROAR,
         NEST,
-        PURSUE;
+        PURSUE,
+        WANDER;
 
         public int toInt() {
             return switch (this) {
@@ -132,6 +133,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
                 case ROAR   -> 1;
                 case NEST   -> 2;
                 case PURSUE -> 3;
+                case WANDER -> 4;
             };
         }
         public static DragonState fromInt(int from) {
@@ -140,6 +142,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
                 case    1 -> ROAR;
                 case    2 -> NEST;
                 case    3 -> PURSUE;
+                case    4 -> WANDER;
             };
         }
         public String toString() {
@@ -148,6 +151,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
                 case ROAR   -> "roar";
                 case NEST   -> "nest";
                 case PURSUE -> "pursue";
+                case WANDER -> "wander";
             };
         }
     }
@@ -298,7 +302,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         nbt.putInt("EyeColour", dataTracker.get(EYE_COLOUR));
 
         Optional<UUID> tamedOwner = dataTracker.get(TAMED_OWNER);
-        if (tamedOwner.isPresent()) {
+        if (tamedOwner != null && tamedOwner.isPresent()) {
             nbt.putUuid("TamedOwner", tamedOwner.get());
         } else {
             nbt.remove("TamedOwner");
@@ -371,8 +375,11 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         return Math.max(Math.min(Math.floorDiv(this.getAge(), STAGE_TICKS), MAX_STAGES), 0);
     }
 
+    public int getColour() {return dataTracker.get(COLOUR);}
+
     public boolean isTamed() {
-        return dataTracker.get(TAMED_OWNER).isPresent();
+        Optional<UUID> owner = dataTracker.get(TAMED_OWNER);
+        return owner != null && owner.isPresent();
     }
 
     public boolean isNaturallySpawned() {
@@ -400,10 +407,6 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         return Math.min(Math.max((float)(getAge()) / (float)(getMaxAge()), 0.0f), 1.0f);
     }
 
-    public float getScale() {
-        return MIN_SCALE + (MAX_SCALE - MIN_SCALE) * getAgeInterpolation();
-    }
-
     public boolean isFemale() {return dataTracker.get(IS_FEMALE);}
 
 
@@ -422,10 +425,24 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         this.dataTracker.set(STATE, state.toInt());
     }
 
-    public void addAge(int amount) {
-        dataTracker.set(AGE, Math.min(Math.max(dataTracker.get(AGE) + amount, 0), getMaxAge()));
+    public void setAge(int age) {
+        dataTracker.set(AGE, age);
+    }
+
+    public void addAge(int age) {
+        dataTracker.set(AGE, Math.min(Math.max(dataTracker.get(AGE) + age, 0), getMaxAge()));
         calculateDimensions();
     }
+
+    public void setColour(int colour) {
+        dataTracker.set(COLOUR, colour);
+    }
+
+    public void setSpawnPos(BlockPos pos) {dataTracker.set(SPAWN_POS, pos);}
+
+    public void setEyeColour(int colour) {dataTracker.set(EYE_COLOUR, colour);}
+
+    public void setNaturalSpawn(boolean natural) {dataTracker.set(NATURAL_SPAWN, natural);}
 
     public void toggleSitting() {
         dataTracker.set(SITTING, ! dataTracker.get(SITTING));
@@ -520,20 +537,23 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     }
 
     // Scale
+    public float getModelScale() {
+        return MIN_MODEL_SCALE + (MAX_MODEL_SCALE - MIN_MODEL_SCALE) * getAgeInterpolation();
+    }
     @Override
     public float getScaleFactor() {
-        return this.getScale();
+        return 1.0f;
     }
     @Override
     public float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return EYE_HEIGHT * getScale();
+        return EYE_HEIGHT * getModelScale();
     }
     @Override
     public EntityDimensions getDimensions(EntityPose pose) {
         float t = getAgeInterpolation();
-        return EntityDimensions.changing(
-                MIN_WIDTH  + ( DIMENSIONS.width  - MIN_WIDTH  ) * t,
-                MIN_HEIGHT + ( DIMENSIONS.height - MIN_HEIGHT ) * t
+        return super.getDimensions(pose).scaled(
+                (MIN_BOX_WIDTH  + (MAX_DIMENSIONS.width  / MIN_BOX_WIDTH  ) * t) / MAX_DIMENSIONS.width,
+                (MIN_BOX_HEIGHT + (MAX_DIMENSIONS.height / MIN_BOX_HEIGHT ) * t) / MAX_DIMENSIONS.height
         );
     }
 
@@ -776,22 +796,25 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
             // Tick age.
             addAge(1);
 
-        }
+        } else { // world.isClient()
 
-        // Client side blinking animation
-        if (blinkTicks > 0) {
-            if (blinkCooldownTicks > 0) {
+            // Client side blinking animation
+            if (blinkTicks > 0) {
                 blinkTicks -= 1;
-            }
-            if (blinkCooldownTicks <= 0) {
-                Random rand = new Random();
-                if (rand.nextFloat() <= BLINK_CHANCE) {
-                    blinkCooldownTicks = BLINK_COOLDOWN_TICKS;
-                    blinkTicks = BLINK_TICKS;
+
+            } else { // blinkTicks <= 0
+                if (blinkCooldownTicks > 0) {
+                    blinkCooldownTicks -= 1;
+                } else { // blinkCooldownTicks <= 0
+                    Random rand = new Random();
+                    if (rand.nextFloat() <= BLINK_CHANCE) {
+                        blinkCooldownTicks = BLINK_COOLDOWN_TICKS;
+                        blinkTicks         = BLINK_TICKS;
+                    }
                 }
+
             }
-        } else {
-            blinkTicks -= 1;
+
         }
 
         // Handle dragon size

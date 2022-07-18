@@ -26,11 +26,11 @@ public class ModItems {
         DragonforgeItems .register();
         FoodItems        .register();
 
-        SwordItems.register();
-        PickaxeItems.register();
-        AxeItems.register();
-        ShovelItems.register();
-        HoeItems.register();
+        SwordItems       .register();
+        PickaxeItems     .register();
+        AxeItems         .register();
+        ShovelItems      .register();
+        HoeItems         .register();
         ArmourItems      .register();
 
     }

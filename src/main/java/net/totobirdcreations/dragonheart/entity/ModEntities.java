@@ -25,7 +25,7 @@ public class ModEntities {
             Registry.ENTITY_TYPE,
             new Identifier(DragonHeart.MOD_ID, "dragon_fire"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, DragonFireEntity::new)
-                    .dimensions(DragonEntity.DIMENSIONS)
+                    .dimensions(DragonEntity.MAX_DIMENSIONS)
                     .build()
     );
 
@@ -33,7 +33,7 @@ public class ModEntities {
             Registry.ENTITY_TYPE,
             new Identifier(DragonHeart.MOD_ID, "dragon_ice"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, DragonIceEntity::new)
-                    .dimensions(DragonEntity.DIMENSIONS)
+                    .dimensions(DragonEntity.MAX_DIMENSIONS)
                     .build()
     );
 
@@ -41,7 +41,7 @@ public class ModEntities {
             Registry.ENTITY_TYPE,
             new Identifier(DragonHeart.MOD_ID, "dragon_lightning"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, DragonLightningEntity::new)
-                    .dimensions(DragonEntity.DIMENSIONS)
+                    .dimensions(DragonEntity.MAX_DIMENSIONS)
                     .build()
     );
 
@@ -71,31 +71,34 @@ public class ModEntities {
     );
 
 
+    @SuppressWarnings("unused")
     public static final PaintingVariant PAINTING_DRAGON_FIRE = registerPainting(
             "dragon/fire",
             new PaintingVariant(16, 32)
     );
 
+    @SuppressWarnings("unused")
     public static final PaintingVariant PAINTING_DRAGON_ICE = registerPainting(
             "dragon/ice",
             new PaintingVariant(16, 32)
     );
 
+    @SuppressWarnings("unused")
     public static final PaintingVariant PAINTING_DRAGON_LIGHTNING = registerPainting(
             "dragon/lightning",
             new PaintingVariant(16, 32)
     );
 
 
+    @SuppressWarnings("all")
     public static void register() {
         DragonHeart.LOGGER.info("Registering entities.");
-        // TODO : Figure out what causes this warning.
-        FabricDefaultAttributeRegistry.register( DRAGON_FIRE         , DragonFireEntity.createMobAttributes()      );
-        FabricDefaultAttributeRegistry.register( DRAGON_ICE          , DragonIceEntity.createMobAttributes()       );
-        FabricDefaultAttributeRegistry.register( DRAGON_LIGHTNING    , DragonLightningEntity.createMobAttributes() );
-        FabricDefaultAttributeRegistry.register( DRAGONEGG_FIRE      , DragoneggFireEntity.createMobAttributes()   );
-        FabricDefaultAttributeRegistry.register( DRAGONEGG_ICE       , DragoneggFireEntity.createMobAttributes()   );
-        FabricDefaultAttributeRegistry.register( DRAGONEGG_LIGHTNING , DragoneggFireEntity.createMobAttributes()   );
+        FabricDefaultAttributeRegistry.register( DRAGON_FIRE         , DragonFireEntity         .createMobAttributes());
+        FabricDefaultAttributeRegistry.register( DRAGON_ICE          , DragonIceEntity          .createMobAttributes());
+        FabricDefaultAttributeRegistry.register( DRAGON_LIGHTNING    , DragonLightningEntity    .createMobAttributes());
+        FabricDefaultAttributeRegistry.register( DRAGONEGG_FIRE      , DragoneggFireEntity      .createMobAttributes());
+        FabricDefaultAttributeRegistry.register( DRAGONEGG_ICE       , DragoneggIceEntity       .createMobAttributes());
+        FabricDefaultAttributeRegistry.register( DRAGONEGG_LIGHTNING , DragoneggLightningEntity .createMobAttributes());
     }
 
 

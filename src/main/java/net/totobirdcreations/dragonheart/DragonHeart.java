@@ -11,8 +11,9 @@ import net.totobirdcreations.dragonheart.entity.ModEntities;
 import net.totobirdcreations.dragonheart.gamerule.ModGamerules;
 import net.totobirdcreations.dragonheart.item.ModItems;
 import net.totobirdcreations.dragonheart.item.group.ModItemGroups;
+import net.totobirdcreations.dragonheart.potion.ModPotions;
 import net.totobirdcreations.dragonheart.recipe.ModRecipes;
-import net.totobirdcreations.dragonheart.soundevent.ModSoundEvents;
+import net.totobirdcreations.dragonheart.sound.ModSoundEvents;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.bernie.example.GeckoLibMod;
@@ -81,19 +82,20 @@ public class DragonHeart implements ModInitializer {
 		if (DEVENV) {
 			LOGGER.info("Suppressing GeckoLibMod.");
 			GeckoLibMod.DISABLE_IN_DEV = true;
-			GeckoLib.initialize();
 		}
+		GeckoLib.initialize();
 
-		ModBlocks         .register();
-		ModBlockTags      .register();
-		ModSoundEvents    .register();
-		ModItems          .register();
-		ModItemGroups     .register();
-		ModStatusEffects  .register();
-		ModRecipes        .register();
-		ModEntities       .register();
-		ModCommands       .register();
-		ModGamerules      .register();
+		ModBlocks        .register();
+		ModBlockTags     .register();
+		ModSoundEvents   .register();
+		ModItemGroups    .register();
+		ModItems         .register();
+		ModStatusEffects .register();
+		ModRecipes       .register();
+		ModEntities      .register();
+		ModCommands      .register();
+		ModGamerules     .register();
+		ModPotions       .register();
 
 		LOGGER.info("Initialized.");
 
