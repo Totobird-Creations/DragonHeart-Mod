@@ -11,6 +11,8 @@
     "deafenedeffect.DeafenedEffectLivingEntityMixin"
   ],
   "client": [
+    "titlescreen.TitleScreenMixin",
+    "titlescreen.TitleScreenInterface",
     "frozeneffect.FrozenEffectRendererMixin",
     "frozeneffect.FrozenEffectMouseMixin",
     "frozeneffect.FrozenEffectKeyboardMixin",

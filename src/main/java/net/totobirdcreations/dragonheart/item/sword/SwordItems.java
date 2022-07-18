@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.item;
+package net.totobirdcreations.dragonheart.item.sword;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;

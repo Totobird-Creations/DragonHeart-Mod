@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.item.misc;
+package net.totobirdcreations.dragonheart.item.util;
 
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;

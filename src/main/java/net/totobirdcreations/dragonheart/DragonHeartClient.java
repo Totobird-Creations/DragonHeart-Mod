@@ -18,7 +18,10 @@ import net.totobirdcreations.dragonheart.entity.*;
 import net.totobirdcreations.dragonheart.entity.dragon.render.DragonFireEntityRenderer;
 import net.totobirdcreations.dragonheart.entity.dragon.render.DragonIceEntityRenderer;
 import net.totobirdcreations.dragonheart.entity.dragon.render.DragonLightningEntityRenderer;
-import net.totobirdcreations.dragonheart.item.MiscItems;
+import net.totobirdcreations.dragonheart.entity.dragonegg.DragoneggEntityRenderer;
+import net.totobirdcreations.dragonheart.entity.dragonegg.DragoneggFireEntity;
+import net.totobirdcreations.dragonheart.item.misc.Dragonegg;
+import net.totobirdcreations.dragonheart.item.misc.MiscItems;
 import net.totobirdcreations.dragonheart.item.misc.Dragonbucket;
 import net.totobirdcreations.dragonheart.item.misc.Dragonscale;
 import net.totobirdcreations.dragonheart.screen.ModScreens;
@@ -49,13 +52,22 @@ public class DragonHeartClient implements ClientModInitializer, ShaderEffectRend
     public void onInitializeClient() {
 
         ColorProviderRegistry.ITEM.register((stack, tintIndex) -> ((Dragonscale)stack.getItem()).getColor(stack), MiscItems.DRAGONSCALE);
-        ColorProviderRegistry.ITEM.register( this::getDragonBucketItemColour, MiscItems.DRAGONBUCKET_ICE       );
-        ColorProviderRegistry.ITEM.register( this::getDragonBucketItemColour, MiscItems.DRAGONBUCKET_FIRE      );
-        ColorProviderRegistry.ITEM.register( this::getDragonBucketItemColour, MiscItems.DRAGONBUCKET_LIGHTNING );
+
+        ColorProviderRegistry.ITEM.register( this::getDragonbucketItemColour, MiscItems.DRAGONBUCKET_FIRE      );
+        ColorProviderRegistry.ITEM.register( this::getDragonbucketItemColour, MiscItems.DRAGONBUCKET_ICE       );
+        ColorProviderRegistry.ITEM.register( this::getDragonbucketItemColour, MiscItems.DRAGONBUCKET_LIGHTNING );
+
+        ColorProviderRegistry.ITEM.register( this::getDragoneggItemColour, MiscItems.DRAGONEGG_FIRE      );
+        ColorProviderRegistry.ITEM.register( this::getDragoneggItemColour, MiscItems.DRAGONEGG_ICE       );
+        ColorProviderRegistry.ITEM.register( this::getDragoneggItemColour, MiscItems.DRAGONEGG_LIGHTNING );
 
         EntityRendererRegistry.register(ModEntities.DRAGON_FIRE      , DragonFireEntityRenderer::new      );
         EntityRendererRegistry.register(ModEntities.DRAGON_ICE       , DragonIceEntityRenderer::new       );
         EntityRendererRegistry.register(ModEntities.DRAGON_LIGHTNING , DragonLightningEntityRenderer::new );
+
+        EntityRendererRegistry.register(ModEntities.DRAGONEGG_FIRE      , DragoneggEntityRenderer::new );
+        EntityRendererRegistry.register(ModEntities.DRAGONEGG_ICE       , DragoneggEntityRenderer::new );
+        EntityRendererRegistry.register(ModEntities.DRAGONEGG_LIGHTNING , DragoneggEntityRenderer::new );
 
         ShaderEffectRenderCallback.EVENT.register(this);
 
@@ -65,9 +77,15 @@ public class DragonHeartClient implements ClientModInitializer, ShaderEffectRend
     }
 
 
-    public int getDragonBucketItemColour(ItemStack stack, int tintIndex) {
+    public int getDragonbucketItemColour(ItemStack stack, int tintIndex) {
         Dragonbucket bucket = (Dragonbucket)stack.getItem();
         return tintIndex == 1 ? bucket.getColor(stack) : 16777215;
+    }
+
+
+    public int getDragoneggItemColour(ItemStack stack, int tintIndex) {
+        Dragonegg egg = (Dragonegg)stack.getItem();
+        return egg.getColor(stack);
     }
 
 

@@ -3,14 +3,16 @@
   "id": "dragonheart",
   "version": "${version}",
 
-  "name": "Dragonheart",
+  "name": "DragonHeart",
   "description": "Dragon Mod for Minecraft Fabric 1.19.x",
   "authors": [
-    "Totobird Creations"
+    "Totobird Creations",
+    "Balec"
   ],
   "contact": {
     "homepage": "https://github.com/Totobird-Creations/",
-    "sources": "https://github.com/Totobird-Creations/DragonHeart-Mod"
+    "sources": "https://github.com/Totobird-Creations/DragonHeart-Mod",
+    "issues": "https://github.com/Totobird-Creations/DragonHeart-Mod/issues"
   },
 
   "license": "MIT",
@@ -36,5 +38,13 @@
     "java": ">=18"
   },
   "suggests": {
+    "modmenu": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.wiki": "https://github.com/Totobird-Creations/DragonHeart-Mod/wiki"
+      }
+    }
   }
 }

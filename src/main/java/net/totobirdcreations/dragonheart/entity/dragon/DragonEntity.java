@@ -24,6 +24,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.ActionResult;
@@ -51,7 +52,6 @@ import net.totobirdcreations.dragonheart.entity.dragon.util.DragonEntityColourPi
 import net.totobirdcreations.dragonheart.entity.dragon.util.DragonSalt;
 import net.totobirdcreations.dragonheart.entity.dragon.util.UuidOp;
 import net.totobirdcreations.dragonheart.item.FoodItems;
-import net.totobirdcreations.dragonheart.util.Curve;
 import net.totobirdcreations.dragonheart.util.colour.RGBColour;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -86,9 +86,6 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     public static int                  MIN_NATURAL_SPAWN_AGE    = STAGE_TICKS * 3;
     public static int                  MAX_NATURAL_SPAWN_AGE    = STAGE_TICKS * 4;
     public static HashMap<Item, Float> HEAL_ITEMS               = new HashMap<>();
-    public static int                  MIN_BREED_STAGE          = 2;
-    public static int                  MAX_SHOULDER_STAGE       = 0;
-    public static int                  MIN_MOUNT_STAGE          = 2;
     static {
         HEAL_ITEMS.put( Items.COOKED_BEEF            , 50.0f  );
         HEAL_ITEMS.put( Items.COOKED_PORKCHOP        , 37.5f  );
@@ -101,6 +98,12 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     }
     public static float                MIN_SCALE                = 0.125f;
     public static float                MAX_SCALE                = 1.0f;
+    public static int                  MIN_BREED_STAGE          = 2;
+    public static int                  MAX_SHOULDER_STAGE       = 0;
+    public static int                  MIN_MOUNT_STAGE          = 2;
+    public static int                  MIN_XP_DROP_STAGE        = 2;
+    public static float                MIN_SOUND_PITCH          = 1.5f;
+    public static float                MAX_SOUND_PITCH          = 1.0f;
 
     public static EntityDimensions     DIMENSIONS               = EntityDimensions.changing(2.75f, 1.625f);
     public static float                EYE_HEIGHT               = 1.5f;
@@ -151,11 +154,11 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH           , 1000.0d )
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE        , 50.0f   )
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK     , 3.0f    )
-                .add(EntityAttributes.GENERIC_ATTACK_SPEED         , 3.0f    )
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE , 1.0f    );
+                .add( EntityAttributes.GENERIC_MAX_HEALTH           , 1000.0d )
+                .add( EntityAttributes.GENERIC_ATTACK_DAMAGE        , 50.0f   )
+                .add( EntityAttributes.GENERIC_ATTACK_KNOCKBACK     , 3.0f    )
+                .add( EntityAttributes.GENERIC_ATTACK_SPEED         , 3.0f    )
+                .add( EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE , 1.0f    );
     }
 
 
@@ -197,6 +200,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     public static final TrackedData<Boolean>        HAS_BREEDED;
     public static final TrackedData<Boolean>        NATURAL_SPAWN;
     public static final TrackedData<Boolean>        SITTING;
+    public static final TrackedData<Boolean>        IS_FEMALE;
 
     static {
         SPAWN_POS       = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BLOCK_POS     );
@@ -214,6 +218,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         HAS_BREEDED     = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
         NATURAL_SPAWN   = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
         SITTING         = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
+        IS_FEMALE       = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
     }
 
 
@@ -234,17 +239,20 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         this.dataTracker.startTracking( HAS_BREEDED     , false                 );
         this.dataTracker.startTracking( NATURAL_SPAWN   , false                 );
         this.dataTracker.startTracking( SITTING         , false                 );
+        this.dataTracker.startTracking( IS_FEMALE       , false                 );
     }
 
 
     @Override
     @Nullable
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        net.minecraft.util.math.random.Random rand;
+
         dataTracker.set( SPAWN_POS       , getBlockPos()                                                                   );
         dataTracker.set( HUNGER_LEVEL    , 20 * 60 * 15                                                                    );
         dataTracker.set( COLOUR          , DragonEntityColourPicker.chooseFromCategory(getDragonType(), getUuid()).asInt() );
         dataTracker.set( STATE           , DragonState.SLEEP.toInt()                                                       );
-        net.minecraft.util.math.random.Random rand = net.minecraft.util.math.random.Random.create(DragonSalt.AGE + UuidOp.uuidToInt(uuid));
+        rand = net.minecraft.util.math.random.Random.create(DragonSalt.AGE + UuidOp.uuidToInt(uuid));
         dataTracker.set( AGE             , rand.nextBetween(MIN_NATURAL_SPAWN_AGE, MAX_NATURAL_SPAWN_AGE)                  );
         calculateDimensions();
         dataTracker.set( WAKEUP_PROGRESS , 0                                                                               );
@@ -255,6 +263,8 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         dataTracker.set( HAS_BREEDED     , false                                                                           );
         dataTracker.set( NATURAL_SPAWN   , true                                                                            );
         dataTracker.set( SITTING         , false                                                                           );
+        rand = net.minecraft.util.math.random.Random.create(DragonSalt.IS_FEMALE + UuidOp.uuidToInt(uuid)                  );
+        dataTracker.set( IS_FEMALE       , rand.nextBoolean()                                                              );
         super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         return entityData;
     }
@@ -297,6 +307,10 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         nbt.putBoolean("HasBreeded", dataTracker.get(HAS_BREEDED));
 
         nbt.putBoolean("NaturalSpawn", dataTracker.get(NATURAL_SPAWN));
+
+        nbt.putBoolean("Sitting", dataTracker.get(SITTING));
+
+        nbt.putBoolean("IsFemale", dataTracker.get(IS_FEMALE));
     }
 
 
@@ -337,6 +351,10 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         dataTracker.set(HAS_BREEDED, nbt.getBoolean("HasBreeded"));
 
         dataTracker.set(NATURAL_SPAWN, nbt.getBoolean("NaturalSpawn"));
+
+        dataTracker.set(SITTING, nbt.getBoolean("Sitting"));
+
+        dataTracker.set(IS_FEMALE, nbt.getBoolean("IsFemale"));
     }
 
 
@@ -355,13 +373,6 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
 
     public boolean isTamed() {
         return dataTracker.get(TAMED_OWNER).isPresent();
-    }
-
-    public boolean canBreed(DragonEntity other) {
-        return this._canBreed() && other._canBreed();
-    }
-    public boolean _canBreed() {
-        return this.isTamed() && ! dataTracker.get(HAS_BREEDED) && getStage() >= MIN_BREED_STAGE;
     }
 
     public boolean isNaturallySpawned() {
@@ -392,6 +403,8 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     public float getScale() {
         return MIN_SCALE + (MAX_SCALE - MIN_SCALE) * getAgeInterpolation();
     }
+
+    public boolean isFemale() {return dataTracker.get(IS_FEMALE);}
 
 
 
@@ -470,66 +483,47 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     }
 
 
-    /*---------------------------------
-    | Physics, Despawn, and Resistance |
-     ---------------------------------*/
+    /*------------------------------------------------------------------------
+    | Sounds, Scale, Physics, Despawn, Death, Blocking, Slots, and Immunities |
+     ------------------------------------------------------------------------*/
 
+    // Sounds
     @Override
-    public boolean isPersistent() {
-        return true;
+    public SoundCategory getSoundCategory() {return SoundCategory.NEUTRAL;}
+    @Override
+    public SoundEvent getSwimSound() {
+        return SoundEvents.ENTITY_HOSTILE_SWIM;
     }
     @Override
-    public boolean cannotDespawn() {
-        return true;
+    public SoundEvent getSplashSound() {
+        return SoundEvents.ENTITY_HOSTILE_SPLASH;
     }
     @Override
-    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
-        return false;
+    public SoundEvent getHurtSound(DamageSource source) {
+        return SoundEvents.ENTITY_HOSTILE_HURT;
     }
     @Override
-    public boolean isFireImmune() {
-        return true;
+    public SoundEvent getDeathSound() {
+        return SoundEvents.ENTITY_HOSTILE_DEATH;
     }
     @Override
-    public boolean canFreeze() {
-        return false;
-    }
-    @Override
-    public boolean canBreatheInWater() {
-        return true;
-    }
-    @Override
-    public boolean canUsePortals() {
-        return false;
-    }
-    @Override
-    public boolean occludeVibrationSignals() {
-        return true;
-    }
-    @Override
-    public boolean isPushable() {
-        return false;
-    }
-    @Override
-    public boolean canImmediatelyDespawn(double distanceSquared) {
-        return false;
+    public FallSounds getFallSounds() {
+        return new FallSounds(SoundEvents.ENTITY_HOSTILE_SMALL_FALL, SoundEvents.ENTITY_HOSTILE_BIG_FALL);
     }
     @Override
     public float getSoundVolume() {
-        return 4.0f;
+        return 5.0f;
     }
     @Override
-    public boolean isDisallowedInPeaceful() {
-        return false;
+    public float getSoundPitch() {
+        return MIN_SOUND_PITCH + (MAX_SOUND_PITCH - MIN_SOUND_PITCH) * getAgeInterpolation();
     }
+
+    // Scale
     @Override
-    public boolean canStartRiding(Entity entity) {
-        return false;
+    public float getScaleFactor() {
+        return this.getScale();
     }
-    @Override
-    public void takeKnockback(double strength, double x, double z) {}
-    @Override
-    public boolean hasNoGravity() {return dataTracker.get(FLYING);}
     @Override
     public float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return EYE_HEIGHT * getScale();
@@ -543,10 +537,147 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         );
     }
 
+    // Physics
+    @Override
+    public boolean hasNoDrag() {
+        return true;
+    }
+    @Override
+    public void takeKnockback(double strength, double x, double z) {}
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+    @Override
+    public boolean isPushedByFluids() {return false;}
+    @Override
+    public boolean hasNoGravity() {return dataTracker.get(FLYING);}
+
+    // Despawn
+    @Override
+    public boolean canImmediatelyDespawn(double distanceSquared) {
+        return false;
+    }
+    @Override
+    public boolean cannotDespawn() {
+        return true;
+    }
+    @Override
+    public boolean isDisallowedInPeaceful() {
+        return true;
+    }
+    @Override
+    public int getLimitPerChunk() {
+        return -1;
+    }
+    @Override
+    public boolean isPersistent() {
+        return true;
+    }
+    @Override
+    public boolean shouldSwimInFluids() {
+        return ! isSleeping();
+    }
+
+    // Death
+    @Override
+    public boolean shouldDropXp() {
+        return ! isTamed() && getStage() >= MIN_XP_DROP_STAGE;
+    }
+    @Override
+    public boolean shouldDropLoot() {
+        return true;
+    }
+    @Override
+    public int getXpToDrop() {
+        return (int)(500 * this.getAgeInterpolation());
+    }
+    @Override
+    public boolean shouldAlwaysDropXp() {
+        return this.shouldDropXp();
+    }
+
+    // Blocking
+    @Override
+    public boolean canBeLeashedBy(PlayerEntity player) {
+        return false;
+    }
+    @Override
+    public boolean canStartRiding(Entity entity) {
+        return false;
+    }
+    @Override
+    public boolean canUsePortals() {
+        return false;
+    }
+
+    // Slots
+    @Override
+    public boolean tryEquip(ItemStack equipment) {
+        return false;
+    }
+    @Override
+    public boolean canPickupItem(ItemStack stack) {
+        return false;
+    }
+    @Override
+    public boolean canPickUpLoot() {
+        return false;
+    }
+    @Override
+    public boolean canEquip(ItemStack stack) {
+        return false;
+    }
+    @Override
+    public boolean isArmorSlot(EquipmentSlot slot) {
+        return false;
+    }
+
+    // Immunities
+    @Override
+    public boolean canBreatheInWater() {
+        return true;
+    }
+    @Override
+    public boolean canHaveStatusEffect(StatusEffectInstance effect) {
+        return false;
+    }
+    @Override
+    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+        return false;
+    }
+    @Override
+    public boolean hurtByWater() {
+        return false;
+    }
+    @Override
+    public boolean isFireImmune() {
+        return true;
+    }
+    @Override
+    public boolean canFreeze() {
+        return false;
+    }
+
 
     /*---
     | AI |
      ---*/
+
+    @Override
+    public boolean isAngryAt(PlayerEntity player) {
+        return ! isSleeping();
+    }
+
+    @Override
+    public float getPathfindingFavor(BlockPos pos, WorldView world) {
+        return 0.0f;
+    }
+
+    @Override
+    public boolean isNavigating() {
+        return ! this.getNavigation().isIdle();
+    }
 
     public boolean isValidTarget(@Nullable Entity entity) {
         return (
@@ -757,6 +888,10 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
 
     public EntityGameEventHandler<VibrationListener> gameEventHandler = new EntityGameEventHandler<>(new VibrationListener(new EntityPositionSource(this, this.getStandingEyeHeight()), 16, this, null, 0.0F, 0));
 
+    @Override
+    public boolean occludeVibrationSignals() {
+        return true;
+    }
 
     @Override
     public TagKey<GameEvent> getTag() {
@@ -876,7 +1011,6 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         if (passenger instanceof MobEntity mobEntity) {
             this.headYaw = mobEntity.headYaw;
         }
-
     }
 
 
@@ -884,8 +1018,19 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     | Breeding |
      ---------*/
 
+    public boolean canBreed(DragonEntity other) {
+        return (
+                this._canBreed() && other._canBreed() &&
+                this.getClass() == other.getClass() &&
+                this.isFemale() != other.isFemale()
+        );
+    }
+    public boolean _canBreed() {
+        return this.isTamed() && ! dataTracker.get(HAS_BREEDED) && getStage() >= MIN_BREED_STAGE;
+    }
+
     public boolean canBreedWith(Entity other) {
-        return(
+        return (
                 other != this &&
                 other instanceof DragonEntity otherDragon &&
                 this.canBreed(otherDragon)
@@ -894,7 +1039,11 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
 
 
     public void breed(ServerWorld world, DragonEntity other) {
-        // TODO
+        if (canBreedWith(other) && isFemale()) {
+            /*DragonEntity baby = (DragonEntity)(this.getType().create(world));
+            baby
+            world.spawnEntity(baby);*/
+        }
     }
 
 
