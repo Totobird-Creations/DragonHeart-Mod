@@ -2,12 +2,14 @@ package net.totobirdcreations.dragonheart.item.misc;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -17,16 +19,19 @@ import net.totobirdcreations.dragonheart.entity.dragon.util.DragonSalt;
 import net.totobirdcreations.dragonheart.entity.dragon.util.UuidOp;
 import net.totobirdcreations.dragonheart.entity.dragonegg.DragoneggEntity;
 import net.totobirdcreations.dragonheart.item.util.ColouredItem;
+import net.totobirdcreations.dragonheart.util.colour.RGBColour;
 
 
 public class Dragonegg<D extends DragonEntity, T extends DragoneggEntity<D>> extends Item implements ColouredItem {
 
-    public EntityType<T> entity;
+    public EntityType<T>           entity;
+    public DragonEntity.DragonType type;
 
 
-    public Dragonegg(Settings settings, EntityType<T> entity) {
+    public Dragonegg(Settings settings, EntityType<T> entity, DragonEntity.DragonType type) {
         super(settings);
         this.entity = entity;
+        this.type   = type;
     }
 
 
@@ -64,6 +69,24 @@ public class Dragonegg<D extends DragonEntity, T extends DragoneggEntity<D>> ext
             return nbt.getInt(key);
         } else {
             return fallback;
+        }
+    }
+
+
+    @Override
+    public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
+        if (this.isIn(group)) {
+            Item        item    = this.type.getDragoneggItem();
+            RGBColour[] options = this.type.getBaseColourOptions();
+            if (this.type != DragonEntity.DragonType.ICE) {
+                stacks.add(new ItemStack(item));
+            }
+            for (RGBColour option : options) {
+                ItemStack   stack = new ItemStack(item);
+                NbtCompound nbt   = stack.getOrCreateSubNbt("display");
+                nbt.putInt("color", option.asInt());
+                stacks.add(stack);
+            }
         }
     }
 

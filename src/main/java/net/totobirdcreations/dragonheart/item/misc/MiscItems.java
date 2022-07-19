@@ -3,7 +3,18 @@ package net.totobirdcreations.dragonheart.item.misc;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.collection.DefaultedList;
+import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.entity.ModEntities;
+import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
+import net.totobirdcreations.dragonheart.entity.dragon.util.DragonEntityColourPicker;
+import net.totobirdcreations.dragonheart.util.colour.RGBColour;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import static net.totobirdcreations.dragonheart.item.ModItems.registerItem;
 
@@ -138,7 +149,8 @@ public class MiscItems {
                             .group     (ItemGroup.MISC)
                             .maxCount  (1)
                             .fireproof (),
-                    ModEntities.DRAGONEGG_FIRE
+                    ModEntities.DRAGONEGG_FIRE,
+                    DragonEntity.DragonType.FIRE
             )
     );
 
@@ -149,7 +161,8 @@ public class MiscItems {
                             .group     (ItemGroup.MISC)
                             .maxCount  (1)
                             .fireproof (),
-                    ModEntities.DRAGONEGG_ICE
+                    ModEntities.DRAGONEGG_ICE,
+                    DragonEntity.DragonType.ICE
             )
     );
 
@@ -160,7 +173,8 @@ public class MiscItems {
                             .group     (ItemGroup.MISC)
                             .maxCount  (1)
                             .fireproof (),
-                    ModEntities.DRAGONEGG_LIGHTNING
+                    ModEntities.DRAGONEGG_LIGHTNING,
+                    DragonEntity.DragonType.LIGHTNING
             )
     );
 

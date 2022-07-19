@@ -52,6 +52,7 @@ import net.totobirdcreations.dragonheart.entity.dragon.util.DragonEntityColourPi
 import net.totobirdcreations.dragonheart.entity.dragon.util.DragonSalt;
 import net.totobirdcreations.dragonheart.entity.dragon.util.UuidOp;
 import net.totobirdcreations.dragonheart.item.FoodItems;
+import net.totobirdcreations.dragonheart.item.misc.MiscItems;
 import net.totobirdcreations.dragonheart.util.colour.RGBColour;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -117,7 +118,24 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         NONE,
         FIRE,
         ICE,
-        LIGHTNING
+        LIGHTNING;
+
+        @Nullable
+        public RGBColour[] getBaseColourOptions() {
+            if (DragonEntityColourPicker.OPTIONS.containsKey(this)) {
+                return DragonEntityColourPicker.OPTIONS.get(this);
+            }
+            return null;
+        }
+        @Nullable
+        public Item getDragoneggItem() {
+            return switch (this) {
+                case FIRE      -> MiscItems.DRAGONEGG_FIRE;
+                case ICE       -> MiscItems.DRAGONEGG_ICE;
+                case LIGHTNING -> MiscItems.DRAGONEGG_LIGHTNING;
+                case NONE      -> null;
+            };
+        }
     }
 
     public enum DragonState {
@@ -852,25 +870,26 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         if (hand == Hand.MAIN_HAND) {
             ItemStack stack = player.getStackInHand(hand);
+
             if (isTamed()) {
                 if (stack == null && isTamedOwner(player)) {
                     if (player.isSneaking()) {
                         if (canRideShoulder(player)) {
                             // Dragon ride player shoulder.
-                            if (! this.world.isClient()) {
+                            if (!this.world.isClient()) {
                                 rideShoulder(player);
                             }
                             return ActionResult.success(this.world.isClient());
                         } else if (canPlayerMount(player)) {
                             // Player ride dragon.
-                            if (! this.world.isClient()) {
+                            if (!this.world.isClient()) {
                                 mountPlayer(player);
                             }
                             return ActionResult.success(this.world.isClient());
                         }
                     } else {
                         // Toggle dragon sitting.
-                        if (! this.world.isClient()) {
+                        if (!this.world.isClient()) {
                             toggleSitting();
                         }
                         return ActionResult.success(this.world.isClient());
@@ -891,11 +910,10 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
                         }
                     }
                 }
+
             } else if (canTame(player)) {
-                if (stack == null) {
-                    if (! this.world.isClient()) {
-                        tamedBy(player);
-                    }
+                if (stack == null || stack.isEmpty()) {
+                    tamedBy(player);
                     return ActionResult.success(this.world.isClient());
                 }
             }
@@ -982,19 +1000,23 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
 
 
     public void tamedBy(PlayerEntity tamedOwner) {
-        dataTracker.set(TAMED_OWNER, Optional.of(tamedOwner.getUuid()));
-        Random random = new Random();
-        Box    bounds = this.getBoundingBox();
-        for (int i=0;i< 7 ;i++) {
-            this.world.addParticle(
-                    ParticleTypes.HEART,
-                    random.nextDouble(bounds.maxX - bounds.minX),
-                    random.nextDouble(bounds.maxY - bounds.minY),
-                    random.nextDouble(bounds.maxZ - bounds.minZ),
-                    random.nextGaussian() * 0.02,
-                    random.nextGaussian() * 0.02,
-                    random.nextGaussian() * 0.02
-            );
+        if (! this.world.isClient()) {
+            dataTracker.set(TAMED_OWNER, Optional.of(tamedOwner.getUuid()));
+
+        } else { // this.world.isClient()
+            Random random = new Random();
+            Box    bounds = this.getBoundingBox();
+            for (int i = 0; i < 7; i++) {
+                this.world.addParticle(
+                        ParticleTypes.HEART,
+                        random.nextDouble(bounds.maxX - bounds.minX),
+                        random.nextDouble(bounds.maxY - bounds.minY),
+                        random.nextDouble(bounds.maxZ - bounds.minZ),
+                        random.nextGaussian() * 0.02,
+                        random.nextGaussian() * 0.02,
+                        random.nextGaussian() * 0.02
+                );
+            }
         }
     }
 
