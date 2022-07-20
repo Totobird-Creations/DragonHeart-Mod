@@ -10,7 +10,7 @@ import net.minecraft.world.BlockView;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.util.*;
 import net.totobirdcreations.dragonheart.item.group.ModItemGroups;
-import net.totobirdcreations.dragonheart.mixin.ItemGroupMixin;
+import net.totobirdcreations.dragonheart.mixin.init.InitItemGroupMixin;
 
 import static net.totobirdcreations.dragonheart.block.ModBlocks.registerBlock;
 import static net.totobirdcreations.dragonheart.block.ModBlocks.registerBlockWithoutItem;
@@ -317,7 +317,7 @@ public class DragonforgeBlocks {
         ( ( DragonforgeWindow         ) DRAGONFORGE_WINDOW_LIGHTNING          ).setDependencyBlocks( DRAGONFORGE_BRICKS_LIGHTNING , lightning_cores );
         ( ( DragonforgeStructureBlock ) DRAGONFORGE_SUPPORT_LIGHTNING  .block ).setDependencyBlocks( lightning_cores                                );
 
-        ((ItemGroupMixin)ModItemGroups.DRAGONFORGE).setIcon(new ItemStack(DRAGONFORGE_BRICKS_BASE.item));
+        ((InitItemGroupMixin)ModItemGroups.DRAGONFORGE).setIcon(new ItemStack(DRAGONFORGE_BRICKS_BASE.item));
 
     }
 

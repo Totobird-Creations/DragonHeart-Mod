@@ -9,7 +9,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
-import net.totobirdcreations.dragonheart.util.effect.FrozenEffectLivingEntityInterface;
+import net.totobirdcreations.dragonheart.util.mixin.frozeneffect.FrozenEffectLivingEntityMixinInterface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 
 @Mixin(LivingEntity.class)
-public abstract class FrozenEffectLivingEntityMixin extends Entity implements FrozenEffectLivingEntityInterface {
+public abstract class FrozenEffectLivingEntityMixin extends Entity implements FrozenEffectLivingEntityMixinInterface {
     @Shadow public abstract float getHeadYaw();
 
     @Shadow public abstract void setSprinting(boolean sprinting);
@@ -109,7 +109,7 @@ public abstract class FrozenEffectLivingEntityMixin extends Entity implements Fr
             cancellable = true
     )
     public void isImmobile(CallbackInfoReturnable<Boolean> callback) {
-        if (((FrozenEffectLivingEntityInterface)this).isIced()) {
+        if (((FrozenEffectLivingEntityMixinInterface)this).isIced()) {
             callback.setReturnValue(true);
         }
     }
@@ -121,7 +121,7 @@ public abstract class FrozenEffectLivingEntityMixin extends Entity implements Fr
             cancellable = true
     )
     public void tryAttack(Entity target, CallbackInfoReturnable<Boolean> callback) {
-        if (((FrozenEffectLivingEntityInterface)this).isIced()) {
+        if (((FrozenEffectLivingEntityMixinInterface)this).isIced()) {
             callback.setReturnValue(false);
         }
     }
@@ -133,7 +133,7 @@ public abstract class FrozenEffectLivingEntityMixin extends Entity implements Fr
             cancellable = true
     )
     public void isUsingItem(CallbackInfoReturnable<Boolean> callback) {
-        if (((FrozenEffectLivingEntityInterface)this).isIced()) {
+        if (((FrozenEffectLivingEntityMixinInterface)this).isIced()) {
             callback.setReturnValue(false);
         }
     }
@@ -145,7 +145,7 @@ public abstract class FrozenEffectLivingEntityMixin extends Entity implements Fr
             cancellable = true
     )
     public void tickActiveItemStack(CallbackInfo callback) {
-        if (((FrozenEffectLivingEntityInterface)this).isIced()) {
+        if (((FrozenEffectLivingEntityMixinInterface)this).isIced()) {
             callback.cancel();
         }
     }
@@ -157,7 +157,7 @@ public abstract class FrozenEffectLivingEntityMixin extends Entity implements Fr
             cancellable = true
     )
     public void tickItemStackUsage(ItemStack stack, CallbackInfo callback) {
-        if (((FrozenEffectLivingEntityInterface)this).isIced()) {
+        if (((FrozenEffectLivingEntityMixinInterface)this).isIced()) {
             callback.cancel();
         }
     }
@@ -169,7 +169,7 @@ public abstract class FrozenEffectLivingEntityMixin extends Entity implements Fr
             cancellable = true
     )
     public void consumeItem(CallbackInfo callback) {
-        if (((FrozenEffectLivingEntityInterface)this).isIced()) {
+        if (((FrozenEffectLivingEntityMixinInterface)this).isIced()) {
             callback.cancel();
         }
     }

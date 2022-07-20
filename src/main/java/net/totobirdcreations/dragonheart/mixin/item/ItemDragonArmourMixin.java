@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.mixin;
+package net.totobirdcreations.dragonheart.mixin.item;
 
 
 import com.google.common.collect.ImmutableMultimap;
@@ -24,7 +24,7 @@ import java.util.UUID;
 
 
 @Mixin(ArmorItem.class)
-public class DragonArmourMixin {
+public class ItemDragonArmourMixin {
 
 
     @Shadow

@@ -19,13 +19,13 @@ import net.totobirdcreations.dragonheart.entity.dragon.render.DragonFireEntityRe
 import net.totobirdcreations.dragonheart.entity.dragon.render.DragonIceEntityRenderer;
 import net.totobirdcreations.dragonheart.entity.dragon.render.DragonLightningEntityRenderer;
 import net.totobirdcreations.dragonheart.entity.dragonegg.DragoneggEntityRenderer;
-import net.totobirdcreations.dragonheart.entity.dragonegg.DragoneggFireEntity;
 import net.totobirdcreations.dragonheart.item.misc.Dragonegg;
 import net.totobirdcreations.dragonheart.item.misc.MiscItems;
 import net.totobirdcreations.dragonheart.item.misc.Dragonbucket;
 import net.totobirdcreations.dragonheart.item.misc.Dragonscale;
 import net.totobirdcreations.dragonheart.screen.ModScreens;
-import net.totobirdcreations.dragonheart.util.effect.DeafenedEffectLivingEntityInterface;
+import net.totobirdcreations.dragonheart.util.colour.RGBColour;
+import net.totobirdcreations.dragonheart.util.mixin.deafenedeffect.DeafenedEffectLivingEntityMixinInterface;
 import net.totobirdcreations.dragonheart.util.ModRegistries;
 
 
@@ -79,12 +79,12 @@ public class DragonHeartClient implements ClientModInitializer, ShaderEffectRend
 
     public int getDragonbucketItemColour(ItemStack stack, int tintIndex) {
         Dragonbucket bucket = (Dragonbucket)stack.getItem();
-        return tintIndex == 1 ? bucket.getColor(stack) : 16777215;
+        return tintIndex == 1 ? bucket.getColor(stack) : RGBColour.WHITE.asInt();
     }
 
 
     public int getDragoneggItemColour(ItemStack stack, int tintIndex) {
-        Dragonegg egg = (Dragonegg)stack.getItem();
+        Dragonegg egg = (Dragonegg)(stack.getItem());
         return egg.getColor(stack);
     }
 
@@ -93,7 +93,7 @@ public class DragonHeartClient implements ClientModInitializer, ShaderEffectRend
     public void renderShaderEffects(float tickDelta) {
         ClientPlayerEntity player     = MinecraftClient.getInstance().player;
         assert player != null;
-        boolean            isDeafened = ((DeafenedEffectLivingEntityInterface)player).isDeafened();
+        boolean            isDeafened = ((DeafenedEffectLivingEntityMixinInterface)player).isDeafened();
         deafenedShaderAmount          = Math.min(Math.max(deafenedShaderAmount + (isDeafened ? tickDelta * 0.1f : -tickDelta * 0.02f), 0.0f), 1.0f);
         if (deafenedShaderAmount > 0.0) {
             UNIFORM_SATURATION .set( 1.0f - 0.75f * deafenedShaderAmount              );

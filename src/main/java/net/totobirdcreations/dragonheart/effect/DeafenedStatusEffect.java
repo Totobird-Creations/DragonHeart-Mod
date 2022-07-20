@@ -5,7 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.totobirdcreations.dragonheart.util.effect.DeafenedEffectLivingEntityInterface;
+import net.totobirdcreations.dragonheart.util.mixin.deafenedeffect.DeafenedEffectLivingEntityMixinInterface;
 
 
 public class DeafenedStatusEffect extends StatusEffect {
@@ -24,7 +24,7 @@ public class DeafenedStatusEffect extends StatusEffect {
     @Override
     public void onApplied(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (! entity.world.isClient()) {
-            ((DeafenedEffectLivingEntityInterface) entity).setDeafened(true);
+            ((DeafenedEffectLivingEntityMixinInterface) entity).setDeafened(true);
         }
     }
 
@@ -32,7 +32,7 @@ public class DeafenedStatusEffect extends StatusEffect {
     @Override
     public void onRemoved(LivingEntity entity, AttributeContainer attributes, int amplifier) {
         if (! entity.world.isClient()) {
-            ((DeafenedEffectLivingEntityInterface) entity).setDeafened(false);
+            ((DeafenedEffectLivingEntityMixinInterface) entity).setDeafened(false);
             if (entity.getWorld().isClient()) {
                 KeyBinding.unpressAll();
             }

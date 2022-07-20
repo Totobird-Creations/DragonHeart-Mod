@@ -177,6 +177,45 @@ public class MiscItems {
                     DragonEntity.DragonType.LIGHTNING
             )
     );
+    public static final Item DRAGONEGG_CREATIVE_FIRE = registerItem(
+            "dragonegg_creative_fire",
+            new DragoneggCreative<>(
+                    new FabricItemSettings()
+                            .group     (ItemGroup.MISC)
+                            .maxCount  (1)
+                            .fireproof (),
+                    ModEntities.DRAGONEGG_FIRE,
+                    DragonEntity.DragonType.FIRE,
+                    DRAGONEGG_FIRE
+            )
+    );
+
+    public static final Item DRAGONEGG_CREATIVE_ICE = registerItem(
+            "dragonegg_creative_ice",
+            new DragoneggCreative<>(
+                    new FabricItemSettings()
+                            .group     (ItemGroup.MISC)
+                            .maxCount  (1)
+                            .fireproof (),
+                    ModEntities.DRAGONEGG_ICE,
+                    DragonEntity.DragonType.ICE,
+                    DRAGONEGG_ICE
+            )
+    );
+
+    public static final Item DRAGONEGG_CREATIVE_LIGHTNING = registerItem(
+            "dragonegg_creative_lightning",
+            new DragoneggCreative<>(
+                    new FabricItemSettings()
+                            .group     (ItemGroup.MISC)
+                            .maxCount  (1)
+                            .fireproof (),
+                    ModEntities.DRAGONEGG_LIGHTNING,
+                    DragonEntity.DragonType.LIGHTNING,
+                    DRAGONEGG_LIGHTNING
+            )
+    );
+
 
 
     public static void register() {}

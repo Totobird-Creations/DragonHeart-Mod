@@ -26,7 +26,7 @@ public class TitleScreenMixin extends Screen {
             at = @At("TAIL")
     )
     public void render(MatrixStack stack, int mouseX, int mouseY, float delta, CallbackInfo callback) {
-        String text = Text.translatable("titlescreen.notice").getString();
+        String text = Text.translatable("titlescreen.dragonheart.notice").getString();
 
         boolean doBackgroundFade    = ((TitleScreenInterface)this).getDoBackgroundFade();
         long    backgroundFadeStart = ((TitleScreenInterface)this).getBackgroundFadeStart();

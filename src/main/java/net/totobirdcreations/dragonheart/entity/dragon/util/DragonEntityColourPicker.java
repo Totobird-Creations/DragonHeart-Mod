@@ -68,7 +68,7 @@ public class DragonEntityColourPicker {
     }
 
     public static RGBColour adjust(RGBColour colour) {
-        if (colour.greyscale().r < THRESHOLD) {
+        if (colour.toHsv().greyscale().v < THRESHOLD) {
             if (colour.r < THRESHOLD) {
                 colour.r = THRESHOLD;
             }
@@ -94,7 +94,7 @@ public class DragonEntityColourPicker {
             DragonEntity.DragonType key = (DragonEntity.DragonType)(OPTIONS.keySet().toArray()[k]);
             for (int o=0;o< OPTIONS.get(key).length ;o++) {
                 RGBColour other = OPTIONS.get(key)[o];
-                float     dist  = colour.distance(other);
+                float     dist  = colour.toLab().distance(other.toLab());
                 if (bestKey == DragonEntity.DragonType.NONE || dist < bestDist) {
                     bestKey  = key;
                     bestDist = dist;

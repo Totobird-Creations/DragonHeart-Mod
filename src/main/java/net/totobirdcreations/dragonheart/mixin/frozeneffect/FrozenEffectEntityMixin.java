@@ -2,7 +2,7 @@ package net.totobirdcreations.dragonheart.mixin.frozeneffect;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.totobirdcreations.dragonheart.util.effect.FrozenEffectLivingEntityInterface;
+import net.totobirdcreations.dragonheart.util.mixin.frozeneffect.FrozenEffectLivingEntityMixinInterface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,7 +23,7 @@ public abstract class FrozenEffectEntityMixin {
     public void tick(CallbackInfo callback) {
         // TODO : Do something about this warning.
         if (((Entity)(Object)this) instanceof LivingEntity) {
-            if (! ((FrozenEffectLivingEntityInterface) this).isIced()) {
+            if (! ((FrozenEffectLivingEntityMixinInterface) this).isIced()) {
                 Entity entity = ((Entity)(Object)this);
                 frozenSneak   = entity.isSneaking();
             }

@@ -3,7 +3,12 @@ package net.totobirdcreations.dragonheart.util.colour;
 
 import software.bernie.geckolib3.core.util.Color;
 
+import javax.annotation.Nullable;
+
 public class RGBColour {
+
+    public static RGBColour WHITE = new RGBColour(1.0f, 1.0f, 1.0f);
+    public static RGBColour GREY  = new RGBColour(0.5f, 0.5f, 0.5f);
 
     public float r;
     public float g;
@@ -21,22 +26,35 @@ public class RGBColour {
         this.b = ((value      ) & 0xff) / 255.0f;
     }
 
-    public float distance(RGBColour other) {
-        int[] lab1 = this.toLab();
-        int[] lab2 = other.toLab();
-        return (float)(Math.sqrt(
-                Math.pow(lab2[0] - lab1[0], 2.0f) +
-                Math.pow(lab2[1] - lab1[1], 2.0f) +
-                Math.pow(lab2[2] - lab1[2], 2.0f)
-        ));
+
+    @Nullable
+    public static RGBColour parseString(String name) {
+        if (name.startsWith("#") && name.length() == 7) { // Hexadecimal colour code
+            String code  = name.substring(1);
+            String rCode = code.substring(0, 2);
+            String gCode = code.substring(2, 4);
+            String bCode = code.substring(4, 6);
+
+            try {
+                return new RGBColour(
+                        ((float)(Long.parseLong(rCode, 16))) / 255.0f,
+                        ((float)(Long.parseLong(gCode, 16))) / 255.0f,
+                        ((float)(Long.parseLong(bCode, 16))) / 255.0f
+                );
+            } catch (NumberFormatException ignored) {}
+
+        }/* else { // Decimal colour code
+            try {
+                return new RGBColour(
+                        (int)(Long.parseLong(name, 10))
+                );
+            } catch (NumberFormatException ignored) {}
+        }*/
+        return null;
     }
 
-    public RGBColour greyscale() {
-        float v = (this.r + this.g + this.b) / 3.0f;
-        return new RGBColour(v, v, v);
-    }
 
-    public int[] toLab() {
+    public LABColour toLab() {
         float eps = 216.0f / 24389.0f;
         float k   = 24389.0f / 27.0f;
         float Xr  = 0.964221f;
@@ -57,11 +75,11 @@ public class RGBColour {
         float Ls = (116.0f * fy) - 16.0f;
         float as = 500.0f * (fx - fy);
         float bs = 200.0f * (fy - fz);
-        return new int[]{
+        return new LABColour(
                 (int)(2.55f * Ls + 0.5f),
                 (int)(as + 0.5f),
                 (int)(bs + 0.5f)
-        };
+        );
     }
 
     public int asInt() {

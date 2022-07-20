@@ -120,12 +120,36 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         ICE,
         LIGHTNING;
 
-        @Nullable
+        /*@Nullable
         public RGBColour[] getBaseColourOptions() {
             if (DragonEntityColourPicker.OPTIONS.containsKey(this)) {
                 return DragonEntityColourPicker.OPTIONS.get(this);
             }
             return null;
+        }*/
+        @Nullable
+        public RGBColour[] getDragoneggCreativeColourOptions() {
+            return switch (this) {
+                case FIRE      -> new RGBColour[]{
+                        new RGBColour( 0.5f   , 0.0f   , 0.0f   ), // Red
+                        new RGBColour( 0.3f   , 0.3f   , 0.3f   ), // Gray
+                        new RGBColour( 0.125f , 0.375f , 0.125f ), // Emerald
+                        new RGBColour( 0.735f , 0.424f , 0.0f   )  // Bronze
+                };
+                case ICE       -> new RGBColour[]{
+                        new RGBColour( 0.375f , 0.8f   , 1.0f   ), // Blue
+                        new RGBColour( 0.31f  , 0.31f  , 0.75f  ), // Sapphire
+                        new RGBColour( 1.0f   , 1.0f   , 1.0f   ), // White
+                        new RGBColour( 0.75f  , 0.75f  , 0.812f )  // Silver
+                };
+                case LIGHTNING -> new RGBColour[]{
+                        new RGBColour( 0.5f   , 0.265f , 0.0f   ), // Copper
+                        new RGBColour( 0.125f , 0.05f  , 0.375f ), // Electric
+                        new RGBColour( 0.337f , 0.0f   , 0.45f  ), // Amethyst
+                        new RGBColour( 0.125f , 0.125f , 0.125f )  // Black
+                };
+                case NONE      -> null;
+            };
         }
         @Nullable
         public Item getDragoneggItem() {
@@ -133,6 +157,15 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
                 case FIRE      -> MiscItems.DRAGONEGG_FIRE;
                 case ICE       -> MiscItems.DRAGONEGG_ICE;
                 case LIGHTNING -> MiscItems.DRAGONEGG_LIGHTNING;
+                case NONE      -> null;
+            };
+        }
+        @Nullable
+        public Item getDragoneggCreativeItem() {
+            return switch (this) {
+                case FIRE      -> MiscItems.DRAGONEGG_CREATIVE_FIRE;
+                case ICE       -> MiscItems.DRAGONEGG_CREATIVE_ICE;
+                case LIGHTNING -> MiscItems.DRAGONEGG_CREATIVE_LIGHTNING;
                 case NONE      -> null;
             };
         }
@@ -247,21 +280,21 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     @Override
     public void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking( SPAWN_POS       , new BlockPos(0, 0, 0) );
-        this.dataTracker.startTracking( HUNGER_LEVEL    , 0                     );
-        this.dataTracker.startTracking( COLOUR          , 8355711               );
-        this.dataTracker.startTracking( STATE           , 0                     );
-        this.dataTracker.startTracking( AGE             , 0                     );
+        this.dataTracker.startTracking( SPAWN_POS       , new BlockPos(0, 0, 0)   );
+        this.dataTracker.startTracking( HUNGER_LEVEL    , 0                       );
+        this.dataTracker.startTracking( COLOUR          , RGBColour.GREY.asInt()  );
+        this.dataTracker.startTracking( STATE           , 0                       );
+        this.dataTracker.startTracking( AGE             , 0                       );
         calculateDimensions();
-        this.dataTracker.startTracking( WAKEUP_PROGRESS , 0                     );
-        this.dataTracker.startTracking( ROAR_TICKS      , 0                     );
-        this.dataTracker.startTracking( FLYING          , false                 );
-        this.dataTracker.startTracking( EYE_COLOUR      , 16777215              );
-        this.dataTracker.startTracking( TAMED_OWNER     , null                  );
-        this.dataTracker.startTracking( HAS_BREEDED     , false                 );
-        this.dataTracker.startTracking( NATURAL_SPAWN   , false                 );
-        this.dataTracker.startTracking( SITTING         , false                 );
-        this.dataTracker.startTracking( IS_FEMALE       , false                 );
+        this.dataTracker.startTracking( WAKEUP_PROGRESS , 0                       );
+        this.dataTracker.startTracking( ROAR_TICKS      , 0                       );
+        this.dataTracker.startTracking( FLYING          , false                   );
+        this.dataTracker.startTracking( EYE_COLOUR      , RGBColour.WHITE.asInt() );
+        this.dataTracker.startTracking( TAMED_OWNER     , null                    );
+        this.dataTracker.startTracking( HAS_BREEDED     , false                   );
+        this.dataTracker.startTracking( NATURAL_SPAWN   , false                   );
+        this.dataTracker.startTracking( SITTING         , false                   );
+        this.dataTracker.startTracking( IS_FEMALE       , false                   );
     }
 
 

@@ -34,4 +34,9 @@ public class HSVColour {
         };
     }
 
+
+    public HSVColour greyscale() {
+        return new HSVColour(this.h, 0.0f, this.v);
+    }
+
 }

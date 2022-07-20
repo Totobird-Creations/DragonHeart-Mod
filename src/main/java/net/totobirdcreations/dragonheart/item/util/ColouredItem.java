@@ -3,13 +3,13 @@ package net.totobirdcreations.dragonheart.item.util;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-
+import net.totobirdcreations.dragonheart.util.colour.RGBColour;
 
 
 public interface ColouredItem extends DyeableItem {
 
 
-    int DEFAULT_COLOR = 16777215;
+    int DEFAULT_COLOR = RGBColour.WHITE.asInt();
 
 
     @Override

@@ -8,7 +8,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
-import net.totobirdcreations.dragonheart.util.effect.DeafenedEffectLivingEntityInterface;
+import net.totobirdcreations.dragonheart.util.mixin.deafenedeffect.DeafenedEffectLivingEntityMixinInterface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 @Mixin(LivingEntity.class)
-public abstract class DeafenedEffectLivingEntityMixin extends Entity implements DeafenedEffectLivingEntityInterface {
+public abstract class DeafenedEffectLivingEntityMixin extends Entity implements DeafenedEffectLivingEntityMixinInterface {
 
     public DeafenedEffectLivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);

@@ -4,20 +4,25 @@
   "package": "net.totobirdcreations.dragonheart.mixin",
   "compatibilityLevel": "JAVA_18",
   "mixins": [
-    "DragonArmourMixin",
+    "block.BlockCactusBlockMixin",
+    "deafenedeffect.DeafenedEffectLivingEntityMixin",
+    "dragonegg.DragoneggAnvilScreenHandlerInterface",
+    "dragonegg.DragoneggAnvilScreenHandlerMixin",
     "frozeneffect.FrozenEffectEntityMixin",
     "frozeneffect.FrozenEffectLivingEntityMixin",
     "frozeneffect.FrozenEffectPlayerEntityMixin",
-    "deafenedeffect.DeafenedEffectLivingEntityMixin",
-    "BrewingRecipeRegistryMixin",
-    "ItemGroupMixin"
+    "init.InitItemGroupMixin",
+    "item.ItemDragonArmourMixin"
   ],
   "client": [
-    "titlescreen.TitleScreenMixin",
-    "titlescreen.TitleScreenInterface",
-    "frozeneffect.FrozenEffectRendererMixin",
+    "cape.CapeAbstractClientPlayerEntityMixin",
+    "dragonegg.DragoneggAnvilScreenInterface",
+    "dragonegg.DragoneggAnvilScreenMixin",
+    "dragonegg.DragoneggTextFieldWidgetInterface",
     "frozeneffect.FrozenEffectMouseMixin",
-    "AbstractClientPlayerEntityMixin"
+    "frozeneffect.FrozenEffectRendererMixin",
+    "titlescreen.TitleScreenInterface",
+    "titlescreen.TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

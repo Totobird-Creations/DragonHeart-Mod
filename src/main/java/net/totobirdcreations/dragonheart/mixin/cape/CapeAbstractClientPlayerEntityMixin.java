@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.mixin;
+package net.totobirdcreations.dragonheart.mixin.cape;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -16,9 +16,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 
 @Mixin(AbstractClientPlayerEntity.class)
-public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity {
+public abstract class CapeAbstractClientPlayerEntityMixin extends PlayerEntity {
 
-    public AbstractClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile, @Nullable PlayerPublicKey publicKey) {
+    public CapeAbstractClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile, @Nullable PlayerPublicKey publicKey) {
         super(world, pos, yaw, gameProfile, publicKey);
     }
 
