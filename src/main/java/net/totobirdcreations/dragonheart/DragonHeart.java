@@ -24,9 +24,10 @@ import javax.annotation.Nullable;
 
 public class DragonHeart implements ModInitializer {
 
+	public static String  HEX_CHARS = "012346789abcdefABCDEF";
 
-	public static String  MOD_ID = "dragonheart";
-	public static Logger  LOGGER = LogManager.getLogger(MOD_ID);
+	public static String  MOD_ID    = "dragonheart";
+	public static Logger  LOGGER    = LogManager.getLogger(MOD_ID);
 	public static boolean DEVENV;
 
 	public enum Developer {
