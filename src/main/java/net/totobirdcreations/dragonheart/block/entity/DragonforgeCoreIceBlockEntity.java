@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.recipe.DragonforgeCoreTypeRecipe;
 import net.totobirdcreations.dragonheart.recipe.DragonforgeCoreTypeRecipe.RequiredForgeType;
-import net.totobirdcreations.dragonheart.screen.DragonforgeCoreIceScreenHandler;
+import net.totobirdcreations.dragonheart.client.screen.DragonforgeCoreIceScreenHandler;
 import org.jetbrains.annotations.Nullable;
 
 

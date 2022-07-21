@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.screen;
+package net.totobirdcreations.dragonheart.client.screen;
 
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -16,7 +16,7 @@ public class DragonforgeCoreIceScreenHandler extends DragonforgeCoreTypeScreenHa
     }
 
     public DragonforgeCoreIceScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
-        super(ModScreens.DRAGONFORGE_CORE_ICE, syncId, playerInventory, inventory, propertyDelegate);
+        super(ClientScreens.DRAGONFORGE_CORE_ICE, syncId, playerInventory, inventory, propertyDelegate);
     }
 
 

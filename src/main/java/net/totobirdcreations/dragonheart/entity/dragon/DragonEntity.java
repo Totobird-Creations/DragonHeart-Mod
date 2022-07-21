@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.boss.dragon.EnderDragonPart;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -104,8 +105,10 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     public static float            MAX_MODEL_SCALE = 1.0f;
     public static float            EYE_HEIGHT      = 1.5f;
     public static EntityDimensions MAX_DIMENSIONS  = EntityDimensions.changing(2.75f, 1.625f);
-    public static float            MIN_BOX_WIDTH   = 1.0f;
-    public static float            MIN_BOX_HEIGHT  = 0.5f;
+    public static float            MIN_BOX_WIDTH   = 3.0f;
+    public static float            MIN_BOX_HEIGHT  = 1.5f;
+
+    //public DragonPartEntity head = new DragonPartEntity(this, EntityDimensions.changing(0.5f, 0.5f), 1.5f);
 
     public static int   BLINK_COOLDOWN_TICKS = 200; // 5s
     public static int   BLINK_TICKS          = 5;   // 0.25s
@@ -309,7 +312,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         dataTracker.set( STATE           , DragonState.SLEEP.toInt()                                                       );
         rand = net.minecraft.util.math.random.Random.create(DragonSalt.AGE + UuidOp.uuidToInt(uuid));
         dataTracker.set( AGE             , rand.nextBetween(MIN_NATURAL_SPAWN_AGE, MAX_NATURAL_SPAWN_AGE)                  );
-        calculateDimensions();
+        this.calculateDimensions();
         dataTracker.set( WAKEUP_PROGRESS , 0                                                                               );
         dataTracker.set( ROAR_TICKS      , 0                                                                               );
         dataTracker.set( FLYING          , false                                                                           );
@@ -379,7 +382,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         dataTracker.set(WAKEUP_PROGRESS, nbt.getInt("WakeupProgress"));
 
         dataTracker.set(AGE, nbt.getInt("Age"));
-        calculateDimensions();
+        this.calculateDimensions();
 
         dataTracker.set(STATE, nbt.getInt("State"));
 
@@ -482,7 +485,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
 
     public void addAge(int age) {
         dataTracker.set(AGE, Math.min(Math.max(dataTracker.get(AGE) + age, 0), getMaxAge()));
-        calculateDimensions();
+        this.calculateDimensions();
     }
 
     public void setColour(int colour) {
@@ -597,14 +600,14 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     }
     @Override
     public float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return EYE_HEIGHT * getModelScale();
+        return EYE_HEIGHT * dimensions.height;
     }
     @Override
     public EntityDimensions getDimensions(EntityPose pose) {
         float t = getAgeInterpolation();
-        return super.getDimensions(pose).scaled(
-                (MIN_BOX_WIDTH  + (MAX_DIMENSIONS.width  / MIN_BOX_WIDTH  ) * t) / MAX_DIMENSIONS.width,
-                (MIN_BOX_HEIGHT + (MAX_DIMENSIONS.height / MIN_BOX_HEIGHT ) * t) / MAX_DIMENSIONS.height
+        return EntityDimensions.changing(
+                MIN_BOX_WIDTH  + (MAX_DIMENSIONS.width  - MIN_BOX_WIDTH  ) * t,
+                MIN_BOX_HEIGHT + (MAX_DIMENSIONS.height - MIN_BOX_HEIGHT ) * t
         );
     }
 
@@ -845,7 +848,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
             }
 
             // Tick age.
-            addAge(1);
+            this.addAge(1);
 
         } else { // world.isClient()
 
@@ -866,13 +869,26 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
 
             }
 
-        }
+            // Handle dragon size
+            this.calculateDimensions();
 
-        // Handle dragon size
-        this.calculateDimensions();
+        }
 
         // Run parent tick
         super.tick();
+    }
+
+
+    @Override
+    public void tickMovement() {
+        super.tickMovement();
+        //this.setPartPosition(head, new Vec3d(0.0f, 1.5f, 2.0f));
+    }
+
+
+    public void setPartPosition(DragonPartEntity part, Vec3d offset) {
+        offset = offset.rotateY(this.getHeadYaw());
+        part.setPosition(this.getPos().add(offset));
     }
 
 

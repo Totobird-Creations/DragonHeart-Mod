@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.screen.util;
+package net.totobirdcreations.dragonheart.client.screen.util;
 
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;

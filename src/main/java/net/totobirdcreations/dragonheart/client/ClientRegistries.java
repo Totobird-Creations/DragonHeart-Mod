@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.util;
+package net.totobirdcreations.dragonheart.client;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
@@ -18,7 +18,7 @@ import net.totobirdcreations.dragonheart.entity.dragonegg.DragoneggLightningEnti
 import net.totobirdcreations.dragonheart.item.misc.MiscItems;
 
 
-public class ModRegistries {
+public class ClientRegistries {
 
     @SuppressWarnings("all")
     public static void registerEntityAttributes() {

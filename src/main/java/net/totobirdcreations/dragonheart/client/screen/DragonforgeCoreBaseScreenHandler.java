@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.screen;
+package net.totobirdcreations.dragonheart.client.screen;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -8,51 +8,35 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.util.Identifier;
+import net.minecraft.text.Text;
 import net.minecraft.world.World;
-import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.screen.util.OutputSlot;
 
-import static net.totobirdcreations.dragonheart.block.entity.DragonforgeCoreTypeBlockEntity.DELEGATE_PROGRESS;
-import static net.totobirdcreations.dragonheart.block.entity.DragonforgeCoreTypeBlockEntity.DELEGATE_MAXPROGRESS;
+import static net.totobirdcreations.dragonheart.block.entity.DragonforgeCoreBaseBlockEntity.*;
 
 
 
-public class DragonforgeCoreTypeScreenHandler extends ScreenHandler {
+public class DragonforgeCoreBaseScreenHandler extends ScreenHandler {
+
+    public final Inventory        inventory;
+    public final World            world;
+    public final PropertyDelegate propertyDelegate;
 
 
-    public enum ForgeType {
-        FIRE,
-        ICE,
-        LIGHTNING
+    public DragonforgeCoreBaseScreenHandler(int syncId, PlayerInventory playerInventory) {
+        this(syncId, playerInventory, new SimpleInventory(1), new ArrayPropertyDelegate(3));
     }
 
 
-    public Inventory        inventory;
-    public PlayerInventory  playerInventory;
-    public World            world;
-    public PropertyDelegate propertyDelegate;
-
-
-    public DragonforgeCoreTypeScreenHandler(ScreenHandlerType handlerType, int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
-        super(handlerType, syncId);
-        initialize(playerInventory, inventory, propertyDelegate);
-    }
-
-
-    public void initialize(PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
+    public DragonforgeCoreBaseScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
+        super(ClientScreens.DRAGONFORGE_CORE_BASE, syncId);
+        checkSize(inventory, 1);
         this.inventory        = inventory;
-        this.playerInventory  = playerInventory;
         this.world            = playerInventory.player.world;
         this.propertyDelegate = propertyDelegate;
-        checkSize(inventory, 3);
         inventory.onOpen(playerInventory.player);
 
-        addSlot(new Slot(inventory, 0, 68, 51));
-        addSlot(new Slot(inventory, 1, 92, 51));
-        addSlot(new OutputSlot(inventory, 2, 80, 17));
+        addSlot(new Slot(inventory, 0, 80, 36));
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
@@ -61,33 +45,20 @@ public class DragonforgeCoreTypeScreenHandler extends ScreenHandler {
     }
 
 
-    public ForgeType getForgeType() {
-        return ForgeType.FIRE;
+    public boolean isConverting() {
+        return propertyDelegate.get(DELEGATE_PROGRESS) > 0 && getConversionMode() != CONVERSIONMODE_NONE;
     }
 
 
-    public Identifier getScreenTexture() {
-        ForgeType forgeType = getForgeType();
-        if (forgeType == ForgeType.FIRE) {
-            return new Identifier(DragonHeart.MOD_ID, "textures/gui/dragonforge_core_fire.png");
-        } else if (forgeType == ForgeType.ICE) {
-            return new Identifier(DragonHeart.MOD_ID, "textures/gui/dragonforge_core_ice.png");
-        } else {
-            return new Identifier(DragonHeart.MOD_ID, "textures/gui/dragonforge_core_lightning.png");
-        }
-    }
-
-
-    public boolean isCrafting() {
-        return propertyDelegate.get(DELEGATE_PROGRESS) > 0;
+    public int getConversionMode() {
+        return propertyDelegate.get(DELEGATE_CONVERSIONMODE);
     }
 
 
     public int getScaledProgress() {
-        int progress    = this.propertyDelegate.get(DELEGATE_PROGRESS);
-        int maxProgress = this.propertyDelegate.get(DELEGATE_MAXPROGRESS);
-        int textureSize = 14;
-
+        int progress    = propertyDelegate.get(DELEGATE_PROGRESS);
+        int maxProgress = propertyDelegate.get(DELEGATE_MAXPROGRESS);
+        int textureSize = 40;
         if (maxProgress != 0 && progress != 0) {
             return progress * textureSize / maxProgress;
         } else {

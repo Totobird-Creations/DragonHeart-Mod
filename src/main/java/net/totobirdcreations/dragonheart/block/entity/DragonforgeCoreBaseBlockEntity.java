@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.*;
 import net.totobirdcreations.dragonheart.item.DragonforgeItems;
-import net.totobirdcreations.dragonheart.screen.DragonforgeCoreBaseScreenHandler;
+import net.totobirdcreations.dragonheart.client.screen.DragonforgeCoreBaseScreenHandler;
 import net.totobirdcreations.dragonheart.util.ImplementedInventory;
 import org.jetbrains.annotations.Nullable;
 

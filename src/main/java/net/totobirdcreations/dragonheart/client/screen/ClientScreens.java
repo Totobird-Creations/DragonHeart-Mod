@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.screen;
+package net.totobirdcreations.dragonheart.client.screen;
 
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
@@ -8,7 +8,7 @@ import net.totobirdcreations.dragonheart.DragonHeart;
 
 
 
-public class ModScreens {
+public class ClientScreens {
 
 
     @SuppressWarnings("deprecation")

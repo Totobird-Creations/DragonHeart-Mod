@@ -24,7 +24,7 @@
       "net.totobirdcreations.dragonheart.DragonHeart"
     ],
     "client": [
-      "net.totobirdcreations.dragonheart.DragonHeartClient"
+      "net.totobirdcreations.dragonheart.client.ModClient"
     ]
   },
   "mixins": [
@@ -33,12 +33,11 @@
 
   "depends": {
     "fabricloader": ">=0.14.7",
-    "fabric": "*",
     "minecraft": "1.19.x",
     "java": ">=18"
   },
   "suggests": {
-    "modmenu": "*"
+    "modmenu": ">=4"
   },
   "custom": {
     "modmenu": {
