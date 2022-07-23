@@ -103,8 +103,8 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
 
     public static float            MIN_MODEL_SCALE = 0.125f;
     public static float            MAX_MODEL_SCALE = 1.0f;
-    public static float            EYE_HEIGHT      = 1.5f;
-    public static EntityDimensions MAX_DIMENSIONS  = EntityDimensions.changing(2.75f, 1.625f);
+    public static float            EYE_HEIGHT      = 0.75f;
+    public static EntityDimensions MAX_DIMENSIONS  = EntityDimensions.changing(2.5f, 0.1f);//1.625f);
     public static float            MIN_BOX_WIDTH   = 3.0f;
     public static float            MIN_BOX_HEIGHT  = 1.5f;
 
@@ -123,13 +123,6 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         ICE,
         LIGHTNING;
 
-        /*@Nullable
-        public RGBColour[] getBaseColourOptions() {
-            if (DragonEntityColourPicker.OPTIONS.containsKey(this)) {
-                return DragonEntityColourPicker.OPTIONS.get(this);
-            }
-            return null;
-        }*/
         @Nullable
         public RGBColour[] getDragoneggCreativeColourOptions() {
             return switch (this) {
@@ -886,10 +879,10 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     }
 
 
-    public void setPartPosition(DragonPartEntity part, Vec3d offset) {
+    /*public void setPartPosition(DragonPartEntity part, Vec3d offset) {
         offset = offset.rotateY(this.getHeadYaw());
         part.setPosition(this.getPos().add(offset));
-    }
+    }*/
 
 
 
@@ -904,7 +897,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         }
     }
 
-    public void alerted(@Nullable Entity alerter) {
+    public void alerted(@Nullable Entity ignored /*alerter*/) {
         if (getState() == DragonState.SLEEP) {
             dataTracker.set(ROAR_TICKS, ROAR_ANIMATION_LENGTH);
             /*if (alerter != null) {
@@ -1132,11 +1125,10 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     }
 
 
+    /*
     public void breed(ServerWorld world, DragonEntity other) {
         if (canBreedWith(other) && isFemale()) {
-            /*DragonEntity baby = (DragonEntity)(this.getType().create(world));
-            baby
-            world.spawnEntity(baby);*/
+            // Egg
         }
     }
 
@@ -1144,7 +1136,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     @Nullable
     public Item getBreedingItem() {
         return FoodItems.DRAGONMEAL;
-    }
+    }*/
 
 
 }

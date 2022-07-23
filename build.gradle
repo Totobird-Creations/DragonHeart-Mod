@@ -31,7 +31,7 @@ repositories {
 		}
 	}
 
-	/*// ClothConfig
+	// ClothConfig
 	maven {
 		url "https://maven.shedaniel.me/"
 	}
@@ -39,7 +39,7 @@ repositories {
 	// ModMenu
 	maven {
 		url "https://maven.terraformersmc.com/releases/"
-	}*/
+	}
 }
 
 dependencies {
@@ -60,14 +60,14 @@ dependencies {
 	modImplementation "io.github.ladysnake:satin:${project.satinapi_version}"
 	include "io.github.ladysnake:satin:${project.satinapi_version}"
 
-	/*// ClothConfig
+	// ClothConfig
 	modApi ("me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}") {
 		exclude group: "net.fabricmc.fabric-api"
 	}
 	include "me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}"
 
 	// ModMenu
-	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"*/
+	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 }
 
 processResources {

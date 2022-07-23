@@ -15,10 +15,10 @@ public class DragonPartEntity extends Entity {
 
     public DragonPartEntity(DragonEntity owner, EntityDimensions partDimensions, float damageMult) {
         super(owner.getType(), owner.world);
+        this.owner          = owner;
         this.partDimensions = partDimensions;
+        this.damageMult     = damageMult;
         this.calculateDimensions();
-        this.owner      = owner;
-        this.damageMult = damageMult;
     }
 
     @Override

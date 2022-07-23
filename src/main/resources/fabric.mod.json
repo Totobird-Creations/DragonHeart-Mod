@@ -25,6 +25,9 @@
     ],
     "client": [
       "net.totobirdcreations.dragonheart.client.ModClient"
+    ],
+    "modmenu": [
+      "net.totobirdcreations.dragonheart.client.ClientModMenu"
     ]
   },
   "mixins": [

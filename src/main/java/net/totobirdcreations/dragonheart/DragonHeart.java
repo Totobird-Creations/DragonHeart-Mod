@@ -1,11 +1,14 @@
 package net.totobirdcreations.dragonheart;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.block.ModBlockTags;
 import net.totobirdcreations.dragonheart.block.ModBlocks;
 import net.totobirdcreations.dragonheart.command.ModCommands;
+import net.totobirdcreations.dragonheart.config.ModConfig;
 import net.totobirdcreations.dragonheart.effect.ModStatusEffects;
 import net.totobirdcreations.dragonheart.entity.ModEntities;
 import net.totobirdcreations.dragonheart.gamerule.ModGamerules;
@@ -14,6 +17,7 @@ import net.totobirdcreations.dragonheart.item.group.ModItemGroups;
 import net.totobirdcreations.dragonheart.potion.ModPotions;
 import net.totobirdcreations.dragonheart.recipe.ModRecipes;
 import net.totobirdcreations.dragonheart.sound.ModSoundEvents;
+import net.totobirdcreations.dragonheart.sync.ModSync;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.bernie.example.GeckoLibMod;
@@ -86,6 +90,7 @@ public class DragonHeart implements ModInitializer {
 		}
 		GeckoLib.initialize();
 
+		ModConfig        .register();
 		ModBlocks        .register();
 		ModBlockTags     .register();
 		ModSoundEvents   .register();
