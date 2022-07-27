@@ -46,6 +46,7 @@ import net.minecraft.world.event.listener.GameEventListener;
 import net.minecraft.world.event.listener.VibrationListener;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.ModBlockTags;
+import net.totobirdcreations.dragonheart.config.ModConfig;
 import net.totobirdcreations.dragonheart.damage.ModDamageSources;
 import net.totobirdcreations.dragonheart.effect.ModStatusEffects;
 import net.totobirdcreations.dragonheart.entity.dragon.ai.DragonEntityMoveController;
@@ -71,19 +72,13 @@ import java.util.function.BiConsumer;
 
 public abstract class DragonEntity extends HostileEntity implements IAnimatable, VibrationListener.Callback {
 
-    public static TagKey<GameEvent>    VIBRATIONS               = TagKey.of(Registry.GAME_EVENT_KEY, new Identifier(DragonHeart.MOD_ID, "dragon_can_listen"));
-    public static int                  WAKEUP_VIBRATIONS_NEEDED = 5;
-    public static int                  ROAR_ANIMATION_LENGTH    = 41;
-    public static float                ROAR_RADIUS              = 16.0f;
-    public static float                ROAR_KNOCKBACK           = 100.0f;
-    public static int                  ROAR_DESTROY_PER_TICK    = 1;
-    public static float                ROAR_DAMAGE              = 30.0f;
-    public static float                JUMP_STRENGTH            = 1.0f;
-    public static int                  STAGE_TICKS              = 600000;
-    public static int                  MAX_STAGES               = 4;
-    public static int                  MIN_NATURAL_SPAWN_AGE    = STAGE_TICKS * 3;
-    public static int                  MAX_NATURAL_SPAWN_AGE    = STAGE_TICKS * 4;
-    public static HashMap<Item, Float> HEAL_ITEMS               = new HashMap<>();
+    public static TagKey<GameEvent>    VIBRATIONS            = TagKey.of(Registry.GAME_EVENT_KEY, new Identifier(DragonHeart.MOD_ID, "dragon_can_listen"));
+    public static int                  ROAR_ANIMATION_LENGTH = 41;
+    public static float                JUMP_STRENGTH         = 1.0f;
+    public static int                  MAX_STAGES            = 4;
+    public static int                  MIN_NATURAL_SPAWN_AGE = ModConfig.CONFIG.dragon.age.stage_ticks * 3;
+    public static int                  MAX_NATURAL_SPAWN_AGE = ModConfig.CONFIG.dragon.age.stage_ticks * 4;
+    public static HashMap<Item, Float> HEAL_ITEMS            = new HashMap<>();
     static {
         HEAL_ITEMS.put( Items.COOKED_BEEF            , 50.0f  );
         HEAL_ITEMS.put( Items.COOKED_PORKCHOP        , 37.5f  );
@@ -94,10 +89,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         HEAL_ITEMS.put( Items.ENCHANTED_GOLDEN_APPLE , 250.0f );
         HEAL_ITEMS.put( FoodItems.DRAGONMEAL         , 43.75f );
     }
-    public static int   MIN_BREED_STAGE    = 2;
     public static int   MAX_SHOULDER_STAGE = 0;
-    public static int   MIN_MOUNT_STAGE    = 2;
-    public static int   MIN_XP_DROP_STAGE  = 2;
     public static float MIN_SOUND_PITCH    = 1.5f;
     public static float MAX_SOUND_PITCH    = 1.0f;
 
@@ -419,7 +411,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     }
 
     public int getStage() {
-        return Math.max(Math.min(Math.floorDiv(this.getAge(), STAGE_TICKS), MAX_STAGES), 0);
+        return Math.max(Math.min(Math.floorDiv(this.getAge(), ModConfig.CONFIG.dragon.age.stage_ticks), MAX_STAGES), 0);
     }
 
     public int getColour() {return dataTracker.get(COLOUR);}
@@ -447,7 +439,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     }
 
     public int getMaxAge() {
-        return STAGE_TICKS * MAX_STAGES;
+        return ModConfig.CONFIG.dragon.age.stage_ticks * MAX_STAGES;
     }
 
     public float getAgeInterpolation() {
@@ -649,7 +641,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
     // Death
     @Override
     public boolean shouldDropXp() {
-        return ! isTamed() && getStage() >= MIN_XP_DROP_STAGE;
+        return ! isTamed() && getStage() >= ModConfig.CONFIG.dragon.age.min_xp_stage;
     }
     @Override
     public boolean shouldDropLoot() {
@@ -787,18 +779,18 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         if (! world.isClient()) {
             if (getState() == DragonState.ROAR) {
                 // Throw all nearby entities away & deafen them, depending on distance to them.
-                List<Entity> entities = world.getOtherEntities(this, Box.of(this.getPos(), ROAR_RADIUS, ROAR_RADIUS, ROAR_RADIUS));
+                List<Entity> entities = world.getOtherEntities(this, Box.of(this.getPos(), ModConfig.CONFIG.dragon.wakeup.roar_radius, ModConfig.CONFIG.dragon.wakeup.roar_radius, ModConfig.CONFIG.dragon.wakeup.roar_radius));
                 for (Entity entity : entities) {
 
                     if (!entity.isRemoved() && entity instanceof LivingEntity livingEntity) {
                         float distance = entity.distanceTo(this);
-                        if (distance <= ROAR_RADIUS) {
+                        if (distance <= ModConfig.CONFIG.dragon.wakeup.roar_radius) {
                             // Throw & damage entity
                             Vec3d vector = entity.getPos().add(this.getPos().multiply(-1)).multiply(1.0 / distance);
-                            float power = 1.0f - distance / ROAR_RADIUS;
-                            Vec3d velocity = vector.multiply(power * ROAR_KNOCKBACK);
+                            float power = 1.0f - distance / ModConfig.CONFIG.dragon.wakeup.roar_radius;
+                            Vec3d velocity = vector.multiply(power * ModConfig.CONFIG.dragon.wakeup.roar_knockback);
                             entity.addVelocity(velocity.x, velocity.y, velocity.z);
-                            entity.damage(ModDamageSources.ROAR, power * ROAR_DAMAGE);
+                            entity.damage(ModDamageSources.ROAR, power * ModConfig.CONFIG.dragon.wakeup.roar_damage);
                             // Add deafened effect
                             StatusEffectInstance effect = new StatusEffectInstance(ModStatusEffects.DEAFENED, 10, 0, false, false, true);
                             livingEntity.addStatusEffect(effect, this);
@@ -808,7 +800,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
 
                 // Destroy blocks in random directions
                 Random rand = new Random();
-                for (int i = 0; i < ROAR_DESTROY_PER_TICK; i++) {
+                for (int i = 0; i < ModConfig.CONFIG.dragon.wakeup.roar_destroy; i++) {
                     float yaw = rand.nextFloat((float) Math.PI * 2.0f);
                     float arc = (float) Math.PI / 2.0f;
                     float pitch = rand.nextFloat(arc * 0.5f) + (arc * 0.5f);
@@ -817,7 +809,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
                             Math.sin(pitch),
                             Math.cos(yaw) * Math.cos(pitch)
                     );
-                    BlockHitResult result = world.raycast(new RaycastContext(this.getPos(), this.getPos().add(vector.multiply(ROAR_RADIUS)), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, this));
+                    BlockHitResult result = world.raycast(new RaycastContext(this.getPos(), this.getPos().add(vector.multiply(ModConfig.CONFIG.dragon.wakeup.roar_radius)), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, this));
                     // If raycast hit a block
                     if (result.getType() == HitResult.Type.BLOCK) {
                         Block block = world.getBlockState(result.getBlockPos()).getBlock();
@@ -888,11 +880,11 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
 
     public void incrementWakeupProgress(boolean all, @Nullable Entity alerter) {
         if (all) {
-            dataTracker.set(WAKEUP_PROGRESS, WAKEUP_VIBRATIONS_NEEDED);
+            dataTracker.set(WAKEUP_PROGRESS, ModConfig.CONFIG.dragon.wakeup.vibrations);
         } else {
             dataTracker.set(WAKEUP_PROGRESS, dataTracker.get(WAKEUP_PROGRESS) + 1);
         }
-        if (dataTracker.get(WAKEUP_PROGRESS) >= WAKEUP_VIBRATIONS_NEEDED) {
+        if (dataTracker.get(WAKEUP_PROGRESS) >= ModConfig.CONFIG.dragon.wakeup.vibrations) {
             alerted(alerter);
         }
     }
@@ -1086,7 +1078,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
      ----------------*/
 
     public boolean canPlayerMount(PlayerEntity player) {
-        return isTamedOwner(player) && getStage() >= MIN_MOUNT_STAGE;
+        return isTamedOwner(player) && getStage() >= ModConfig.CONFIG.dragon.age.min_mount_stage;
     }
 
     public void mountPlayer(PlayerEntity player) {
@@ -1113,7 +1105,7 @@ public abstract class DragonEntity extends HostileEntity implements IAnimatable,
         );
     }
     public boolean _canBreed() {
-        return this.isTamed() && ! dataTracker.get(HAS_BREEDED) && getStage() >= MIN_BREED_STAGE;
+        return this.isTamed() && ! dataTracker.get(HAS_BREEDED) && getStage() >= ModConfig.CONFIG.dragon.age.min_breed_stage;
     }
 
     public boolean canBreedWith(Entity other) {

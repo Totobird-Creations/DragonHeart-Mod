@@ -6,6 +6,6 @@
     "minecraft:dark_forest",
     "minecraft:mushroom_fields",
     "minecraft:deep_dark",
-    "#dragonheart:has_structure/nest/terralith/lightning"
+    "#${id}:has_structure/nest/terralith/lightning"
   ]
 }

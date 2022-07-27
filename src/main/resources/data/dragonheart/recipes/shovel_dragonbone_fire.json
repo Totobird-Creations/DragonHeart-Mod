@@ -1,16 +1,16 @@
 {
-    "type" : "dragonheart:dragonforge",
+    "type" : "${id}:dragonforge",
     "forgetype" : "fire",
     "time" : 300,
     "ingredients" : [
         {
-            "item" : "dragonheart:shovel_dragonbone"
+            "item" : "${id}:shovel_dragonbone"
         },
         {
-            "item" : "dragonheart:dragonblood_fire"
+            "item" : "${id}:dragonblood_fire"
         }
     ],
     "output" : {
-        "item" : "dragonheart:shovel_dragonbone_fire"
+        "item" : "${id}:shovel_dragonbone_fire"
     }
 }

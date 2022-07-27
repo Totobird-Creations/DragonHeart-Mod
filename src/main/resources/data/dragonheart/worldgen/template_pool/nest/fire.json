@@ -1,5 +1,5 @@
 {
-  "name": "dragonheart:nest/fire",
+  "name": "${id}:nest/fire",
   "fallback": "minecraft:empty",
   "elements": [
     {
@@ -7,8 +7,8 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dragonheart:nest/fire",
-        "processors": "dragonheart:nest/fire"
+        "location": "${id}:nest/fire",
+        "processors": "${id}:nest/fire"
       }
     }
   ]

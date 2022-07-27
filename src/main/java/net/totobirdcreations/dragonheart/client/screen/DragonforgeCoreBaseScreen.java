@@ -6,6 +6,7 @@ import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.DragonHeart;
 
@@ -31,7 +32,7 @@ public class DragonforgeCoreBaseScreen extends HandledScreen<DragonforgeCoreBase
 
     @Override
     public Text getTitle() {
-        return Text.translatable("screen.dragonheart.dragonforge_core_base");
+        return Text.translatable("screen." + DragonHeart.MOD_ID + ".dragonforge_core_base").formatted(Formatting.WHITE);
     }
 
 

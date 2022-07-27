@@ -5,6 +5,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
+import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.util.mixin.frozeneffect.FrozenEffectLivingEntityMixinInterface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,7 +26,7 @@ public abstract class FrozenEffectRendererMixin extends EntityRenderer<LivingEnt
     )
     public Identifier overrideIdentifier(Identifier object, LivingEntity entity) {
         if (((FrozenEffectLivingEntityMixinInterface)entity).isIced()) {
-            return new Identifier("dragonheart", "textures/misc/frozen_entity.png");
+            return new Identifier(DragonHeart.MOD_ID, "textures/misc/frozen_entity.png");
         } else {
             return this.getTexture(entity);
         }

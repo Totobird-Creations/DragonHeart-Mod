@@ -1,6 +1,6 @@
 {
   "type": "minecraft:jigsaw",
-  "biomes": "#dragonheart:has_structure/nest/ice",
+  "biomes": "#${id}:has_structure/nest/ice",
   "step": "surface_structures",
   "spawn_overrides": {
     "ambient": {
@@ -37,7 +37,7 @@
     }
   },
   "terrain_adaptation": "beard_thin",
-  "start_pool": "dragonheart:nest/ice",
+  "start_pool": "${id}:nest/ice",
   "size": 7,
   "start_height": {
     "absolute": 0

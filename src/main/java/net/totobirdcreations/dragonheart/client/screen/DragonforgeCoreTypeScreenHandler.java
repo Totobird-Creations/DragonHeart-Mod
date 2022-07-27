@@ -8,6 +8,7 @@ import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
@@ -75,14 +76,14 @@ public abstract class DragonforgeCoreTypeScreenHandler extends ScreenHandler {
     }
 
 
-    public Text getTitle() {
+    public MutableText getTitle() {
         ForgeType forgeType = getForgeType();
         if (forgeType == ForgeType.FIRE) {
-            return Text.translatable("screen.dragonheart.dragonforge_core_fire");
+            return Text.translatable("screen." + DragonHeart.MOD_ID + ".dragonforge_core_fire");
         } else if (forgeType == ForgeType.ICE) {
-            return Text.translatable("screen.dragonheart.dragonforge_core_ice");
+            return Text.translatable("screen." + DragonHeart.MOD_ID + ".dragonforge_core_ice");
         } else {
-            return Text.translatable("screen.dragonheart.dragonforge_core_lightning");
+            return Text.translatable("screen." + DragonHeart.MOD_ID + ".dragonforge_core_lightning");
         }
     }
 

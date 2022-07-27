@@ -6,6 +6,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
+import net.totobirdcreations.dragonheart.DragonHeart;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -26,7 +27,7 @@ public class TitleScreenMixin extends Screen {
             at = @At("TAIL")
     )
     public void render(MatrixStack stack, int mouseX, int mouseY, float delta, CallbackInfo callback) {
-        String text = Text.translatable("titlescreen.dragonheart.notice").getString();
+        String text = Text.translatable("titlescreen." + DragonHeart.MOD_ID + ".notice").getString();
 
         boolean doBackgroundFade    = ((TitleScreenInterface)this).getDoBackgroundFade();
         long    backgroundFadeStart = ((TitleScreenInterface)this).getBackgroundFadeStart();

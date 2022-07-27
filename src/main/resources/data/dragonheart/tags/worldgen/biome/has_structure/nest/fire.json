@@ -8,6 +8,6 @@
     "minecraft:badlands",
     "minecraft:eroded_badlands",
     "minecraft:wooded_badlands",
-    "#dragonheart:has_structure/nest/terralith/fire"
+    "#${id}:has_structure/nest/terralith/fire"
   ]
 }

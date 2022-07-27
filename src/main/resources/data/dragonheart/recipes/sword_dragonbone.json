@@ -7,13 +7,13 @@
     ],
     "key" : {
         "#" : {
-            "item" : "dragonheart:dragonbone"
+            "item" : "${id}:dragonbone"
         },
         "+" : {
-            "item" : "dragonheart:bonehilt"
+            "item" : "${id}:bonehilt"
         }
     },
     "result" : {
-        "item" : "dragonheart:sword_dragonbone"
+        "item" : "${id}:sword_dragonbone"
     }
 }

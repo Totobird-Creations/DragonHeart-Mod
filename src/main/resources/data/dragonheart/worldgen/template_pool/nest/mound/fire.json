@@ -1,5 +1,5 @@
 {
-  "name": "dragonheart:nest/mound/ice",
+  "name": "${id}:nest/mound/ice",
   "fallback": "minecraft:empty",
   "elements": [
     {
@@ -7,8 +7,8 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dragonheart:nest/mound",
-        "processors": "dragonheart:nest/mound/stone"
+        "location": "${id}:nest/mound",
+        "processors": "${id}:nest/mound/stone"
       }
     },
     {
@@ -16,8 +16,8 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dragonheart:nest/mound",
-        "processors": "dragonheart:nest/mound/coal"
+        "location": "${id}:nest/mound",
+        "processors": "${id}:nest/mound/coal"
       }
     },
     {
@@ -25,8 +25,8 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dragonheart:nest/mound",
-        "processors": "dragonheart:nest/mound/copper"
+        "location": "${id}:nest/mound",
+        "processors": "${id}:nest/mound/copper"
       }
     },
     {
@@ -34,8 +34,8 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dragonheart:nest/mound",
-        "processors": "dragonheart:nest/mound/gold"
+        "location": "${id}:nest/mound",
+        "processors": "${id}:nest/mound/gold"
       }
     },
     {
@@ -43,8 +43,8 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dragonheart:nest/mound",
-        "processors": "dragonheart:nest/mound/redstone"
+        "location": "${id}:nest/mound",
+        "processors": "${id}:nest/mound/redstone"
       }
     },
     {
@@ -52,8 +52,8 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dragonheart:nest/mound",
-        "processors": "dragonheart:nest/mound/obsidian"
+        "location": "${id}:nest/mound",
+        "processors": "${id}:nest/mound/obsidian"
       }
     },
     {
@@ -61,8 +61,8 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dragonheart:nest/mound",
-        "processors": "dragonheart:nest/mound/nether"
+        "location": "${id}:nest/mound",
+        "processors": "${id}:nest/mound/nether"
       }
     },
     {
@@ -70,8 +70,8 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dragonheart:nest/mound",
-        "processors": "dragonheart:nest/mound/honey"
+        "location": "${id}:nest/mound",
+        "processors": "${id}:nest/mound/honey"
       }
     },
     {
@@ -79,8 +79,8 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dragonheart:nest/mound",
-        "processors": "dragonheart:nest/mound/bone"
+        "location": "${id}:nest/mound",
+        "processors": "${id}:nest/mound/bone"
       }
     }
   ]

@@ -1,16 +1,16 @@
 {
-    "type" : "dragonheart:dragonforge",
+    "type" : "${id}:dragonforge",
     "forgetype" : "lightning",
     "time" : 300,
     "ingredients" : [
         {
-            "item" : "dragonheart:pickaxe_dragonbone"
+            "item" : "${id}:pickaxe_dragonbone"
         },
         {
-            "item" : "dragonheart:dragonblood_lightning"
+            "item" : "${id}:dragonblood_lightning"
         }
     ],
     "output" : {
-        "item" : "dragonheart:pickaxe_dragonbone_lightning"
+        "item" : "${id}:pickaxe_dragonbone_lightning"
     }
 }

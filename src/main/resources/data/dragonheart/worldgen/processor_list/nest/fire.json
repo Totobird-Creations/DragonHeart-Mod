@@ -67,7 +67,7 @@
             "block": "minecraft:white_wool"
           },
           "output_state": {
-            "Name": "dragonheart:burned"
+            "Name": "${id}:burned"
           }
         }
       ]

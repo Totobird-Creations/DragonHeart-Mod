@@ -10,6 +10,7 @@ import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
+import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
 
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
@@ -58,15 +59,15 @@ public class DragonManager {
     }
     public static int setStateGeneric(ServerCommandSource source, Entity entity, DragonEntity.DragonState state) throws CommandSyntaxException {
         if (! (entity instanceof DragonEntity)) {
-            throw new SimpleCommandExceptionType(Text.translatable("command.dragonheart.dragonmanager.target.not_dragon", entity.getDisplayName())).create();
+            throw new SimpleCommandExceptionType(Text.translatable("command." + DragonHeart.MOD_ID + ".dragonmanager.target.not_dragon", entity.getDisplayName())).create();
         }
         ((DragonEntity)entity).setState(state);
         source.sendFeedback(
                 Text.translatable(
-                        "command.dragonheart.dragonmanager.set.state",
+                        "command." + DragonHeart.MOD_ID + ".dragonmanager.set.state",
                         entity.getDisplayName(),
                         Text.translatable(
-                                "command.dragonheart.dragonmanager.state." + state
+                                "command." + DragonHeart.MOD_ID + ".dragonmanager.state." + state
                         )
                 ),
                 true
@@ -77,15 +78,15 @@ public class DragonManager {
 
     public static int getState(ServerCommandSource source, Entity entity) throws CommandSyntaxException {
         if (! (entity instanceof DragonEntity)) {
-            throw new SimpleCommandExceptionType(Text.translatable("command.dragonheart.dragonmanager.target.not_dragon", entity.getDisplayName())).create();
+            throw new SimpleCommandExceptionType(Text.translatable("command." + DragonHeart.MOD_ID + ".dragonmanager.target.not_dragon", entity.getDisplayName())).create();
         }
         DragonEntity.DragonState state  = DragonEntity.DragonState.fromInt(entity.getDataTracker().get(DragonEntity.STATE));
         source.sendFeedback(
                 Text.translatable(
-                        "command.dragonheart.dragonmanager.get.state",
+                        "command." + DragonHeart.MOD_ID + ".dragonmanager.get.state",
                         entity.getDisplayName(),
                         Text.translatable(
-                                "command.dragonheart.dragonmanager.state." + state
+                                "command." + DragonHeart.MOD_ID + ".dragonmanager.state." + state
                         )
                 ),
                 true

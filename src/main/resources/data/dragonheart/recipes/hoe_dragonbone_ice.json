@@ -1,16 +1,16 @@
 {
-    "type" : "dragonheart:dragonforge",
+    "type" : "${id}:dragonforge",
     "forgetype" : "ice",
     "time" : 300,
     "ingredients" : [
         {
-            "item" : "dragonheart:hoe_dragonbone"
+            "item" : "${id}:hoe_dragonbone"
         },
         {
-            "item" : "dragonheart:dragonblood_ice"
+            "item" : "${id}:dragonblood_ice"
         }
     ],
     "output" : {
-        "item" : "dragonheart:hoe_dragonbone_ice"
+        "item" : "${id}:hoe_dragonbone_ice"
     }
 }

@@ -6,7 +6,7 @@
             "entries" : [
                 {
                     "type" : "minecraft:item",
-                    "name" : "dragonheart:dragonforge_aperture_ice"
+                    "name" : "${id}:dragonforge_aperture_ice"
                 }
             ]
         }

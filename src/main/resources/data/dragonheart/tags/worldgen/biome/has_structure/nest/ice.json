@@ -10,6 +10,6 @@
     "minecraft:frozen_peaks",
     "minecraft:jagged_peaks",
     "minecraft:snowy_beach",
-    "#dragonheart:has_structure/nest/terralith/ice"
+    "#${id}:has_structure/nest/terralith/ice"
   ]
 }

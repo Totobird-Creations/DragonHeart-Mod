@@ -1,16 +1,16 @@
 {
-    "type" : "dragonheart:dragonforge",
+    "type" : "${id}:dragonforge",
     "forgetype" : "fire",
     "time" : 300,
     "ingredients" : [
         {
-            "item" : "dragonheart:shovel_dragonbone_fire"
+            "item" : "${id}:shovel_dragonbone_fire"
         },
         {
             "item" : "minecraft:netherite_ingot"
         }
     ],
     "output" : {
-        "item" : "dragonheart:shovel_dragonsteel_fire"
+        "item" : "${id}:shovel_dragonsteel_fire"
     }
 }

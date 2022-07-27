@@ -1,6 +1,6 @@
 {
   "type": "minecraft:jigsaw",
-  "biomes": "#dragonheart:has_structure/nest/fire",
+  "biomes": "#${id}:has_structure/nest/fire",
   "step": "surface_structures",
   "spawn_overrides": {
     "ambient": {
@@ -37,7 +37,7 @@
     }
   },
   "terrain_adaptation": "beard_thin",
-  "start_pool": "dragonheart:nest/fire",
+  "start_pool": "${id}:nest/fire",
   "size": 7,
   "start_height": {
     "absolute": 0

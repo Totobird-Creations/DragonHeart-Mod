@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "dragonheart:frozen",
-    "dragonheart:electrified",
-    "dragonheart:dragonboneblock"
+    "${id}:frozen",
+    "${id}:electrified",
+    "${id}:dragonboneblock"
   ]
 }

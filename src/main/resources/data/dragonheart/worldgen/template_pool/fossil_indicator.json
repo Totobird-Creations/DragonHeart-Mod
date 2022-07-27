@@ -1,5 +1,5 @@
 {
-  "name": "dragonheart:fossil",
+  "name": "${id}:fossil",
   "fallback": "minecraft:empty",
   "elements": [
     {
@@ -7,8 +7,8 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "dragonheart:fossil/indicator",
-        "processors": "dragonheart:fossil_indicator"
+        "location": "${id}:fossil/indicator",
+        "processors": "${id}:fossil_indicator"
       }
     }
   ]

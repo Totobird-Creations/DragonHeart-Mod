@@ -1,15 +1,15 @@
 {
   "structures": [
     {
-      "structure": "dragonheart:nest_fire",
+      "structure": "${id}:nest_fire",
       "weight": 3
     },
     {
-      "structure": "dragonheart:nest_ice",
+      "structure": "${id}:nest_ice",
       "weight": 3
     },
     {
-      "structure": "dragonheart:nest_lightning",
+      "structure": "${id}:nest_lightning",
       "weight": 2
     }
   ],

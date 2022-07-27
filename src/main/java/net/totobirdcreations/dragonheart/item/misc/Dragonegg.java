@@ -11,11 +11,13 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
 import net.totobirdcreations.dragonheart.entity.dragon.util.DragonSalt;
 import net.totobirdcreations.dragonheart.entity.dragon.util.UuidOp;
@@ -113,8 +115,8 @@ public class Dragonegg<D extends DragonEntity, T extends DragoneggEntity<D>> ext
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltips, TooltipContext context) {
         if (this.isCreative(stack)) {
-            tooltips.add(Text.translatable("item.dragonheart.dragonegg_creative.tooltip.0"));
-            tooltips.add(Text.translatable("item.dragonheart.dragonegg_creative.tooltip.1"));
+            tooltips.add(Text.translatable("item." + DragonHeart.MOD_ID + ".dragonegg_creative.tooltip.0").formatted(Formatting.YELLOW));
+            tooltips.add(Text.translatable("item." + DragonHeart.MOD_ID + ".dragonegg_creative.tooltip.1").formatted(Formatting.YELLOW));
         }
         super.appendTooltip(stack, world, tooltips, context);
     }

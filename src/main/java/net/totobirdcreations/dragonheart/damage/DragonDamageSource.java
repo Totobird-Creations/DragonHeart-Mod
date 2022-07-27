@@ -3,7 +3,7 @@ package net.totobirdcreations.dragonheart.damage;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.text.Text;
-
+import net.totobirdcreations.dragonheart.DragonHeart;
 
 
 public class DragonDamageSource extends DamageSource {
@@ -44,7 +44,7 @@ public class DragonDamageSource extends DamageSource {
 
     @Override
     public Text getDeathMessage(LivingEntity entity) {
-        String string = "death.dragonheart." + damageType.name().toLowerCase() + "." + damageClass.name().toLowerCase();
+        String string = "death." + DragonHeart.MOD_ID + "." + damageType.name().toLowerCase() + "." + damageClass.name().toLowerCase();
         return Text.translatable(string, entity.getDisplayName());
     }
 

@@ -7,16 +7,16 @@
     ],
     "key" : {
         "#" : {
-            "item" : "dragonheart:dragonbone"
+            "item" : "${id}:dragonbone"
         },
         "|" : {
             "item" : "minecraft:bone"
         },
         "+" : {
-            "item" : "dragonheart:bonehilt"
+            "item" : "${id}:bonehilt"
         }
     },
     "result" : {
-        "item" : "dragonheart:axe_dragonbone"
+        "item" : "${id}:axe_dragonbone"
     }
 }

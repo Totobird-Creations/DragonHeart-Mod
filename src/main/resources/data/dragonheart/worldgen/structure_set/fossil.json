@@ -1,7 +1,7 @@
 {
   "structures": [
     {
-      "structure": "dragonheart:fossil",
+      "structure": "${id}:fossil",
       "weight": 1
     }
   ],

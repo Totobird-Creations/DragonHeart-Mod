@@ -12,12 +12,7 @@
     "frozeneffect.FrozenEffectLivingEntityMixin",
     "frozeneffect.FrozenEffectPlayerEntityMixin",
     "init.InitItemGroupMixin",
-    "item.ItemDragonArmourMixin",
-    "sync.SyncMinecraftServerMixin",
-    "sync.SyncPlayerManagerMixin",
-    "sync.SyncServerMetadataDeserializerMixin",
-    "sync.SyncServerMetadataMixin",
-    "sync.SyncServerMetadataInterface"
+    "item.ItemDragonArmourMixin"
   ],
   "client": [
     "cape.CapeAbstractClientPlayerEntityMixin",

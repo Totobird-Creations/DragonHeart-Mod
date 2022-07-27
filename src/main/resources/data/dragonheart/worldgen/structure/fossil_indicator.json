@@ -1,10 +1,10 @@
 {
   "type": "minecraft:jigsaw",
-  "biomes": "#dragonheart:has_structure/fossil",
+  "biomes": "#${id}:has_structure/fossil",
   "step": "surface_structures",
   "spawn_overrides": {},
   "terrain_adaptation": "beard_thin",
-  "start_pool": "dragonheart:fossil_indicator",
+  "start_pool": "${id}:fossil_indicator",
   "size": 7,
   "start_height": {
     "absolute": 0

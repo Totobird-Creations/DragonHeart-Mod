@@ -1,6 +1,6 @@
 {
   "type": "minecraft:jigsaw",
-  "biomes": "#dragonheart:has_structure/nest/lightning",
+  "biomes": "#${id}:has_structure/nest/lightning",
   "step": "surface_structures",
   "spawn_overrides": {
     "ambient": {
@@ -37,7 +37,7 @@
     }
   },
   "terrain_adaptation": "beard_thin",
-  "start_pool": "dragonheart:nest/lightning",
+  "start_pool": "${id}:nest/lightning",
   "size": 7,
   "start_height": {
     "absolute": 0

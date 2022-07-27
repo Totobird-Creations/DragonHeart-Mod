@@ -6,7 +6,7 @@
             "entries" : [
                 {
                     "type" : "minecraft:item",
-                    "name" : "dragonheart:dragonforge_bricks_lightning"
+                    "name" : "${id}:dragonforge_bricks_lightning"
                 }
             ]
         }

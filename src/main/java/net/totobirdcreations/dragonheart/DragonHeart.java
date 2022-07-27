@@ -1,8 +1,7 @@
 package net.totobirdcreations.dragonheart;
 
+import com.google.gson.Gson;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.block.ModBlockTags;
@@ -17,21 +16,38 @@ import net.totobirdcreations.dragonheart.item.group.ModItemGroups;
 import net.totobirdcreations.dragonheart.potion.ModPotions;
 import net.totobirdcreations.dragonheart.recipe.ModRecipes;
 import net.totobirdcreations.dragonheart.sound.ModSoundEvents;
-import net.totobirdcreations.dragonheart.sync.ModSync;
+import net.totobirdcreations.looseendslib.manager.LooseEnd;
+import net.totobirdcreations.looseendslib.manager.LooseEndManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.bernie.example.GeckoLibMod;
 import software.bernie.geckolib3.GeckoLib;
 
 import javax.annotation.Nullable;
+import java.io.IOException;
+import java.util.Properties;
 
 
 public class DragonHeart implements ModInitializer {
 
-	public static String  HEX_CHARS = "012346789abcdefABCDEF";
+	public static String HEX_CHARS = "012346789abcdefABCDEF";
 
-	public static String  MOD_ID    = "dragonheart";
-	public static Logger  LOGGER    = LogManager.getLogger(MOD_ID);
+	public static String MOD_ID;
+	public static String MOD_NAME;
+	public static String MOD_VERSION;
+	static {
+		Properties properties = new Properties();
+		try {
+			properties.load(DragonHeart.class.getResourceAsStream("/mod.properties"));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		MOD_ID      = properties.getProperty("id"      );
+		MOD_NAME    = properties.getProperty("name"    );
+		MOD_VERSION = properties.getProperty("version" );
+	}
+	public static Logger LOGGER = LogManager.getLogger(MOD_ID);
+
 	public static boolean DEVENV;
 
 	public enum Developer {
@@ -89,6 +105,10 @@ public class DragonHeart implements ModInitializer {
 			GeckoLibMod.DISABLE_IN_DEV = true;
 		}
 		GeckoLib.initialize();
+
+		LooseEndManager.getInstance().register(MOD_ID, MOD_NAME, MOD_VERSION)
+				.whenClientJoins(LooseEnd.Condition.REQUIRED)
+				.whenJoinServer(LooseEnd.Condition.REQUIRED);
 
 		ModConfig        .register();
 		ModBlocks        .register();

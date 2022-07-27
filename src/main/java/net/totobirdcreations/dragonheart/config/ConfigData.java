@@ -9,52 +9,56 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 public class ConfigData implements me.shedaniel.autoconfig.ConfigData {
 
     @ConfigEntry.Gui.CollapsibleObject
-    Dragon dragon = new Dragon();
-    static class Dragon {
+    public Dragon dragon = new Dragon();
+    public static class Dragon {
 
         @ConfigEntry.Gui.CollapsibleObject
-        Wakeup wakeup = new Wakeup();
-        static class Wakeup {
+        public Wakeup wakeup = new Wakeup();
+        public static class Wakeup {
 
             @ConfigEntry.Gui.Tooltip
             @ConfigEntry.BoundedDiscrete(min = 0, max = 10)
-            float vibrations     = 5;
+            public int   vibrations     = 5;
 
             @ConfigEntry.Gui.Tooltip
-            float roar_radius    = 16.0f;
+            public float roar_radius    = 16.0f;
 
             @ConfigEntry.Gui.Tooltip
-            float roar_knockback = 100.0f;
+            public float roar_knockback = 100.0f;
 
             @ConfigEntry.Gui.Tooltip
             @ConfigEntry.BoundedDiscrete(min = 0, max = 25)
-            int   roar_destroy   = 25;
+            public int   roar_destroy   = 25;
+
+            @ConfigEntry.Gui.Tooltip
+            public float roar_damage    = 30.0f;
 
         }
 
         @ConfigEntry.Gui.CollapsibleObject
-        Age age = new Age();
-        static class Age {
+        public Age age = new Age();
+        public static class Age {
 
             @ConfigEntry.Gui.Tooltip
-            int stage_ticks     = 600000;
-
-            @ConfigEntry.Gui.Tooltip
-            @ConfigEntry.BoundedDiscrete(min = -1, max = 4)
-            int min_breed_stage = 2;
+            public int stage_ticks     = 600000;
 
             @ConfigEntry.Gui.Tooltip
             @ConfigEntry.BoundedDiscrete(min = -1, max = 4)
-            int min_mount_stage = 3;
+            public int min_breed_stage = 2;
 
             @ConfigEntry.Gui.Tooltip
             @ConfigEntry.BoundedDiscrete(min = -1, max = 4)
-            int min_xp_stage    = 2;
+            public int min_mount_stage = 3;
+
+            @ConfigEntry.Gui.Tooltip
+            @ConfigEntry.BoundedDiscrete(min = -1, max = 4)
+            public int min_xp_stage    = 2;
 
         }
 
     }
 
+    /*
     @SuppressWarnings("unused")
     @ConfigEntry.Gui.PrefixText
     @ConfigEntry.Gui.CollapsibleObject
@@ -66,6 +70,7 @@ public class ConfigData implements me.shedaniel.autoconfig.ConfigData {
         boolean initialization_logging = true;
 
     }
+    */
 
 
 
@@ -87,6 +92,8 @@ public class ConfigData implements me.shedaniel.autoconfig.ConfigData {
                 this.dragon.wakeup.roar_knockback = Math.max(0.0f, this.dragon.wakeup.roar_knockback);
 
                 this.dragon.wakeup.roar_destroy = Math.max(0, Math.min(this.dragon.wakeup.roar_destroy, 25));
+
+                this.dragon.wakeup.roar_damage = Math.max(0.0f, this.dragon.wakeup.roar_damage);
 
             }
 
