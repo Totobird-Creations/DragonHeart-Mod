@@ -2,7 +2,7 @@ package net.totobirdcreations.dragonheart.item;
 
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.FoodComponent;
-import net.totobirdcreations.dragonheart.effect.ModStatusEffects;
+import net.totobirdcreations.dragonheart.effect.StatusEffects;
 
 
 public class FoodItemComponents {
@@ -21,7 +21,7 @@ public class FoodItemComponents {
             .meat()
             .statusEffect(
                     new StatusEffectInstance(
-                            ModStatusEffects.FROZEN,
+                            StatusEffects.FROZEN,
                             10, 0
                     ),
                     1.0f

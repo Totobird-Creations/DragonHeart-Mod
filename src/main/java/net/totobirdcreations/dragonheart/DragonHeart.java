@@ -1,26 +1,24 @@
 package net.totobirdcreations.dragonheart;
 
-import com.google.gson.Gson;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
-import net.totobirdcreations.dragonheart.block.ModBlockTags;
-import net.totobirdcreations.dragonheart.block.ModBlocks;
-import net.totobirdcreations.dragonheart.command.ModCommands;
-import net.totobirdcreations.dragonheart.config.ModConfig;
-import net.totobirdcreations.dragonheart.effect.ModStatusEffects;
-import net.totobirdcreations.dragonheart.entity.ModEntities;
-import net.totobirdcreations.dragonheart.gamerule.ModGamerules;
-import net.totobirdcreations.dragonheart.item.ModItems;
-import net.totobirdcreations.dragonheart.item.group.ModItemGroups;
-import net.totobirdcreations.dragonheart.potion.ModPotions;
-import net.totobirdcreations.dragonheart.recipe.ModRecipes;
-import net.totobirdcreations.dragonheart.sound.ModSoundEvents;
-import net.totobirdcreations.looseendslib.manager.LooseEnd;
-import net.totobirdcreations.looseendslib.manager.LooseEndManager;
+import net.totobirdcreations.dragonheart.block.BlockTags;
+import net.totobirdcreations.dragonheart.block.Blocks;
+import net.totobirdcreations.dragonheart.command.Commands;
+import net.totobirdcreations.dragonheart.config.Config;
+import net.totobirdcreations.dragonheart.effect.StatusEffects;
+import net.totobirdcreations.dragonheart.entity.Entities;
+import net.totobirdcreations.dragonheart.event.EventHandlers;
+import net.totobirdcreations.dragonheart.gamerule.Gamerules;
+import net.totobirdcreations.dragonheart.item.Items;
+import net.totobirdcreations.dragonheart.item.group.ItemGroups;
+import net.totobirdcreations.dragonheart.recipe.Recipes;
+import net.totobirdcreations.dragonheart.resource.Resources;
+import net.totobirdcreations.dragonheart.screenhandler.ScreenHandlers;
+import net.totobirdcreations.dragonheart.sound.SoundEvents;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import software.bernie.example.GeckoLibMod;
 import software.bernie.geckolib3.GeckoLib;
 
 import javax.annotation.Nullable;
@@ -32,9 +30,9 @@ public class DragonHeart implements ModInitializer {
 
 	public static String HEX_CHARS = "012346789abcdefABCDEF";
 
-	public static String MOD_ID;
-	public static String MOD_NAME;
-	public static String MOD_VERSION;
+	public static String ID;
+	public static String NAME;
+	public static String VERSION;
 	static {
 		Properties properties = new Properties();
 		try {
@@ -42,11 +40,11 @@ public class DragonHeart implements ModInitializer {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		MOD_ID      = properties.getProperty("id"      );
-		MOD_NAME    = properties.getProperty("name"    );
-		MOD_VERSION = properties.getProperty("version" );
+		ID      = properties.getProperty("id"      );
+		NAME    = properties.getProperty("name"    );
+		VERSION = properties.getProperty("version" );
 	}
-	public static Logger LOGGER = LogManager.getLogger(MOD_ID);
+	public static Logger LOGGER = LogManager.getLogger(ID);
 
 	public static boolean DEVENV;
 
@@ -75,7 +73,7 @@ public class DragonHeart implements ModInitializer {
 				developer = Developer.PROGRAMMER;
 			}
 			if (developer != null) {
-				return new Identifier(MOD_ID, "textures/entity/player/" + type.toString().toLowerCase() + "/developer/" + developer.name().toLowerCase() + ".png");
+				return new Identifier(ID, "textures/entity/player/" + type.toString().toLowerCase() + "/developer/" + developer.name().toLowerCase() + ".png");
 			}
 			return null;
 		}
@@ -100,28 +98,30 @@ public class DragonHeart implements ModInitializer {
 
 		DEVENV = FabricLoader.getInstance().isDevelopmentEnvironment();
 
-		if (DEVENV) {
+		/*if (DEVENV) {
 			LOGGER.info("Suppressing GeckoLibMod.");
-			GeckoLibMod.DISABLE_IN_DEV = true;
 		}
+		GeckoLibMod.DISABLE_IN_DEV = true;*/
 		GeckoLib.initialize();
 
-		LooseEndManager.getInstance().register(MOD_ID, MOD_NAME, MOD_VERSION)
+		/*LooseEndManager.getInstance().register(MOD_ID, MOD_NAME, MOD_VERSION.split("-")[0])
 				.whenClientJoins(LooseEnd.Condition.REQUIRED)
-				.whenJoinServer(LooseEnd.Condition.REQUIRED);
+				.whenJoinServer(LooseEnd.Condition.REQUIRED);*/
 
-		ModConfig        .register();
-		ModBlocks        .register();
-		ModBlockTags     .register();
-		ModSoundEvents   .register();
-		ModItemGroups    .register();
-		ModItems         .register();
-		ModStatusEffects .register();
-		ModRecipes       .register();
-		ModEntities      .register();
-		ModCommands      .register();
-		ModGamerules     .register();
-		ModPotions       .register();
+		Config.register();
+		Blocks.register();
+		BlockTags.register();
+		SoundEvents.register();
+		ItemGroups.register();
+		Items.register();
+		StatusEffects.register();
+		Recipes.register();
+		Entities.register();
+		Commands.register();
+		Gamerules.register();
+		ScreenHandlers.register();
+		Resources.register();
+		EventHandlers.register();
 
 		LOGGER.info("Initialized.");
 

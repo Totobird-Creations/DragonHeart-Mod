@@ -37,9 +37,9 @@ repositories {
 	}
 
 	// LooseEndsLib
-	maven {
-		url "https://jitpack.io/"
-	}
+	//maven {
+	//	url "https://jitpack.io/"
+	//}
 
 }
 
@@ -52,11 +52,9 @@ dependencies {
 
 	// FabricAPI
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	include "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// Geckolib
 	modImplementation "software.bernie.geckolib:geckolib-fabric-${project.geckolib_version}"
-	include "software.bernie.geckolib:geckolib-fabric-${project.geckolib_version}"
 
 	// SatinAPI
 	modImplementation "io.github.ladysnake:satin:${project.satinapi_version}"
@@ -66,14 +64,13 @@ dependencies {
 	modApi ("me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}") {
 		exclude group: "net.fabricmc.fabric-api"
 	}
-	include "me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}"
 
 	// ModMenu
 	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
 	// LooseEndsLib
-	modImplementation "com.github.Totobird-Creations:LooseEndsLib:${project.looseendslib_version}"
-	include "com.github.Totobird-Creations:LooseEndsLib:${project.looseendslib_version}"
+	//modImplementation "com.github.Totobird-Creations:LooseEndsLib:${project.looseendslib_version}"
+	//include "com.github.Totobird-Creations:LooseEndsLib:${project.looseendslib_version}"
 
 }
 

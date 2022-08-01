@@ -1,0 +1,34 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    "A A",
+    "DCD",
+    "BSB"
+  ],
+  "key" : {
+    "A" : {
+      "item" : "minecraft:amethyst_cluster"
+    },
+    "D" : {
+      "item" : "${id}:dragonboneblock"
+    },
+    "C" : {
+      "item" : "minecraft:end_crystal"
+    },
+    "B" : {
+      "item" : "${id}:dragon_forge_bricks",
+      "data": {
+        "deny": {
+          "dragon": ""
+        }
+      }
+    },
+    "S" : {
+      "item" : "${id}:dragonscale"
+    }
+  },
+  "result" : {
+    "item" : "${id}:dragon_forge_core",
+    "count": 1
+  }
+}

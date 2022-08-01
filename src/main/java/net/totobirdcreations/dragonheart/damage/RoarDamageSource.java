@@ -26,7 +26,7 @@ public class RoarDamageSource extends DamageSource {
 
     @Override
     public Text getDeathMessage(LivingEntity entity) {
-        return Text.translatable("death." + DragonHeart.MOD_ID + ".roar", entity.getDisplayName());
+        return Text.translatable("death." + DragonHeart.ID + ".roar", entity.getDisplayName());
     }
 
 

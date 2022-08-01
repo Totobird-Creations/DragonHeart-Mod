@@ -1,6 +1,5 @@
 package net.totobirdcreations.dragonheart.mixin.dragonegg;
 
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.ingame.AnvilScreen;
 import net.minecraft.client.gui.screen.ingame.ForgingScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -13,12 +12,11 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.item.misc.Dragonegg;
+import net.totobirdcreations.dragonheart.item.misc.DragoneggItem;
 import net.totobirdcreations.dragonheart.util.mixin.dragonegg.DragoneggTextFieldWidgetMixinInterface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.function.Consumer;
@@ -37,7 +35,7 @@ public abstract class DragoneggAnvilScreenMixin extends ForgingScreen<AnvilScree
         ItemStack stack = this.getScreenHandler().getSlot(0).getStack();
         if (
                 ! stack.isEmpty() &&
-                stack.getItem() instanceof Dragonegg egg &&
+                stack.getItem() instanceof DragoneggItem egg &&
                 egg.isCreative(stack)
         ) {
             return true;

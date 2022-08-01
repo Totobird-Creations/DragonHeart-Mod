@@ -1,0 +1,25 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    "III",
+    "B B",
+    "III"
+  ],
+  "key" : {
+    "I" : {
+      "item" : "minecraft:iron_bars"
+    },
+    "B" : {
+      "item" : "${id}:dragon_forge_bricks",
+      "data": {
+        "deny": {
+          "dragon": ""
+        }
+      }
+    }
+  },
+  "result" : {
+    "item" : "${id}:dragon_forge_hatch",
+    "count": 2
+  }
+}

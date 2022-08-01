@@ -1,0 +1,31 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    "SDS",
+    "BOB",
+    "SDS"
+  ],
+  "key" : {
+    "S" : {
+      "item" : "${id}:dragonscale"
+    },
+    "D" : {
+      "item" : "${id}:dragonboneblock"
+    },
+    "B" : {
+      "item" : "${id}:dragon_forge_bricks",
+      "data": {
+        "deny": {
+          "dragon": ""
+        }
+      }
+    },
+    "O" : {
+      "tag" : "${id}:obsidian"
+    }
+  },
+  "result" : {
+    "item" : "${id}:dragon_forge_support",
+    "count": 4
+  }
+}

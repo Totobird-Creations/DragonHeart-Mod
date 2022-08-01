@@ -26,7 +26,7 @@ public abstract class FrozenEffectRendererMixin extends EntityRenderer<LivingEnt
     )
     public Identifier overrideIdentifier(Identifier object, LivingEntity entity) {
         if (((FrozenEffectLivingEntityMixinInterface)entity).isIced()) {
-            return new Identifier(DragonHeart.MOD_ID, "textures/misc/frozen_entity.png");
+            return new Identifier(DragonHeart.ID, "textures/misc/frozen_entity.png");
         } else {
             return this.getTexture(entity);
         }

@@ -1,0 +1,28 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    "ISI",
+    "B B",
+    "ISI"
+  ],
+  "key" : {
+    "I" : {
+      "item" : "minecraft:iron_bars"
+    },
+    "S" : {
+      "item" : "${id}:dragonscale"
+    },
+    "B" : {
+      "item" : "${id}:dragon_forge_bricks",
+      "data": {
+        "deny": {
+          "dragon": ""
+        }
+      }
+    }
+  },
+  "result" : {
+    "item" : "${id}:dragon_forge_aperture",
+    "count": 2
+  }
+}

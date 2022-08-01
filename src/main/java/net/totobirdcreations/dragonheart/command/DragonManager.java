@@ -59,15 +59,15 @@ public class DragonManager {
     }
     public static int setStateGeneric(ServerCommandSource source, Entity entity, DragonEntity.DragonState state) throws CommandSyntaxException {
         if (! (entity instanceof DragonEntity)) {
-            throw new SimpleCommandExceptionType(Text.translatable("command." + DragonHeart.MOD_ID + ".dragonmanager.target.not_dragon", entity.getDisplayName())).create();
+            throw new SimpleCommandExceptionType(Text.translatable("command." + DragonHeart.ID + ".dragonmanager.target.not_dragon", entity.getDisplayName())).create();
         }
         ((DragonEntity)entity).setState(state);
         source.sendFeedback(
                 Text.translatable(
-                        "command." + DragonHeart.MOD_ID + ".dragonmanager.set.state",
+                        "command." + DragonHeart.ID + ".dragonmanager.set.state",
                         entity.getDisplayName(),
                         Text.translatable(
-                                "command." + DragonHeart.MOD_ID + ".dragonmanager.state." + state
+                                "command." + DragonHeart.ID + ".dragonmanager.state." + state
                         )
                 ),
                 true
@@ -78,15 +78,15 @@ public class DragonManager {
 
     public static int getState(ServerCommandSource source, Entity entity) throws CommandSyntaxException {
         if (! (entity instanceof DragonEntity)) {
-            throw new SimpleCommandExceptionType(Text.translatable("command." + DragonHeart.MOD_ID + ".dragonmanager.target.not_dragon", entity.getDisplayName())).create();
+            throw new SimpleCommandExceptionType(Text.translatable("command." + DragonHeart.ID + ".dragonmanager.target.not_dragon", entity.getDisplayName())).create();
         }
         DragonEntity.DragonState state  = DragonEntity.DragonState.fromInt(entity.getDataTracker().get(DragonEntity.STATE));
         source.sendFeedback(
                 Text.translatable(
-                        "command." + DragonHeart.MOD_ID + ".dragonmanager.get.state",
+                        "command." + DragonHeart.ID + ".dragonmanager.get.state",
                         entity.getDisplayName(),
                         Text.translatable(
-                                "command." + DragonHeart.MOD_ID + ".dragonmanager.state." + state
+                                "command." + DragonHeart.ID + ".dragonmanager.state." + state
                         )
                 ),
                 true

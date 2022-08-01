@@ -20,7 +20,7 @@ public class ClientShaders implements ShaderEffectRenderCallback {
 
     public static ManagedShaderEffect registerShader(String name) {
         return ShaderEffectManager.getInstance()
-                .manage(new Identifier(DragonHeart.MOD_ID, "shaders/post/" + name + ".json"));
+                .manage(new Identifier(DragonHeart.ID, "shaders/post/" + name + ".json"));
     }
 
 

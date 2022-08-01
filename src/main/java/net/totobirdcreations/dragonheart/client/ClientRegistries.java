@@ -8,13 +8,9 @@ import net.minecraft.item.Items;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.VillagerProfession;
 import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.entity.dragon.DragonFireEntity;
-import net.totobirdcreations.dragonheart.entity.ModEntities;
-import net.totobirdcreations.dragonheart.entity.dragon.DragonIceEntity;
-import net.totobirdcreations.dragonheart.entity.dragon.DragonLightningEntity;
-import net.totobirdcreations.dragonheart.entity.dragonegg.DragoneggFireEntity;
-import net.totobirdcreations.dragonheart.entity.dragonegg.DragoneggIceEntity;
-import net.totobirdcreations.dragonheart.entity.dragonegg.DragoneggLightningEntity;
+import net.totobirdcreations.dragonheart.entity.Entities;
+import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
+import net.totobirdcreations.dragonheart.entity.dragonegg.DragoneggEntity;
 import net.totobirdcreations.dragonheart.item.misc.MiscItems;
 
 
@@ -23,12 +19,8 @@ public class ClientRegistries {
     @SuppressWarnings("all")
     public static void registerEntityAttributes() {
         DragonHeart.LOGGER.info("Registering entity attributes.");
-        FabricDefaultAttributeRegistry.register(ModEntities.DRAGON_FIRE         , DragonFireEntity         .setAttributes());
-        FabricDefaultAttributeRegistry.register(ModEntities.DRAGON_ICE          , DragonIceEntity          .setAttributes());
-        FabricDefaultAttributeRegistry.register(ModEntities.DRAGON_LIGHTNING    , DragonLightningEntity    .setAttributes());
-        FabricDefaultAttributeRegistry.register(ModEntities.DRAGONEGG_FIRE      , DragoneggFireEntity      .setAttributes());
-        FabricDefaultAttributeRegistry.register(ModEntities.DRAGONEGG_ICE       , DragoneggIceEntity       .setAttributes());
-        FabricDefaultAttributeRegistry.register(ModEntities.DRAGONEGG_LIGHTNING , DragoneggLightningEntity .setAttributes());
+        FabricDefaultAttributeRegistry.register( Entities.DRAGON    , DragonEntity    .setAttributes());
+        FabricDefaultAttributeRegistry.register( Entities.DRAGONEGG , DragoneggEntity .setAttributes());
     }
 
     public static void registerCustomTrades() {

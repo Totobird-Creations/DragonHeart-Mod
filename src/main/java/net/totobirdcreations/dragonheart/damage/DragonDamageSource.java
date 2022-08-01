@@ -44,7 +44,7 @@ public class DragonDamageSource extends DamageSource {
 
     @Override
     public Text getDeathMessage(LivingEntity entity) {
-        String string = "death." + DragonHeart.MOD_ID + "." + damageType.name().toLowerCase() + "." + damageClass.name().toLowerCase();
+        String string = "death." + DragonHeart.ID + "." + damageType.name().toLowerCase() + "." + damageClass.name().toLowerCase();
         return Text.translatable(string, entity.getDisplayName());
     }
 

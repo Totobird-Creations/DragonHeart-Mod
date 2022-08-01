@@ -1,0 +1,44 @@
+{
+  "name"     : "text.guidebook.${id}.content.dragon_forge.construction",
+  "icon"     : "minecraft:scaffolding",
+  "category" : "${id}:dragon_forge",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": ""
+    },
+    {
+      "type": "patchouli:multiblock",
+      "name": "text.guidebook.${id}.content.dragon_forge.construction.construction",
+      "multiblock": {
+        "mapping": {
+          "B": "${id}:dragon_forge_bricks",
+          "0": "${id}:dragon_forge_bricks",
+          "V": "${id}:dragon_forge_bricks[vent=true]",
+          "W": "${id}:dragon_forge_bricks[window=true]",
+          "A": "${id}:dragon_forge_aperture",
+          "H": "${id}:dragon_forge_hatch",
+          "S": "${id}:dragon_forge_support",
+          "C": "${id}:dragon_forge_core"
+        },
+        "pattern": [
+          [
+            "SBS",
+            "BWB",
+            "SBS"
+          ],
+          [
+            "BHB",
+            "VCV",
+            "BAB"
+          ],
+          [
+            "SBS",
+            "B0B",
+            "SBS"
+          ]
+        ]
+      }
+    }
+  ]
+}

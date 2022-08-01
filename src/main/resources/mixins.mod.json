@@ -8,11 +8,11 @@
     "deafenedeffect.DeafenedEffectLivingEntityMixin",
     "dragonegg.DragoneggAnvilScreenHandlerInterface",
     "dragonegg.DragoneggAnvilScreenHandlerMixin",
+    "dragonegg.DragoneggForgingScreenHandlerInterface",
     "frozeneffect.FrozenEffectEntityMixin",
     "frozeneffect.FrozenEffectLivingEntityMixin",
     "frozeneffect.FrozenEffectPlayerEntityMixin",
-    "init.InitItemGroupMixin",
-    "item.ItemDragonArmourMixin"
+    "init.InitItemGroupMixin"
   ],
   "client": [
     "cape.CapeAbstractClientPlayerEntityMixin",

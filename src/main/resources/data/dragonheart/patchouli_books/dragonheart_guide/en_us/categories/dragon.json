@@ -1,0 +1,5 @@
+{
+  "name"        : "text.guidebook.${id}.content.dragon.name",
+  "description" : "",
+  "icon"        : "${id}:dragonegg_creative"
+}

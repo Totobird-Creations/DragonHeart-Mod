@@ -6,7 +6,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.item.misc.Dragonegg;
+import net.totobirdcreations.dragonheart.item.misc.DragoneggItem;
 import net.totobirdcreations.dragonheart.util.mixin.dragonegg.DragoneggTextFieldWidgetMixinInterface;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -36,7 +36,7 @@ public abstract class DragoneggTextFieldWidgetMixin extends ClickableWidget impl
             ItemStack stack = this.anvilScreen.getScreenHandler().getSlot(0).getStack();
             if (
                     ! stack.isEmpty() &&
-                    stack.getItem() instanceof Dragonegg egg &&
+                    stack.getItem() instanceof DragoneggItem egg &&
                     egg.isCreative(stack)
             ) {
                 return true;

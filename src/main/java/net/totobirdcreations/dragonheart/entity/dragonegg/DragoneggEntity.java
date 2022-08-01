@@ -8,7 +8,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ItemStackParticleEffect;
@@ -16,12 +15,20 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.totobirdcreations.dragonheart.DragonHeart;
+import net.totobirdcreations.dragonheart.entity.Entities;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
+import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 import net.totobirdcreations.dragonheart.item.misc.MiscItems;
-import net.totobirdcreations.dragonheart.sound.ModSoundEvents;
+import net.totobirdcreations.dragonheart.item.util.DragonColouredItem;
+import net.totobirdcreations.dragonheart.sound.SoundEvents;
+import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
+import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -34,7 +41,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.Random;
 
 
-public abstract class DragoneggEntity<T extends DragonEntity> extends MobEntity implements IAnimatable {
+public class DragoneggEntity extends MobEntity implements IAnimatable {
 
     public static EntityDimensions DIMENSIONS = EntityDimensions.changing(0.375f, 0.5f);
 
@@ -66,12 +73,14 @@ public abstract class DragoneggEntity<T extends DragonEntity> extends MobEntity 
     | Data Handling |
      --------------*/
 
+    public static final TrackedData<String>  DRAGON;
     public static final TrackedData<Integer> COLOUR;
     public static final TrackedData<Integer> AGE;
     public static final TrackedData<Integer> SPAWN_AGE;
     public static final TrackedData<Integer> EYE_COLOUR;
 
     static {
+        DRAGON     = DataTracker.registerData( DragoneggEntity.class , TrackedDataHandlerRegistry.STRING  );
         COLOUR     = DataTracker.registerData( DragoneggEntity.class , TrackedDataHandlerRegistry.INTEGER );
         AGE        = DataTracker.registerData( DragoneggEntity.class , TrackedDataHandlerRegistry.INTEGER );
         SPAWN_AGE  = DataTracker.registerData( DragoneggEntity.class , TrackedDataHandlerRegistry.INTEGER );
@@ -82,20 +91,22 @@ public abstract class DragoneggEntity<T extends DragonEntity> extends MobEntity 
     @Override
     public void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking( COLOUR     , 0 );
-        this.dataTracker.startTracking( AGE        , 0 );
-        this.dataTracker.startTracking( SPAWN_AGE  , 0 );
-        this.dataTracker.startTracking( EYE_COLOUR , 0 );
+        this.dataTracker.startTracking( DRAGON     , "" );
+        this.dataTracker.startTracking( COLOUR     , 0  );
+        this.dataTracker.startTracking( AGE        , 0  );
+        this.dataTracker.startTracking( SPAWN_AGE  , 0  );
+        this.dataTracker.startTracking( EYE_COLOUR , 0  );
     }
 
 
     @Override
     @Nullable
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        dataTracker.set( COLOUR     , 8355711 );
-        dataTracker.set( AGE        , 0       );
-        dataTracker.set( SPAWN_AGE  , 0       );
-        dataTracker.set( EYE_COLOUR , 8355711 );
+        this.dataTracker.set( DRAGON     , NbtHelper.EMPTY_TYPE.toString() );
+        this.dataTracker.set( COLOUR     , 8355711                         );
+        this.dataTracker.set( AGE        , 0                               );
+        this.dataTracker.set( SPAWN_AGE  , 0                               );
+        this.dataTracker.set( EYE_COLOUR , 8355711                         );
 
         super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         return entityData;
@@ -105,40 +116,46 @@ public abstract class DragoneggEntity<T extends DragonEntity> extends MobEntity 
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
 
-        nbt.putInt("Colour"    , dataTracker.get(COLOUR     ));
-        nbt.putInt("Age"       , dataTracker.get(AGE        ));
-        nbt.putInt("SpawnAge"  , dataTracker.get(SPAWN_AGE  ));
-        nbt.putInt("EyeColour" , dataTracker.get(EYE_COLOUR ));
+        nbt.putString ( "dragon"    , dataTracker.get( DRAGON     ));
+        nbt.putInt    ( "colour"    , dataTracker.get( COLOUR     ));
+        nbt.putInt    ( "age"       , dataTracker.get( AGE        ));
+        nbt.putInt    ( "spawnAge"  , dataTracker.get( SPAWN_AGE  ));
+        nbt.putInt    ( "eyeColour" , dataTracker.get( EYE_COLOUR ));
     }
 
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
 
-        dataTracker.set(COLOUR     , nbt.getInt("Colour"    ));
-        dataTracker.set(AGE        , nbt.getInt("Age"       ));
-        dataTracker.set(SPAWN_AGE  , nbt.getInt("SpawnAge"  ));
-        dataTracker.set(EYE_COLOUR , nbt.getInt("EyeColour" ));
+        this.dataTracker.set( DRAGON     , nbt.getString ("dragon"    ));
+        this.dataTracker.set( COLOUR     , nbt.getInt    ("colour"    ));
+        this.dataTracker.set( AGE        , nbt.getInt    ("age"       ));
+        this.dataTracker.set( SPAWN_AGE  , nbt.getInt    ("spawnAge"  ));
+        this.dataTracker.set( EYE_COLOUR , nbt.getInt    ("eyeColour" ));
     }
 
 
-    public int getColour() {return dataTracker.get(COLOUR);}
+    public String getDragon() {return this.dataTracker.get(DRAGON);}
 
-    public int getAge() {return dataTracker.get(AGE);}
+    public int getColour() {return this.dataTracker.get(COLOUR);}
 
-    public int getSpawnAge() {return dataTracker.get(SPAWN_AGE);}
+    public int getAge() {return this.dataTracker.get(AGE);}
 
-    public int getEyeColour() {return dataTracker.get(EYE_COLOUR);}
+    public int getSpawnAge() {return this.dataTracker.get(SPAWN_AGE);}
+
+    public int getEyeColour() {return this.dataTracker.get(EYE_COLOUR);}
 
 
-    public void setColour(int colour) {dataTracker.set(COLOUR, colour);}
+    public void setDragon(String dragon) {this.dataTracker.set(DRAGON, dragon);}
 
-    public void setAge(int age) {dataTracker.set(AGE, age);}
-    public void addAge(int age) {dataTracker.set(AGE, getAge() + age);}
+    public void setColour(int colour) {this.dataTracker.set(COLOUR, colour);}
 
-    public void setSpawnAge(int age) {dataTracker.set(SPAWN_AGE, age);}
+    public void setAge(int age) {this.dataTracker.set(AGE, age);}
+    public void addAge(int age) {this.dataTracker.set(AGE, getAge() + age);}
 
-    public void setEyeColour(int colour) {dataTracker.set(EYE_COLOUR, colour);}
+    public void setSpawnAge(int age) {this.dataTracker.set(SPAWN_AGE, age);}
+
+    public void setEyeColour(int colour) {this.dataTracker.set(EYE_COLOUR, colour);}
 
 
     /*-------------------
@@ -148,7 +165,7 @@ public abstract class DragoneggEntity<T extends DragonEntity> extends MobEntity 
     public final AnimationFactory animationFactory = new AnimationFactory(this);
 
 
-    public PlayState animationPredicate(AnimationEvent<DragoneggEntity<T>> event) {
+    public PlayState animationPredicate(AnimationEvent<DragoneggEntity> event) {
 
         AnimationBuilder builder   = new AnimationBuilder();
         PlayState        playState = PlayState.CONTINUE;
@@ -190,18 +207,15 @@ public abstract class DragoneggEntity<T extends DragonEntity> extends MobEntity 
     public void onDeath(DamageSource source) {
         this.remove(RemovalReason.KILLED);
 
-        ItemStack   stack = new ItemStack(this.getDropItem());
-        NbtCompound nbt   = stack.getOrCreateSubNbt("display");
-        nbt.putInt("color"     , this.getColour()    );
-        nbt = stack.getOrCreateNbt();
-        nbt.putInt("Colour"    , this.getColour()    );
-        nbt.putInt("Age"       , this.getAge()       );
-        nbt.putInt("SpawnAge"  , this.getSpawnAge()  );
-        nbt.putInt("EyeColour" , this.getEyeColour() );
+        ItemStack stack = new ItemStack(MiscItems.DRAGONEGG);
+        DragonColouredItem.setColour(stack, this.getColour());
+        NbtCompound nbt = stack.getOrCreateNbt();
+        nbt.putString ("dragon"    , this.getDragon()    );
+        nbt.putInt    ("age"       , this.getAge()       );
+        nbt.putInt    ("spawnAge"  , this.getSpawnAge()  );
+        nbt.putInt    ("eyeColour" , this.getEyeColour() );
         this.dropStack(stack);
     }
-
-    public abstract Item getDropItem();
 
 
     /*---------
@@ -245,20 +259,17 @@ public abstract class DragoneggEntity<T extends DragonEntity> extends MobEntity 
             this.world.playSound(this.getX(), this.getY(), this.getZ(), hatchSound, this.getSoundCategory(), this.getSoundVolume(), this.getSoundPitch(), true);
         }
 
-        ItemStack   stack = new ItemStack(MiscItems.DRAGONEGG_FIRE);
-        NbtCompound nbt   = stack.getOrCreateSubNbt("display");
-        nbt.putInt("color", getColour());
-
         ((ServerWorld)world).spawnParticles(
-                new ItemStackParticleEffect(ParticleTypes.ITEM, stack),
+                new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(MiscItems.DRAGONEGG_CREATIVE)),
                 this.getX(), this.getY() + getHeight() / 2.0f, this.getZ(),
                 25,
                 0.05, 0.1, 0.05,
                 0.075
         );
 
-        T dragon = this.convertTo(getSpawnEntity(), false);
+        DragonEntity dragon = this.convertTo(Entities.DRAGON, false);
         assert dragon != null;
+        dragon.setDragon(this.dataTracker.get(DRAGON));
         this.createEntity(dragon);
     }
 
@@ -275,41 +286,41 @@ public abstract class DragoneggEntity<T extends DragonEntity> extends MobEntity 
     }
 
 
-    public abstract EntityType<T> getSpawnEntity();
+    /*--------------
+    | Data & Sounds |
+     --------------*/
 
+    // Data
+    @Override
+    public Text getName() {
+        return Text.translatable("entity." + DragonHeart.ID + ".dragonegg",
+                DragonResourceLoader.getResource(new Identifier(this.getDragon())).getName()
+        );
+    }
 
-    /*-------
-    | Sounds |
-     -------*/
-
+    // Sounds
     @Nullable
-    public SoundEvent getPlaceSound() {return ModSoundEvents.DRAGONEGG_PLACE;}
-
+    public SoundEvent getPlaceSound() {return SoundEvents.DRAGONEGG_PLACE;}
     @Nullable
-    public SoundEvent getHatchSound() {return ModSoundEvents.DRAGONEGG_HATCH;}
-
+    public SoundEvent getHatchSound() {return SoundEvents.DRAGONEGG_HATCH;}
     @Override
     @Nullable
     public SoundEvent getHurtSound(DamageSource source) {
         return null;
     }
-
     @Override
     @Nullable
     public SoundEvent getDeathSound() {
-        return ModSoundEvents.DRAGONEGG_BREAK;
+        return SoundEvents.DRAGONEGG_BREAK;
     }
-
     @Override
     public float getSoundVolume() {
         return 0.5f;
     }
-
     @Override
     public float getSoundPitch() {
         return 0.75f;
     }
-
     @Override
     public SoundCategory getSoundCategory() {
         return SoundCategory.BLOCKS;

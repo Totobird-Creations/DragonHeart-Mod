@@ -2,14 +2,18 @@ package net.totobirdcreations.dragonheart.mixin.dragonegg;
 
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingResultInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.AnvilScreenHandler;
 import net.minecraft.screen.ForgingScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
-import net.totobirdcreations.dragonheart.item.misc.Dragonegg;
-import net.totobirdcreations.dragonheart.util.colour.RGBColour;
+import net.totobirdcreations.dragonheart.item.misc.DragoneggItem;
+import net.totobirdcreations.dragonheart.item.misc.MiscItems;
+import net.totobirdcreations.dragonheart.item.util.DragonColouredItem;
+import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
+import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -38,7 +42,7 @@ public abstract class DragoneggAnvilScreenHandlerMixin extends ForgingScreenHand
         ItemStack stack = this.getSlot(0).getStack();
         if (
                 ! stack.isEmpty() &&
-                stack.getItem() instanceof Dragonegg egg &&
+                stack.getItem() instanceof DragoneggItem egg &&
                 egg.isCreative(stack)
         ) {
             RGBColour colour = RGBColour.parseString(ithis.getNewItemName());
@@ -59,20 +63,19 @@ public abstract class DragoneggAnvilScreenHandlerMixin extends ForgingScreenHand
             )
     )
     public void updateResultRedirectSetStack(CraftingResultInventory output, int slot, ItemStack stack) {
-        DragoneggAnvilScreenHandlerInterface ithis = ((DragoneggAnvilScreenHandlerInterface) this);
+        DragoneggAnvilScreenHandlerInterface   ithis  = ((DragoneggAnvilScreenHandlerInterface) this);
+        DragoneggForgingScreenHandlerInterface ipthis = ((DragoneggForgingScreenHandlerInterface) this);
         if (
                 ! stack.isEmpty() &&
-                stack.getItem() instanceof Dragonegg egg &&
+                stack.getItem() instanceof DragoneggItem egg &&
                 egg.isCreative(stack)
         ) {
             RGBColour colour = RGBColour.parseString(ithis.getNewItemName());
             if (colour != null) {
-                NbtCompound nbt = stack.getNbt();
-                stack = new ItemStack(egg.type.getDragoneggItem());
-                stack.setNbt(nbt);
-                nbt = stack.getOrCreateSubNbt("display");
-                stack.setCustomName(null);
-                nbt.putInt("color", colour.asInt());
+                stack = new ItemStack(MiscItems.DRAGONEGG);
+                DragonColouredItem.setColour(stack, colour.asInt());
+                NbtCompound nbt = ipthis.getInput().getStack(0).getOrCreateNbt();
+                nbt.putString("dragon", NbtHelper.getItemDragonType(nbt).toString());
                 output.setStack(slot, stack);
             }
 

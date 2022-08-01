@@ -1,0 +1,20 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    "SSS",
+    "BBB",
+    "SSS"
+  ],
+  "key" : {
+    "S" : {
+      "item" : "${id}:dragonscale"
+    },
+    "B" : {
+      "item" : "minecraft:end_stone_bricks"
+    }
+  },
+  "result" : {
+    "item" : "${id}:dragon_forge_bricks",
+    "count": 3
+  }
+}

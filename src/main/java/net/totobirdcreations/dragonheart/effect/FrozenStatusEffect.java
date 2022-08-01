@@ -27,7 +27,7 @@ public class FrozenStatusEffect extends StatusEffect {
         entity.setVelocity(0.0, -1.5, 0.0);
         entity.setFrozenTicks(150);
         if (entity.isOnFire()) {
-            entity.removeStatusEffect(ModStatusEffects.FROZEN);
+            entity.removeStatusEffect(StatusEffects.FROZEN);
             entity.extinguish();
         }
     }

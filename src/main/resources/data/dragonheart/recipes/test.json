@@ -1,0 +1,21 @@
+{
+  "type" : "${id}:dragonforge",
+  "dragon_type" : "dragonheart:.",
+  "time" : 300,
+  "ingredients" : [
+    {
+      "item" : "minecraft:end_stone_bricks"
+    },
+    {
+      "item" : "${id}:dragonblood",
+      "forge": [
+        "type_source",
+        "match_type"
+      ]
+    }
+  ],
+  "output" : {
+    "item" : "${id}:dragon_forge_bricks",
+    "count": 1
+  }
+}

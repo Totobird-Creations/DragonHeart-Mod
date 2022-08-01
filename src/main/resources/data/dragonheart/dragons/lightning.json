@@ -1,0 +1,30 @@
+{
+  "entity_breath" : "minecraft:",
+  "entity_spike"  : "minecraft:",
+  "body_colours" : [
+    [ 0.0   , 0.25  , 1.0   ],
+    [ 0.0   , 0.0   , 1.0   ],
+    [ 0.25  , 0.0   , 1.0   ],
+    [ 0.5   , 0.0   , 1.0   ],
+    [ 0.75  , 0.0   , 1.0   ],
+    [ 1.0   , 0.0   , 1.0   ],
+    [ 1.0   , 0.0   , 0.75  ],
+    [ 1.0   , 0.0   , 0.5   ],
+    [ 0.125 , 0.125 , 0.125 ]
+  ],
+  "eye_colour" : [0.0, 0.75, 1.0],
+  "creative_egg_colours" : [
+    [ 0.5   , 0.265 , 0.0   ],
+    [ 0.125 , 0.05  , 0.375 ],
+    [ 0.337 , 0.0   , 0.45  ],
+    [ 0.125 , 0.125 , 0.125 ]
+  ],
+  "can_breathe_in_water"        : true,
+  "can_freeze"                  : false,
+  "hurt_by_water"               : false,
+  "fire_immune"                 : true,
+  "explosion_immune_when_awake" : true,
+  "colour_bricks" : [ 0.341 , 0.275 , 0.416 ],
+  "colour_cracks" : [ 0.467 , 0.239 , 0.588 ],
+  "colour_glow"   : [ 1.0   , 0.0   , 0.875 ]
+}

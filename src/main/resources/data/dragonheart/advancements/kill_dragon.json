@@ -1,0 +1,36 @@
+{
+  "parent": "minecraft:adventure/shoot_arrow",
+  "display": {
+    "icon": {
+      "item": "${id}:dragonbone"
+    },
+    "title": {
+      "translate": "advancement.${id}.kill_dragon.title"
+    },
+    "description": {
+      "translate": "advancement.${id}.kill_dragon.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 300
+  },
+  "criteria": {
+    "kill_dragon": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "${id}:dragon"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "kill_dragon"
+    ]
+  ]
+}

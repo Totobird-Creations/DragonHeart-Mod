@@ -1,18 +1,26 @@
 package net.totobirdcreations.dragonheart.client;
 
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.ItemStack;
-import net.totobirdcreations.dragonheart.entity.ModEntities;
-import net.totobirdcreations.dragonheart.entity.dragon.render.DragonFireEntityRenderer;
-import net.totobirdcreations.dragonheart.entity.dragon.render.DragonIceEntityRenderer;
-import net.totobirdcreations.dragonheart.entity.dragon.render.DragonLightningEntityRenderer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockRenderView;
+import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
+import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntity;
+import net.totobirdcreations.dragonheart.entity.Entities;
+import net.totobirdcreations.dragonheart.entity.dragon.render.DragonEntityRenderer;
+import net.totobirdcreations.dragonheart.item.misc.DragonItem;
+import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 import net.totobirdcreations.dragonheart.entity.dragonegg.DragoneggEntityRenderer;
-import net.totobirdcreations.dragonheart.item.misc.Dragonbucket;
-import net.totobirdcreations.dragonheart.item.misc.Dragonegg;
-import net.totobirdcreations.dragonheart.item.misc.Dragonscale;
 import net.totobirdcreations.dragonheart.item.misc.MiscItems;
-import net.totobirdcreations.dragonheart.util.colour.RGBColour;
+import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
+import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
+
+import javax.annotation.Nullable;
 
 
 public class ClientRenderers {
@@ -20,48 +28,112 @@ public class ClientRenderers {
     public static void register() {
         registerEntities();
         registerItems();
+        registerBlocks();
     }
 
 
     public static void registerEntities() {
-        EntityRendererRegistry.register(ModEntities.DRAGON_FIRE      , DragonFireEntityRenderer::new      );
-        EntityRendererRegistry.register(ModEntities.DRAGON_ICE       , DragonIceEntityRenderer::new       );
-        EntityRendererRegistry.register(ModEntities.DRAGON_LIGHTNING , DragonLightningEntityRenderer::new );
+        EntityRendererRegistry.register(Entities.DRAGON, DragonEntityRenderer::new);
 
-        EntityRendererRegistry.register(ModEntities.DRAGONEGG_FIRE      , DragoneggEntityRenderer::new );
-        EntityRendererRegistry.register(ModEntities.DRAGONEGG_ICE       , DragoneggEntityRenderer::new );
-        EntityRendererRegistry.register(ModEntities.DRAGONEGG_LIGHTNING , DragoneggEntityRenderer::new );
+        EntityRendererRegistry.register(Entities.DRAGONEGG, DragoneggEntityRenderer::new);
     }
+
 
     public static void registerItems() {
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonscaleItemColour, MiscItems.DRAGONSCALE);
+        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonItemColour , MiscItems.DRAGONSCALE  );
+        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonItemColour , MiscItems.DRAGONEGG    );
+        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonItemColour , MiscItems.DRAGONBLOOD  );
+        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonItemColour , MiscItems.DRAGONBREATH );
 
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonbucketItemColour, MiscItems.DRAGONBUCKET_FIRE      );
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonbucketItemColour, MiscItems.DRAGONBUCKET_ICE       );
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonbucketItemColour, MiscItems.DRAGONBUCKET_LIGHTNING );
+        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonBlockItemColour , DragonBlocks.DRAGONEGG_INCUBATOR   . item() );
+        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonBlockItemColour , DragonBlocks.DRAGON_FORGE_BRICKS   . item() );
+        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonBlockItemColour , DragonBlocks.DRAGON_FORGE_APERTURE . item() );
+        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonBlockItemColour , DragonBlocks.DRAGON_FORGE_HATCH    . item() );
+        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonBlockItemColour , DragonBlocks.DRAGON_FORGE_SUPPORT  . item() );
+        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonBlockItemColour , DragonBlocks.DRAGON_FORGE_CORE     . item() );
+    }
 
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragoneggItemColour, MiscItems.DRAGONEGG_FIRE      );
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragoneggItemColour, MiscItems.DRAGONEGG_ICE       );
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragoneggItemColour, MiscItems.DRAGONEGG_LIGHTNING );
+
+    public static void registerBlocks() {
+        BlockRenderLayerMap.INSTANCE.putBlock(DragonBlocks. DRAGONEGG_INCUBATOR   .block(), RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(DragonBlocks. DRAGON_FORGE_BRICKS   .block(), RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(DragonBlocks. DRAGON_FORGE_APERTURE .block(), RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(DragonBlocks. DRAGON_FORGE_HATCH    .block(), RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(DragonBlocks. DRAGON_FORGE_SUPPORT  .block(), RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(DragonBlocks. DRAGON_FORGE_CORE     .block(), RenderLayer.getTranslucent());
+
+        ColorProviderRegistry.BLOCK.register(ClientRenderers::getDragonBlockColour,
+                DragonBlocks.DRAGON_FORGE_BRICKS   .block(),
+                DragonBlocks.DRAGON_FORGE_APERTURE .block(),
+                DragonBlocks.DRAGON_FORGE_HATCH    .block(),
+                DragonBlocks.DRAGON_FORGE_SUPPORT  .block(),
+                DragonBlocks.DRAGON_FORGE_CORE     .block()
+        );
+        ColorProviderRegistry.BLOCK.register(ClientRenderers::getDragoneggIncubatorBlockColour,
+                DragonBlocks.DRAGONEGG_INCUBATOR.block()
+        );
     }
 
 
 
-    public static int getDragonscaleItemColour(ItemStack stack, int tintIndex) {
-        Dragonscale scale = (Dragonscale)stack.getItem();
-        return scale.getColor(stack);
+    public static int getDragonItemColour(ItemStack stack, int tintIndex) {
+        if (tintIndex == 0) {
+            DragonItem scale = (DragonItem) stack.getItem();
+            return scale.getColor(stack);
+        } else {
+            return RGBColour.WHITE.asInt();
+        }
     }
 
 
-    public static int getDragonbucketItemColour(ItemStack stack, int tintIndex) {
-        Dragonbucket bucket = (Dragonbucket)stack.getItem();
-        return tintIndex == 1 ? bucket.getColor(stack) : RGBColour.WHITE.asInt();
+    public static int getDragonBlockItemColour(ItemStack stack, int tintIndex) {
+        DragonResourceLoader.DragonResource resource = DragonResourceLoader.getResource(
+                NbtHelper.getBlockItemDragonType(stack.getOrCreateNbt())
+        );
+        return getDragonBlockColour(resource, tintIndex).asInt();
     }
 
 
-    public static int getDragoneggItemColour(ItemStack stack, int tintIndex) {
-        Dragonegg egg = (Dragonegg)(stack.getItem());
-        return egg.getColor(stack);
+
+    public static int getDragonBlockColour(BlockState state, @Nullable BlockRenderView view, BlockPos pos, int tintIndex) {
+        if (view != null) {
+            BlockEntity blockEntity = view.getBlockEntity(pos);
+            if (blockEntity instanceof DragonBlockEntity dragonBlockEntity) {
+                return getDragonBlockColour(
+                        DragonResourceLoader.getResource(dragonBlockEntity.dragon),
+                        tintIndex
+                ).asInt();
+            }
+        }
+        return RGBColour.WHITE.asInt();
+    }
+
+
+    public static int getDragoneggIncubatorBlockColour(BlockState state, @Nullable BlockRenderView view, BlockPos pos, int tintIndex) {
+        if (view != null) {
+            BlockEntity blockEntity = view.getBlockEntity(pos);
+            if (blockEntity instanceof DragonBlockEntity dragonBlockEntity) {
+                if (tintIndex == 3) {
+                    return DragonResourceLoader.getResource(dragonBlockEntity.dragon).colourGlow().asInt();
+                } else {
+                    return getDragonBlockColour(
+                            DragonResourceLoader.getResource(NbtHelper.EMPTY_TYPE),
+                            tintIndex
+                    ).asInt();
+                }
+            }
+        }
+        return RGBColour.WHITE.asInt();
+    }
+
+
+    public static RGBColour getDragonBlockColour(DragonResourceLoader.DragonResource resource, int tintIndex) {
+        return switch (tintIndex) {
+            case    0 -> resource. colourBricks();
+            case    1 -> resource. colourCracks();
+            case    3 -> resource. colourGlow();
+            default   -> RGBColour.WHITE;
+        };
     }
 
 }
