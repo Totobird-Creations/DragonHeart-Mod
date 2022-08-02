@@ -1,14 +1,12 @@
-package net.totobirdcreations.dragonheart.block.dragon;
+package net.totobirdcreations.dragonheart.block.dragon.forge;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -16,14 +14,14 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.totobirdcreations.dragonheart.DragonHeart;
+import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntity;
-import net.totobirdcreations.dragonheart.block.entity.dragon.DragonForgeHatchBlockEntity;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge_core.DragonForgeCoreBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.DragonForgeHatchBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
+import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 
@@ -41,9 +39,16 @@ public class DragonForgeHatchBlock extends DragonForgeBlock {
 
 
     @Override
+    public void appendStacks(DefaultedList<ItemStack> stacks) {
+        ItemStack   stack = new ItemStack(DragonBlocks.DRAGON_FORGE_HATCH.item());
+        NbtCompound nbt;
+        nbt = stack.getOrCreateSubNbt("BlockEntityTag");
+        nbt.putString("dragon", NbtHelper.EMPTY_TYPE.toString());
+        stacks.add(stack);
+    }
+    @Override
     public void appendStacks(DefaultedList<ItemStack> stacks, Identifier dragon, DragonResourceLoader.DragonResource resource) {
-        Item item  = DragonBlocks.DRAGON_FORGE_HATCH.item();
-        ItemStack   stack = new ItemStack(item);
+        ItemStack   stack = new ItemStack(DragonBlocks.DRAGON_FORGE_HATCH.item());
         NbtCompound nbt;
         nbt = stack.getOrCreateSubNbt("BlockEntityTag");
         nbt.putString("dragon", dragon.toString());
@@ -57,25 +62,24 @@ public class DragonForgeHatchBlock extends DragonForgeBlock {
         if (world.isClient()) {
             return ActionResult.SUCCESS;
         } else {
-            return open(world, pos, player);
+            open(world, pos, player);
+            return ActionResult.CONSUME;
         }
     }
 
-    public ActionResult open(World world, BlockPos pos, PlayerEntity player) {
+    public static void open(World world, BlockPos pos, PlayerEntity player) {
         if (world.getBlockEntity(pos) instanceof DragonForgeHatchBlockEntity entity) {
             ArrayList<DragonForgeCoreBlockEntity> relations = entity.getRelation(DragonForgeHatchBlockEntity.CORE_SIDE);
             if (relations.size() == 1) {
                 DragonForgeCoreBlockEntity relation = relations.get(0);
-                return DragonForgeCoreBlock.open(
+                DragonForgeCoreBlock.open(
                         world.getBlockState(relation.getPos()),
                         world,
                         relation.getPos(),
                         player
                 );
             }
-            return ActionResult.FAIL;
         }
-        return ActionResult.PASS;
     }
 
 

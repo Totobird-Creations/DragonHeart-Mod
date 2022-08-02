@@ -32,8 +32,9 @@ public class DragoneggIncubatorBlock extends DragonBlock {
         return "egg_incubator";
     }
 
+
     @Override
-    public void appendStacks(DefaultedList<ItemStack> stacks, Identifier dragon, DragonResourceLoader.DragonResource resource) {
+    public void appendStacks(DefaultedList<ItemStack> stacks) {
         Item      item  = DragonBlocks.DRAGONEGG_INCUBATOR.item();
         ItemStack stack = new ItemStack(item);
         stacks.add(stack);
@@ -53,11 +54,12 @@ public class DragoneggIncubatorBlock extends DragonBlock {
             NamedScreenHandlerFactory factory = state.createScreenHandlerFactory(world, pos);
             if (factory != null) {
                 player.openHandledScreen(factory);
-                return ActionResult.SUCCESS;
+                return ActionResult.CONSUME;
             }
-            return ActionResult.FAIL;
+            return ActionResult.SUCCESS;
+        } else {
+            return ActionResult.SUCCESS;
         }
-        return super.onUse(state, world, pos, player, hand, hit);
     }
 
 

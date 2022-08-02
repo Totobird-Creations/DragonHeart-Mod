@@ -6,7 +6,11 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge_core.DragonForgeCoreBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.DragonForgeApertureBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.DragonForgeBricksBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.DragonForgeHatchBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.DragonForgeSupportBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
 
 public class DragonBlockEntities {
 

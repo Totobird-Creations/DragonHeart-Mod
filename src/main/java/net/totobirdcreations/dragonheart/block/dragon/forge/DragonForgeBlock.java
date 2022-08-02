@@ -1,4 +1,6 @@
-package net.totobirdcreations.dragonheart.block.dragon;
+package net.totobirdcreations.dragonheart.block.dragon.forge;
+
+import net.totobirdcreations.dragonheart.block.dragon.DragonBlock;
 
 public abstract class DragonForgeBlock extends DragonBlock {
 

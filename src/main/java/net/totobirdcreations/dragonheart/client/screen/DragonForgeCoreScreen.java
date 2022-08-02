@@ -9,14 +9,10 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge_core.DragonForgeCoreBlockEntity;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge_core.DragonForgeCoreBlockEntityProperties;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntityProperties;
 import net.totobirdcreations.dragonheart.screenhandler.DragonForgeCoreScreenHandler;
-import net.totobirdcreations.dragonheart.screenhandler.DragoneggIncubatorScreenHandler;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
-
-import java.util.ArrayList;
-import java.util.Optional;
 
 
 public class DragonForgeCoreScreen extends HandledScreen<DragonForgeCoreScreenHandler> {

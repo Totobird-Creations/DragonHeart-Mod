@@ -53,11 +53,13 @@ public abstract class DragonBlock extends BlockWithEntity implements BlockEntity
     @Override
     public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
         Set<Identifier> identifiers = DragonResourceLoader.getIdentifiers();
+        this.appendStacks(stacks);
         for (Identifier identifier : identifiers) {
             this.appendStacks(stacks, identifier, DragonResourceLoader.getResource(identifier));
         }
     }
-    public abstract void appendStacks(DefaultedList<ItemStack> stacks, Identifier dragon, DragonResourceLoader.DragonResource resource);
+    public void appendStacks(DefaultedList<ItemStack> stacks) {}
+    public void appendStacks(DefaultedList<ItemStack> stacks, Identifier dragon, DragonResourceLoader.DragonResource resource) {}
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltips, TooltipContext context) {

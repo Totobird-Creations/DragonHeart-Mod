@@ -9,10 +9,8 @@ import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
-import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge_core.DragonForgeCoreBlockEntity;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge_core.DragonForgeCoreBlockEntityProperties;
-import net.totobirdcreations.dragonheart.screenhandler.util.DragonBreathSlot;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntityProperties;
 import net.totobirdcreations.dragonheart.screenhandler.util.FireChargeSlot;
 import net.totobirdcreations.dragonheart.screenhandler.util.OutputSlot;
 

@@ -13,6 +13,7 @@ import net.totobirdcreations.dragonheart.event.EventHandlers;
 import net.totobirdcreations.dragonheart.gamerule.Gamerules;
 import net.totobirdcreations.dragonheart.item.Items;
 import net.totobirdcreations.dragonheart.item.group.ItemGroups;
+import net.totobirdcreations.dragonheart.particle.Particles;
 import net.totobirdcreations.dragonheart.recipe.Recipes;
 import net.totobirdcreations.dragonheart.resource.Resources;
 import net.totobirdcreations.dragonheart.screenhandler.ScreenHandlers;
@@ -122,6 +123,7 @@ public class DragonHeart implements ModInitializer {
 		ScreenHandlers.register();
 		Resources.register();
 		EventHandlers.register();
+		Particles.register();
 
 		LOGGER.info("Initialized.");
 

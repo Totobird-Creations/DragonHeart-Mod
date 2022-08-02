@@ -1,8 +1,9 @@
-package net.totobirdcreations.dragonheart.block.entity.dragon;
+package net.totobirdcreations.dragonheart.block.entity.dragon.forge;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities;
 
 
 public class DragonForgeApertureBlockEntity extends DragonForgeBlockEntity {

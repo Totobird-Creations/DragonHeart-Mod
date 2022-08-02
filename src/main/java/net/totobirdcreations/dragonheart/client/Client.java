@@ -22,7 +22,8 @@ public class Client implements ClientModInitializer {
         ClientShaders    .register();
         ClientScreens    .register();
         ClientRegistries .register();
-        EventHandlers.registerClient();
+        ClientParticles  .register();
+        EventHandlers    .registerClient();
 
     }
 

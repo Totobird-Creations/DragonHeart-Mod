@@ -1,11 +1,7 @@
-package net.totobirdcreations.dragonheart.block.entity.dragon.forge_core;
+package net.totobirdcreations.dragonheart.block.entity.dragon.forge.core;
 
 import net.minecraft.screen.PropertyDelegate;
-import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge_core.DragonForgeCoreBlockEntity;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
-
-import javax.annotation.Nullable;
 
 
 public record DragonForgeCoreBlockEntityProperties(

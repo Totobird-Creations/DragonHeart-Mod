@@ -48,7 +48,7 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
                     false,
                     new RGBColour( 0.843f , 0.729f , 0.588f ),
                     new RGBColour( 0.698f , 0.604f , 0.486f ),
-                    new RGBColour( 1.0f   , 0.804f , 0.216f )
+                    new RGBColour( 1.0f   , 0.804f , 0.416f )
             );
         }
     }
@@ -241,7 +241,12 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
     ) {
 
         public Text getName() {
-            return Text.translatable("dragon." + this.id.getNamespace() + ".type." + this.id.getPath().replace("/", "."));
+            String path = this.id.getPath().replace("/", ".");
+            if (path.equals("")) {
+                return Text.translatable("dragon." + DragonHeart.ID + ".base");
+            } else {
+                return Text.translatable("dragon." + this.id.getNamespace() + ".type." + path);
+            }
         }
 
         public RGBColour chooseBodyColour(UUID uuid) {

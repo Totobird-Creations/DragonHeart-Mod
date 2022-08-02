@@ -1,20 +1,20 @@
-package net.totobirdcreations.dragonheart.block.dragon;
+package net.totobirdcreations.dragonheart.block.dragon.forge;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
 import net.totobirdcreations.dragonheart.block.entity.dragon.*;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.DragonForgeSupportBlockEntity;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
-
-import javax.annotation.Nullable;
+import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 
 
 public class DragonForgeSupportBlock extends DragonForgeBlock {
@@ -31,9 +31,16 @@ public class DragonForgeSupportBlock extends DragonForgeBlock {
 
 
     @Override
+    public void appendStacks(DefaultedList<ItemStack> stacks) {
+        ItemStack   stack = new ItemStack(DragonBlocks.DRAGON_FORGE_SUPPORT.item());
+        NbtCompound nbt;
+        nbt = stack.getOrCreateSubNbt("BlockEntityTag");
+        nbt.putString("dragon", NbtHelper.EMPTY_TYPE.toString());
+        stacks.add(stack);
+    }
+    @Override
     public void appendStacks(DefaultedList<ItemStack> stacks, Identifier dragon, DragonResourceLoader.DragonResource resource) {
-        Item item  = DragonBlocks.DRAGON_FORGE_SUPPORT.item();
-        ItemStack   stack = new ItemStack(item);
+        ItemStack   stack = new ItemStack(DragonBlocks.DRAGON_FORGE_SUPPORT.item());
         NbtCompound nbt;
         nbt = stack.getOrCreateSubNbt("BlockEntityTag");
         nbt.putString("dragon", dragon.toString());

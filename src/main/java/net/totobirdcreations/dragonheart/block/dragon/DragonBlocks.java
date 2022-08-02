@@ -1,9 +1,8 @@
 package net.totobirdcreations.dragonheart.block.dragon;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
 import net.minecraft.block.Material;
-import net.minecraft.item.Item;
+import net.totobirdcreations.dragonheart.block.dragon.forge.*;
 import net.totobirdcreations.dragonheart.block.util.BlockAndItem;
 import net.totobirdcreations.dragonheart.item.group.ItemGroups;
 import net.totobirdcreations.dragonheart.item.misc.DragonBlockItem;

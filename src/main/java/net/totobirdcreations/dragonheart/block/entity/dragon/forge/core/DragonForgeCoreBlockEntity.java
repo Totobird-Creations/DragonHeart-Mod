@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.block.entity.dragon.forge_core;
+package net.totobirdcreations.dragonheart.block.entity.dragon.forge.core;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,8 +18,9 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.dragon.DragonBlock;
-import net.totobirdcreations.dragonheart.block.dragon.DragonForgeBlock;
+import net.totobirdcreations.dragonheart.block.dragon.forge.DragonForgeBlock;
 import net.totobirdcreations.dragonheart.block.entity.dragon.*;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.*;
 import net.totobirdcreations.dragonheart.recipe.DragonForgeCoreRecipe;
 import net.totobirdcreations.dragonheart.recipe.Recipes;
 import net.totobirdcreations.dragonheart.screenhandler.DragonForgeCoreScreenHandler;

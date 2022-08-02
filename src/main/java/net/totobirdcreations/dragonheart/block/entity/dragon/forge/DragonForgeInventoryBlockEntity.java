@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.block.entity.dragon;
+package net.totobirdcreations.dragonheart.block.entity.dragon.forge;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;

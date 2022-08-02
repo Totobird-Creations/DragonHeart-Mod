@@ -1,15 +1,16 @@
-package net.totobirdcreations.dragonheart.block.entity.dragon;
+package net.totobirdcreations.dragonheart.block.entity.dragon.forge;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.totobirdcreations.dragonheart.block.dragon.DragonForgeBlock;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge_core.DragonForgeCoreBlockEntity;
+import net.totobirdcreations.dragonheart.block.dragon.forge.DragonForgeBlock;
+import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
 
 
 public class DragonForgeSupportBlockEntity extends DragonForgeBlockEntity {
 
-    public static final DragonBlockEntity.Relation<DragonForgeCoreBlockEntity> CORE_CORNER = new DragonBlockEntity.Relation<>(
+    public static final Relation<DragonForgeCoreBlockEntity> CORE_CORNER = new Relation<>(
             DragonBlockEntities.DRAGON_FORGE_CORE,
             new BlockPos(-1, -1, -1),
             new BlockPos(-1, -1, 1),
