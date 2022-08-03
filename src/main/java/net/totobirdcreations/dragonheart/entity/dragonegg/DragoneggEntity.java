@@ -1,5 +1,6 @@
 package net.totobirdcreations.dragonheart.entity.dragonegg;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -15,19 +16,21 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.DragonHeart;
+import net.totobirdcreations.dragonheart.block.dragon.forge.DragoneggIncubatorBlock;
 import net.totobirdcreations.dragonheart.entity.Entities;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
-import net.totobirdcreations.dragonheart.item.misc.MiscItems;
+import net.totobirdcreations.dragonheart.item.dragon.DragonItems;
 import net.totobirdcreations.dragonheart.item.util.DragonColouredItem;
 import net.totobirdcreations.dragonheart.sound.SoundEvents;
-import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -50,7 +53,7 @@ public class DragoneggEntity extends MobEntity implements IAnimatable {
 
     public static int   SHAKE_COOLDOWN_TICKS = 100; // 5s
     public static int   SHAKE_TICKS          = 40;  // 2s
-    public static float SHAKE_CHANCE         = 0.005f;
+    public static float SHAKE_CHANCE         = 0.01f;
 
     public int        shakeCooldownTicks = SHAKE_COOLDOWN_TICKS;
     public int        shakeTicks         = 0;
@@ -207,7 +210,7 @@ public class DragoneggEntity extends MobEntity implements IAnimatable {
     public void onDeath(DamageSource source) {
         this.remove(RemovalReason.KILLED);
 
-        ItemStack stack = new ItemStack(MiscItems.DRAGONEGG);
+        ItemStack stack = new ItemStack(DragonItems.DRAGONEGG);
         DragonColouredItem.setColour(stack, this.getColour());
         NbtCompound nbt = stack.getOrCreateNbt();
         nbt.putString ("dragon"    , this.getDragon()    );
@@ -226,9 +229,11 @@ public class DragoneggEntity extends MobEntity implements IAnimatable {
     public void tick() {
         if (! world.isClient()) {
 
-            this.addAge(1);
-            if (this.getAge() >= this.getSpawnAge()) {
-                this.crack();
+            if (this.isIncubated()) {
+                this.addAge(1);
+                if (this.getAge() >= this.getSpawnAge()) {
+                    this.crack();
+                }
             }
 
         } else { // world.isClient()
@@ -241,7 +246,7 @@ public class DragoneggEntity extends MobEntity implements IAnimatable {
                     shakeCooldownTicks -= 1;
                 } else { // shakeCooldownTicks <= 0
                     Random rand = new Random();
-                    if (rand.nextFloat() <= SHAKE_CHANCE) {
+                    if (this.isIncubated() && rand.nextFloat() <= SHAKE_CHANCE) {
                         shakeCooldownTicks = SHAKE_COOLDOWN_TICKS;
                         shakeTicks         = SHAKE_TICKS;
                     }
@@ -253,6 +258,12 @@ public class DragoneggEntity extends MobEntity implements IAnimatable {
     }
 
 
+    public boolean isIncubated() {
+        BlockState state = world.getBlockState(getBlockPos().add(new Vec3i(0, -1, 0)));
+        return state.getBlock() instanceof DragoneggIncubatorBlock && state.get(Properties.POWERED);
+    }
+
+
     public void crack() {
         SoundEvent hatchSound = this.getHatchSound();
         if (hatchSound != null) {
@@ -260,7 +271,7 @@ public class DragoneggEntity extends MobEntity implements IAnimatable {
         }
 
         ((ServerWorld)world).spawnParticles(
-                new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(MiscItems.DRAGONEGG_CREATIVE)),
+                new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(DragonItems.DRAGONEGG_CREATIVE)),
                 this.getX(), this.getY() + getHeight() / 2.0f, this.getZ(),
                 25,
                 0.05, 0.1, 0.05,
@@ -270,6 +281,8 @@ public class DragoneggEntity extends MobEntity implements IAnimatable {
         DragonEntity dragon = this.convertTo(Entities.DRAGON, false);
         assert dragon != null;
         dragon.setDragon(this.dataTracker.get(DRAGON));
+        dragon.setNaturalSpawn(false);
+        dragon.setState(DragonEntity.DragonState.WANDER);
         this.createEntity(dragon);
     }
 

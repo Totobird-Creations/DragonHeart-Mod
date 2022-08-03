@@ -11,7 +11,7 @@ import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.entity.Entities;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
 import net.totobirdcreations.dragonheart.entity.dragonegg.DragoneggEntity;
-import net.totobirdcreations.dragonheart.item.misc.MiscItems;
+import net.totobirdcreations.dragonheart.item.dragon.DragonItems;
 
 
 public class ClientRegistries {
@@ -34,7 +34,7 @@ public class ClientRegistries {
                     profession, 4,
                     factories -> factories.add((entity, random) -> new TradeOffer(
                             new ItemStack(Items.EMERALD, 32),
-                            new ItemStack(MiscItems.BONEHILT, 1),
+                            new ItemStack(DragonItems.BONEHILT, 1),
                             1, 3, 0.08f
                     ))
             );
@@ -43,7 +43,7 @@ public class ClientRegistries {
 
     public static void registerFuels() {
         DragonHeart.LOGGER.info("Registering fuels.");
-        FuelRegistry.INSTANCE.add(MiscItems.DRAGONSTONE, 72000); // 1h
+        FuelRegistry.INSTANCE.add(DragonItems.DRAGONSTONE, 72000); // 1h
     }
 
     public static void register() {

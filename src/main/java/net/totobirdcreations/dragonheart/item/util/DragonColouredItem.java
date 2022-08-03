@@ -11,22 +11,8 @@ import static java.awt.image.DataBuffer.TYPE_INT;
 
 public interface DragonColouredItem extends DyeableItem {
 
-    String    DATA_COLOUR_KEY = "Colour";
-    String    DISPLAY_KEY     = "display";
-    String    DRAGON_KEY      = "dragon";
-    String    COLOUR_KEY      = "colour";
-    RGBColour DEFAULT_COLOR   = RGBColour.WHITE;
-
-
-    static NbtCompound getDragonNbt(ItemStack stack) {
-        NbtCompound display = stack.getOrCreateSubNbt(DISPLAY_KEY);
-        NbtCompound dragon  = display.getCompound(DRAGON_KEY);
-        if (dragon == null) {
-            dragon = new NbtCompound();
-            display.put(DRAGON_KEY, dragon);
-        }
-        return dragon;
-    }
+    String    COLOUR_KEY    = "colour";
+    RGBColour DEFAULT_COLOR = RGBColour.WHITE;
 
 
     @Override
@@ -39,16 +25,12 @@ public interface DragonColouredItem extends DyeableItem {
         return getColour(stack).asInt();
     }
     static RGBColour getColour(ItemStack stack) {
-        NbtCompound nbt;
-        nbt = getDragonNbt(stack);
+        NbtCompound nbt = stack.getOrCreateNbt();
         if (nbt.contains(COLOUR_KEY, TYPE_INT)) {
             return new RGBColour(nbt.getInt(COLOUR_KEY));
+        } else {
+            return DEFAULT_COLOR;
         }
-        nbt = stack.getOrCreateNbt();
-        if (nbt.contains(DATA_COLOUR_KEY, TYPE_INT)) {
-            return new RGBColour(nbt.getInt(DATA_COLOUR_KEY));
-        }
-        return DEFAULT_COLOR;
     }
 
     @Override
@@ -56,15 +38,7 @@ public interface DragonColouredItem extends DyeableItem {
         removeColour(stack);
     }
     static void removeColour(ItemStack stack) {
-        NbtCompound nbt;
-        nbt = getDragonNbt(stack);
-        if (nbt.contains(COLOUR_KEY)) {
-            nbt.remove(COLOUR_KEY);
-        }
-        nbt = stack.getOrCreateNbt();
-        if (nbt.contains(DATA_COLOUR_KEY)) {
-            nbt.remove(DATA_COLOUR_KEY);
-        }
+        stack.getOrCreateNbt().remove(COLOUR_KEY);
     }
 
     @Override
@@ -75,8 +49,7 @@ public interface DragonColouredItem extends DyeableItem {
         setColour(stack, colour.asInt());
     }
     static void setColour(ItemStack stack, int colour) {
-        getDragonNbt(stack).putInt(COLOUR_KEY, colour);
-        stack.getOrCreateNbt().putInt(DATA_COLOUR_KEY, colour);
+        stack.getOrCreateNbt().putInt(COLOUR_KEY, colour);
     }
 
 

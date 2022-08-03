@@ -5,7 +5,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.item.misc.MiscItems;
+import net.totobirdcreations.dragonheart.item.dragon.DragonItems;
 
 
 public class ItemGroups {
@@ -13,7 +13,7 @@ public class ItemGroups {
 
     public static final ItemGroup DRAGON = registerItemGroup(
             "dragon",
-            new ItemStack(MiscItems.DRAGONEGG_CREATIVE)
+            new ItemStack(DragonItems.DRAGONEGG_CREATIVE)
     );
 
 

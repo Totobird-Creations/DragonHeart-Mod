@@ -5,7 +5,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.slot.Slot;
-import net.totobirdcreations.dragonheart.item.misc.MiscItems;
 
 
 public class FireChargeSlot extends Slot {

@@ -8,10 +8,16 @@ import net.minecraft.world.GameRules;
 public class Gamerules {
 
 
-    public static final GameRules.Key<GameRules.BooleanRule> DRAGONSTEELBLOCK_UNBREAKABLE = GameRuleRegistry.register(
-            "dragonsteelBlockUnbreakable",
+    public static final GameRules.Key<GameRules.BooleanRule> PLATED_DRAGON_FORGE_BRICKS_UNBREAKABLE = GameRuleRegistry.register(
+            "platedDragonBricksUnbreakable",
             GameRules.Category.MISC,
-            GameRuleFactory.createBooleanRule(true)
+            GameRuleFactory.createBooleanRule(false)
+    );
+
+    public static final GameRules.Key<GameRules.BooleanRule> DRAGON_GRIEFING_PERMANENT = GameRuleRegistry.register(
+            "dragonGriefingPermanent",
+            GameRules.Category.MISC,
+            GameRuleFactory.createBooleanRule(false)
     );
 
 

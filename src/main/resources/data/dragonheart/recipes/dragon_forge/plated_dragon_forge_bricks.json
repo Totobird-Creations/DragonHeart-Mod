@@ -4,18 +4,18 @@
   "time" : 300,
   "ingredients" : [
     {
-      "item" : "minecraft:end_stone_bricks"
-    },
-    {
-      "item" : "${id}:dragonblood",
+      "item" : "${id}:dragon_forge_bricks",
       "forge": [
         "type_source",
         "match_type"
       ]
+    },
+    {
+      "item" : "minecraft:netherite_ingot"
     }
   ],
   "output" : {
-    "item" : "${id}:dragon_forge_bricks",
+    "item" : "${id}:plated_dragon_forge_bricks",
     "count": 1
   }
 }

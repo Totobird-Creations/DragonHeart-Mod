@@ -56,19 +56,15 @@ public class DragonForgeCoreScreen extends HandledScreen<DragonForgeCoreScreenHa
 
         for (int i = 0; i < DragonForgeCoreBlockEntity.INVENTORY_SIZE; i++) {
             Slot slot = this.handler.getSlot(i);
-            this.drawTexture(
-                    matrices,
-                    x + slot.x, y + slot.y,
-                    176, 42 + 16 * slot.getIndex(),
-                    16, 16
-            );
+            if (slot.getStack().isEmpty()) {
+                this.drawTexture(
+                        matrices,
+                        x + slot.x, y + slot.y,
+                        240, 16 * slot.getIndex(),
+                        16, 16
+                );
+            }
         }
-    }
-
-
-    @Override
-    public void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
-        super.drawForeground(matrices, mouseX, mouseY);
     }
 
 

@@ -1,6 +1,7 @@
 package net.totobirdcreations.dragonheart.block.entity.dragon.forge;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.block.dragon.forge.DragonForgeBlock;
@@ -54,20 +55,20 @@ public class DragonForgeBricksBlockEntity extends DragonForgeBlockEntity {
 
         for (DragonForgeCoreBlockEntity relation : entity.getRelation(CORE_SIDE)) {
             vent = true;
-            if (world.getBlockState(relation.getPos()).get(DragonForgeBlock.POWERED)) {
+            if (world.getBlockState(relation.getPos()).get(Properties.POWERED)) {
                 powered = true;
                 break;
             }
         }
         for (DragonForgeCoreBlockEntity relation : entity.getRelation(CORE_DOWN)) {
             window = true;
-            if (world.getBlockState(relation.getPos()).get(DragonForgeBlock.POWERED)) {
+            if (world.getBlockState(relation.getPos()).get(Properties.POWERED)) {
                 powered = true;
                 break;
             }
         }
         for (DragonForgeCoreBlockEntity relation : entity.getRelation(CORE_ALT)) {
-            if (world.getBlockState(relation.getPos()).get(DragonForgeBlock.POWERED)) {
+            if (world.getBlockState(relation.getPos()).get(Properties.POWERED)) {
                 powered = true;
                 break;
             }
@@ -76,14 +77,14 @@ public class DragonForgeBricksBlockEntity extends DragonForgeBlockEntity {
         world.setBlockState(pos, state
                 .with(DragonForgeBricksBlock. VENT    , vent    )
                 .with(DragonForgeBricksBlock. WINDOW  , window  )
-                .with(DragonForgeBlock.       POWERED , powered )
+                .with(Properties.             POWERED , powered )
         );
 
 
         if (window && powered && world.isClient()) {
             RGBColour colour = DragonResourceLoader.getResource(entity.dragon).colourGlow();
             world.addParticle(
-                    Particles.DRAGON_FORGE_ACTIVE,
+                    Particles.DRAGON_FORGE_FLAME,
                     pos.getX() + 0.5, pos.getY() + 0.75, pos.getZ() + 0.5,
                     colour.r, colour.g, colour.b
             );

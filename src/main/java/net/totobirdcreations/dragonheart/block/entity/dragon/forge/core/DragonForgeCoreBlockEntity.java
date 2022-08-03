@@ -11,6 +11,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -84,7 +85,7 @@ public class DragonForgeCoreBlockEntity extends DragonForgeBlockEntity implement
     public static int INVENTORY_SIZE = 4;
 
 
-    public       DefaultedList<ItemStack> inventory   = DefaultedList.ofSize(4, ItemStack.EMPTY);
+    public       DefaultedList<ItemStack> inventory   = DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
     public final PropertyDelegate         properties;
     public       int                      progress    = 0;
     public       int                      maxProgress = 0;
@@ -145,7 +146,7 @@ public class DragonForgeCoreBlockEntity extends DragonForgeBlockEntity implement
         boolean powered = false;
 
         for (DragonForgeApertureBlockEntity relation : entity.getRelation(APERTURE_SIDE)) {
-            if (world.getBlockState(relation.getPos()).get(DragonForgeBlock.POWERED)) {
+            if (world.getBlockState(relation.getPos()).get(Properties.POWERED)) {
                 powered = true;
                 break;
             }
@@ -161,7 +162,7 @@ public class DragonForgeCoreBlockEntity extends DragonForgeBlockEntity implement
         }
 
         world.setBlockState(pos, state
-                .with(DragonForgeBlock.POWERED, powered)
+                .with(Properties.POWERED, powered)
         );
     }
 
@@ -192,7 +193,7 @@ public class DragonForgeCoreBlockEntity extends DragonForgeBlockEntity implement
 
     @Nullable
     public static DragonForgeCoreRecipe getRecipe(World world, BlockState state, DragonForgeCoreBlockEntity entity, SimpleInventory inventory) {
-        if (!state.get(DragonBlock.POWERED)) {
+        if (! state.contains(Properties.POWERED) || ! state.get(Properties.POWERED)) {
             return null;
         }
         if (inventory.getStack(3).getItem() != Items.FIRE_CHARGE) {

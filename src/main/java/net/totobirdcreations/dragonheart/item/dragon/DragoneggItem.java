@@ -1,11 +1,10 @@
-package net.totobirdcreations.dragonheart.item.misc;
+package net.totobirdcreations.dragonheart.item.dragon;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -32,17 +31,11 @@ import java.util.List;
 
 
 // TODO : Make egg able to hatch in inventory.
-public class DragoneggItem extends DragonItem {
+public class DragoneggItem extends DragonItemImpl {
 
 
     public DragoneggItem(Settings settings) {
         super(settings);
-    }
-
-
-    @Override
-    public String getNameId() {
-        return "dragonegg";
     }
 
 
@@ -85,6 +78,8 @@ public class DragoneggItem extends DragonItem {
 
 
     @Override
+    public void appendStacks(DefaultedList<ItemStack> stacks) {}
+    @Override
     public void appendStacks(DefaultedList<ItemStack> stacks, Identifier identifier, DragonResourceLoader.DragonResource resource) {
         ArrayList<RGBColour> colours = resource.creativeEggColours();
         this.appendStack(stacks, identifier, null);
@@ -94,7 +89,7 @@ public class DragoneggItem extends DragonItem {
     }
 
     public void appendStack(DefaultedList<ItemStack> stacks, Identifier dragon, @Nullable RGBColour colour) {
-        Item        item  = colour != null ? MiscItems.DRAGONEGG : MiscItems.DRAGONEGG_CREATIVE;
+        Item        item  = colour != null ? DragonItems.DRAGONEGG : DragonItems.DRAGONEGG_CREATIVE;
         ItemStack   stack = new ItemStack(item);
         NbtCompound nbt;
         if (colour != null) {
@@ -104,7 +99,6 @@ public class DragoneggItem extends DragonItem {
         nbt.putString("dragon", dragon.toString());
         stacks.add(stack);
     }
-
 
 
 

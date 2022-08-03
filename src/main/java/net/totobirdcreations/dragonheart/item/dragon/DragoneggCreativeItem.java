@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.item.misc;
+package net.totobirdcreations.dragonheart.item.dragon;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -9,12 +9,6 @@ public class DragoneggCreativeItem extends DragoneggItem {
 
     public DragoneggCreativeItem(Settings settings) {
         super(settings);
-    }
-
-
-    @Override
-    public String getNameId() {
-        return "dragonegg_creative";
     }
 
 

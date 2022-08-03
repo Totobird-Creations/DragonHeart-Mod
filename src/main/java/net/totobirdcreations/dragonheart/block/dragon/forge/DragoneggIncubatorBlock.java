@@ -1,25 +1,26 @@
-package net.totobirdcreations.dragonheart.block.dragon;
+package net.totobirdcreations.dragonheart.block.dragon.forge;
 
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.util.*;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntity;
-import net.totobirdcreations.dragonheart.block.entity.dragon.DragoneggIncubatorBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.egg_incubator.DragoneggIncubatorBlockEntity;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 
 
-public class DragoneggIncubatorBlock extends DragonBlock {
+public class DragoneggIncubatorBlock extends DragonForgeBlock {
 
 
     public DragoneggIncubatorBlock(Settings settings) {
@@ -34,9 +35,11 @@ public class DragoneggIncubatorBlock extends DragonBlock {
 
 
     @Override
-    public void appendStacks(DefaultedList<ItemStack> stacks) {
-        Item      item  = DragonBlocks.DRAGONEGG_INCUBATOR.item();
-        ItemStack stack = new ItemStack(item);
+    public void appendStacks(DefaultedList<ItemStack> stacks, Identifier dragon, DragonResourceLoader.DragonResource resource) {
+        ItemStack stack = new ItemStack(DragonBlocks.DRAGONEGG_INCUBATOR.item());
+        NbtCompound nbt;
+        nbt = stack.getOrCreateSubNbt("BlockEntityTag");
+        nbt.putString("dragon", dragon.toString());
         stacks.add(stack);
     }
 
@@ -51,6 +54,7 @@ public class DragoneggIncubatorBlock extends DragonBlock {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (! world.isClient()) {
+            // If server, try to create screen.
             NamedScreenHandlerFactory factory = state.createScreenHandlerFactory(world, pos);
             if (factory != null) {
                 player.openHandledScreen(factory);
@@ -58,6 +62,7 @@ public class DragoneggIncubatorBlock extends DragonBlock {
             }
             return ActionResult.SUCCESS;
         } else {
+            // If client, do nothing.
             return ActionResult.SUCCESS;
         }
     }
@@ -67,6 +72,7 @@ public class DragoneggIncubatorBlock extends DragonBlock {
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
+            // Block broken, scatter items.
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof DragoneggIncubatorBlockEntity entity) {
                 ItemScatterer.spawn(world, pos, entity);

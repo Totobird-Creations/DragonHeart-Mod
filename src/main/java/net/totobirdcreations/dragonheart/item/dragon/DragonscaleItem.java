@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.item.misc;
+package net.totobirdcreations.dragonheart.item.dragon;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -6,7 +6,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 
 
-public class DragonscaleItem extends DragonItem {
+public class DragonscaleItem extends DragonItemImpl {
 
     public DragonscaleItem(Settings settings) {
         super(settings);
@@ -14,13 +14,8 @@ public class DragonscaleItem extends DragonItem {
 
 
     @Override
-    public String getNameId() {
-        return "scale";
-    }
-
-
+    public void appendStacks(DefaultedList<ItemStack> stacks) {}
     @Override
-    public void appendStacks(DefaultedList<ItemStack> stacks, Identifier id, DragonResourceLoader.DragonResource resource) {
-    }
+    public void appendStacks(DefaultedList<ItemStack> stacks, Identifier id, DragonResourceLoader.DragonResource resource) {}
 
 }

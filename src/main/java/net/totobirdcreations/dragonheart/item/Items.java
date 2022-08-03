@@ -4,7 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.item.misc.MiscItems;
+import net.totobirdcreations.dragonheart.item.dragon.DragonItems;
 
 
 public class Items {
@@ -17,7 +17,7 @@ public class Items {
     public static void register() {
 
         DragonHeart.LOGGER.info("Registering items.");
-        MiscItems .register();
+        DragonItems.register();
         FoodItems .register();
 
     }

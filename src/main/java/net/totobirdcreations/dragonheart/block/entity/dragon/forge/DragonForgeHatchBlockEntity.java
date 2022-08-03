@@ -1,6 +1,7 @@
 package net.totobirdcreations.dragonheart.block.entity.dragon.forge;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.block.dragon.forge.DragonForgeBlock;
@@ -28,14 +29,14 @@ public class DragonForgeHatchBlockEntity extends DragonForgeBlockEntity {
         boolean powered = false;
 
         for (DragonForgeCoreBlockEntity relation : entity.getRelation(CORE_SIDE)) {
-            if (world.getBlockState(relation.getPos()).get(DragonForgeBlock.POWERED)) {
+            if (world.getBlockState(relation.getPos()).get(Properties.POWERED)) {
                 powered = true;
                 break;
             }
         }
 
         world.setBlockState(pos, state
-                .with(DragonForgeBlock.POWERED, powered)
+                .with(Properties.POWERED, powered)
         );
     }
 

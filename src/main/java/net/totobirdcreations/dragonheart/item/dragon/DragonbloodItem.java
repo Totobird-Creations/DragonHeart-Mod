@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.item.misc;
+package net.totobirdcreations.dragonheart.item.dragon;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -9,7 +9,7 @@ import net.totobirdcreations.dragonheart.item.util.DragonColouredItem;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 
 
-public class DragonbloodItem extends DragonItem {
+public class DragonbloodItem extends DragonItemImpl {
 
 
     public DragonbloodItem(Settings settings) {
@@ -18,14 +18,10 @@ public class DragonbloodItem extends DragonItem {
 
 
     @Override
-    public String getNameId() {
-        return "dragonblood";
-    }
-
-
+    public void appendStacks(DefaultedList<ItemStack> stacks) {}
     @Override
     public void appendStacks(DefaultedList<ItemStack> stacks, Identifier id, DragonResourceLoader.DragonResource resource) {
-        Item      item  = MiscItems.DRAGONBLOOD;
+        Item      item  = DragonItems.DRAGONBLOOD;
         ItemStack stack = new ItemStack(item);
         DragonColouredItem.setColour(stack, resource.colourGlow());
         NbtCompound nbt = stack.getOrCreateNbt();

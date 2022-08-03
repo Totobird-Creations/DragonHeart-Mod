@@ -4,7 +4,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
-import net.totobirdcreations.dragonheart.item.misc.MiscItems;
+import net.totobirdcreations.dragonheart.item.dragon.DragonItems;
 
 
 public class DragonBreathSlot extends Slot {
@@ -18,7 +18,7 @@ public class DragonBreathSlot extends Slot {
     @Override
     public boolean canInsert(ItemStack stack) {
         Item item = stack.getItem();
-        return item == MiscItems.DRAGONBREATH;
+        return item == DragonItems.DRAGONBREATH;
     }
 
 

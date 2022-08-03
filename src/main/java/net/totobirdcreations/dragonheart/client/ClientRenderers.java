@@ -1,6 +1,7 @@
 package net.totobirdcreations.dragonheart.client;
 
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.block.BlockState;
@@ -11,12 +12,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
 import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntity;
+import net.totobirdcreations.dragonheart.client.block.DragonGriefedBlockModelProvider;
 import net.totobirdcreations.dragonheart.entity.Entities;
 import net.totobirdcreations.dragonheart.entity.dragon.render.DragonEntityRenderer;
-import net.totobirdcreations.dragonheart.item.misc.DragonItem;
+import net.totobirdcreations.dragonheart.item.dragon.DragonItem;
+import net.totobirdcreations.dragonheart.item.dragon.tool.DragonToolItems;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 import net.totobirdcreations.dragonheart.entity.dragonegg.DragoneggEntityRenderer;
-import net.totobirdcreations.dragonheart.item.misc.MiscItems;
+import net.totobirdcreations.dragonheart.item.dragon.DragonItems;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 
@@ -29,6 +32,8 @@ public class ClientRenderers {
         registerEntities();
         registerItems();
         registerBlocks();
+
+        ModelLoadingRegistry.INSTANCE.registerResourceProvider((rm) -> new DragonGriefedBlockModelProvider());
     }
 
 
@@ -40,34 +45,56 @@ public class ClientRenderers {
 
 
     public static void registerItems() {
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonItemColour , MiscItems.DRAGONSCALE  );
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonItemColour , MiscItems.DRAGONEGG    );
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonItemColour , MiscItems.DRAGONBLOOD  );
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonItemColour , MiscItems.DRAGONBREATH );
+        ColorProviderRegistry.ITEM.register(ClientRenderers::getDragonItemColour,
+                DragonItems.DRAGONSCALE,
+                DragonItems.DRAGONEGG,
+                DragonItems.DRAGONBLOOD,
+                DragonItems.DRAGONBREATH
+        );
 
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonBlockItemColour , DragonBlocks.DRAGONEGG_INCUBATOR   . item() );
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonBlockItemColour , DragonBlocks.DRAGON_FORGE_BRICKS   . item() );
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonBlockItemColour , DragonBlocks.DRAGON_FORGE_APERTURE . item() );
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonBlockItemColour , DragonBlocks.DRAGON_FORGE_HATCH    . item() );
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonBlockItemColour , DragonBlocks.DRAGON_FORGE_SUPPORT  . item() );
-        ColorProviderRegistry.ITEM.register( ClientRenderers::getDragonBlockItemColour , DragonBlocks.DRAGON_FORGE_CORE     . item() );
+        ColorProviderRegistry.ITEM.register(ClientRenderers::getDragonBlockItemColour,
+                DragonBlocks.DRAGON_FORGE_BRICKS.item(),
+                DragonBlocks.DRAGON_FORGE_APERTURE.item(),
+                DragonBlocks.DRAGON_FORGE_HATCH.item(),
+                DragonBlocks.DRAGON_FORGE_SUPPORT.item(),
+                DragonBlocks.DRAGON_FORGE_CORE.item(),
+                DragonBlocks.DRAGONEGG_INCUBATOR.item(),
+                DragonBlocks.PLATED_DRAGON_FORGE_BRICKS.item()
+        );
+
+        ColorProviderRegistry.ITEM.register(ClientRenderers::getDragonToolItemColour,
+                DragonToolItems.DRAGON_BONE_AXE,
+                DragonToolItems.DRAGON_BONE_HOE,
+                DragonToolItems.DRAGON_BONE_PICKAXE,
+                DragonToolItems.DRAGON_BONE_SHOVEL,
+                DragonToolItems.DRAGON_BONE_SWORD,
+                DragonToolItems.DRAGON_STEEL_AXE,
+                DragonToolItems.DRAGON_STEEL_HOE,
+                DragonToolItems.DRAGON_STEEL_PICKAXE,
+                DragonToolItems.DRAGON_STEEL_SHOVEL,
+                DragonToolItems.DRAGON_STEEL_SWORD
+        );
     }
 
 
     public static void registerBlocks() {
-        BlockRenderLayerMap.INSTANCE.putBlock(DragonBlocks. DRAGONEGG_INCUBATOR   .block(), RenderLayer.getTranslucent());
-        BlockRenderLayerMap.INSTANCE.putBlock(DragonBlocks. DRAGON_FORGE_BRICKS   .block(), RenderLayer.getTranslucent());
-        BlockRenderLayerMap.INSTANCE.putBlock(DragonBlocks. DRAGON_FORGE_APERTURE .block(), RenderLayer.getTranslucent());
-        BlockRenderLayerMap.INSTANCE.putBlock(DragonBlocks. DRAGON_FORGE_HATCH    .block(), RenderLayer.getTranslucent());
-        BlockRenderLayerMap.INSTANCE.putBlock(DragonBlocks. DRAGON_FORGE_SUPPORT  .block(), RenderLayer.getTranslucent());
-        BlockRenderLayerMap.INSTANCE.putBlock(DragonBlocks. DRAGON_FORGE_CORE     .block(), RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
+                DragonBlocks.DRAGON_FORGE_BRICKS.block(),
+                DragonBlocks.DRAGON_FORGE_APERTURE.block(),
+                DragonBlocks.DRAGON_FORGE_HATCH.block(),
+                DragonBlocks.DRAGON_FORGE_SUPPORT.block(),
+                DragonBlocks.DRAGON_FORGE_CORE.block(),
+                DragonBlocks.DRAGONEGG_INCUBATOR.block(),
+                DragonBlocks.PLATED_DRAGON_FORGE_BRICKS.block()
+        );
 
         ColorProviderRegistry.BLOCK.register(ClientRenderers::getDragonBlockColour,
-                DragonBlocks.DRAGON_FORGE_BRICKS   .block(),
-                DragonBlocks.DRAGON_FORGE_APERTURE .block(),
-                DragonBlocks.DRAGON_FORGE_HATCH    .block(),
-                DragonBlocks.DRAGON_FORGE_SUPPORT  .block(),
-                DragonBlocks.DRAGON_FORGE_CORE     .block()
+                DragonBlocks.DRAGON_FORGE_BRICKS.block(),
+                DragonBlocks.DRAGON_FORGE_APERTURE.block(),
+                DragonBlocks.DRAGON_FORGE_HATCH.block(),
+                DragonBlocks.DRAGON_FORGE_SUPPORT.block(),
+                DragonBlocks.DRAGON_FORGE_CORE.block(),
+                DragonBlocks.PLATED_DRAGON_FORGE_BRICKS.block()
         );
         ColorProviderRegistry.BLOCK.register(ClientRenderers::getDragoneggIncubatorBlockColour,
                 DragonBlocks.DRAGONEGG_INCUBATOR.block()
@@ -94,6 +121,19 @@ public class ClientRenderers {
     }
 
 
+    public static int getDragonToolItemColour(ItemStack stack, int tintIndex) {
+        DragonResourceLoader.DragonResource resource = DragonResourceLoader.getResource(
+                NbtHelper.getBlockItemDragonType(stack.getOrCreateNbt())
+        );
+        return (switch (tintIndex) {
+            case    1 -> resource.colourBricks();
+            case    2 -> resource.colourCracks();
+            case    3 -> resource.colourGlow();
+            default   -> RGBColour.WHITE;
+        }).asInt();
+    }
+
+
 
     public static int getDragonBlockColour(BlockState state, @Nullable BlockRenderView view, BlockPos pos, int tintIndex) {
         if (view != null) {
@@ -107,7 +147,6 @@ public class ClientRenderers {
         }
         return RGBColour.WHITE.asInt();
     }
-
 
     public static int getDragoneggIncubatorBlockColour(BlockState state, @Nullable BlockRenderView view, BlockPos pos, int tintIndex) {
         if (view != null) {

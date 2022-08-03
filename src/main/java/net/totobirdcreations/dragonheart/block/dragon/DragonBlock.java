@@ -6,20 +6,24 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntity;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
+import net.totobirdcreations.dragonheart.util.helper.ItemHelper;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 
 import javax.annotation.Nullable;
@@ -30,26 +34,19 @@ import java.util.Set;
 
 public abstract class DragonBlock extends BlockWithEntity implements BlockEntityProvider {
 
-    public static final BooleanProperty POWERED = BooleanProperty.of("powered");
-
 
     public DragonBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.getDefaultState()
-                .with(POWERED, false)
-        );
     }
 
 
-    public abstract String getNameId();
-
-    @Override
-    public void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder);
-        builder.add(POWERED);
-    }
+    // Used for getting the item/block name in the translation file.
+    public String getNameId() {
+        return Registry.BLOCK.getId(this).getPath();
+    };
 
 
+    // Add items to creative inventory.
     @Override
     public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
         Set<Identifier> identifiers = DragonResourceLoader.getIdentifiers();
@@ -58,9 +55,12 @@ public abstract class DragonBlock extends BlockWithEntity implements BlockEntity
             this.appendStacks(stacks, identifier, DragonResourceLoader.getResource(identifier));
         }
     }
+    // Add base item to creative inventory.
     public void appendStacks(DefaultedList<ItemStack> stacks) {}
+    // Add typed item to creative inventory.
     public void appendStacks(DefaultedList<ItemStack> stacks, Identifier dragon, DragonResourceLoader.DragonResource resource) {}
 
+    // Add debug information to tooltip when necessary.
     @Override
     public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltips, TooltipContext context) {
         super.appendTooltip(stack, world, tooltips, context);
@@ -83,6 +83,7 @@ public abstract class DragonBlock extends BlockWithEntity implements BlockEntity
     }
 
 
+    // Block can not be pushed.
     @SuppressWarnings("deprecation")
     @Override
     public PistonBehavior getPistonBehavior(BlockState state) {
@@ -91,5 +92,17 @@ public abstract class DragonBlock extends BlockWithEntity implements BlockEntity
 
 
     public abstract <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type);
+
+
+    // If powered, glow.
+    public static int getLuminance(BlockState state) {
+        if (state.getBlock() instanceof DragonBlock block) {
+            return block.getLightLevel(state);
+        }
+        return 0;
+    }
+    public int getLightLevel(BlockState state) {
+        return 0;
+    }
 
 }

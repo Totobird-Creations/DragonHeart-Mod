@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.Identifier;
-import net.totobirdcreations.dragonheart.item.misc.DragonBlockItem;
+import net.totobirdcreations.dragonheart.item.dragon.DragonBlockItem;
 
 public class NbtHelper {
 

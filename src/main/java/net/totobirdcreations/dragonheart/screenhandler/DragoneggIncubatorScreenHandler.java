@@ -5,8 +5,13 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ArrayPropertyDelegate;
+import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntityProperties;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.egg_incubator.DragoneggIncubatorBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.egg_incubator.DragoneggIncubatorBlockEntityProperties;
 import net.totobirdcreations.dragonheart.screenhandler.util.DragonBreathSlot;
 import net.totobirdcreations.dragonheart.screenhandler.util.OutputSlot;
 import net.totobirdcreations.dragonheart.screenhandler.ScreenHandlers;
@@ -14,24 +19,29 @@ import net.totobirdcreations.dragonheart.screenhandler.ScreenHandlers;
 
 public class DragoneggIncubatorScreenHandler extends ScreenHandler {
 
-    public final Inventory inventory;
+    public final Inventory        inventory;
+    public final PropertyDelegate properties;
 
 
     public DragoneggIncubatorScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, new SimpleInventory(2));
+        this(syncId, playerInventory, new SimpleInventory(DragoneggIncubatorBlockEntity.INVENTORY_SIZE), new ArrayPropertyDelegate(DragoneggIncubatorBlockEntityProperties.SIZE));
     }
 
-    public DragoneggIncubatorScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
+    public DragoneggIncubatorScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate properties) {
         super(ScreenHandlers.DRAGONEGG_INCUBATOR, syncId);
-        checkSize(inventory, 2);
-        this.inventory = inventory;
+        checkSize(inventory, DragoneggIncubatorBlockEntity.INVENTORY_SIZE);
+
+        this.inventory  = inventory;
+        this.properties = properties;
+
         inventory.onOpen(playerInventory.player);
 
-        this.addSlot(new DragonBreathSlot (this.inventory, 0, 62, 36));
-        this.addSlot(new OutputSlot       (this.inventory, 1, 98, 36));
+        this.addSlot(new DragonBreathSlot(this.inventory, 0, 80, 51));
 
         this.addPlayerInventory (playerInventory);
         this.addPlayerHotbar    (playerInventory);
+
+        this.addProperties(this.properties);
     }
 
 

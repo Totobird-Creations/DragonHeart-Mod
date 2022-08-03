@@ -80,14 +80,17 @@ public class DragonForgeCoreBlock extends DragonForgeBlock {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (! world.isClient()) {
+            // If server, open screen.
             open(state, world, pos, player);
             return ActionResult.CONSUME;
         } else {
+            // If client, do nothing.
             return ActionResult.SUCCESS;
         }
     }
 
     public static void open(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+        // Open screen.
         NamedScreenHandlerFactory factory = state.createScreenHandlerFactory(world, pos);
         if (factory != null) {
             player.openHandledScreen(factory);
@@ -99,6 +102,7 @@ public class DragonForgeCoreBlock extends DragonForgeBlock {
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
+            // Block broken, scatter items.
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof DragonForgeCoreBlockEntity entity) {
                 ItemScatterer.spawn(world, pos, entity);

@@ -1,14 +1,16 @@
-package net.totobirdcreations.dragonheart.item.misc;
+package net.totobirdcreations.dragonheart.item.dragon;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.totobirdcreations.dragonheart.DragonHeart;
+import net.totobirdcreations.dragonheart.item.dragon.tool.DragonToolItems;
 import net.totobirdcreations.dragonheart.item.group.ItemGroups;
 
 import static net.totobirdcreations.dragonheart.item.Items.registerItem;
 
 
-public class MiscItems {
+public class DragonItems {
 
 
     public static final Item DRAGONBONE = registerItem(
@@ -105,7 +107,9 @@ public class MiscItems {
 
 
 
-    public static void register() {}
+    public static void register() {
+        DragonToolItems.register();
+    }
 
 
 }

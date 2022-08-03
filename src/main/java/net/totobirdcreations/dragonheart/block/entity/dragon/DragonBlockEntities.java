@@ -6,11 +6,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge.DragonForgeApertureBlockEntity;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge.DragonForgeBricksBlockEntity;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge.DragonForgeHatchBlockEntity;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge.DragonForgeSupportBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.*;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.egg_incubator.DragoneggIncubatorBlockEntity;
+
 
 public class DragonBlockEntities {
 
@@ -71,6 +70,26 @@ public class DragonBlockEntities {
             FabricBlockEntityTypeBuilder.create(
                     DragonForgeCoreBlockEntity::new,
                     DragonBlocks.DRAGON_FORGE_CORE.block()
+            ).build(null)
+    );
+
+
+    public static final BlockEntityType<PlatedDragonForgeBricksBlockEntity> PLATED_DRAGON_FORGE_BRICKS = Registry.register(
+            Registry.BLOCK_ENTITY_TYPE,
+            new Identifier(DragonHeart.ID, "plated_dragon_forge_bricks"),
+            FabricBlockEntityTypeBuilder.create(
+                    PlatedDragonForgeBricksBlockEntity::new,
+                    DragonBlocks.PLATED_DRAGON_FORGE_BRICKS.block()
+            ).build(null)
+    );
+
+
+    public static final BlockEntityType<DragonGriefedBlockEntity> DRAGON_GRIEFED = Registry.register(
+            Registry.BLOCK_ENTITY_TYPE,
+            new Identifier(DragonHeart.ID, "dragon_griefed"),
+            FabricBlockEntityTypeBuilder.create(
+                    DragonGriefedBlockEntity::new,
+                    DragonBlocks.DRAGON_GRIEFED.block()
             ).build(null)
     );
 

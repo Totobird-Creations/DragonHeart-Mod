@@ -12,7 +12,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.item.misc.DragoneggItem;
+import net.totobirdcreations.dragonheart.item.dragon.DragoneggItem;
 import net.totobirdcreations.dragonheart.util.mixin.dragonegg.DragoneggTextFieldWidgetMixinInterface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

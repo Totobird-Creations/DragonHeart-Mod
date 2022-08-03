@@ -12,7 +12,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
-import net.totobirdcreations.dragonheart.item.misc.DragonBlockItem;
+import net.totobirdcreations.dragonheart.item.dragon.DragonBlockItem;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 
 import javax.annotation.Nullable;
