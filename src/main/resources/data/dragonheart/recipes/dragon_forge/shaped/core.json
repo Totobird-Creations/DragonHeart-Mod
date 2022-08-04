@@ -10,7 +10,7 @@
       "item" : "minecraft:amethyst_cluster"
     },
     "D" : {
-      "item" : "${id}:dragonboneblock"
+      "item" : "${id}:dragon_bone_block"
     },
     "C" : {
       "item" : "minecraft:end_crystal"
@@ -24,7 +24,7 @@
       }
     },
     "S" : {
-      "item" : "${id}:dragonscale"
+      "item" : "${id}:dragon_scale"
     }
   },
   "result" : {

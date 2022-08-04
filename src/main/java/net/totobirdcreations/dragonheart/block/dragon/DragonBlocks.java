@@ -3,10 +3,11 @@ package net.totobirdcreations.dragonheart.block.dragon;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
+import net.minecraft.block.PillarBlock;
 import net.totobirdcreations.dragonheart.block.dragon.forge.*;
 import net.totobirdcreations.dragonheart.block.util.BlockAndItem;
-import net.totobirdcreations.dragonheart.item.group.ItemGroups;
 import net.totobirdcreations.dragonheart.item.dragon.DragonBlockItem;
+import net.totobirdcreations.dragonheart.item.group.ItemGroups;
 
 import static net.totobirdcreations.dragonheart.block.Blocks.registerBlock;
 
@@ -20,9 +21,9 @@ public class DragonBlocks {
             .luminance(DragonBlock::getLuminance);
 
 
-    public static final BlockAndItem DRAGONEGG_INCUBATOR = registerBlock(
-            "dragonegg_incubator",
-            new DragoneggIncubatorBlock(settings),
+    public static final BlockAndItem DRAGON_EGG_INCUBATOR = registerBlock(
+            "dragon_egg_incubator",
+            new DragonEggIncubatorBlock(settings),
             ItemGroups.DRAGON,
             DragonBlockItem.class
     );
@@ -75,6 +76,13 @@ public class DragonBlocks {
             new DragonGriefedBlock(settings),
             ItemGroups.DRAGON,
             DragonBlockItem.class
+    );
+
+
+    public static final BlockAndItem DRAGON_BONE_BLOCK = registerBlock(
+            "dragon_bone_block",
+            new PillarBlock(FabricBlockSettings.copy(net.minecraft.block.Blocks.BONE_BLOCK)),
+            ItemGroups.DRAGON
     );
 
 

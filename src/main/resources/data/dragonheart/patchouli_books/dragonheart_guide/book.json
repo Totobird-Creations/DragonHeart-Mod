@@ -1,10 +1,10 @@
 {
-  "name"         : "text.guidebook.${id}.title",
-  "subtitle"     : "text.guidebook.${id}.subtitle",
-  "landing_text" : "text.guidebook.${id}.overview",
+  "name"         : "text.guide_book.${id}.title",
+  "subtitle"     : "text.guide_book.${id}.subtitle",
+  "landing_text" : "text.guide_book.${id}.overview",
 
   "book_texture" : "patchouli:textures/gui/book_purple.png",
-  "model"        : "${id}:guidebook",
+  "model"        : "${id}:guide_book",
 
   "i18n"         : true
 }

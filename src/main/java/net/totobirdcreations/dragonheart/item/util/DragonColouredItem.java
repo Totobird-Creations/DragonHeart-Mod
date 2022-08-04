@@ -4,7 +4,6 @@ import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
-import org.w3c.dom.css.RGBColor;
 
 import static java.awt.image.DataBuffer.TYPE_INT;
 

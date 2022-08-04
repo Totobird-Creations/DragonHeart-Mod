@@ -10,7 +10,7 @@
       "item" : "minecraft:iron_bars"
     },
     "S" : {
-      "item" : "${id}:dragonscale"
+      "item" : "${id}:dragon_scale"
     },
     "B" : {
       "item" : "${id}:dragon_forge_bricks",

@@ -8,8 +8,8 @@ import net.minecraft.entity.decoration.painting.PaintingVariant;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.entity.dragon.*;
-import net.totobirdcreations.dragonheart.entity.dragonegg.DragoneggEntity;
+import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
+import net.totobirdcreations.dragonheart.entity.dragon_egg.DragonEggEntity;
 
 
 public class Entities {
@@ -23,11 +23,11 @@ public class Entities {
     );
 
 
-    public static final EntityType<DragoneggEntity> DRAGONEGG = Registry.register(
+    public static final EntityType<DragonEggEntity> DRAGON_EGG = Registry.register(
             Registry.ENTITY_TYPE,
-            new Identifier(DragonHeart.ID, "dragonegg"),
-            FabricEntityTypeBuilder.create(SpawnGroup.MISC, DragoneggEntity::new)
-                    .dimensions(DragoneggEntity.DIMENSIONS)
+            new Identifier(DragonHeart.ID, "dragon_egg"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, DragonEggEntity::new)
+                    .dimensions(DragonEggEntity.DIMENSIONS)
                     .build()
     );
 
@@ -54,8 +54,8 @@ public class Entities {
     @SuppressWarnings("all")
     public static void register() {
         DragonHeart.LOGGER.info("Registering entities.");
-        FabricDefaultAttributeRegistry.register( DRAGON    , DragonEntity    .createMobAttributes());
-        FabricDefaultAttributeRegistry.register( DRAGONEGG , DragoneggEntity .createMobAttributes());
+        FabricDefaultAttributeRegistry.register( DRAGON     , DragonEntity    .createMobAttributes());
+        FabricDefaultAttributeRegistry.register( DRAGON_EGG , DragonEggEntity.createMobAttributes());
     }
 
 

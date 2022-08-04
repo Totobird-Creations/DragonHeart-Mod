@@ -2,7 +2,7 @@
   "parent": "minecraft:adventure/shoot_arrow",
   "display": {
     "icon": {
-      "item": "${id}:dragonbone"
+      "item": "${id}:dragon_bone"
     },
     "title": {
       "translate": "advancement.${id}.kill_dragon.title"

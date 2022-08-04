@@ -13,7 +13,7 @@ public class ItemGroups {
 
     public static final ItemGroup DRAGON = registerItemGroup(
             "dragon",
-            new ItemStack(DragonItems.DRAGONEGG_CREATIVE)
+            new ItemStack(DragonItems.DRAGON_EGG_CREATIVE)
     );
 
 

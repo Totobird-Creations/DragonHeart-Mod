@@ -10,9 +10,9 @@ public class ScreenHandlers {
 
 
     @SuppressWarnings("deprecation")
-    public static ScreenHandlerType<DragoneggIncubatorScreenHandler> DRAGONEGG_INCUBATOR = ScreenHandlerRegistry.registerSimple(
-            new Identifier(DragonHeart.ID, "dragonegg_incubator"),
-            DragoneggIncubatorScreenHandler::new
+    public static ScreenHandlerType<DragonEggIncubatorScreenHandler> DRAGONEGG_INCUBATOR = ScreenHandlerRegistry.registerSimple(
+            new Identifier(DragonHeart.ID, "dragon_egg_incubator"),
+            DragonEggIncubatorScreenHandler::new
     );
 
 

@@ -1,5 +1,5 @@
 {
-  "name"        : "text.guidebook.${id}.content.dragon.name",
+  "name"        : "text.guide_book.${id}.content.dragon.name",
   "description" : "",
-  "icon"        : "${id}:dragonegg_creative"
+  "icon"        : "${id}:dragon_egg_creative"
 }

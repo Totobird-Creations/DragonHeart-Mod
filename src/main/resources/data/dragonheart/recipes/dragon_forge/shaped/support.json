@@ -7,10 +7,10 @@
   ],
   "key" : {
     "S" : {
-      "item" : "${id}:dragonscale"
+      "item" : "${id}:dragon_scale"
     },
     "D" : {
-      "item" : "${id}:dragonboneblock"
+      "item" : "${id}:dragon_bone_block"
     },
     "B" : {
       "item" : "${id}:dragon_forge_bricks",

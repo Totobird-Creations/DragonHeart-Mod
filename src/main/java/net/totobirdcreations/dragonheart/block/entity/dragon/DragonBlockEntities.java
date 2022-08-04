@@ -14,12 +14,12 @@ import net.totobirdcreations.dragonheart.block.entity.dragon.forge.egg_incubator
 public class DragonBlockEntities {
 
 
-    public static final BlockEntityType<DragoneggIncubatorBlockEntity> DRAGONEGG_INCUBATOR = Registry.register(
+    public static final BlockEntityType<DragoneggIncubatorBlockEntity> DRAGON_EGG_INCUBATOR = Registry.register(
             Registry.BLOCK_ENTITY_TYPE,
-            new Identifier(DragonHeart.ID, "dragonegg_incubator"),
+            new Identifier(DragonHeart.ID, "dragon_egg_incubator"),
             FabricBlockEntityTypeBuilder.create(
                     DragoneggIncubatorBlockEntity::new,
-                    DragonBlocks.DRAGONEGG_INCUBATOR.block()
+                    DragonBlocks.DRAGON_EGG_INCUBATOR.block()
             ).build(null)
     );
 

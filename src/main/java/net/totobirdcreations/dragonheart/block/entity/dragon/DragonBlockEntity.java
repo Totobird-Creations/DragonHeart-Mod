@@ -63,7 +63,7 @@ public abstract class DragonBlockEntity extends BlockEntity {
     public void sync() {
         if (this.world != null) {
             this.markDirty();
-            this.world.updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_ALL);
+            this.world.updateListeners(this.getPos(), this.getCachedState(), this.world.getBlockState(this.getPos()), Block.NOTIFY_ALL);
         }
     }
 

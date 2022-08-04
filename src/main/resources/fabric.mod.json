@@ -33,6 +33,7 @@
   "mixins": [
     "mixins.mod.json"
   ],
+  "accessWidener": "mod.accesswidener",
 
   "depends": {
     "fabricloader": ">=0.14.7",

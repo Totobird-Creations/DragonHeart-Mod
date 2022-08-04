@@ -50,10 +50,9 @@ import net.totobirdcreations.dragonheart.config.Config;
 import net.totobirdcreations.dragonheart.damage.DamageSources;
 import net.totobirdcreations.dragonheart.effect.StatusEffects;
 import net.totobirdcreations.dragonheart.entity.dragon.ai.DragonEntityMoveController;
-import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 import net.totobirdcreations.dragonheart.entity.dragon.util.DragonSalt;
 import net.totobirdcreations.dragonheart.entity.dragon.util.UuidOp;
-import net.totobirdcreations.dragonheart.item.FoodItems;
+import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 import org.jetbrains.annotations.Nullable;
@@ -87,7 +86,7 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
         HEAL_ITEMS.put( Items.COOKED_RABBIT          , 12.5f  );
         HEAL_ITEMS.put( Items.GOLDEN_APPLE           , 100.0f );
         HEAL_ITEMS.put( Items.ENCHANTED_GOLDEN_APPLE , 250.0f );
-        HEAL_ITEMS.put( FoodItems.DRAGONMEAL         , 43.75f );
+        //HEAL_ITEMS.put( FoodItems.DRAGON_MEAL         , 43.75f );
     }
     public static int   MAX_SHOULDER_STAGE = 0;
     public static float MIN_SOUND_PITCH    = 1.5f;

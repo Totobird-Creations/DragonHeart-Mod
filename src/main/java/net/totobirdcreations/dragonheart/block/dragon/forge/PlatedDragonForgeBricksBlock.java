@@ -1,6 +1,7 @@
 package net.totobirdcreations.dragonheart.block.dragon.forge;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -53,6 +54,19 @@ public class PlatedDragonForgeBricksBlock extends DragonBlock {
 
 
     @Override
+    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+        if (world.getBlockEntity(pos) instanceof PlatedDragonForgeBricksBlockEntity entity) {
+            ItemStack stack = new ItemStack(this);
+            NbtCompound nbt = stack.getOrCreateSubNbt("BlockEntityTag");
+            nbt.putString("dragon", entity.dragon.toString());
+            return stack;
+        } else {
+            return super.getPickStack(world, pos, state);
+        }
+    }
+
+
+    @Override
     public BlockState getPlacementState(ItemPlacementContext context) {
         // When placing block, face the plated side toward the player.
         return this.getDefaultState().with(Properties.FACING, context.getSide());
@@ -84,12 +98,6 @@ public class PlatedDragonForgeBricksBlock extends DragonBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return checkType(type, DragonBlockEntities.PLATED_DRAGON_FORGE_BRICKS, PlatedDragonForgeBricksBlockEntity::tick);
-    }
-
-
-    @Override
-    public int getLightLevel(BlockState state) {
-        return 0;
     }
 
 

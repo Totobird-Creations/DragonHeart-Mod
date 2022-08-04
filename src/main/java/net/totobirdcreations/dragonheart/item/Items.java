@@ -18,7 +18,6 @@ public class Items {
 
         DragonHeart.LOGGER.info("Registering items.");
         DragonItems.register();
-        FoodItems .register();
 
     }
 

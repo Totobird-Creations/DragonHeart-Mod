@@ -18,10 +18,10 @@ import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.DragonForgeBlockEntity;
-import net.totobirdcreations.dragonheart.item.dragon.DragonbreathItem;
+import net.totobirdcreations.dragonheart.item.dragon.DragonBreathItem;
 import net.totobirdcreations.dragonheart.particle.Particles;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
-import net.totobirdcreations.dragonheart.screenhandler.DragoneggIncubatorScreenHandler;
+import net.totobirdcreations.dragonheart.screenhandler.DragonEggIncubatorScreenHandler;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
 import net.totobirdcreations.dragonheart.util.helper.InventoryHelper;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
@@ -39,7 +39,7 @@ public class DragoneggIncubatorBlockEntity extends DragonForgeBlockEntity implem
 
 
     public DragoneggIncubatorBlockEntity(BlockPos pos, BlockState state) {
-        super(DragonBlockEntities.DRAGONEGG_INCUBATOR, pos, state);
+        super(DragonBlockEntities.DRAGON_EGG_INCUBATOR, pos, state);
         this.properties = new DragoneggIncubatorBlockEntityProperties(this);
     }
 
@@ -53,7 +53,7 @@ public class DragoneggIncubatorBlockEntity extends DragonForgeBlockEntity implem
     @Nullable
     @Override
     public ScreenHandler createMenu(int syncId, PlayerInventory inventory, PlayerEntity player) {
-        return new DragoneggIncubatorScreenHandler(syncId, inventory, this, this.properties);
+        return new DragonEggIncubatorScreenHandler(syncId, inventory, this, this.properties);
     }
 
 
@@ -97,7 +97,7 @@ public class DragoneggIncubatorBlockEntity extends DragonForgeBlockEntity implem
         }
         if (entity.power <= 0) {
             ItemStack stack = entity.getStack(0);
-            if (stack.getItem() instanceof DragonbreathItem) {
+            if (stack.getItem() instanceof DragonBreathItem) {
                 Identifier type = NbtHelper.getItemStackDragonType(stack);
                 entity.setDragon(type);
                 entity.maxPower = 1200;

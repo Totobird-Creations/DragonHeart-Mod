@@ -1,6 +1,7 @@
 package net.totobirdcreations.dragonheart.block.dragon.forge;
 
 import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -11,6 +12,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities;
@@ -49,6 +51,19 @@ public class DragonForgeApertureBlock extends DragonForgeBlock {
         nbt = stack.getOrCreateSubNbt("BlockEntityTag");
         nbt.putString("dragon", dragon.toString());
         stacks.add(stack);
+    }
+
+
+    @Override
+    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+        if (world.getBlockEntity(pos) instanceof DragonForgeApertureBlockEntity entity) {
+            ItemStack stack = new ItemStack(this);
+            NbtCompound nbt = stack.getOrCreateSubNbt("BlockEntityTag");
+            nbt.putString("dragon", entity.dragon.toString());
+            return stack;
+        } else {
+            return super.getPickStack(world, pos, state);
+        }
     }
 
 

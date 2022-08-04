@@ -104,3 +104,7 @@ publishing {
 	}
 	repositories {}
 }
+
+loom {
+	accessWidenerPath = file("src/main/resources/mod.accesswidener")
+}

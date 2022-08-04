@@ -1,13 +1,15 @@
 package net.totobirdcreations.dragonheart.item.dragon.tool;
 
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.item.*;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ToolMaterial;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
-import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.item.dragon.DragonItem;
 import net.totobirdcreations.dragonheart.item.util.DragonColouredItem;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;

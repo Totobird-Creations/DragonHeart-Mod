@@ -18,7 +18,7 @@ public class DragonBreathSlot extends Slot {
     @Override
     public boolean canInsert(ItemStack stack) {
         Item item = stack.getItem();
-        return item == DragonItems.DRAGONBREATH;
+        return item == DragonItems.DRAGON_BREATH;
     }
 
 

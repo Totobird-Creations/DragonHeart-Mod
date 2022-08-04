@@ -1,5 +1,5 @@
 {
-  "name"        : "text.guidebook.${id}.content.dragon_forge.name",
+  "name"        : "text.guide_book.${id}.content.dragon_forge.name",
   "description" : "",
   "icon"        : "${id}:dragon_forge_bricks"
 }

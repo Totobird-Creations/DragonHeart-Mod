@@ -1,8 +1,6 @@
 {
   "replace": false,
   "values": [
-    "${id}:frozen",
-    "${id}:electrified",
-    "${id}:dragonboneblock"
+    "${id}:dragon_griefed"
   ]
 }

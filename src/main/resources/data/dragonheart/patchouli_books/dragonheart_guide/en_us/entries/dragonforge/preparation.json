@@ -1,27 +1,27 @@
 {
-  "name"     : "text.guidebook.${id}.content.dragon_forge.preparation",
+  "name"     : "text.guide_book.${id}.content.dragon_forge.preparation",
   "icon"     : "minecraft:chest",
   "category" : "${id}:dragon_forge",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "text.guidebook.${id}.content.dragon_forge.preparation.info"
+      "text": "text.guide_book.${id}.content.dragon_forge.preparation.info"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "${id}:dragon_forge/bricks",
-      "recipe2": "${id}:dragon_forge/aperture",
+      "recipe": "${id}:dragon_forge/shaped/bricks",
+      "recipe2": "${id}:dragon_forge/shaped/aperture",
       "anchor": "craft_bricks_aperture"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "${id}:dragon_forge/hatch",
-      "recipe2": "${id}:dragon_forge/support",
+      "recipe": "${id}:dragon_forge/shaped/hatch",
+      "recipe2": "${id}:dragon_forge/shaped/support",
       "anchor": "craft_hatch_support"
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "${id}:dragon_forge/core",
+      "recipe": "${id}:dragon_forge/shaped/core",
       "anchor": "craft_core"
     }
   ]

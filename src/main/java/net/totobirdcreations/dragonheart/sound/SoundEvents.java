@@ -9,9 +9,9 @@ import net.totobirdcreations.dragonheart.DragonHeart;
 public class SoundEvents {
 
 
-    public static final SoundEvent DRAGONEGG_PLACE = registerSoundEvent("dragonegg.place");
-    public static final SoundEvent DRAGONEGG_BREAK = registerSoundEvent("dragonegg.break");
-    public static final SoundEvent DRAGONEGG_HATCH = registerSoundEvent("dragonegg.hatch");
+    public static final SoundEvent DRAGON_EGG_PLACE = registerSoundEvent("dragon_egg.place");
+    public static final SoundEvent DRAGON_EGG_BREAK = registerSoundEvent("dragon_egg.break");
+    public static final SoundEvent DRAGON_EGG_HATCH = registerSoundEvent("dragon_egg.hatch");
 
 
     public static SoundEvent registerSoundEvent(String name) {

@@ -1,7 +1,10 @@
 package net.totobirdcreations.dragonheart.item.dragon.tool;
 
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
+import net.minecraft.item.ToolMaterial;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;

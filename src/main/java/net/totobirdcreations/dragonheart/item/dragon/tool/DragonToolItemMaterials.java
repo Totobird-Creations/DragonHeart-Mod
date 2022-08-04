@@ -10,8 +10,8 @@ import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
 public enum DragonToolItemMaterials implements ToolMaterial {
 
     UNINFUSED_DRAGON_BONE (MiningLevels.IRON      , 2031 , 5.0f  , 5.0f  , 0 , null                                           ),
-    DRAGON_BONE           (MiningLevels.NETHERITE , 3515 , 12.0f , 10.0f , 0 , null                                           ),
-    DRAGON_STEEL          (MiningLevels.NETHERITE , 5000 , 20.0f , 20.0f , 0 , DragonBlocks.PLATED_DRAGON_FORGE_BRICKS.item() );
+    DRAGON_BONE           (MiningLevels.NETHERITE , 3515 , 17.5f , 10.0f , 0 , null                                           ),
+    DRAGON_STEEL          (MiningLevels.NETHERITE , 5000 , 30.0f , 20.0f , 0 , DragonBlocks.PLATED_DRAGON_FORGE_BRICKS.item() );
 
 
     public final int        miningLevel;

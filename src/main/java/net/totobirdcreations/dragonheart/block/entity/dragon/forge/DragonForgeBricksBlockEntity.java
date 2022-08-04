@@ -4,7 +4,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.totobirdcreations.dragonheart.block.dragon.forge.DragonForgeBlock;
 import net.totobirdcreations.dragonheart.block.dragon.forge.DragonForgeBricksBlock;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;

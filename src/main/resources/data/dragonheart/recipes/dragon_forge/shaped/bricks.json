@@ -7,7 +7,7 @@
   ],
   "key" : {
     "S" : {
-      "item" : "${id}:dragonscale"
+      "item" : "${id}:dragon_scale"
     },
     "B" : {
       "item" : "minecraft:end_stone_bricks"
