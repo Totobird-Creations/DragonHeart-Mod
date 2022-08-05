@@ -3,15 +3,16 @@ package net.totobirdcreations.dragonheart.item.util;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
+import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 
 import static java.awt.image.DataBuffer.TYPE_INT;
 
 
 public interface DragonColouredItem extends DyeableItem {
 
-    String    COLOUR_KEY    = "colour";
-    RGBColour DEFAULT_COLOR = RGBColour.WHITE;
+    String COLOUR_KEY = "colour";
 
 
     @Override
@@ -28,7 +29,7 @@ public interface DragonColouredItem extends DyeableItem {
         if (nbt.contains(COLOUR_KEY, TYPE_INT)) {
             return new RGBColour(nbt.getInt(COLOUR_KEY));
         } else {
-            return DEFAULT_COLOR;
+            return DragonResourceLoader.getResource(NbtHelper.getItemDragonType(stack)).colourGlow();
         }
     }
 

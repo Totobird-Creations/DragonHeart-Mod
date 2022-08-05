@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.entity.dragon.render;
+package net.totobirdcreations.dragonheart.client.entity.dragon;
 
 
 import net.minecraft.client.render.VertexConsumer;
@@ -8,8 +8,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
-import net.totobirdcreations.dragonheart.entity.dragon.render.layer.DragonEntityEyesRenderer;
-import net.totobirdcreations.dragonheart.entity.dragon.render.layer.DragonEntityNoColourRenderer;
+import net.totobirdcreations.dragonheart.client.entity.dragon.layer.DragonEntityEyesRenderer;
+import net.totobirdcreations.dragonheart.client.entity.dragon.layer.DragonEntityNoColourRenderer;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
 import software.bernie.geckolib3.core.util.Color;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;

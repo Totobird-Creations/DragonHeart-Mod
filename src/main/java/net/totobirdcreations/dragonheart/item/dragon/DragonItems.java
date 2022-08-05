@@ -2,7 +2,10 @@ package net.totobirdcreations.dragonheart.item.dragon;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
+import net.totobirdcreations.dragonheart.item.dragon.bucket.DragonBucketItem;
+import net.totobirdcreations.dragonheart.item.dragon.bucket.EmptyDragonBucketItem;
+import net.totobirdcreations.dragonheart.item.dragon.egg.CreativeDragonEggItem;
+import net.totobirdcreations.dragonheart.item.dragon.egg.DragonEggItem;
 import net.totobirdcreations.dragonheart.item.dragon.tool.DragonToolItems;
 import net.totobirdcreations.dragonheart.item.group.ItemGroups;
 
@@ -16,7 +19,7 @@ public class DragonItems {
             "dragon_bone",
             new Item(
                 new FabricItemSettings()
-                        .group     (ItemGroup.MISC)
+                        .group     (ItemGroups.DRAGON)
                         .maxCount  (16)
                         .fireproof ()
             )
@@ -32,9 +35,18 @@ public class DragonItems {
             )
     );
 
+    public static final Item EMPTY_DRAGON_BUCKET = registerItem(
+            "empty_dragon_bucket",
+            new EmptyDragonBucketItem(
+                    new FabricItemSettings()
+                            .group     (ItemGroups.DRAGON)
+                            .maxCount  (1)
+                            .fireproof ()
+            )
+    );
     public static final Item DRAGON_BUCKET = registerItem(
             "dragon_bucket",
-            new Item(
+            new DragonBucketItem(
                     new FabricItemSettings()
                             .group     (ItemGroups.DRAGON)
                             .maxCount  (1)
@@ -53,7 +65,7 @@ public class DragonItems {
     );
     public static final Item DRAGON_EGG_CREATIVE = registerItem(
             "dragon_egg_creative",
-            new DragonEggCreativeItem(
+            new CreativeDragonEggItem(
                     new FabricItemSettings()
                             .group     (ItemGroups.DRAGON)
                             .maxCount  (1)

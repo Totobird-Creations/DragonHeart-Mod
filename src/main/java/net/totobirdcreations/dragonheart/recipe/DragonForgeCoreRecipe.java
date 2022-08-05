@@ -2,7 +2,6 @@ package net.totobirdcreations.dragonheart.recipe;
 
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
@@ -12,7 +11,6 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
-import net.totobirdcreations.dragonheart.item.dragon.DragonBlockItem;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 
 import javax.annotation.Nullable;
@@ -67,7 +65,7 @@ public class DragonForgeCoreRecipe implements Recipe<SimpleInventory> {
             }
             if (
                     ingredient.modifiers.contains(CoreIngredient.Modifier.MATCH_TYPE) &&
-                    ! entity.dragon.equals(NbtHelper.getItemStackDragonType(stack))
+                    ! entity.dragon.equals(NbtHelper.getItemDragonType(stack))
             ) {
                 return false;
             }
@@ -80,23 +78,12 @@ public class DragonForgeCoreRecipe implements Recipe<SimpleInventory> {
     public ItemStack craft(SimpleInventory inventory) {
         int i = this.getTypeSource();
         if (i != -1) {
-            CoreIngredient ingredient = this.ingredients.get(i);
-            ItemStack      stack      = inventory.getStack(i);
-            NbtCompound    nbt        = this.getItemStackNbtCompound(stack);
-            String         dragon     = NbtHelper.getString(nbt, "dragon", NbtHelper.EMPTY_TYPE.toString());
-            ItemStack      result     = this.output.copy();
-            nbt                       = this.getItemStackNbtCompound(result);
-            nbt.putString("dragon", dragon);
+            ItemStack stack  = inventory.getStack(i);
+            ItemStack result = this.output.copy();
+            NbtHelper.setItemDragonType(result, NbtHelper.getItemDragonType(stack));
             return result;
         }
         return this.output.copy();
-    }
-    public NbtCompound getItemStackNbtCompound(ItemStack stack) {
-        if (stack.getItem() instanceof DragonBlockItem) {
-            return stack.getOrCreateSubNbt("BlockEntityTag");
-        } else {
-            return stack.getOrCreateNbt();
-        }
     }
 
 

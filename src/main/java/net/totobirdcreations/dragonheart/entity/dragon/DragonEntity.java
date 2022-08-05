@@ -11,8 +11,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -49,7 +48,8 @@ import net.totobirdcreations.dragonheart.block.BlockTags;
 import net.totobirdcreations.dragonheart.config.Config;
 import net.totobirdcreations.dragonheart.damage.DamageSources;
 import net.totobirdcreations.dragonheart.effect.StatusEffects;
-import net.totobirdcreations.dragonheart.entity.dragon.ai.DragonEntityMoveController;
+import net.totobirdcreations.dragonheart.entity.dragon.ai.FindTargetGoal;
+import net.totobirdcreations.dragonheart.entity.dragon.ai.PursueTargetGoal;
 import net.totobirdcreations.dragonheart.entity.dragon.util.DragonSalt;
 import net.totobirdcreations.dragonheart.entity.dragon.util.UuidOp;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
@@ -65,11 +65,14 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 
 
-public class DragonEntity extends HostileEntity implements IAnimatable, VibrationListener.Callback {
+public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, VibrationListener.Callback {
 
     public static TagKey<GameEvent>    VIBRATIONS            = TagKey.of(Registry.GAME_EVENT_KEY, new Identifier(DragonHeart.ID, "dragon_can_listen"));
     public static int                  ROAR_ANIMATION_LENGTH = 41;
@@ -98,6 +101,9 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
     public static EntityDimensions MAX_DIMENSIONS  = EntityDimensions.changing(2.5f, 0.1f);//1.625f);
     public static float            MIN_BOX_WIDTH   = 3.0f;
     public static float            MIN_BOX_HEIGHT  = 1.5f;
+
+    public static float TARGET_MAX_DISTANCE  = 100.0f;
+    public static int   TARGET_MAX_LAST_SEEN = 200;
 
     //public DragonPartEntity head = new DragonPartEntity(this, EntityDimensions.changing(0.5f, 0.5f), 1.5f);
 
@@ -158,10 +164,9 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
     | Constructors |
      -------------*/
 
-    public DragonEntity(EntityType<? extends HostileEntity> entityType, World world) {
+    public DragonEntity(EntityType<? extends FlyingEntity> entityType, World world) {
         super(entityType, world);
         this.ignoreCameraFrustum = true;
-        this.moveControl         = new DragonEntityMoveController(this);
     }
 
 
@@ -179,54 +184,56 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
     public static final TrackedData<Integer>        ROAR_TICKS;
     public static final TrackedData<Boolean>        FLYING;
     public static final TrackedData<Optional<UUID>> TARGET;
-    public static final TrackedData<BlockPos>       TARGET_POSITION;
+    public static final TrackedData<BlockPos>       TARGET_POS;
+    public static final TrackedData<Integer>        TARGET_LAST_SEEN;
     public static final TrackedData<Integer>        EYE_COLOUR;
     public static final TrackedData<Optional<UUID>> TAMED_OWNER;
     public static final TrackedData<Boolean>        HAS_BREEDED;
     public static final TrackedData<Boolean>        NATURAL_SPAWN;
     public static final TrackedData<Boolean>        SITTING;
-    public static final TrackedData<Boolean>        IS_FEMALE;
 
     static {
-        DRAGON          = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.STRING        );
-        SPAWN_POS       = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BLOCK_POS     );
-        HUNGER_LEVEL    = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
-        COLOUR          = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
-        STATE           = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
-        AGE             = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
-        WAKEUP_PROGRESS = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
-        ROAR_TICKS      = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
-        FLYING          = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
-        TARGET          = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.OPTIONAL_UUID );
-        TARGET_POSITION = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BLOCK_POS     );
-        EYE_COLOUR      = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
-        TAMED_OWNER     = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.OPTIONAL_UUID );
-        HAS_BREEDED     = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
-        NATURAL_SPAWN   = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
-        SITTING         = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
-        IS_FEMALE       = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
+        DRAGON           = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.STRING        );
+        SPAWN_POS        = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BLOCK_POS     );
+        HUNGER_LEVEL     = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
+        COLOUR           = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
+        STATE            = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
+        AGE              = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
+        WAKEUP_PROGRESS  = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
+        ROAR_TICKS       = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
+        FLYING           = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
+        TARGET           = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.OPTIONAL_UUID );
+        TARGET_POS       = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BLOCK_POS     );
+        TARGET_LAST_SEEN = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
+        EYE_COLOUR       = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
+        TAMED_OWNER      = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.OPTIONAL_UUID );
+        HAS_BREEDED      = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
+        NATURAL_SPAWN    = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
+        SITTING          = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
     }
 
 
     @Override
     public void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking( DRAGON          , ""                      );
-        this.dataTracker.startTracking( SPAWN_POS       , new BlockPos(0, 0, 0)   );
-        this.dataTracker.startTracking( HUNGER_LEVEL    , 0                       );
-        this.dataTracker.startTracking( COLOUR          , RGBColour.WHITE.asInt() );
-        this.dataTracker.startTracking( STATE           , 0                       );
-        this.dataTracker.startTracking( AGE             , 0                       );
-        calculateDimensions();
-        this.dataTracker.startTracking( WAKEUP_PROGRESS , 0                       );
-        this.dataTracker.startTracking( ROAR_TICKS      , 0                       );
-        this.dataTracker.startTracking( FLYING          , false                   );
-        this.dataTracker.startTracking( EYE_COLOUR      , RGBColour.WHITE.asInt() );
-        this.dataTracker.startTracking( TAMED_OWNER     , null                    );
-        this.dataTracker.startTracking( HAS_BREEDED     , false                   );
-        this.dataTracker.startTracking( NATURAL_SPAWN   , false                   );
-        this.dataTracker.startTracking( SITTING         , false                   );
-        this.dataTracker.startTracking( IS_FEMALE       , false                   );
+        this.dataTracker.startTracking( DRAGON           , ""                      );
+        this.dataTracker.startTracking( SPAWN_POS        , new BlockPos(0, 0, 0)   );
+        this.dataTracker.startTracking( HUNGER_LEVEL     , 0                       );
+        this.dataTracker.startTracking( COLOUR           , RGBColour.WHITE.asInt() );
+        this.dataTracker.startTracking( STATE            , 0                       );
+        this.dataTracker.startTracking( AGE              , 0                       );
+        this.calculateDimensions();
+        this.dataTracker.startTracking( WAKEUP_PROGRESS  , 0                       );
+        this.dataTracker.startTracking( ROAR_TICKS       , 0                       );
+        this.dataTracker.startTracking( FLYING           , false                   );
+        this.dataTracker.startTracking( TARGET           , null                    );
+        this.dataTracker.startTracking( TARGET_POS       , new BlockPos(0, 0, 0)   );
+        this.dataTracker.startTracking( TARGET_LAST_SEEN , 0                       );
+        this.dataTracker.startTracking( EYE_COLOUR       , RGBColour.WHITE.asInt() );
+        this.dataTracker.startTracking( TAMED_OWNER      , null                    );
+        this.dataTracker.startTracking( HAS_BREEDED      , false                   );
+        this.dataTracker.startTracking( NATURAL_SPAWN    , false                   );
+        this.dataTracker.startTracking( SITTING          , false                   );
     }
 
 
@@ -235,24 +242,25 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         net.minecraft.util.math.random.Random rand;
 
-        this.dataTracker.set( DRAGON          , entityNbt != null && entityNbt.contains("dragon", NbtElement.STRING_TYPE) ? entityNbt.getString("dragon") : NbtHelper.EMPTY_TYPE.toString() );
-        this.dataTracker.set( SPAWN_POS       , this.getBlockPos()                                                                                                                          );
-        this.dataTracker.set( HUNGER_LEVEL    , 20 * 60 * 15                                                                                                                                );
-        this.dataTracker.set( COLOUR          , DragonResourceLoader.getResource(new Identifier(this.dataTracker.get(DRAGON))).chooseBodyColour(this.getUuid()).asInt()                     );
-        this.dataTracker.set( STATE           , DragonState.SLEEP.toInt()                                                                                                                   );
+        this.dataTracker.set( DRAGON           , entityNbt != null && entityNbt.contains("dragon", NbtElement.STRING_TYPE) ? entityNbt.getString("dragon") : NbtHelper.EMPTY_TYPE.toString() );
+        this.dataTracker.set( SPAWN_POS        , this.getBlockPos()                                                                                                                          );
+        this.dataTracker.set( HUNGER_LEVEL     , 20 * 60 * 15                                                                                                                                );
+        this.dataTracker.set( COLOUR           , DragonResourceLoader.getResource(new Identifier(this.dataTracker.get(DRAGON))).chooseBodyColour(this.getUuid()).asInt()                     );
+        this.dataTracker.set( STATE            , DragonState.SLEEP.toInt()                                                                                                                   );
         rand = net.minecraft.util.math.random.Random.create(DragonSalt.AGE + UuidOp.uuidToInt(uuid));
-        this.dataTracker.set( AGE             , rand.nextBetween(MIN_NATURAL_SPAWN_AGE, MAX_NATURAL_SPAWN_AGE)                                                                              );
+        this.dataTracker.set( AGE              , rand.nextBetween(MIN_NATURAL_SPAWN_AGE, MAX_NATURAL_SPAWN_AGE)                                                                              );
         this.calculateDimensions();
-        this.dataTracker.set( WAKEUP_PROGRESS , 0                                                                                                                                           );
-        this.dataTracker.set( ROAR_TICKS      , 0                                                                                                                                           );
-        this.dataTracker.set( FLYING          , false                                                                                                                                       );
-        this.dataTracker.set( EYE_COLOUR      , DragonResourceLoader.getResource(new Identifier(this.dataTracker.get(DRAGON))).eyeColour().asInt()                                          );
-        this.dataTracker.set( TAMED_OWNER     , Optional.empty()                                                                                                                            );
-        this.dataTracker.set( HAS_BREEDED     , false                                                                                                                                       );
-        this.dataTracker.set( NATURAL_SPAWN   , true                                                                                                                                        );
-        this.dataTracker.set( SITTING         , false                                                                                                                                       );
-        rand = net.minecraft.util.math.random.Random.create(DragonSalt.IS_FEMALE + UuidOp.uuidToInt(uuid));
-        this.dataTracker.set( IS_FEMALE       , rand.nextBoolean()                                                                                                                          );
+        this.dataTracker.set( WAKEUP_PROGRESS  , 0                                                                                                                                           );
+        this.dataTracker.set( ROAR_TICKS       , 0                                                                                                                                           );
+        this.dataTracker.set( FLYING           , false                                                                                                                                       );
+        this.dataTracker.set( TARGET           , null                                                                                                                                        );
+        this.dataTracker.set( TARGET_POS       , new BlockPos(0, 0, 0)                                                                                                                       );
+        this.dataTracker.set( TARGET_LAST_SEEN , 0                                                                                                                                           );
+        this.dataTracker.set( EYE_COLOUR       , DragonResourceLoader.getResource(new Identifier(this.dataTracker.get(DRAGON))).eyeColour().asInt()                                          );
+        this.dataTracker.set( TAMED_OWNER      , Optional.empty()                                                                                                                            );
+        this.dataTracker.set( HAS_BREEDED      , false                                                                                                                                       );
+        this.dataTracker.set( NATURAL_SPAWN    , true                                                                                                                                        );
+        this.dataTracker.set( SITTING          , false                                                                                                                                       );
         super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         return entityData;
     }
@@ -285,6 +293,18 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
             nbt.put("vibrationListener", element)
         );
 
+        UUID target = this.getTargetUuid();
+        if (target != null) {
+            nbt.putUuid("target", target);
+            BlockPos targetPos = this.dataTracker.get(TARGET_POS);
+            nbt.putIntArray("targetPos", new int[]{targetPos.getX(), targetPos.getY(), targetPos.getZ()});
+            nbt.putInt("targetLastSeen", this.dataTracker.get(TARGET_LAST_SEEN));
+        } else {
+            nbt.remove("target");
+            nbt.remove("targetPos");
+            nbt.remove("targetLastSeen");
+        }
+
         nbt.putInt("eyeColour", this.dataTracker.get(EYE_COLOUR));
 
         Optional<UUID> tamedOwner = this.dataTracker.get(TAMED_OWNER);
@@ -299,8 +319,6 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
         nbt.putBoolean("naturalSpawn", this.dataTracker.get(NATURAL_SPAWN));
 
         nbt.putBoolean("sitting", this.dataTracker.get(SITTING));
-
-        nbt.putBoolean("isFemale", this.dataTracker.get(IS_FEMALE));
     }
 
 
@@ -336,6 +354,18 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
             this.gameEventHandler.setListener(element, this.world)
         );
 
+        this.dataTracker.set(TARGET, Optional.empty());
+        this.dataTracker.set(TARGET_POS, new BlockPos(0, 0, 0));
+        this.dataTracker.set(TARGET_LAST_SEEN, 0);
+        if (nbt.contains("target")) {
+            int[] targetPos = nbt.getIntArray("targetPos");
+            if (targetPos.length == 3) {
+                this.dataTracker.set(TARGET, Optional.of(nbt.getUuid("target")));
+                this.dataTracker.set(TARGET_POS, new BlockPos(targetPos[0], targetPos[1], targetPos[2]));
+                this.dataTracker.set(TARGET_LAST_SEEN, nbt.getInt("targetLastSeen"));
+            }
+        }
+
         this.dataTracker.set(EYE_COLOUR, nbt.getInt("eyeColour"));
 
         this.dataTracker.set(TAMED_OWNER, nbt.contains("tamedOwner") ? Optional.of(nbt.getUuid("tamedOwner")) : Optional.empty());
@@ -345,8 +375,6 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
         this.dataTracker.set(NATURAL_SPAWN, nbt.getBoolean("naturalSpawn"));
 
         this.dataTracker.set(SITTING, nbt.getBoolean("sitting"));
-
-        this.dataTracker.set(IS_FEMALE, nbt.getBoolean("isFemale"));
     }
 
 
@@ -397,7 +425,18 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
         return Math.min(Math.max((float)(getAge()) / (float)(getMaxAge()), 0.0f), 1.0f);
     }
 
-    public boolean isFemale() {return this.dataTracker.get(IS_FEMALE);}
+    @Nullable
+    public UUID getTargetUuid() {
+        Optional<UUID> uuid = this.dataTracker.get(TARGET);
+        if (uuid.isPresent() &&
+                this.dataTracker.get(TARGET_POS).isWithinDistance(this.getPos(), TARGET_MAX_DISTANCE) &&
+                this.dataTracker.get(TARGET_LAST_SEEN) <= TARGET_MAX_LAST_SEEN
+        ) {
+            return uuid.get();
+        } else {
+            return null;
+        }
+    }
 
 
 
@@ -584,7 +623,7 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
     }
     @Override
     public boolean isDisallowedInPeaceful() {
-        return true;
+        return false;
     }
     @Override
     public int getLimitPerChunk() {
@@ -684,21 +723,6 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
     | AI |
      ---*/
 
-    @Override
-    public boolean isAngryAt(PlayerEntity player) {
-        return ! isSleeping();
-    }
-
-    @Override
-    public float getPathfindingFavor(BlockPos pos, WorldView world) {
-        return 0.0f;
-    }
-
-    @Override
-    public boolean isNavigating() {
-        return ! this.getNavigation().isIdle();
-    }
-
     public boolean isValidTarget(@Nullable Entity entity) {
         return (
                 entity instanceof LivingEntity livingEntity &&
@@ -720,12 +744,8 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
 
     @Override
     public void initGoals() {
-        // TODO
-        // Ridden
-        // Flee
-        // Sleep
-        // Sit
-        // Pursue
+        //this.goalSelector.add(1, new PursueTargetGoal(this));
+        //this.targetSelector.add(1, new FindTargetGoal(this));
     }
 
 
@@ -760,11 +780,10 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
                 }
 
                 // Destroy blocks in random directions
-                Random rand = new Random();
                 for (int i = 0; i < Config.CONFIG.dragon.wakeup.roar_destroy; i++) {
-                    float yaw = rand.nextFloat((float) Math.PI * 2.0f);
+                    float yaw = this.random.nextFloat() * (((float)(Math.PI)) * 2.0f);
                     float arc = (float) Math.PI / 2.0f;
-                    float pitch = rand.nextFloat(arc * 0.5f) + (arc * 0.5f);
+                    float pitch = this.random.nextFloat() * (arc * 0.5f) + (arc * 0.5f);
                     Vec3d vector = new Vec3d(
                             Math.sin(yaw) * Math.cos(pitch),
                             Math.sin(pitch),
@@ -806,8 +825,7 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
                 if (blinkCooldownTicks > 0) {
                     blinkCooldownTicks -= 1;
                 } else { // blinkCooldownTicks <= 0
-                    Random rand = new Random();
-                    if (rand.nextFloat() <= BLINK_CHANCE) {
+                    if (this.random.nextFloat() <= BLINK_CHANCE) {
                         blinkCooldownTicks = BLINK_COOLDOWN_TICKS;
                         blinkTicks         = BLINK_TICKS;
                     }
@@ -999,17 +1017,16 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
             dataTracker.set(TAMED_OWNER, Optional.of(tamedOwner.getUuid()));
 
         } else { // this.world.isClient()
-            Random random = new Random();
-            Box    bounds = this.getBoundingBox();
+            Box bounds = this.getBoundingBox();
             for (int i = 0; i < 7; i++) {
                 this.world.addParticle(
                         ParticleTypes.HEART,
-                        random.nextDouble(bounds.maxX - bounds.minX),
-                        random.nextDouble(bounds.maxY - bounds.minY),
-                        random.nextDouble(bounds.maxZ - bounds.minZ),
-                        random.nextGaussian() * 0.02,
-                        random.nextGaussian() * 0.02,
-                        random.nextGaussian() * 0.02
+                        this.random.nextDouble() * (bounds.maxX - bounds.minX),
+                        this.random.nextDouble() * (bounds.maxY - bounds.minY),
+                        this.random.nextDouble() * (bounds.maxZ - bounds.minZ),
+                        this.random.nextGaussian() * 0.02,
+                        this.random.nextGaussian() * 0.02,
+                        this.random.nextGaussian() * 0.02
                 );
             }
         }
@@ -1052,44 +1069,6 @@ public class DragonEntity extends HostileEntity implements IAnimatable, Vibratio
             this.headYaw = mobEntity.headYaw;
         }
     }
-
-
-    /*---------
-    | Breeding |
-     ---------*/
-
-    public boolean canBreed(DragonEntity other) {
-        return (
-                this._canBreed() && other._canBreed() &&
-                this.getClass() == other.getClass() &&
-                this.isFemale() != other.isFemale()
-        );
-    }
-    public boolean _canBreed() {
-        return this.isTamed() && ! dataTracker.get(HAS_BREEDED) && getStage() >= Config.CONFIG.dragon.age.min_breed_stage;
-    }
-
-    public boolean canBreedWith(Entity other) {
-        return (
-                other != this &&
-                other instanceof DragonEntity otherDragon &&
-                this.canBreed(otherDragon)
-        );
-    }
-
-
-    /*
-    public void breed(ServerWorld world, DragonEntity other) {
-        if (canBreedWith(other) && isFemale()) {
-            // Egg
-        }
-    }
-
-
-    @Nullable
-    public Item getBreedingItem() {
-        return FoodItems.DRAGONMEAL;
-    }*/
 
 
 }

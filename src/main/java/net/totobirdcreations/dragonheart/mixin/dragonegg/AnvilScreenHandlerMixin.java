@@ -3,12 +3,11 @@ package net.totobirdcreations.dragonheart.mixin.dragonegg;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.AnvilScreenHandler;
 import net.minecraft.screen.ForgingScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
-import net.totobirdcreations.dragonheart.item.dragon.DragonEggItem;
+import net.totobirdcreations.dragonheart.item.dragon.egg.DragonEggItem;
 import net.totobirdcreations.dragonheart.item.dragon.DragonItems;
 import net.totobirdcreations.dragonheart.item.util.DragonColouredItem;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
@@ -73,8 +72,9 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
             if (colour != null) {
                 stack = new ItemStack(DragonItems.DRAGON_EGG);
                 DragonColouredItem.setColour(stack, colour.asInt());
-                NbtCompound nbt = ipthis.getInput().getStack(0).getOrCreateNbt();
-                nbt.putString("dragon", NbtHelper.getItemDragonType(nbt).toString());
+                NbtHelper.setItemDragonType(ipthis.getInput().getStack(0),
+                        NbtHelper.getItemDragonType(stack)
+                );
                 output.setStack(slot, stack);
             }
 

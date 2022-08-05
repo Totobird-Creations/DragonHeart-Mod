@@ -1,13 +1,14 @@
-package net.totobirdcreations.dragonheart.item.dragon;
+package net.totobirdcreations.dragonheart.item.dragon.egg;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
 
 
-public class DragonEggCreativeItem extends DragonEggItem {
+public class CreativeDragonEggItem extends DragonEggItem {
 
-    public DragonEggCreativeItem(Settings settings) {
+    public CreativeDragonEggItem(Item.Settings settings) {
         super(settings);
     }
 

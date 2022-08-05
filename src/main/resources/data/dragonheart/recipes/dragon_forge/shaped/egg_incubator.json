@@ -1,0 +1,28 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern" : [
+    "SIS",
+    "B B",
+    "BSB"
+  ],
+  "key" : {
+    "S" : {
+      "item" : "${id}:dragon_scale"
+    },
+    "I" : {
+      "item" : "minecraft:iron_bars"
+    },
+    "B" : {
+      "item" : "${id}:dragon_forge_bricks",
+      "data": {
+        "deny": {
+          "dragon": ""
+        }
+      }
+    }
+  },
+  "result" : {
+    "item" : "${id}:dragon_egg_incubator",
+    "count": 1
+  }
+}

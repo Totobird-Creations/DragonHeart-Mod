@@ -6,7 +6,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.item.dragon.DragonEggItem;
+import net.totobirdcreations.dragonheart.item.dragon.egg.DragonEggItem;
 import net.totobirdcreations.dragonheart.util.mixin.dragonegg.DragoneggTextFieldWidgetMixinInterface;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;

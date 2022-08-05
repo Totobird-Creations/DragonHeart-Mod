@@ -67,7 +67,7 @@ public class DragonForgeCoreRecipeSerializer implements RecipeSerializer<DragonF
             ));
         }
 
-        ItemStack output = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "output"));
+        ItemStack output = ShapedRecipe.outputFromJson(JsonHelper.getObject(json, "result"));
 
         return new DragonForgeCoreRecipe(id, dragonType, timeTicks, ingredients, output);
 

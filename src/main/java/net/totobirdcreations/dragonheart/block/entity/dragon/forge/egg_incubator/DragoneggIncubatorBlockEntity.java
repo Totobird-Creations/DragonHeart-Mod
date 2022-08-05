@@ -46,7 +46,7 @@ public class DragoneggIncubatorBlockEntity extends DragonForgeBlockEntity implem
 
     @Override
     public Text getDisplayName() {
-        return Text.translatable("container." + DragonHeart.ID + ".dragonegg_incubator");
+        return Text.translatable("container." + DragonHeart.ID + ".dragon_egg_incubator");
     }
 
 
@@ -98,7 +98,7 @@ public class DragoneggIncubatorBlockEntity extends DragonForgeBlockEntity implem
         if (entity.power <= 0) {
             ItemStack stack = entity.getStack(0);
             if (stack.getItem() instanceof DragonBreathItem) {
-                Identifier type = NbtHelper.getItemStackDragonType(stack);
+                Identifier type = NbtHelper.getItemDragonType(stack);
                 entity.setDragon(type);
                 entity.maxPower = 1200;
                 entity.power    = entity.maxPower;

@@ -1,0 +1,20 @@
+{
+  "type" : "minecraft:crafting_shaped",
+  "pattern": [
+    "XX",
+    "X#",
+    " #"
+  ],
+  "key" : {
+    "X": {
+      "item": "${id}:dragon_bone"
+    },
+    "#": {
+      "item": "minecraft:bone"
+    }
+  },
+  "result" : {
+    "item" : "${id}:uninfused_dragon_bone_axe",
+    "count": 1
+  }
+}

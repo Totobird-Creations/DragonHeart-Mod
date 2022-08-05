@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.entity.dragon.render;
+package net.totobirdcreations.dragonheart.client.entity.dragon;
 
 import net.minecraft.particle.ShriekParticleEffect;
 import net.minecraft.util.Identifier;

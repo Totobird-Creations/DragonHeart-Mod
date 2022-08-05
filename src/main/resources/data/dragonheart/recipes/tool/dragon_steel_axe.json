@@ -1,0 +1,21 @@
+{
+  "type" : "${id}:dragonforge",
+  "dragon_type" : "dragonheart:.",
+  "time" : 1200,
+  "ingredients" : [
+    {
+      "item" : "${id}:dragon_bone_axe",
+      "forge": [
+        "type_source",
+        "match_type"
+      ]
+    },
+    {
+      "item" : "minecraft:netherite_ingot"
+    }
+  ],
+  "result" : {
+    "item" : "${id}:dragon_steel_axe",
+    "count": 1
+  }
+}

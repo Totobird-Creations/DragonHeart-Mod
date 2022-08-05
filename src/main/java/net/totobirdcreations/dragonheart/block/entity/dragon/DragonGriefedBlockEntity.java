@@ -10,7 +10,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
 
 
@@ -50,19 +49,19 @@ public class DragonGriefedBlockEntity extends DragonBlockEntity {
         }
     }
 
-    public void reset(World world, BlockPos pos) {
-        NbtCompound resetNbt   = this.resetNbt;
-
-        world.removeBlockEntity(pos);
-        DragonHeart.LOGGER.info(this.resetState);
-        try {
-            world.setBlockState(pos, BlockState.CODEC.decode(NbtOps.INSTANCE, this.resetState).get().orThrow().getFirst());
-        } catch (Exception ignored) {
-            world.setBlockState(pos, Registry.BLOCK.get(this.resetId).getDefaultState());
-        }
-        BlockEntity resetEntity = world.getBlockEntity(pos);
-        if (resetEntity != null) {
-            resetEntity.readNbt(resetNbt);
+    public void reset() {
+        if (this.world != null) {
+            NbtCompound resetNbt = this.resetNbt;
+            this.world.removeBlockEntity(this.getPos());
+            try {
+                this.world.setBlockState(this.getPos(), BlockState.CODEC.decode(NbtOps.INSTANCE, this.resetState).get().orThrow().getFirst());
+            } catch (Exception ignored) {
+                this.world.setBlockState(this.getPos(), Registry.BLOCK.get(this.resetId).getDefaultState());
+            }
+            BlockEntity resetEntity = this.world.getBlockEntity(this.getPos());
+            if (resetEntity != null) {
+                resetEntity.readNbt(resetNbt);
+            }
         }
     }
 
@@ -90,7 +89,7 @@ public class DragonGriefedBlockEntity extends DragonBlockEntity {
     public static void tick(World world, BlockPos pos, BlockState state, DragonGriefedBlockEntity entity) {
         entity.resetTime -= 1;
         if (entity.resetTime <= 0) {
-            entity.reset(world, pos);
+            entity.reset();
         }
     }
 

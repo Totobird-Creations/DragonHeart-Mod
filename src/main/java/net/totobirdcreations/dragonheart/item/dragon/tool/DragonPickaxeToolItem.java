@@ -5,14 +5,13 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.item.dragon.DragonItem;
-import net.totobirdcreations.dragonheart.item.util.DragonColouredItem;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
+import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -37,10 +36,7 @@ public class DragonPickaxeToolItem extends PickaxeItem implements DragonItem {
         } else {
             for (Identifier id : DragonResourceLoader.getIdentifiers()) {
                 ItemStack stack = new ItemStack(this);
-                DragonResourceLoader.DragonResource resource = DragonResourceLoader.getResource(id);
-                DragonColouredItem.setColour(stack, resource.colourGlow());
-                NbtCompound nbt = stack.getOrCreateNbt();
-                nbt.putString("dragon", id.toString());
+                NbtHelper.setItemDragonType(stack, id);
                 stacks.add(stack);
             }
         }

@@ -6,6 +6,7 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.item.dragon.DragonBlockItem;
 
+
 public class NbtHelper {
 
     public static String getString(NbtCompound nbt, String key, String fallback) {
@@ -23,22 +24,23 @@ public class NbtHelper {
 
     public static Identifier EMPTY_TYPE = new Identifier("minecraft", "");
 
-    public static Identifier getBlockItemDragonType(NbtCompound nbt) {
-        String value = EMPTY_TYPE.toString();
-        if (nbt.get("BlockEntityTag") instanceof NbtCompound tagNbt) {
-            value = getString(tagNbt, "dragon", value);
-        }
-        return new Identifier(value);
+
+    public static Identifier getItemDragonType(ItemStack stack) {
+        return new Identifier(getString(getItemDragonTypeCompound(stack), "dragon", EMPTY_TYPE.toString()));
     }
 
-    public static Identifier getItemDragonType(NbtCompound nbt) {
-        return new Identifier(getString(nbt, "dragon", EMPTY_TYPE.toString()));
+    public static void setItemDragonType(ItemStack stack, Identifier type) {
+        setItemDragonType(stack, type.toString());
+    }
+    public static void setItemDragonType(ItemStack stack, String type) {
+        getItemDragonTypeCompound(stack).putString("dragon", type);
     }
 
-    public static Identifier getItemStackDragonType(ItemStack stack) {
-        return stack.getItem() instanceof DragonBlockItem
-                ? getBlockItemDragonType(stack.getOrCreateNbt())
-                : getItemDragonType(stack.getOrCreateNbt());
+    public static NbtCompound getItemDragonTypeCompound(ItemStack stack) {
+        return (stack.getItem() instanceof DragonBlockItem
+                ? stack.getOrCreateSubNbt("BlockEntityTag")
+                : stack.getOrCreateNbt()
+        );
     }
 
 }

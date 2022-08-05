@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.item.dragon;
+package net.totobirdcreations.dragonheart.item.dragon.egg;
 
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
@@ -20,6 +20,8 @@ import net.totobirdcreations.dragonheart.entity.Entities;
 import net.totobirdcreations.dragonheart.entity.dragon.util.DragonSalt;
 import net.totobirdcreations.dragonheart.entity.dragon.util.UuidOp;
 import net.totobirdcreations.dragonheart.entity.dragon_egg.DragonEggEntity;
+import net.totobirdcreations.dragonheart.item.dragon.DragonItemImpl;
+import net.totobirdcreations.dragonheart.item.dragon.DragonItems;
 import net.totobirdcreations.dragonheart.item.util.DragonColouredItem;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
@@ -30,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-// TODO : Make egg able to hatch in inventory.
 public class DragonEggItem extends DragonItemImpl {
 
 
@@ -60,7 +61,7 @@ public class DragonEggItem extends DragonItemImpl {
         egg.setYaw(new java.util.Random().nextFloat((float)(Math.PI * 2.0f)));
 
         Random rand = Random.create(DragonSalt.AGE + UuidOp.uuidToInt(egg.getUuid()));
-        egg.setDragon   (NbtHelper.getString (nbt, "dragon"    , NbtHelper.EMPTY_TYPE.toString()                                                ));
+        egg.setDragon   (NbtHelper.getItemDragonType(stack));
         egg.setColour   (NbtHelper.getInt    (nbt, "colour"    , RGBColour.WHITE.asInt()                                                        ));
         egg.setAge      (NbtHelper.getInt    (nbt, "age"       , 0                                                                              ));
         egg.setSpawnAge (NbtHelper.getInt    (nbt, "spawnAge"  , rand.nextBetween(DragonEggEntity.MIN_SPAWN_AGE, DragonEggEntity.MAX_SPAWN_AGE) ));
@@ -89,14 +90,14 @@ public class DragonEggItem extends DragonItemImpl {
     }
 
     public void appendStack(DefaultedList<ItemStack> stacks, Identifier dragon, @Nullable RGBColour colour) {
-        Item        item  = colour != null ? DragonItems.DRAGON_EGG : DragonItems.DRAGON_EGG_CREATIVE;
-        ItemStack   stack = new ItemStack(item);
-        NbtCompound nbt;
+        Item      item  = colour != null
+                ? DragonItems.DRAGON_EGG
+                : DragonItems.DRAGON_EGG_CREATIVE;
+        ItemStack stack = new ItemStack(item);
+        NbtHelper.setItemDragonType(stack, dragon);
         if (colour != null) {
             DragonColouredItem.setColour(stack, colour.asInt());
         }
-        nbt = stack.getOrCreateNbt();
-        nbt.putString("dragon", dragon.toString());
         stacks.add(stack);
     }
 
@@ -111,9 +112,8 @@ public class DragonEggItem extends DragonItemImpl {
         super.appendTooltip(stack, world, tooltips, context);
         if (context.isAdvanced()) {
             if (! this.isCreative(stack)) {
-                NbtCompound nbt = stack.getOrCreateNbt();
                 tooltips.add(Text.translatable("text.debug." + DragonHeart.ID + ".dragon.colour",
-                        new RGBColour(NbtHelper.getInt(nbt, "colour", RGBColour.WHITE.asInt())).toString()
+                        DragonColouredItem.getColour(stack).toString()
                 ).formatted(Formatting.GRAY));
             }
         }

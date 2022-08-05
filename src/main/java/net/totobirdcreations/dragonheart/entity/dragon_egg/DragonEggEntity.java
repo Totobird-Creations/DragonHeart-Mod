@@ -152,6 +152,7 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
     public int getEyeColour() {return this.dataTracker.get(EYE_COLOUR);}
 
 
+    public void setDragon(Identifier dragon) {this.setDragon(dragon.toString());}
     public void setDragon(String dragon) {this.dataTracker.set(DRAGON, dragon);}
 
     public void setColour(int colour) {this.dataTracker.set(COLOUR, colour);}
@@ -216,7 +217,8 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
         ItemStack stack = new ItemStack(DragonItems.DRAGON_EGG);
         DragonColouredItem.setColour(stack, this.getColour());
         NbtCompound nbt = stack.getOrCreateNbt();
-        nbt.putString ("dragon"    , this.getDragon()    );
+        NbtHelper.setItemDragonType  (stack, this.getDragon());
+        DragonColouredItem.setColour (stack, this.getColour());
         nbt.putInt    ("age"       , this.getAge()       );
         nbt.putInt    ("spawnAge"  , this.getSpawnAge()  );
         nbt.putInt    ("eyeColour" , this.getEyeColour() );

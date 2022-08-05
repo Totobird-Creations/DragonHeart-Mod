@@ -1,0 +1,21 @@
+{
+  "type" : "${id}:dragonforge",
+  "dragon_type" : "dragonheart:.",
+  "time" : 600,
+  "ingredients" : [
+    {
+      "item" : "${id}:uninfused_dragon_bone_hoe"
+    },
+    {
+      "item" : "${id}:dragon_blood",
+      "forge": [
+        "type_source",
+        "match_type"
+      ]
+    }
+  ],
+  "result" : {
+    "item" : "${id}:dragon_bone_hoe",
+    "count": 1
+  }
+}

@@ -27,7 +27,7 @@ public interface DragonItem extends DragonColouredItem {
     default Text getNameI(ItemStack stack) {
         return Text.translatable("dragon." + DragonHeart.ID + "." + this.getNameId(),
                 DragonResourceLoader.getResource(
-                        NbtHelper.getItemStackDragonType(stack)
+                        NbtHelper.getItemDragonType(stack)
                 ).getName()
         );
     }
@@ -52,7 +52,7 @@ public interface DragonItem extends DragonColouredItem {
     default void appendTooltipI(ItemStack stack, @Nullable World world, List<Text> tooltips, TooltipContext context) {
         if (context.isAdvanced()) {
             tooltips.add(Text.translatable("text.debug." + DragonHeart.ID + ".dragon.type",
-                    NbtHelper.getItemStackDragonType(stack)
+                    NbtHelper.getItemDragonType(stack)
             ).formatted(Formatting.GRAY));
         }
     }

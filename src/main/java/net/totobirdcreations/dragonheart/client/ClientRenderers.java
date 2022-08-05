@@ -15,8 +15,8 @@ import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntity;
 import net.totobirdcreations.dragonheart.client.block.DragonGriefedBlockEntityRenderer;
 import net.totobirdcreations.dragonheart.entity.Entities;
-import net.totobirdcreations.dragonheart.entity.dragon.render.DragonEntityRenderer;
-import net.totobirdcreations.dragonheart.entity.dragon_egg.DragonEggEntityRenderer;
+import net.totobirdcreations.dragonheart.client.entity.dragon.DragonEntityRenderer;
+import net.totobirdcreations.dragonheart.client.entity.dragon_egg.DragonEggEntityRenderer;
 import net.totobirdcreations.dragonheart.item.dragon.DragonItem;
 import net.totobirdcreations.dragonheart.item.dragon.DragonItems;
 import net.totobirdcreations.dragonheart.item.dragon.tool.DragonToolItems;
@@ -48,6 +48,10 @@ public class ClientRenderers {
                 DragonItems.DRAGON_EGG,
                 DragonItems.DRAGON_BLOOD,
                 DragonItems.DRAGON_BREATH
+        );
+        ColorProviderRegistry.ITEM.register(ClientRenderers::getDragonBucketItemColour,
+                DragonItems.EMPTY_DRAGON_BUCKET,
+                DragonItems.DRAGON_BUCKET
         );
 
         ColorProviderRegistry.ITEM.register(ClientRenderers::getDragonBlockItemColour,
@@ -110,17 +114,23 @@ public class ClientRenderers {
 
     public static int getDragonItemColour(ItemStack stack, int tintIndex) {
         if (tintIndex == 0) {
-            DragonItem scale = (DragonItem) stack.getItem();
-            return scale.getColor(stack);
+            return ((DragonItem)(stack.getItem())).getColor(stack);
         } else {
             return RGBColour.WHITE.asInt();
         }
+    }
+    public static int getDragonBucketItemColour(ItemStack stack, int tintIndex) {
+        return switch (tintIndex) {
+            case    1 -> DragonResourceLoader.getResource(NbtHelper.getItemDragonType(stack)).colourGlow().asInt();
+            case    2 -> ((DragonItem)(stack.getItem())).getColor(stack);
+            default   -> RGBColour.WHITE.asInt();
+        };
     }
 
 
     public static int getDragonBlockItemColour(ItemStack stack, int tintIndex) {
         DragonResourceLoader.DragonResource resource = DragonResourceLoader.getResource(
-                NbtHelper.getBlockItemDragonType(stack.getOrCreateNbt())
+                NbtHelper.getItemDragonType(stack)
         );
         return getDragonBlockColour(resource, tintIndex).asInt();
     }
@@ -128,7 +138,7 @@ public class ClientRenderers {
 
     public static int getDragonToolItemColour(ItemStack stack, int tintIndex) {
         DragonResourceLoader.DragonResource resource = DragonResourceLoader.getResource(
-                NbtHelper.getItemStackDragonType(stack)
+                NbtHelper.getItemDragonType(stack)
         );
         return (switch (tintIndex) {
             case    1 -> resource.colourBricks();

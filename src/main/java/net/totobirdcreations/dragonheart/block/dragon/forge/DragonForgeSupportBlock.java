@@ -1,12 +1,10 @@
 package net.totobirdcreations.dragonheart.block.dragon.forge;
 
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -35,18 +33,14 @@ public class DragonForgeSupportBlock extends DragonForgeBlock {
 
     @Override
     public void appendStacks(DefaultedList<ItemStack> stacks) {
-        ItemStack   stack = new ItemStack(DragonBlocks.DRAGON_FORGE_SUPPORT.item());
-        NbtCompound nbt;
-        nbt = stack.getOrCreateSubNbt("BlockEntityTag");
-        nbt.putString("dragon", NbtHelper.EMPTY_TYPE.toString());
+        ItemStack stack = new ItemStack(DragonBlocks.DRAGON_FORGE_SUPPORT.item());
+        NbtHelper.setItemDragonType(stack, NbtHelper.EMPTY_TYPE);
         stacks.add(stack);
     }
     @Override
     public void appendStacks(DefaultedList<ItemStack> stacks, Identifier dragon, DragonResourceLoader.DragonResource resource) {
-        ItemStack   stack = new ItemStack(DragonBlocks.DRAGON_FORGE_SUPPORT.item());
-        NbtCompound nbt;
-        nbt = stack.getOrCreateSubNbt("BlockEntityTag");
-        nbt.putString("dragon", dragon.toString());
+        ItemStack stack = new ItemStack(DragonBlocks.DRAGON_FORGE_SUPPORT.item());
+        NbtHelper.setItemDragonType(stack, dragon);
         stacks.add(stack);
     }
 
@@ -55,8 +49,7 @@ public class DragonForgeSupportBlock extends DragonForgeBlock {
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         if (world.getBlockEntity(pos) instanceof DragonForgeSupportBlockEntity entity) {
             ItemStack stack = new ItemStack(this);
-            NbtCompound nbt = stack.getOrCreateSubNbt("BlockEntityTag");
-            nbt.putString("dragon", entity.dragon.toString());
+            NbtHelper.setItemDragonType(stack, entity.dragon);
             return stack;
         } else {
             return super.getPickStack(world, pos, state);

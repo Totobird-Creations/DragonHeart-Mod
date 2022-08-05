@@ -232,8 +232,8 @@ public class DragonForgeCoreBlockEntity extends DragonForgeBlockEntity implement
         }
         int typeSource = recipe.getTypeSource();
         if (typeSource != -1) {
-            return NbtHelper.getItemStackDragonType(inventory.getStack(typeSource)) ==
-                    NbtHelper.getItemStackDragonType(output);
+            return NbtHelper.getItemDragonType(inventory.getStack(typeSource)) ==
+                    NbtHelper.getItemDragonType(output);
         }
         return true;
     }

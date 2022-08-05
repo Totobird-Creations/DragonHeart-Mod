@@ -63,7 +63,7 @@ public abstract class DragonBlock extends BlockWithEntity implements BlockEntity
         super.appendTooltip(stack, world, tooltips, context);
         if (context.isAdvanced()) {
             tooltips.add(Text.translatable("text.debug." + DragonHeart.ID + ".dragon.type",
-                    NbtHelper.getItemStackDragonType(stack)
+                    NbtHelper.getItemDragonType(stack)
             ).formatted(Formatting.GRAY));
         }
     }
