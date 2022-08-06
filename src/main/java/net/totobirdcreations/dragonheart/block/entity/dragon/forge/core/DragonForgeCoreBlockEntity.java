@@ -21,8 +21,8 @@ import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntity;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.*;
-import net.totobirdcreations.dragonheart.recipe.DragonForgeCoreRecipe;
-import net.totobirdcreations.dragonheart.recipe.Recipes;
+import net.totobirdcreations.dragonheart.resource.recipe.DragonForgeCoreRecipe;
+import net.totobirdcreations.dragonheart.resource.recipe.RecipeResources;
 import net.totobirdcreations.dragonheart.screenhandler.DragonForgeCoreScreenHandler;
 import net.totobirdcreations.dragonheart.util.helper.DataHelper;
 import net.totobirdcreations.dragonheart.util.helper.InventoryHelper;
@@ -198,7 +198,7 @@ public class DragonForgeCoreBlockEntity extends DragonForgeBlockEntity implement
         if (inventory.getStack(3).getItem() != Items.FIRE_CHARGE) {
             return null;
         }
-        List<DragonForgeCoreRecipe> recipes = world.getRecipeManager().getAllMatches(Recipes.DRAGON_FORGE_CORE.type(), inventory, world);
+        List<DragonForgeCoreRecipe> recipes = world.getRecipeManager().getAllMatches(RecipeResources.DRAGON_FORGE_CORE.type(), inventory, world);
         DragonForgeCoreRecipe       result  = null;
         for (DragonForgeCoreRecipe recipe : recipes) {
             if (

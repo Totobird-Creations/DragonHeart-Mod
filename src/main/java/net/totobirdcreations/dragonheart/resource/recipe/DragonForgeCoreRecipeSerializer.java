@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.recipe;
+package net.totobirdcreations.dragonheart.resource.recipe;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

@@ -14,7 +14,7 @@ import net.totobirdcreations.dragonheart.gamerule.Gamerules;
 import net.totobirdcreations.dragonheart.item.Items;
 import net.totobirdcreations.dragonheart.item.group.ItemGroups;
 import net.totobirdcreations.dragonheart.particle.Particles;
-import net.totobirdcreations.dragonheart.recipe.Recipes;
+import net.totobirdcreations.dragonheart.resource.recipe.RecipeResources;
 import net.totobirdcreations.dragonheart.resource.Resources;
 import net.totobirdcreations.dragonheart.screenhandler.ScreenHandlers;
 import net.totobirdcreations.dragonheart.sound.SoundEvents;
@@ -116,7 +116,6 @@ public class DragonHeart implements ModInitializer {
 		ItemGroups.register();
 		Items.register();
 		StatusEffects.register();
-		Recipes.register();
 		Entities.register();
 		Commands.register();
 		Gamerules.register();

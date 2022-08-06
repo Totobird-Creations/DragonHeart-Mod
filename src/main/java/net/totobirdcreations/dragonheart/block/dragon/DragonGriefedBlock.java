@@ -1,5 +1,6 @@
 package net.totobirdcreations.dragonheart.block.dragon;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -9,6 +10,9 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -26,9 +30,21 @@ import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 
 public class DragonGriefedBlock extends DragonBlock {
 
+    public static BooleanProperty CAN_RESET = BooleanProperty.of("can_reset");
+
 
     public DragonGriefedBlock(Settings settings) {
         super(settings);
+        this.setDefaultState(this.getDefaultState()
+                .with(CAN_RESET, false)
+        );
+    }
+
+
+    @Override
+    public void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        super.appendProperties(builder);
+        builder.add(CAN_RESET);
     }
 
 
@@ -75,23 +91,25 @@ public class DragonGriefedBlock extends DragonBlock {
     @SuppressWarnings("deprecation")
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        ItemStack stack = player.getStackInHand(hand);
-        if (stack.getItem() == Items.GLASS_BOTTLE) {
-            if (! world.isClient()) {
-                if (world.getBlockEntity(pos) instanceof DragonGriefedBlockEntity entity) {
-                    stack.decrement(1);
-                    ItemStack newStack = new ItemStack(DragonItems.DRAGON_BREATH);
-                    newStack.getOrCreateNbt().putString("dragon", entity.dragon.toString());
-                    if (stack.isEmpty()) {
-                        player.setStackInHand(hand, newStack);
-                    } else if (! player.getInventory().insertStack(newStack)) {
-                        player.dropItem(newStack, false);
+        if (state.get(CAN_RESET)) {
+            ItemStack stack = player.getStackInHand(hand);
+            if (stack.getItem() == Items.GLASS_BOTTLE) {
+                if (! world.isClient()) {
+                    if (world.getBlockEntity(pos) instanceof DragonGriefedBlockEntity entity) {
+                        stack.decrement(1);
+                        ItemStack newStack = new ItemStack(DragonItems.DRAGON_BREATH);
+                        newStack.getOrCreateNbt().putString("dragon", entity.dragon.toString());
+                        if (stack.isEmpty()) {
+                            player.setStackInHand(hand, newStack);
+                        } else if (! player.getInventory().insertStack(newStack)) {
+                            player.dropItem(newStack, false);
+                        }
+                        entity.resetTime = 0;
                     }
-                    entity.resetTime = 0;
+                    return ActionResult.CONSUME;
+                } else {
+                    return ActionResult.SUCCESS;
                 }
-                return ActionResult.CONSUME;
-            } else {
-                return ActionResult.SUCCESS;
             }
         }
         return super.onUse(state, world, pos, player, hand, hit);

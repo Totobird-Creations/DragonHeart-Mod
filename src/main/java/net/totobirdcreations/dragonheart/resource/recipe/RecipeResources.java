@@ -1,14 +1,14 @@
-package net.totobirdcreations.dragonheart.recipe;
+package net.totobirdcreations.dragonheart.resource.recipe;
 
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.recipe.util.TypeSerializer;
+import net.totobirdcreations.dragonheart.resource.recipe.util.TypeSerializer;
 
 
-public class Recipes {
+public class RecipeResources {
 
 
     public static TypeSerializer DRAGON_FORGE_CORE = registerRecipe(
@@ -36,8 +36,6 @@ public class Recipes {
     }
 
 
-    public static void register() {
-        DragonHeart.LOGGER.info("Registering recipes.");
-    }
+    public static void register() {}
 
 }

@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.recipe.util;
+package net.totobirdcreations.dragonheart.resource.recipe.util;
 
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
