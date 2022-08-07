@@ -2,11 +2,11 @@
   "structures": [
     {
       "structure": "${id}:nest/small",
-      "weight": 3
+      "weight": 5
     },
     {
       "structure": "${id}:nest/medium",
-      "weight": 2
+      "weight": 3
     },
     {
       "structure": "${id}:nest/large",
@@ -17,13 +17,13 @@
     "type": "minecraft:random_spread",
     "salt": 1871518143,
     "frequency_reduction_method": "default",
-    "frequency": 0.5,
+    "frequency": 0.625,
     "exclusion_zone": {
       "other_set": "minecraft:ancient_cities",
       "chunk_count": 2
     },
     "spread_type": "triangular",
-    "spacing": 12,
-    "separation": 8
+    "spacing": 10,
+    "separation": 6
   }
 }

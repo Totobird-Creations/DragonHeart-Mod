@@ -1,5 +1,8 @@
 package net.totobirdcreations.dragonheart.event;
 
+import net.devtech.arrp.api.RRPCallback;
+import net.devtech.arrp.api.RuntimeResourcePack;
+import net.devtech.arrp.json.tags.JTag;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
@@ -35,6 +38,16 @@ public class EventHandlers {
 
 
     public static void serverside_send_dragonresource_signal() {
+        // Generate general has_biome tag.
+        JTag tag = JTag.replacingTag();
+        for (Identifier id : DragonResourceLoader.getIdentifiers()) {
+            tag = tag.tag(new Identifier(id.getNamespace(), "dragons/" + id.getPath()));
+        }
+        DragonResourceLoader.RESOURCES.addTag(
+                new Identifier(DragonHeart.ID, "has_structure/nest"),
+                tag
+        );
+        // Send update to clients.
         for (ServerPlayNetworkHandler handler : handlers) {
             serverside_send_dragonresource_signal(handler);
         }

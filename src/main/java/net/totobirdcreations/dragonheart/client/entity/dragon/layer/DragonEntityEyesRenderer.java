@@ -34,7 +34,7 @@ public class DragonEntityEyesRenderer<T extends DragonEntity> extends GeoLayerRe
             RGBColour      colour         = new RGBColour(dragon.getDataTracker().get(DragonEntity.EYE_COLOUR));
 
             RenderLayer[] renderLayers = {
-                    RenderLayer.getEntityTranslucentEmissive(getTextureResource()),
+                    RenderLayer.getEntityTranslucent(getTextureResource()),
                     RenderLayer.getEyes(getTextureResource())
             };
             for (RenderLayer renderLayer : renderLayers) {

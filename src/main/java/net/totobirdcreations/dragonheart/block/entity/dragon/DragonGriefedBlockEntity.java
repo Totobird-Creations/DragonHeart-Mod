@@ -3,6 +3,7 @@ package net.totobirdcreations.dragonheart.block.entity.dragon;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtOps;
@@ -18,12 +19,17 @@ import net.totobirdcreations.dragonheart.block.dragon.DragonGriefedBlock;
 
 public class DragonGriefedBlockEntity extends DragonBlockEntity {
 
-    public static int MAX_RESET_TIME = 200;
+    public static int         MAX_RESET_TIME = 200;
+    public static NbtCompound DEFAULT_STATE  = (NbtCompound)(BlockState.CODEC.encode(
+            Blocks.AIR.getDefaultState(),
+            NbtOps.INSTANCE,
+            NbtOps.INSTANCE.empty()
+    ).get().orThrow());
 
     public int         resetTime  = MAX_RESET_TIME;
-    public Identifier  resetId;
-    public NbtCompound resetState;
-    public NbtCompound resetNbt;
+    public Identifier  resetId    = new Identifier("minecraft", "air");
+    public NbtCompound resetState = DEFAULT_STATE;
+    public NbtCompound resetNbt   = new NbtCompound();
 
 
     public DragonGriefedBlockEntity(BlockPos pos, BlockState state) {
@@ -36,8 +42,8 @@ public class DragonGriefedBlockEntity extends DragonBlockEntity {
         if (! BlockTags.isOf(resetState, BlockTags.BREATH_IMMUNE)) {
             // If is unresettable griefed block or is not griefed block, create new resettable griefed block.
             if (
-                    (resetState.isOf(DragonBlocks.DRAGON_GRIEFED.block()) && ! resetState.get(DragonGriefedBlock.CAN_RESET)) ||
-                    (! resetState.isOf(DragonBlocks.DRAGON_GRIEFED.block()))
+                    (resetState.isOf(DragonBlocks.DRAGON_GRIEFED) && ! resetState.get(DragonGriefedBlock.CAN_RESET)) ||
+                    (! resetState.isOf(DragonBlocks.DRAGON_GRIEFED))
             ) {
                 Identifier  resetId     = Registry.BLOCK.getId(resetState.getBlock());
                 BlockEntity resetEntity = world.getBlockEntity(pos);
@@ -46,7 +52,7 @@ public class DragonGriefedBlockEntity extends DragonBlockEntity {
                     resetEntity.writeNbt(resetNbt);
                 }
                 world.removeBlockEntity(pos);
-                world.setBlockState(pos, DragonBlocks.DRAGON_GRIEFED.block()
+                world.setBlockState(pos, DragonBlocks.DRAGON_GRIEFED
                         .getDefaultState()
                         .with(DragonGriefedBlock.CAN_RESET, true)
                 );
@@ -54,7 +60,7 @@ public class DragonGriefedBlockEntity extends DragonBlockEntity {
                     entity.setDragon(type);
                     entity.resetId = resetId;
                     try {
-                        entity.resetState = (NbtCompound) (BlockState.CODEC.encode(resetState, NbtOps.INSTANCE, NbtOps.INSTANCE.empty()).get().orThrow());
+                        entity.resetState = (NbtCompound)(BlockState.CODEC.encode(resetState, NbtOps.INSTANCE, NbtOps.INSTANCE.empty()).get().orThrow());
                     } catch (Exception ignored) {
                         entity.resetState = new NbtCompound();
                     }

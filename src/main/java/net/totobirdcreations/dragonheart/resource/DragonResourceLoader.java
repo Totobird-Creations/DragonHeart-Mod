@@ -4,6 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import net.devtech.arrp.api.RRPCallback;
+import net.devtech.arrp.api.RuntimeResourcePack;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
@@ -29,6 +31,11 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
     public static DragonResourceLoader INSTANCE         = new DragonResourceLoader();
     public static Identifier           RESET_CHANNEL    = new Identifier(DragonHeart.ID, "reset_dragon_resources");
     public static Identifier           REGISTER_CHANNEL = new Identifier(DragonHeart.ID, "register_dragon_resources");
+    public static Identifier           RESOURCES_ID     = new Identifier(DragonHeart.ID, "data");
+    public static RuntimeResourcePack  RESOURCES        = RuntimeResourcePack.create(RESOURCES_ID);
+    static {
+        RRPCallback.AFTER_VANILLA.register((listener) -> listener.add(DragonResourceLoader.RESOURCES));
+    }
 
     public HashMap<Identifier, DragonResource> dragonResources = new HashMap<>();
 
@@ -264,10 +271,12 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
         }
 
         public RGBColour chooseBodyColour(UUID uuid) {
-            Random         rand       = Random.create(DragonSalt.COLOUR + UuidOp.uuidToInt(uuid));
             return this.bodyColours.size() == 0
-                    ? RGBColour.WHITE
-                    : this.bodyColours.get(rand.nextInt(this.bodyColours.size()));
+                    ? new RGBColour(1.0f, 0.0f, 0.0f)
+                    : this.bodyColours.get(
+                            Random.create(DragonSalt.COLOUR + UuidOp.uuidToInt(uuid))
+                                    .nextInt(this.bodyColours.size())
+            );
         }
 
 

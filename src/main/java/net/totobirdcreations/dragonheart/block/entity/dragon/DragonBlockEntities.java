@@ -89,7 +89,7 @@ public class DragonBlockEntities {
             new Identifier(DragonHeart.ID, "dragon_griefed"),
             FabricBlockEntityTypeBuilder.create(
                     DragonGriefedBlockEntity::new,
-                    DragonBlocks.DRAGON_GRIEFED.block()
+                    DragonBlocks.DRAGON_GRIEFED
             ).build(null)
     );
 

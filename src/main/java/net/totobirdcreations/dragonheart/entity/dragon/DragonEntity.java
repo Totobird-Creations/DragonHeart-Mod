@@ -245,7 +245,7 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
         this.dataTracker.set( DRAGON           , entityNbt != null && entityNbt.contains("dragon", NbtElement.STRING_TYPE) ? entityNbt.getString("dragon") : NbtHelper.EMPTY_TYPE.toString() );
         this.dataTracker.set( SPAWN_POS        , this.getBlockPos()                                                                                                                          );
         this.dataTracker.set( HUNGER_LEVEL     , 20 * 60 * 15                                                                                                                                );
-        this.dataTracker.set( COLOUR           , DragonResourceLoader.getResource(new Identifier(this.dataTracker.get(DRAGON))).chooseBodyColour(this.getUuid()).asInt()                     );
+        this.dataTracker.set( COLOUR           , RGBColour.WHITE.asInt()                                                                                                                     );
         this.dataTracker.set( STATE            , DragonState.SLEEP.toInt()                                                                                                                   );
         this.dataTracker.set( AGE              , 0                                                                                                                                           );
         this.calculateDimensions();

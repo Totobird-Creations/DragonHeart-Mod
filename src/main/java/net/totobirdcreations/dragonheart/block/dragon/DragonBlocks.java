@@ -1,6 +1,7 @@
 package net.totobirdcreations.dragonheart.block.dragon;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.PillarBlock;
@@ -10,6 +11,7 @@ import net.totobirdcreations.dragonheart.item.dragon.DragonBlockItem;
 import net.totobirdcreations.dragonheart.item.group.ItemGroups;
 
 import static net.totobirdcreations.dragonheart.block.Blocks.registerBlock;
+import static net.totobirdcreations.dragonheart.block.Blocks.registerBlockWithoutItem;
 
 
 public class DragonBlocks {
@@ -71,11 +73,9 @@ public class DragonBlocks {
             DragonBlockItem.class
     );
 
-    public static final BlockAndItem DRAGON_GRIEFED = registerBlock(
+    public static final Block DRAGON_GRIEFED = registerBlockWithoutItem(
             "dragon_griefed",
-            new DragonGriefedBlock(settings),
-            ItemGroups.DRAGON,
-            DragonBlockItem.class
+            new DragonGriefedBlock(settings)
     );
 
 

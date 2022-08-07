@@ -31,9 +31,9 @@
     ]
   },
   "mixins": [
-    "mixins.mod.json"
+    "mixins.dragonheart.json"
   ],
-  "accessWidener": "mod.accesswidener",
+  "accessWidener": "dragonheart.accesswidener",
 
   "depends": {
     "fabricloader": ">=0.14.7",

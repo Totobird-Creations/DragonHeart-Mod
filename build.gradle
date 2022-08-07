@@ -41,6 +41,11 @@ repositories {
 	//	url "https://jitpack.io/"
 	//}
 
+	// ARRP
+	maven {
+		url = uri("https://storage.googleapis.com/devan-maven/")
+	}
+
 }
 
 dependencies {
@@ -72,6 +77,9 @@ dependencies {
 	// LooseEndsLib
 	//modImplementation "com.github.Totobird-Creations:LooseEndsLib:${project.looseendslib_version}"
 	//include "com.github.Totobird-Creations:LooseEndsLib:${project.looseendslib_version}"
+
+	// ARRP
+	modImplementation "net.devtech:arrp:${project.arrp_version}"
 
 }
 
@@ -107,5 +115,5 @@ publishing {
 }
 
 loom {
-	accessWidenerPath = file("src/main/resources/mod.accesswidener")
+	accessWidenerPath = file("src/main/resources/${project.mod_id}.accesswidener")
 }

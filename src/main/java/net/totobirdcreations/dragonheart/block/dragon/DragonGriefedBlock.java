@@ -71,12 +71,6 @@ public class DragonGriefedBlock extends DragonBlock {
 
 
     @Override
-    public void spawnBreakParticles(World world, PlayerEntity player, BlockPos pos, BlockState state) {
-        world.syncWorldEvent(player, 2001, pos, getRawIdFromState(Blocks.OBSIDIAN.getDefaultState()));
-    }
-
-
-    @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return checkType(type, DragonBlockEntities.DRAGON_GRIEFED, DragonGriefedBlockEntity::tick);
     }

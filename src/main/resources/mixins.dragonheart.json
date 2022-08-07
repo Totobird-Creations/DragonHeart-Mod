@@ -10,6 +10,7 @@
     "dragon_egg.AnvilScreenHandlerMixin",
     "dragon_egg.ForgingScreenHandlerInterface",
     "frozen_effect.EntityMixin",
+    "frozen_effect.LivingEntityInterface",
     "frozen_effect.LivingEntityMixin",
     "frozen_effect.PlayerEntityMixin",
     "init.ItemGroupInterface"

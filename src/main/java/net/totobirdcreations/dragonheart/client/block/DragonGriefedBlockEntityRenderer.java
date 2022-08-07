@@ -42,4 +42,10 @@ public class DragonGriefedBlockEntityRenderer implements BlockEntityRenderer<Dra
         matrices.pop();
     }
 
+
+    @Override
+    public int getRenderDistance() {
+        return 256;
+    }
+
 }
