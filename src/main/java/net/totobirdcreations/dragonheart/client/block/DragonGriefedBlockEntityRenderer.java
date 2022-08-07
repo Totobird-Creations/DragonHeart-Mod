@@ -9,6 +9,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonGriefedBlockEntity;
+import net.totobirdcreations.dragonheart.config.ConfigData;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 
 

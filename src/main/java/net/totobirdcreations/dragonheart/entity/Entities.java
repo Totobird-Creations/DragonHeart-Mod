@@ -53,7 +53,7 @@ public class Entities {
 
     @SuppressWarnings("all")
     public static void register() {
-        DragonHeart.LOGGER.info("Registering entities.");
+        DragonHeart.LOGGER.debug("Registering entities.");
         FabricDefaultAttributeRegistry.register( DRAGON     , DragonEntity    .createMobAttributes());
         FabricDefaultAttributeRegistry.register( DRAGON_EGG , DragonEggEntity.createMobAttributes());
     }

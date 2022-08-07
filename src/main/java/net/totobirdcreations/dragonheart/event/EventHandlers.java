@@ -12,6 +12,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.util.Identifier;
+import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 
 import java.nio.charset.StandardCharsets;
@@ -62,7 +63,7 @@ public class EventHandlers {
         String data = buf.readBytes(buf.readableBytes())
                 .toString(StandardCharsets.UTF_8);
         ArrayList<String> parts = DragonResourceLoader.DragonResource.getParts(data);
-        if (parts.size() == 15) {
+        if (parts.size() == 8) {
             DragonResourceLoader.DragonResource resource = DragonResourceLoader.DragonResource.fromParts(parts);
             if (resource != null) {
                 DragonResourceLoader.INSTANCE.dragonResources.put(
@@ -75,6 +76,8 @@ public class EventHandlers {
 
 
     public static void register() {
+        DragonHeart.LOGGER.debug("Registering event handlers.");
+
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             if (! (server instanceof IntegratedServer && server.isHost(handler.getPlayer().getGameProfile()))) {
                 serverside_add_player(handler);
@@ -85,6 +88,8 @@ public class EventHandlers {
 
     @Environment(EnvType.CLIENT)
     public static void registerClient() {
+        DragonHeart.LOGGER.debug("Registering client event handlers.");
+
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> clientside_receive_dragonresource_reset_signal());
         ClientPlayNetworking.registerGlobalReceiver( DragonResourceLoader.RESET_CHANNEL    , (client, handler, buf, responseSender) -> clientside_receive_dragonresource_reset_signal()       );
         ClientPlayNetworking.registerGlobalReceiver( DragonResourceLoader.REGISTER_CHANNEL , (client, handler, buf, responseSender) -> clientside_receive_dragonresource_register_signal(buf) );

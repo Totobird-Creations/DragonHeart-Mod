@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntityProperties;
-import net.totobirdcreations.dragonheart.screenhandler.DragonForgeCoreScreenHandler;
+import net.totobirdcreations.dragonheart.screen_handler.DragonForgeCoreScreenHandler;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
 
 

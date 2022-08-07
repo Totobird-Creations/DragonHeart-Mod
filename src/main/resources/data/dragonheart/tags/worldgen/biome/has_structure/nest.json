@@ -1,0 +1,24 @@
+{
+  "replace" : false,
+
+  "values" : [
+    "minecraft:desert",
+    "minecraft:savanna",
+    "minecraft:savanna_plateau",
+    "minecraft:badlands",
+    "minecraft:eroded_badlands",
+    "minecraft:wooded_badlands",
+    "minecraft:snowy_plains",
+    "minecraft:ice_spikes",
+    "minecraft:snowy_taiga",
+    "minecraft:grove",
+    "minecraft:snowy_slopes",
+    "minecraft:frozen_peaks",
+    "minecraft:jagged_peaks",
+    "minecraft:snowy_beach",
+    "minecraft:mangrove_swamp",
+    "minecraft:dark_forest",
+    "minecraft:mushroom_fields",
+    "minecraft:deep_dark"
+  ]
+}

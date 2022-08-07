@@ -14,10 +14,10 @@ import net.totobirdcreations.dragonheart.gamerule.Gamerules;
 import net.totobirdcreations.dragonheart.item.Items;
 import net.totobirdcreations.dragonheart.item.group.ItemGroups;
 import net.totobirdcreations.dragonheart.particle.Particles;
-import net.totobirdcreations.dragonheart.resource.recipe.RecipeResources;
 import net.totobirdcreations.dragonheart.resource.Resources;
-import net.totobirdcreations.dragonheart.screenhandler.ScreenHandlers;
+import net.totobirdcreations.dragonheart.screen_handler.ScreenHandlers;
 import net.totobirdcreations.dragonheart.sound.SoundEvents;
+import net.totobirdcreations.dragonheart.structure.Structures;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.bernie.geckolib3.GeckoLib;
@@ -95,7 +95,7 @@ public class DragonHeart implements ModInitializer {
 	@Override
 	public void onInitialize() {
 
-		LOGGER.info("Initializing.");
+		LOGGER.debug("Initializing.");
 
 		DEVENV = FabricLoader.getInstance().isDevelopmentEnvironment();
 
@@ -111,9 +111,7 @@ public class DragonHeart implements ModInitializer {
 
 		Config.register();
 		Blocks.register();
-		BlockTags.register();
 		SoundEvents.register();
-		ItemGroups.register();
 		Items.register();
 		StatusEffects.register();
 		Entities.register();
@@ -123,6 +121,7 @@ public class DragonHeart implements ModInitializer {
 		Resources.register();
 		EventHandlers.register();
 		Particles.register();
+		Structures.register();
 
 		LOGGER.info("Initialized.");
 

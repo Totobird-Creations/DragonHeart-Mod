@@ -2,19 +2,27 @@ package net.totobirdcreations.dragonheart.command;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.tree.CommandNode;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.command.argument.IdentifierArgumentType;
+import net.minecraft.command.suggestion.SuggestionProviders;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonGriefedBlockEntity;
+import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 
 
 public class Commands {
+
+    public static final SuggestionProvider<ServerCommandSource> DRAGON_TYPES = SuggestionProviders.register(new Identifier("dragon_types"), (context, builder) ->
+            CommandSource.suggestIdentifiers(DragonResourceLoader.getIdentifiers(), builder)
+    );
 
 
     public static void registerDebug() {
@@ -30,6 +38,7 @@ public class Commands {
 
             CommandNode<ServerCommandSource> griefType = CommandManager
                     .argument("griefType", IdentifierArgumentType.identifier())
+                    .suggests(DRAGON_TYPES)
                     .executes(Commands::grief)
                     .build();
 
@@ -62,7 +71,7 @@ public class Commands {
 
 
     public static void register() {
-        DragonHeart.LOGGER.info("Registering commands.");
+        DragonHeart.LOGGER.debug("Registering commands.");
         if (DragonHeart.DEVENV) {
             registerDebug();
         }

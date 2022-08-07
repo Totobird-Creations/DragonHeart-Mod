@@ -247,8 +247,7 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
         this.dataTracker.set( HUNGER_LEVEL     , 20 * 60 * 15                                                                                                                                );
         this.dataTracker.set( COLOUR           , DragonResourceLoader.getResource(new Identifier(this.dataTracker.get(DRAGON))).chooseBodyColour(this.getUuid()).asInt()                     );
         this.dataTracker.set( STATE            , DragonState.SLEEP.toInt()                                                                                                                   );
-        rand = net.minecraft.util.math.random.Random.create(DragonSalt.AGE + UuidOp.uuidToInt(uuid));
-        this.dataTracker.set( AGE              , rand.nextBetween(MIN_NATURAL_SPAWN_AGE, MAX_NATURAL_SPAWN_AGE)                                                                              );
+        this.dataTracker.set( AGE              , 0                                                                                                                                           );
         this.calculateDimensions();
         this.dataTracker.set( WAKEUP_PROGRESS  , 0                                                                                                                                           );
         this.dataTracker.set( ROAR_TICKS       , 0                                                                                                                                           );
@@ -428,7 +427,7 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
     @Nullable
     public UUID getTargetUuid() {
         Optional<UUID> uuid = this.dataTracker.get(TARGET);
-        if (uuid.isPresent() &&
+        if (uuid != null && uuid.isPresent() &&
                 this.dataTracker.get(TARGET_POS).isWithinDistance(this.getPos(), TARGET_MAX_DISTANCE) &&
                 this.dataTracker.get(TARGET_LAST_SEEN) <= TARGET_MAX_LAST_SEEN
         ) {
@@ -792,13 +791,9 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
                     BlockHitResult result = world.raycast(new RaycastContext(this.getPos(), this.getPos().add(vector.multiply(Config.CONFIG.dragon.wakeup.roar_radius)), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, this));
                     // If raycast hit a block
                     if (result.getType() == HitResult.Type.BLOCK) {
-                        Block block = world.getBlockState(result.getBlockPos()).getBlock();
                         // Make sure block is not protected.
-                        Optional<RegistryKey<Block>> key = Registry.BLOCK.getKey(block);
-                        if (key.isPresent()) {
-                            if (!Registry.BLOCK.getOrCreateEntry(key.get()).isIn(BlockTags.DRAGON_UNGRIEFABLE)) {
-                                world.breakBlock(result.getBlockPos(), true, this);
-                            }
+                        if (BlockTags.isOf(world.getBlockState(result.getBlockPos()), BlockTags.ROAR_IMMUNE)) {
+                            world.breakBlock(result.getBlockPos(), true, this);
                         }
                     }
                 }

@@ -29,7 +29,7 @@ public class StatusEffects {
 
 
     public static void register() {
-        DragonHeart.LOGGER.info("Registering status effects.");
+        DragonHeart.LOGGER.debug("Registering status effects.");
     }
 
 

@@ -7,6 +7,7 @@ import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.block.dragon.forge.DragonForgeBricksBlock;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
+import net.totobirdcreations.dragonheart.particle.DragonFlameParticleEffect;
 import net.totobirdcreations.dragonheart.particle.Particles;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
@@ -81,12 +82,7 @@ public class DragonForgeBricksBlockEntity extends DragonForgeBlockEntity {
 
 
         if (window && powered && world.isClient()) {
-            RGBColour colour = DragonResourceLoader.getResource(entity.dragon).colourGlow();
-            world.addParticle(
-                    Particles.DRAGON_FORGE_FLAME,
-                    pos.getX() + 0.5, pos.getY() + 0.75, pos.getZ() + 0.5,
-                    colour.r, colour.g, colour.b
-            );
+            Particles.createDragonForgeFlame(world, pos, entity.dragon);
         }
     }
 

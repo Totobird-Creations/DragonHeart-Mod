@@ -10,6 +10,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
+import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntity;
@@ -30,6 +31,8 @@ import javax.annotation.Nullable;
 public class ClientRenderers {
 
     public static void register() {
+        DragonHeart.LOGGER.debug("Registering client renderers.");
+
         registerEntities();
         registerItems();
         registerBlocks();

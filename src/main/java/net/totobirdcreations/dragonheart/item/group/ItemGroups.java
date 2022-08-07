@@ -25,9 +25,7 @@ public class ItemGroups {
     }
 
 
-    public static void register() {
-        DragonHeart.LOGGER.info("Registering item groups.");
-    }
+    public static void register() {}
 
 
 }

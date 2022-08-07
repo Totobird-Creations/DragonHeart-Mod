@@ -3,6 +3,7 @@ package net.totobirdcreations.dragonheart.gamerule;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.minecraft.world.GameRules;
+import net.totobirdcreations.dragonheart.DragonHeart;
 
 
 public class Gamerules {
@@ -21,7 +22,9 @@ public class Gamerules {
     );
 
 
-    public static void register() {}
+    public static void register() {
+        DragonHeart.LOGGER.debug("Registering gamerules.");
+    }
 
 
 }

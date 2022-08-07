@@ -8,7 +8,7 @@ public class BlockEntities {
 
 
     public static void register() {
-        DragonHeart.LOGGER.info("Registering block entities.");
+        DragonHeart.LOGGER.debug("Registering block entities.");
         DragonBlockEntities.register();
     }
 

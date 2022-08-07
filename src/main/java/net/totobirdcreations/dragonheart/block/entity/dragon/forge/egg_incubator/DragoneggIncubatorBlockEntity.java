@@ -20,9 +20,7 @@ import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.DragonForgeBlockEntity;
 import net.totobirdcreations.dragonheart.item.dragon.DragonBreathItem;
 import net.totobirdcreations.dragonheart.particle.Particles;
-import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
-import net.totobirdcreations.dragonheart.screenhandler.DragonEggIncubatorScreenHandler;
-import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
+import net.totobirdcreations.dragonheart.screen_handler.DragonEggIncubatorScreenHandler;
 import net.totobirdcreations.dragonheart.util.helper.InventoryHelper;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 import org.jetbrains.annotations.Nullable;
@@ -87,12 +85,7 @@ public class DragoneggIncubatorBlockEntity extends DragonForgeBlockEntity implem
             if (entity.power <= 0) {
                 world.setBlockState(pos, state.with(Properties.POWERED, false));
             } else {
-                RGBColour colour = DragonResourceLoader.getResource(entity.dragon).colourGlow();
-                world.addParticle(
-                        Particles.DRAGON_FORGE_FLAME,
-                        pos.getX() + 0.5, pos.getY() + 0.75, pos.getZ() + 0.5,
-                        colour.r, colour.g, colour.b
-                );
+                Particles.createDragonForgeFlame(world, pos, entity.dragon);
             }
         }
         if (entity.power <= 0) {

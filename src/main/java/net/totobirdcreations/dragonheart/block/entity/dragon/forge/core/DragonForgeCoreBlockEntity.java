@@ -23,7 +23,7 @@ import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntity;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.*;
 import net.totobirdcreations.dragonheart.resource.recipe.DragonForgeCoreRecipe;
 import net.totobirdcreations.dragonheart.resource.recipe.RecipeResources;
-import net.totobirdcreations.dragonheart.screenhandler.DragonForgeCoreScreenHandler;
+import net.totobirdcreations.dragonheart.screen_handler.DragonForgeCoreScreenHandler;
 import net.totobirdcreations.dragonheart.util.helper.DataHelper;
 import net.totobirdcreations.dragonheart.util.helper.InventoryHelper;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;

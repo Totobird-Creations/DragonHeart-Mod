@@ -52,6 +52,7 @@ dependencies {
 
 	// FabricAPI
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
 	// Geckolib
 	modImplementation "software.bernie.geckolib:geckolib-fabric-${project.geckolib_version}"

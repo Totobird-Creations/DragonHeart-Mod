@@ -5,26 +5,26 @@
   "compatibilityLevel": "JAVA_18",
   "mixins": [
     "block.CactusBlockMixin",
-    "deafenedeffect.LivingEntityMixin",
-    "dragonegg.AnvilScreenHandlerInterface",
-    "dragonegg.AnvilScreenHandlerMixin",
-    "dragonegg.ForgingScreenHandlerInterface",
-    "frozeneffect.EntityMixin",
-    "frozeneffect.LivingEntityMixin",
-    "frozeneffect.PlayerEntityMixin",
+    "deafened_effect.LivingEntityMixin",
+    "dragon_egg.AnvilScreenHandlerInterface",
+    "dragon_egg.AnvilScreenHandlerMixin",
+    "dragon_egg.ForgingScreenHandlerInterface",
+    "frozen_effect.EntityMixin",
+    "frozen_effect.LivingEntityMixin",
+    "frozen_effect.PlayerEntityMixin",
     "init.ItemGroupInterface"
   ],
   "client": [
     "cape.AbstractClientPlayerEntityMixin",
-    "dragonegg.AnvilScreenInterface",
-    "dragonegg.AnvilScreenMixin",
-    "dragonegg.ClickableWidgetInterface",
-    "dragonegg.TextFieldWidgetInterface",
-    "dragonegg.TextFieldWidgetMixin",
-    "frozeneffect.MouseMixin",
-    "frozeneffect.RendererMixin",
-    "titlescreen.TitleScreenInterface",
-    "titlescreen.TitleScreenMixin"
+    "dragon_egg.AnvilScreenInterface",
+    "dragon_egg.AnvilScreenMixin",
+    "dragon_egg.ClickableWidgetInterface",
+    "dragon_egg.TextFieldWidgetInterface",
+    "dragon_egg.TextFieldWidgetMixin",
+    "frozen_effect.MouseMixin",
+    "frozen_effect.RendererMixin",
+    "title_screen.TitleScreenInterface",
+    "title_screen.TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

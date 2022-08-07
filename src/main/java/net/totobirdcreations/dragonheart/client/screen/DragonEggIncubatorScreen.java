@@ -12,7 +12,7 @@ import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntityProperties;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.egg_incubator.DragoneggIncubatorBlockEntityProperties;
-import net.totobirdcreations.dragonheart.screenhandler.DragonEggIncubatorScreenHandler;
+import net.totobirdcreations.dragonheart.screen_handler.DragonEggIncubatorScreenHandler;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
 
 

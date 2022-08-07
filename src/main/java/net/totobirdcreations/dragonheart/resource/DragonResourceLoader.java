@@ -7,9 +7,12 @@ import com.google.gson.JsonParser;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
+import net.minecraft.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.Biome;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.entity.dragon.util.DragonSalt;
 import net.totobirdcreations.dragonheart.entity.dragon.util.UuidOp;
@@ -32,7 +35,7 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
 
     public static DragonResource getResource(Identifier identifier) {
         if (INSTANCE.dragonResources.containsKey(identifier) && ! identifier.equals(NbtHelper.EMPTY_TYPE)) {
-            return INSTANCE.dragonResources.get(identifier).copy();
+            return INSTANCE.dragonResources.get(identifier);
         } else {
             return new DragonResource(
                     NbtHelper.EMPTY_TYPE,
@@ -48,7 +51,8 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
                     false,
                     new RGBColour( 0.843f , 0.729f , 0.588f ),
                     new RGBColour( 0.698f , 0.604f , 0.486f ),
-                    new RGBColour( 1.0f   , 0.804f , 0.416f )
+                    new RGBColour( 1.0f   , 0.804f , 0.416f ),
+                    null
             );
         }
     }
@@ -197,7 +201,8 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
                                     explosionImmuneWhenAwake,
                                     colourBricks,
                                     colourCracks,
-                                    colourGlow
+                                    colourGlow,
+                                    TagKey.of(Registry.BIOME_KEY, new Identifier(id.getNamespace(), "dragons/" + id.getPath()))
                             ));
                         }
                     } else {
@@ -225,19 +230,28 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
 
     public record DragonResource(
             Identifier           id,
+            @Nullable
             Identifier           entityBreath,
+            @Nullable
             Identifier           entitySpike,
             ArrayList<RGBColour> bodyColours,
             RGBColour            eyeColour,
             ArrayList<RGBColour> creativeEggColours,
-            boolean              canBreatheInWater,
-            boolean              canFreeze,
-            boolean              hurtByWater,
-            boolean              fireImmune,
-            boolean              explosionImmuneWhenAwake,
+            @Nullable
+            Boolean              canBreatheInWater,
+            @Nullable
+            Boolean              canFreeze,
+            @Nullable
+            Boolean              hurtByWater,
+            @Nullable
+            Boolean              fireImmune,
+            @Nullable
+            Boolean              explosionImmuneWhenAwake,
             RGBColour            colourBricks,
             RGBColour            colourCracks,
-            RGBColour            colourGlow
+            RGBColour            colourGlow,
+            @Nullable
+            TagKey<Biome>        spawnsIn
     ) {
 
         public Text getName() {
@@ -294,16 +308,9 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
         public String getString(Identifier path) {
             return fromIdentifier(path) + "/"
                     + fromIdentifier(this.id) + "/"
-                    + fromIdentifier(this.entityBreath) + "/"
-                    + fromIdentifier(this.entitySpike) + "/"
                     + fromRGBList(this.bodyColours) + "/"
                     + fromRGB(this.eyeColour) + "/"
                     + fromRGBList(this.creativeEggColours) + "/"
-                    + fromBoolean(this.canBreatheInWater) + "/"
-                    + fromBoolean(this.canFreeze) + "/"
-                    + fromBoolean(this.hurtByWater) + "/"
-                    + fromBoolean(this.fireImmune) + "/"
-                    + fromBoolean(this.explosionImmuneWhenAwake) + "/"
                     + fromRGB(this.colourBricks) + "/"
                     + fromRGB(this.colourCracks) + "/"
                     + fromRGB(this.colourGlow) + "/";
@@ -367,43 +374,24 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
             try {
                 return new DragonResource(
                         new Identifier(parts.get(1)),
-                        new Identifier(parts.get(2)),
-                        new Identifier(parts.get(3)),
+                        null,
+                        null,
+                        toRGBList(getParts(parts.get(2), ',', false)),
+                        toRGB(parts.get(3)),
                         toRGBList(getParts(parts.get(4), ',', false)),
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
                         toRGB(parts.get(5)),
-                        toRGBList(getParts(parts.get(6), ',', false)),
-                        toBoolean(parts.get(7)),
-                        toBoolean(parts.get(8)),
-                        toBoolean(parts.get(9)),
-                        toBoolean(parts.get(10)),
-                        toBoolean(parts.get(11)),
-                        toRGB(parts.get(12)),
-                        toRGB(parts.get(13)),
-                        toRGB(parts.get(14))
+                        toRGB(parts.get(6)),
+                        toRGB(parts.get(7)),
+                        null
                 );
             } catch (Exception ignored) {
                 return null;
             }
-        }
-
-
-        public DragonResource copy() {
-            return new DragonResource(
-                    new Identifier(this.id.getNamespace(), this.id.getPath()),
-                    new Identifier(this.entityBreath.getNamespace(), this.entityBreath.getPath()),
-                    new Identifier(this.entitySpike.getNamespace(), this.entitySpike.getPath()),
-                    new ArrayList<>(this.bodyColours),
-                    new RGBColour(this.eyeColour.r, this.eyeColour.g, this.eyeColour.b),
-                    new ArrayList<>(this.creativeEggColours),
-                    this.canBreatheInWater,
-                    this.canFreeze,
-                    this.hurtByWater,
-                    this.fireImmune,
-                    this.explosionImmuneWhenAwake,
-                    new RGBColour(this.colourBricks.r, this.colourBricks.g, this.colourBricks.b),
-                    new RGBColour(this.colourCracks.r, this.colourCracks.g, this.colourCracks.b),
-                    new RGBColour(this.colourGlow.r, this.colourGlow.g, this.colourGlow.b)
-            );
         }
 
     }

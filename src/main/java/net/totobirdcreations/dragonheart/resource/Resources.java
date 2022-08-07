@@ -8,7 +8,7 @@ import net.totobirdcreations.dragonheart.resource.recipe.RecipeResources;
 public class Resources {
 
     public static void register() {
-        DragonHeart.LOGGER.info("Registering resources.");
+        DragonHeart.LOGGER.debug("Registering resources.");
 
         RecipeResources.register();
 

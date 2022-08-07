@@ -24,7 +24,7 @@ public class SoundEvents {
     }
 
     public static void register() {
-        DragonHeart.LOGGER.info("Registering sound events.");
+        DragonHeart.LOGGER.debug("Registering sound events.");
     }
 
 }

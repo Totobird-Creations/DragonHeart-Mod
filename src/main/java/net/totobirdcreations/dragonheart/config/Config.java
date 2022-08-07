@@ -10,7 +10,7 @@ public class Config {
     public static ConfigData CONFIG = AutoConfig.register(ConfigData.class, Toml4jConfigSerializer::new).get();
 
     public static void register() {
-        DragonHeart.LOGGER.info("Registering config.");
+        DragonHeart.LOGGER.debug("Registering config.");
     }
 
 }

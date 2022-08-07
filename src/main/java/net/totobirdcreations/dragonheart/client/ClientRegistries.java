@@ -11,7 +11,8 @@ public class ClientRegistries {
 
     @SuppressWarnings("all")
     public static void registerEntityAttributes() {
-        DragonHeart.LOGGER.info("Registering entity attributes.");
+        DragonHeart.LOGGER.debug("Registering client entity attributes.");
+
         FabricDefaultAttributeRegistry.register( Entities.DRAGON     , DragonEntity    .setAttributes());
         FabricDefaultAttributeRegistry.register( Entities.DRAGON_EGG , DragonEggEntity.setAttributes());
     }

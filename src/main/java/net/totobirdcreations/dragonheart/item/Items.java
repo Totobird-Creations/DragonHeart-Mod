@@ -5,6 +5,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.item.dragon.DragonItems;
+import net.totobirdcreations.dragonheart.item.group.ItemGroups;
 
 
 public class Items {
@@ -16,8 +17,9 @@ public class Items {
 
     public static void register() {
 
-        DragonHeart.LOGGER.info("Registering items.");
+        DragonHeart.LOGGER.debug("Registering items.");
         DragonItems.register();
+        ItemGroups.register();
 
     }
 

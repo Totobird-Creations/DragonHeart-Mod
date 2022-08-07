@@ -35,6 +35,8 @@ public class ClientShaders implements ShaderEffectRenderCallback {
 
 
     public static void register() {
+        DragonHeart.LOGGER.debug("Registering client shaders.");
+
         ShaderEffectRenderCallback.EVENT.register(new ClientShaders());
     }
 
