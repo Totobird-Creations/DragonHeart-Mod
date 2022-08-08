@@ -3,7 +3,6 @@ package net.totobirdcreations.dragonheart;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
-import net.totobirdcreations.dragonheart.block.BlockTags;
 import net.totobirdcreations.dragonheart.block.Blocks;
 import net.totobirdcreations.dragonheart.command.Commands;
 import net.totobirdcreations.dragonheart.config.Config;
@@ -12,7 +11,6 @@ import net.totobirdcreations.dragonheart.entity.Entities;
 import net.totobirdcreations.dragonheart.event.EventHandlers;
 import net.totobirdcreations.dragonheart.gamerule.Gamerules;
 import net.totobirdcreations.dragonheart.item.Items;
-import net.totobirdcreations.dragonheart.item.group.ItemGroups;
 import net.totobirdcreations.dragonheart.particle.Particles;
 import net.totobirdcreations.dragonheart.resource.Resources;
 import net.totobirdcreations.dragonheart.screen_handler.ScreenHandlers;
@@ -20,6 +18,7 @@ import net.totobirdcreations.dragonheart.sound.SoundEvents;
 import net.totobirdcreations.dragonheart.structure.Structures;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import software.bernie.example.GeckoLibMod;
 import software.bernie.geckolib3.GeckoLib;
 
 import javax.annotation.Nullable;
@@ -37,7 +36,7 @@ public class DragonHeart implements ModInitializer {
 	static {
 		Properties properties = new Properties();
 		try {
-			properties.load(DragonHeart.class.getResourceAsStream("/mod.properties"));
+			properties.load(DragonHeart.class.getResourceAsStream("/dragonheart.properties"));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -45,7 +44,7 @@ public class DragonHeart implements ModInitializer {
 		NAME    = properties.getProperty("name"    );
 		VERSION = properties.getProperty("version" );
 	}
-	public static Logger LOGGER = LogManager.getLogger(ID);
+	public static Logger LOGGER = LogManager.getLogger(NAME);
 
 	public static boolean DEVENV;
 
@@ -99,10 +98,10 @@ public class DragonHeart implements ModInitializer {
 
 		DEVENV = FabricLoader.getInstance().isDevelopmentEnvironment();
 
-		/*if (DEVENV) {
+		if (DEVENV) {
 			LOGGER.info("Suppressing GeckoLibMod.");
+			GeckoLibMod.DISABLE_IN_DEV = true;
 		}
-		GeckoLibMod.DISABLE_IN_DEV = true;*/
 		GeckoLib.initialize();
 
 		/*LooseEndManager.getInstance().register(MOD_ID, MOD_NAME, MOD_VERSION.split("-")[0])

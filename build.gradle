@@ -41,11 +41,6 @@ repositories {
 	//	url "https://jitpack.io/"
 	//}
 
-	// ARRP
-	maven {
-		url = uri("https://storage.googleapis.com/devan-maven/")
-	}
-
 }
 
 dependencies {
@@ -78,16 +73,14 @@ dependencies {
 	//modImplementation "com.github.Totobird-Creations:LooseEndsLib:${project.looseendslib_version}"
 	//include "com.github.Totobird-Creations:LooseEndsLib:${project.looseendslib_version}"
 
-	// ARRP
-	modImplementation "net.devtech:arrp:${project.arrp_version}"
-
 }
 
 processResources {
 	filesMatching(["**/*.properties", "**/*.json", "**/*.mcmeta"]) {
-		expand  "id"      : project.mod_id,
-				"name"    : project.mod_name,
-				"version" : project.mod_version
+		expand  "id"           : project.mod_id,
+				"name"         : project.mod_name,
+				"version"      : "${project.mod_version}-mc${project.minecraft_version}",
+				"version_base" : project.mod_version
 	}
 }
 

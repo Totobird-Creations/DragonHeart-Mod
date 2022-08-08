@@ -61,7 +61,6 @@ public class Blocks {
         DragonHeart.LOGGER.debug("Registering blocks.");
         DragonBlocks.register();
         BlockEntities.register();
-        BlockTags.register();
     }
 
 

@@ -11,6 +11,7 @@ public class Resources {
         DragonHeart.LOGGER.debug("Registering resources.");
 
         RecipeResources.register();
+        TagResources.register();
 
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(DragonResourceLoader.INSTANCE);
     }

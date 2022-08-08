@@ -1,7 +1,6 @@
 package net.totobirdcreations.dragonheart.block.entity.dragon;
 
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
@@ -11,10 +10,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.block.BlockTags;
 import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
 import net.totobirdcreations.dragonheart.block.dragon.DragonGriefedBlock;
+import net.totobirdcreations.dragonheart.resource.TagResources;
 
 
 public class DragonGriefedBlockEntity extends DragonBlockEntity {
@@ -39,7 +37,7 @@ public class DragonGriefedBlockEntity extends DragonBlockEntity {
 
     public static void convert(World world, BlockPos pos, Identifier type) {
         BlockState resetState = world.getBlockState(pos);
-        if (! BlockTags.isOf(resetState, BlockTags.BREATH_IMMUNE)) {
+        if (! TagResources.isOf(resetState, TagResources.BREATH_IMMUNE)) {
             // If is unresettable griefed block or is not griefed block, create new resettable griefed block.
             if (
                     (resetState.isOf(DragonBlocks.DRAGON_GRIEFED) && ! resetState.get(DragonGriefedBlock.CAN_RESET)) ||

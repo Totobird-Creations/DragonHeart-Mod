@@ -4,8 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import net.devtech.arrp.api.RRPCallback;
-import net.devtech.arrp.api.RuntimeResourcePack;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
@@ -31,11 +29,6 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
     public static DragonResourceLoader INSTANCE         = new DragonResourceLoader();
     public static Identifier           RESET_CHANNEL    = new Identifier(DragonHeart.ID, "reset_dragon_resources");
     public static Identifier           REGISTER_CHANNEL = new Identifier(DragonHeart.ID, "register_dragon_resources");
-    public static Identifier           RESOURCES_ID     = new Identifier(DragonHeart.ID, "data");
-    public static RuntimeResourcePack  RESOURCES        = RuntimeResourcePack.create(RESOURCES_ID);
-    static {
-        RRPCallback.AFTER_VANILLA.register((listener) -> listener.add(DragonResourceLoader.RESOURCES));
-    }
 
     public HashMap<Identifier, DragonResource> dragonResources = new HashMap<>();
 
@@ -158,6 +151,7 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
 
     @Override
     public void reload(ResourceManager manager) {
+        Exception exception = null;
         try {
             this.dragonResources = new HashMap<>();
             Map<Identifier, Resource> resources = manager.findResources("dragons", this::isValidFile);
@@ -221,12 +215,11 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
             }
 
         } catch (Exception e) {
-            EventHandlers.serverside_send_dragonresource_signal();
-            throw e;
+            DragonHeart.LOGGER.error("Failed to load dragon types.");
         }
 
+        // Send update to clients.
         EventHandlers.serverside_send_dragonresource_signal();
-
     }
 
 

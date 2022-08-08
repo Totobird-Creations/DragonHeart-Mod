@@ -13,7 +13,8 @@
     "frozen_effect.LivingEntityInterface",
     "frozen_effect.LivingEntityMixin",
     "frozen_effect.PlayerEntityMixin",
-    "init.ItemGroupInterface"
+    "init.ItemGroupInterface",
+    "structure.StructureMixin"
   ],
   "client": [
     "cape.AbstractClientPlayerEntityMixin",

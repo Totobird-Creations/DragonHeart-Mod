@@ -11,6 +11,7 @@ import net.minecraft.structure.processor.StructureProcessor;
 import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.ChunkRegion;
@@ -24,10 +25,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class DragonNestStructureProcessor extends StructureProcessor {
+public class NestStructureProcessor extends StructureProcessor {
 
-    public static final DragonNestStructureProcessor        INSTANCE = new DragonNestStructureProcessor();
-    public static final Codec<DragonNestStructureProcessor> CODEC    = Codec.unit(() -> INSTANCE);
+    public static final NestStructureProcessor INSTANCE = new NestStructureProcessor();
+    public static final Codec<NestStructureProcessor> CODEC    = Codec.unit(() -> INSTANCE);
 
     public static final HashMap<Block, Float>               CHANCES = new HashMap<>();
     static {
@@ -92,30 +93,37 @@ public class DragonNestStructureProcessor extends StructureProcessor {
                 );
             }
         } else if (currentInfo.state.isOf(Blocks.COMMAND_BLOCK)) {
-            // Block is command block. Consider as data block.
+            // Block is command block. Consider as game-logic marker.
             if (world instanceof ChunkRegion chunkRegion) {
                 ServerWorld serverWorld = chunkRegion.toServerWorld();
                 String command = currentInfo.nbt.getString("Command");
                 if (command.startsWith("dragon")) {
                     // Data specifies dragon spawn.
-                    DragonEntity dragon = Entities.DRAGON.create(serverWorld);
-                    assert dragon != null;
-                    dragon.setPosition(new Vec3d(
+                    Vec3d dragonPos = new Vec3d(
                             currentInfo.pos.getX() + 0.5f,
                             currentInfo.pos.getY(),
                             currentInfo.pos.getZ() + 0.5f
-                    ));
-                    dragon.setDragon(id.toString());
-                    dragon.setAge(random.nextBetween(DragonEntity.MIN_NATURAL_SPAWN_AGE, DragonEntity.MAX_NATURAL_SPAWN_AGE));
-                    dragon.setColour(DragonResourceLoader.getResource(id)
-                            .chooseBodyColour(dragon.getUuid())
-                            .asInt()
                     );
-                    float yaw = random.nextFloat() * 360.0f;
-                    dragon.setYaw(yaw);
-                    dragon.setBodyYaw(yaw);
-                    dragon.setHeadYaw(yaw);
-                    serverWorld.spawnEntity(dragon);
+                    // Make sure no other dragon has been spawned.
+                    if (serverWorld.getEntitiesByClass(
+                            DragonEntity.class,
+                            Box.of(dragonPos, 5.0, 5.0, 5.0),
+                            (entity) -> true
+                    ).size() == 0) {
+                        DragonEntity dragon = Entities.DRAGON.create(serverWorld);
+                        assert dragon != null;
+                        dragon.setPosition(dragonPos);
+                        DragonResourceLoader.DragonResource resource = DragonResourceLoader.getResource(id);
+                        dragon.setDragon(resource.id().toString());
+                        dragon.setAge(random.nextBetween(DragonEntity.MIN_NATURAL_SPAWN_AGE, DragonEntity.MAX_NATURAL_SPAWN_AGE));
+                        dragon.setColour(resource.chooseBodyColour(dragon.getUuid()).asInt());
+                        dragon.setEyeColour(resource.eyeColour().asInt());
+                        float yaw = random.nextFloat() * 360.0f;
+                        dragon.setYaw(yaw);
+                        dragon.setBodyYaw(yaw);
+                        dragon.setHeadYaw(yaw);
+                        serverWorld.spawnEntity(dragon);
+                    }
                 }
             }
             return new StructureTemplate.StructureBlockInfo(
@@ -138,7 +146,7 @@ public class DragonNestStructureProcessor extends StructureProcessor {
 
     @Override
     public StructureProcessorType<?> getType() {
-        return Structures.DRAGON_NEST;
+        return Structures.NEST_PROCESSOR_TYPE;
     }
 
 }

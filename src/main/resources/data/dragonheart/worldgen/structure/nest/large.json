@@ -1,6 +1,6 @@
 {
-  "type": "minecraft:jigsaw",
-  "biomes": "#${id}:has_structure/nest",
+  "type": "${id}:nest",
+  "biomes": "#${id}:dragons",
   "step": "underground_structures",
   "spawn_overrides": {
     "ambient": {

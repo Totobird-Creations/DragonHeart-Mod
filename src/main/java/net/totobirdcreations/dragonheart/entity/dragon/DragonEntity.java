@@ -2,7 +2,6 @@ package net.totobirdcreations.dragonheart.entity.dragon;
 
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
-import net.minecraft.block.Block;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -36,7 +35,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.*;
 import net.minecraft.world.event.EntityPositionSource;
 import net.minecraft.world.event.GameEvent;
@@ -44,15 +42,11 @@ import net.minecraft.world.event.listener.EntityGameEventHandler;
 import net.minecraft.world.event.listener.GameEventListener;
 import net.minecraft.world.event.listener.VibrationListener;
 import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.block.BlockTags;
 import net.totobirdcreations.dragonheart.config.Config;
 import net.totobirdcreations.dragonheart.damage.DamageSources;
 import net.totobirdcreations.dragonheart.effect.StatusEffects;
-import net.totobirdcreations.dragonheart.entity.dragon.ai.FindTargetGoal;
-import net.totobirdcreations.dragonheart.entity.dragon.ai.PursueTargetGoal;
-import net.totobirdcreations.dragonheart.entity.dragon.util.DragonSalt;
-import net.totobirdcreations.dragonheart.entity.dragon.util.UuidOp;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
+import net.totobirdcreations.dragonheart.resource.TagResources;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 import org.jetbrains.annotations.Nullable;
@@ -242,24 +236,28 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         net.minecraft.util.math.random.Random rand;
 
-        this.dataTracker.set( DRAGON           , entityNbt != null && entityNbt.contains("dragon", NbtElement.STRING_TYPE) ? entityNbt.getString("dragon") : NbtHelper.EMPTY_TYPE.toString() );
-        this.dataTracker.set( SPAWN_POS        , this.getBlockPos()                                                                                                                          );
-        this.dataTracker.set( HUNGER_LEVEL     , 20 * 60 * 15                                                                                                                                );
-        this.dataTracker.set( COLOUR           , RGBColour.WHITE.asInt()                                                                                                                     );
-        this.dataTracker.set( STATE            , DragonState.SLEEP.toInt()                                                                                                                   );
-        this.dataTracker.set( AGE              , 0                                                                                                                                           );
+        this.dataTracker.set(DRAGON,
+                entityNbt != null && entityNbt.contains("dragon", NbtElement.STRING_TYPE)
+                        ? entityNbt.getString("dragon")
+                        : NbtHelper.EMPTY_TYPE.toString()
+        );
+        this.dataTracker.set( SPAWN_POS        , this.getBlockPos()        );
+        this.dataTracker.set( HUNGER_LEVEL     , 20 * 60 * 15              );
+        this.dataTracker.set( COLOUR           , RGBColour.WHITE.asInt()   );
+        this.dataTracker.set( STATE            , DragonState.SLEEP.toInt() );
+        this.dataTracker.set( AGE              , 0                         );
         this.calculateDimensions();
-        this.dataTracker.set( WAKEUP_PROGRESS  , 0                                                                                                                                           );
-        this.dataTracker.set( ROAR_TICKS       , 0                                                                                                                                           );
-        this.dataTracker.set( FLYING           , false                                                                                                                                       );
-        this.dataTracker.set( TARGET           , null                                                                                                                                        );
-        this.dataTracker.set( TARGET_POS       , new BlockPos(0, 0, 0)                                                                                                                       );
-        this.dataTracker.set( TARGET_LAST_SEEN , 0                                                                                                                                           );
-        this.dataTracker.set( EYE_COLOUR       , DragonResourceLoader.getResource(new Identifier(this.dataTracker.get(DRAGON))).eyeColour().asInt()                                          );
-        this.dataTracker.set( TAMED_OWNER      , Optional.empty()                                                                                                                            );
-        this.dataTracker.set( HAS_BREEDED      , false                                                                                                                                       );
-        this.dataTracker.set( NATURAL_SPAWN    , true                                                                                                                                        );
-        this.dataTracker.set( SITTING          , false                                                                                                                                       );
+        this.dataTracker.set( WAKEUP_PROGRESS  , 0                         );
+        this.dataTracker.set( ROAR_TICKS       , 0                         );
+        this.dataTracker.set( FLYING           , false                     );
+        this.dataTracker.set( TARGET           , null                      );
+        this.dataTracker.set( TARGET_POS       , new BlockPos(0, 0, 0)     );
+        this.dataTracker.set( TARGET_LAST_SEEN , 0                         );
+        this.dataTracker.set( EYE_COLOUR       , RGBColour.WHITE.asInt()   );
+        this.dataTracker.set( TAMED_OWNER      , Optional.empty()          );
+        this.dataTracker.set( HAS_BREEDED      , false                     );
+        this.dataTracker.set( NATURAL_SPAWN    , true                      );
+        this.dataTracker.set( SITTING          , false                     );
         super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         return entityData;
     }
@@ -792,7 +790,7 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
                     // If raycast hit a block
                     if (result.getType() == HitResult.Type.BLOCK) {
                         // Make sure block is not protected.
-                        if (BlockTags.isOf(world.getBlockState(result.getBlockPos()), BlockTags.ROAR_IMMUNE)) {
+                        if (TagResources.isOf(world.getBlockState(result.getBlockPos()), TagResources.ROAR_IMMUNE)) {
                             world.breakBlock(result.getBlockPos(), true, this);
                         }
                     }

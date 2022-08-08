@@ -1,10 +1,13 @@
 {
   "schemaVersion": 1,
   "id": "${id}",
-  "version": "${version}",
+  "version": "${version_base}",
+
 
   "name": "${name}",
   "description": "Dragon Mod for Minecraft Fabric 1.19.x",
+
+
   "authors": [
     "Totobird Creations",
     "Balec"
@@ -15,8 +18,10 @@
     "issues": "https://github.com/Totobird-Creations/DragonHeart-Mod/issues"
   },
 
+
   "license": "MIT",
   "icon": "assets/${id}/icon.png",
+
 
   "environment": "*",
   "entrypoints": {
@@ -31,21 +36,30 @@
     ]
   },
   "mixins": [
-    "mixins.dragonheart.json"
+    "mixins.${id}.json"
   ],
-  "accessWidener": "dragonheart.accesswidener",
+  "accessWidener": "${id}.accesswidener",
+
 
   "depends": {
     "fabricloader": ">=0.14.7",
     "minecraft": "1.19.x",
     "java": ">=18",
-    "nbtcrafting": ">=2"
+    "fabric": ">=0.55",
+    "nbtcrafting": ">=2",
+    "geckolib3": "3.x.x",
+    "satin": ">=1.8",
+    "cloth-config": ">=7"
+  },
+  "recommends": {
+    "patchouli": ">=74"
   },
   "suggests": {
-    "modmenu": ">=4",
-    "canvas": ">=1",
-    "patchouli": ">=1"
+    "modmenu": ">=4.0.0",
+    "canvas": ">=1.0.2453"
   },
+
+
   "custom": {
     "modmenu": {
       "links": {

@@ -5,3 +5,17 @@ accessible class net/minecraft/client/model/ModelPart$Vertex
 accessible field net/minecraft/client/model/ModelPart$Cuboid sides [Lnet/minecraft/client/model/ModelPart$Quad;
 # Block Entity
 accessible method net/minecraft/block/entity/BlockEntity writeNbt (Lnet/minecraft/nbt/NbtCompound;)V
+# Structure
+extendable class  net/minecraft/world/gen/structure/JigsawStructure
+accessible method net/minecraft/world/gen/structure/JigsawStructure  createValidator         ()Ljava/util/function/Function;
+accessible field  net/minecraft/world/gen/structure/JigsawStructure  startPool               Lnet/minecraft/util/registry/RegistryEntry;
+accessible field  net/minecraft/world/gen/structure/JigsawStructure  startJigsawName         Ljava/util/Optional;
+accessible field  net/minecraft/world/gen/structure/JigsawStructure  size                    I
+accessible field  net/minecraft/world/gen/structure/JigsawStructure  startHeight             Lnet/minecraft/world/gen/heightprovider/HeightProvider;
+accessible field  net/minecraft/world/gen/structure/JigsawStructure  useExpansionHack        Z
+accessible field  net/minecraft/world/gen/structure/JigsawStructure  projectStartToHeightmap Ljava/util/Optional;
+accessible field  net/minecraft/world/gen/structure/JigsawStructure  maxDistanceFromCenter   I
+accessible method net/minecraft/world/gen/structure/Structure        isBiomeValid            (Lnet/minecraft/world/gen/structure/Structure$StructurePosition;Lnet/minecraft/world/gen/chunk/ChunkGenerator;Lnet/minecraft/world/gen/noise/NoiseConfig;Ljava/util/function/Predicate;)Z
+accessible field  net/minecraft/world/gen/structure/Structure$Config biomes                  Lnet/minecraft/util/registry/RegistryEntryList;
+mutable    field  net/minecraft/world/gen/structure/Structure$Config biomes                  Lnet/minecraft/util/registry/RegistryEntryList;
+
