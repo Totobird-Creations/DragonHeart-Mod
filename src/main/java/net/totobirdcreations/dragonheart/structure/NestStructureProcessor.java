@@ -4,22 +4,17 @@ import com.mojang.serialization.Codec;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.structure.StructurePlacementData;
 import net.minecraft.structure.StructureTemplate;
 import net.minecraft.structure.processor.StructureProcessor;
 import net.minecraft.structure.processor.StructureProcessorType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.WorldView;
 import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
-import net.totobirdcreations.dragonheart.entity.Entities;
-import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
+import net.totobirdcreations.dragonheart.util.helper.DataHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,29 +41,12 @@ public class NestStructureProcessor extends StructureProcessor {
             StructurePlacementData data
     ) {
 
-        ArrayList<Identifier> allowedIds = new ArrayList<>();
-        for (Identifier id : DragonResourceLoader.getIdentifiers()) {
-            DragonResourceLoader.DragonResource resource = DragonResourceLoader.getResource(id);
-            if (world.getBiome(pos).isIn(
-                    resource.spawnsIn()
-            )) {
-                allowedIds.add(id);
-            }
-        }
-
-        Random random = data.getRandom(pos);
-        Identifier id;
-        if (allowedIds.size() > 0) {
-            int index = allowedIds.size() > 1
-                    ? random.nextInt(allowedIds.size())
-                    : 0;
-            id = allowedIds.get(index);
-        } else {
+        Identifier id = DataHelper.chooseDragonTypeForPos(world, pos, data.getRandom(pos));
+        if (id == null) {
             return originalInfo;
         }
 
-
-        random        = data.getRandom(currentInfo.pos);
+        Random random = data.getRandom(currentInfo.pos);
         Float  chance = CHANCES.get(currentInfo.state.getBlock());
         if (chance != null) {
             // Block is wool with chance attached.
@@ -92,45 +70,6 @@ public class NestStructureProcessor extends StructureProcessor {
                         currentInfo.nbt
                 );
             }
-        } else if (currentInfo.state.isOf(Blocks.COMMAND_BLOCK)) {
-            // Block is command block. Consider as game-logic marker.
-            if (world instanceof ChunkRegion chunkRegion) {
-                ServerWorld serverWorld = chunkRegion.toServerWorld();
-                String command = currentInfo.nbt.getString("Command");
-                if (command.startsWith("dragon")) {
-                    // Data specifies dragon spawn.
-                    Vec3d dragonPos = new Vec3d(
-                            currentInfo.pos.getX() + 0.5f,
-                            currentInfo.pos.getY(),
-                            currentInfo.pos.getZ() + 0.5f
-                    );
-                    // Make sure no other dragon has been spawned.
-                    if (serverWorld.getEntitiesByClass(
-                            DragonEntity.class,
-                            Box.of(dragonPos, 5.0, 5.0, 5.0),
-                            (entity) -> true
-                    ).size() == 0) {
-                        DragonEntity dragon = Entities.DRAGON.create(serverWorld);
-                        assert dragon != null;
-                        dragon.setPosition(dragonPos);
-                        DragonResourceLoader.DragonResource resource = DragonResourceLoader.getResource(id);
-                        dragon.setDragon(resource.id().toString());
-                        dragon.setAge(random.nextBetween(DragonEntity.MIN_NATURAL_SPAWN_AGE, DragonEntity.MAX_NATURAL_SPAWN_AGE));
-                        dragon.setColour(resource.chooseBodyColour(dragon.getUuid()).asInt());
-                        dragon.setEyeColour(resource.eyeColour().asInt());
-                        float yaw = random.nextFloat() * 360.0f;
-                        dragon.setYaw(yaw);
-                        dragon.setBodyYaw(yaw);
-                        dragon.setHeadYaw(yaw);
-                        serverWorld.spawnEntity(dragon);
-                    }
-                }
-            }
-            return new StructureTemplate.StructureBlockInfo(
-                    currentInfo.pos,
-                    Blocks.AIR.getDefaultState(),
-                    currentInfo.nbt
-            );
         } else if (currentInfo.state.isOf(Blocks.AIR) && originalInfo.state.isOf(Blocks.WATER)) {
             // Handle underwater spawning.
             return new StructureTemplate.StructureBlockInfo(

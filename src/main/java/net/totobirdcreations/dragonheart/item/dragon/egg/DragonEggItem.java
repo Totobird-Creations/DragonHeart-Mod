@@ -25,6 +25,7 @@ import net.totobirdcreations.dragonheart.item.dragon.DragonItems;
 import net.totobirdcreations.dragonheart.item.util.DragonColouredItem;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
+import net.totobirdcreations.dragonheart.util.helper.DataHelper;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -58,14 +59,14 @@ public class DragonEggItem extends DragonItemImpl {
         assert egg != null;
         assert nbt != null;
         egg.setPosition(Vec3d.ofBottomCenter(pos));
-        egg.setYaw(new java.util.Random().nextFloat((float)(Math.PI * 2.0f)));
 
-        Random rand = Random.create(DragonSalt.AGE + UuidOp.uuidToInt(egg.getUuid()));
+        Random random = Random.create(DragonSalt.AGE + UuidOp.uuidToInt(egg.getUuid()));
         egg.setDragon   (NbtHelper.getItemDragonType(stack));
-        egg.setColour   (NbtHelper.getInt    (nbt, "colour"    , RGBColour.WHITE.asInt()                                                        ));
-        egg.setAge      (NbtHelper.getInt    (nbt, "age"       , 0                                                                              ));
-        egg.setSpawnAge (NbtHelper.getInt    (nbt, "spawnAge"  , rand.nextBetween(DragonEggEntity.MIN_SPAWN_AGE, DragonEggEntity.MAX_SPAWN_AGE) ));
-        egg.setEyeColour(NbtHelper.getInt    (nbt, "eyeColour" , RGBColour.WHITE.asInt()                                                        ));
+        egg.setColour   (NbtHelper.getInt    (nbt, "colour"    , RGBColour.WHITE.asInt()                                                          ));
+        egg.setAge      (NbtHelper.getInt    (nbt, "age"       , 0                                                                                ));
+        egg.setSpawnAge (NbtHelper.getInt    (nbt, "spawnAge"  , random.nextBetween(DragonEggEntity.MIN_SPAWN_AGE, DragonEggEntity.MAX_SPAWN_AGE) ));
+        egg.setEyeColour(NbtHelper.getInt    (nbt, "eyeColour" , RGBColour.WHITE.asInt()                                                          ));
+        DataHelper.randomiseEntityRotation(egg);
 
         world.spawnEntity(egg);
 

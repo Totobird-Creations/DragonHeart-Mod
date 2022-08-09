@@ -16,7 +16,7 @@ import net.minecraft.world.biome.Biome;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.entity.dragon.util.DragonSalt;
 import net.totobirdcreations.dragonheart.entity.dragon.util.UuidOp;
-import net.totobirdcreations.dragonheart.event.EventHandlers;
+import net.totobirdcreations.dragonheart.event.ResourceEventHandlers;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 
@@ -219,7 +219,7 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
         }
 
         // Send update to clients.
-        EventHandlers.serverside_send_dragonresource_signal();
+        ResourceEventHandlers.serverside_send_dragonresource_signal();
     }
 
 

@@ -285,16 +285,12 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
 
         DragonEntity dragon = this.convertTo(Entities.DRAGON, false);
         assert dragon != null;
-        dragon.setDragon(this.dataTracker.get(DRAGON));
-        dragon.setNaturalSpawn(false);
-        dragon.setState(DragonEntity.DragonState.WANDER);
         this.createEntity(dragon);
     }
 
 
     public void createEntity(DragonEntity dragon) {
-        dragon.setYaw(this.getRandom().nextFloat() % (float)(Math.PI * 2.0f));
-
+        dragon.setDragon(this.dataTracker.get(DRAGON));
         dragon.setAge(0);
         dragon.setState(DragonEntity.DragonState.WANDER);
         dragon.setColour(this.getColour());

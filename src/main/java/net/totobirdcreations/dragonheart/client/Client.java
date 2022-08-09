@@ -3,7 +3,6 @@ package net.totobirdcreations.dragonheart.client;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.client.screen.ClientScreens;
 import net.totobirdcreations.dragonheart.event.EventHandlers;
 
@@ -19,7 +18,7 @@ public class Client implements ClientModInitializer {
         ClientScreens    .register();
         ClientRegistries .register();
         ClientParticles  .register();
-        EventHandlers    .registerClient();
+        EventHandlers.registerClient();
 
     }
 

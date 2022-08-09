@@ -49,7 +49,8 @@
     "nbtcrafting": ">=2",
     "geckolib3": "3.x.x",
     "satin": ">=1.8",
-    "cloth-config": ">=7"
+    "cloth-config": ">=7",
+    "jigsawlogiclib": "1.0.x"
   },
   "recommends": {
     "patchouli": ">=74"

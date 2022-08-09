@@ -72,8 +72,6 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
     public static int                  ROAR_ANIMATION_LENGTH = 41;
     public static float                JUMP_STRENGTH         = 1.0f;
     public static int                  MAX_STAGES            = 4;
-    public static int                  MIN_NATURAL_SPAWN_AGE = Config.CONFIG.dragon.age.stage_ticks * 3;
-    public static int                  MAX_NATURAL_SPAWN_AGE = Config.CONFIG.dragon.age.stage_ticks * 4;
     public static HashMap<Item, Float> HEAL_ITEMS            = new HashMap<>();
     static {
         HEAL_ITEMS.put( Items.COOKED_BEEF            , 50.0f  );
@@ -460,10 +458,15 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
     }
 
     public void addAge(int age) {
-        this.dataTracker.set(AGE, Math.min(Math.max(this.dataTracker.get(AGE) + age, 0), getMaxAge()));
-        this.calculateDimensions();
+        if (! this.isNaturallySpawned()) {
+            this.dataTracker.set(AGE, Math.min(Math.max(this.dataTracker.get(AGE) + age, 0), getMaxAge()));
+            this.calculateDimensions();
+        }
     }
 
+    public void setColour(RGBColour colour) {
+        this.setColour(colour.asInt());
+    }
     public void setColour(int colour) {
         this.dataTracker.set(COLOUR, colour);
     }
