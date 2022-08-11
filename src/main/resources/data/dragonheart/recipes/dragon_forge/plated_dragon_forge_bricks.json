@@ -1,6 +1,6 @@
 {
   "type" : "${id}:dragonforge",
-  "dragon_type" : "dragonheart:.",
+  "dragon_type" : "${id}:.",
   "time" : 300,
   "ingredients" : [
     {

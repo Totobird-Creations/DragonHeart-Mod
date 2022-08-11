@@ -63,9 +63,8 @@ public class DragonForgeCoreRecipe implements Recipe<SimpleInventory> {
             if (! ingredient.ingredient.test(stack)) {
                 return false;
             }
-            if (
-                    ingredient.modifiers.contains(CoreIngredient.Modifier.MATCH_TYPE) &&
-                    ! entity.dragon.equals(NbtHelper.getItemDragonType(stack))
+            if (ingredient.modifiers.contains(CoreIngredient.Modifier.MATCH_TYPE)
+                    && ! entity.dragon.equals(NbtHelper.getItemDragonType(stack))
             ) {
                 return false;
             }

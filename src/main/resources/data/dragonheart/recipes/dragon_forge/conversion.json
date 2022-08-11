@@ -1,0 +1,23 @@
+{
+  "type" : "${id}:dragonforge",
+  "dragon_type" : "minecraft:empty",
+  "time" : 300,
+  "ingredients" : [
+    {
+      "item" : "${id}:dragon_cells",
+      "forge": [
+        "match_type"
+      ]
+    },
+    {
+      "item" : "${id}:dragon_blood",
+      "forge": [
+        "match_type"
+      ]
+    }
+  ],
+  "result" : {
+    "item" : "minecraft:gunpowder",
+    "count": 1
+  }
+}

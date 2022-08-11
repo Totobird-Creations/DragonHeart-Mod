@@ -34,10 +34,9 @@ public abstract class TextFieldWidgetMixin extends ClickableWidget implements Dr
     private boolean isAnvilDragoneggCreative() {
         if (this.anvilScreen != null) {
             ItemStack stack = this.anvilScreen.getScreenHandler().getSlot(0).getStack();
-            if (
-                    ! stack.isEmpty() &&
-                    stack.getItem() instanceof DragonEggItem egg &&
-                    egg.isCreative(stack)
+            if (! stack.isEmpty()
+                    && stack.getItem() instanceof DragonEggItem egg
+                    && egg.isCreative(stack)
             ) {
                 return true;
             }

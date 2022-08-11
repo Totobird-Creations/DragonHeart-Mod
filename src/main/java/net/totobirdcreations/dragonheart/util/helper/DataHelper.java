@@ -13,8 +13,12 @@ import java.util.ArrayList;
 
 public class DataHelper {
 
-    public static boolean dragonTypeMatches(Identifier source, Identifier pattern) {
-        return stringPartMatches(source.getNamespace(), pattern.getNamespace()) && stringPartMatches(source.getPath(), pattern.getPath());
+    public static boolean dragonRecipeTypeMatches(Identifier entityType, Identifier recipeType) {
+        if (entityType.equals(NbtHelper.EMPTY_TYPE)) {
+            return recipeType.equals(NbtHelper.EMPTY_TYPE);
+        }
+        return stringPartMatches(entityType.getNamespace(), recipeType.getNamespace())
+                && stringPartMatches(entityType.getPath(), recipeType.getPath());
     }
 
     public static boolean stringPartMatches(String source, String pattern) {

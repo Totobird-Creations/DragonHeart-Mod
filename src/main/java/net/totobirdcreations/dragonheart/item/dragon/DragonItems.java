@@ -74,7 +74,6 @@ public class DragonItems {
     );
 
 
-    @SuppressWarnings("unused")
     public static final Item DRAGON_BLOOD = registerItem(
             "dragon_blood",
             new DragonBloodItem(
@@ -87,6 +86,15 @@ public class DragonItems {
     public static final Item DRAGON_BREATH = registerItem(
             "dragon_breath",
             new DragonBreathItem(
+                    new FabricItemSettings()
+                            .group(ItemGroups.DRAGON)
+            )
+    );
+
+
+    public static final Item DRAGON_CELLS = registerItem(
+            "dragon_cells",
+            new DragonCellsItem(
                     new FabricItemSettings()
                             .group(ItemGroups.DRAGON)
             )

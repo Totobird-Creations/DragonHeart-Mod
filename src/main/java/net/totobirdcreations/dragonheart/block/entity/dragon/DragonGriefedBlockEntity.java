@@ -17,16 +17,11 @@ import net.totobirdcreations.dragonheart.resource.TagResources;
 
 public class DragonGriefedBlockEntity extends DragonBlockEntity {
 
-    public static int         MAX_RESET_TIME = 200;
-    public static NbtCompound DEFAULT_STATE  = (NbtCompound)(BlockState.CODEC.encode(
-            Blocks.AIR.getDefaultState(),
-            NbtOps.INSTANCE,
-            NbtOps.INSTANCE.empty()
-    ).get().orThrow());
+    public static int MAX_RESET_TIME = 200;
 
     public int         resetTime  = MAX_RESET_TIME;
     public Identifier  resetId    = new Identifier("minecraft", "air");
-    public NbtCompound resetState = DEFAULT_STATE;
+    public BlockState  resetState = Blocks.AIR.getDefaultState();
     public NbtCompound resetNbt   = new NbtCompound();
 
 
@@ -39,10 +34,9 @@ public class DragonGriefedBlockEntity extends DragonBlockEntity {
         BlockState resetState = world.getBlockState(pos);
         if (! TagResources.isOf(resetState, TagResources.BREATH_IMMUNE)) {
             // If is unresettable griefed block or is not griefed block, create new resettable griefed block.
-            if (
-                    (resetState.isOf(DragonBlocks.DRAGON_GRIEFED) && ! resetState.get(DragonGriefedBlock.CAN_RESET)) ||
-                    (! resetState.isOf(DragonBlocks.DRAGON_GRIEFED))
-            ) {
+            if ((resetState.isOf(DragonBlocks.DRAGON_GRIEFED)
+                    && ! resetState.get(DragonGriefedBlock.CAN_RESET)
+            ) || (! resetState.isOf(DragonBlocks.DRAGON_GRIEFED))) {
                 Identifier  resetId     = Registry.BLOCK.getId(resetState.getBlock());
                 BlockEntity resetEntity = world.getBlockEntity(pos);
                 NbtCompound resetNbt    = new NbtCompound();
@@ -56,13 +50,9 @@ public class DragonGriefedBlockEntity extends DragonBlockEntity {
                 );
                 if (world.getBlockEntity(pos) instanceof DragonGriefedBlockEntity entity) {
                     entity.setDragon(type);
-                    entity.resetId = resetId;
-                    try {
-                        entity.resetState = (NbtCompound)(BlockState.CODEC.encode(resetState, NbtOps.INSTANCE, NbtOps.INSTANCE.empty()).get().orThrow());
-                    } catch (Exception ignored) {
-                        entity.resetState = new NbtCompound();
-                    }
-                    entity.resetNbt = resetNbt;
+                    entity.resetId    = resetId;
+                    entity.resetState = resetState;
+                    entity.resetNbt   = resetNbt;
                 }
                 resetState = world.getBlockState(pos);
             }
@@ -76,15 +66,9 @@ public class DragonGriefedBlockEntity extends DragonBlockEntity {
 
     public void reset() {
         if (this.world != null) {
-            NbtCompound resetNbt   = this.resetNbt;
-            BlockState  resetState;
-            try {
-                resetState = BlockState.CODEC.decode(NbtOps.INSTANCE, this.resetState).get().orThrow().getFirst();
-            } catch (Exception ignored) {
-                resetState = Registry.BLOCK.get(this.resetId).getDefaultState();
-            }
+            NbtCompound resetNbt = this.resetNbt;
             this.world.removeBlockEntity(this.getPos());
-            this.world.setBlockState(this.getPos(), resetState);
+            this.world.setBlockState(this.getPos(), this.resetState);
             BlockEntity resetEntity = this.world.getBlockEntity(this.getPos());
             if (resetEntity != null) {
                 resetEntity.readNbt(resetNbt);
@@ -95,20 +79,28 @@ public class DragonGriefedBlockEntity extends DragonBlockEntity {
 
     @Override
     public void readNbt(NbtCompound nbt) {
-        resetTime  = nbt.getInt("resetTime");
-        resetId    = new Identifier(nbt.getString("resetId"));
-        resetState = nbt.getCompound("resetState");
-        resetNbt   = nbt.getCompound("resetNbt");
+        this.resetTime = nbt.getInt("resetTime");
+        this.resetId   = new Identifier(nbt.getString("resetId"));
+        try {
+            this.resetState = BlockState.CODEC.decode(NbtOps.INSTANCE, nbt.getCompound("resetState")).get().orThrow().getFirst();
+        } catch (Exception ignored) {
+            this.resetState = Registry.BLOCK.get(this.resetId).getDefaultState();
+        }
+        this.resetNbt = nbt.getCompound("resetNbt");
         super.readNbt(nbt);
     }
 
 
     @Override
     public void writeNbt(NbtCompound nbt) {
-        nbt.putInt("resetTime", resetTime);
-        nbt.putString("resetId", resetId.toString());
-        nbt.put("resetState", resetState);
-        nbt.put("resetNbt", resetNbt);
+        nbt.putInt    ( "resetTime"  , this.resetTime          );
+        nbt.putString ( "resetId"    , this.resetId.toString() );
+        NbtCompound resetState = new NbtCompound();
+        try {
+            resetState = (NbtCompound)(BlockState.CODEC.encode(this.resetState, NbtOps.INSTANCE, NbtOps.INSTANCE.empty()).get().orThrow());
+        } catch (Exception ignored) {}
+        nbt.put( "resetState" , resetState    );
+        nbt.put( "resetNbt"   , this.resetNbt );
         super.writeNbt(nbt);
     }
 

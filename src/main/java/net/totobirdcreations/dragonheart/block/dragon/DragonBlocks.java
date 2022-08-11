@@ -75,13 +75,15 @@ public class DragonBlocks {
 
     public static final Block DRAGON_GRIEFED = registerBlockWithoutItem(
             "dragon_griefed",
-            new DragonGriefedBlock(settings)
+            new DragonGriefedBlock(FabricBlockSettings.copy(Blocks.SAND)
+                    .requiresTool()
+            )
     );
 
 
     public static final BlockAndItem DRAGON_BONE_BLOCK = registerBlock(
             "dragon_bone_block",
-            new PillarBlock(FabricBlockSettings.copy(net.minecraft.block.Blocks.BONE_BLOCK)),
+            new PillarBlock(FabricBlockSettings.copy(Blocks.BONE_BLOCK)),
             ItemGroups.DRAGON
     );
 

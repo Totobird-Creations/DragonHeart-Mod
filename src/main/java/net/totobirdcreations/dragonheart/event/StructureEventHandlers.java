@@ -25,28 +25,30 @@ public class StructureEventHandlers {
     }
 
 
-    public static void spawnDragon(String metadata, World world, BlockPos pos) throws Exception {
-        Identifier id = DataHelper.chooseDragonTypeForPos(world, pos, world.getRandom());
-        if (id == null) {
-            return;
-        }
-        DragonResourceLoader.DragonResource resource = DragonResourceLoader.getResource(id);
+    public static void spawnDragon(String metadata, World world, BlockPos blockPos, BlockPos structureOrigin) throws Exception {
         int size = switch (metadata) {
             case    "small"  -> 2;
             case    "medium" -> 3;
             case    "large"  -> 4;
             default          -> throw new Exception("Invalid dragon size `" + metadata + "`");
         };
+
+        Identifier id = DataHelper.chooseDragonTypeForPos(world, structureOrigin, world.getRandom());
+        if (id == null) {
+            throw new Exception("Could not find valid dragon type for biome at " + structureOrigin.toString() + ".");
+        }
+        DragonResourceLoader.DragonResource resource = DragonResourceLoader.getResource(id);
+
         int min_age = Config.CONFIG.dragon.age.stage_ticks * size;
         int max_age = Config.CONFIG.dragon.age.stage_ticks * (size + 1);
         DragonEntity entity = Entities.DRAGON.create(world);
         assert entity != null;
         Random random = entity.getRandom();
-        entity.setPosition(new Vec3d(pos.getX() + 0.5f, pos.getY(), pos.getZ() + 0.5f));
+        entity.setPosition(new Vec3d(blockPos.getX() + 0.5f, blockPos.getY(), blockPos.getZ() + 0.5f));
         entity.setDragon(resource.id().toString());
         entity.setAge(random.nextBetween(min_age, max_age));
         entity.setColour(resource.chooseBodyColour(entity.getUuid()));
-        entity.setSpawnPos(pos);
+        entity.setSpawnPos(blockPos);
         entity.setNaturalSpawn(true);
         DataHelper.randomiseEntityRotation(entity);
         world.spawnEntity(entity);

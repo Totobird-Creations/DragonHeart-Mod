@@ -50,7 +50,8 @@ public class ClientRenderers {
                 DragonItems.DRAGON_SCALE,
                 DragonItems.DRAGON_EGG,
                 DragonItems.DRAGON_BLOOD,
-                DragonItems.DRAGON_BREATH
+                DragonItems.DRAGON_BREATH,
+                DragonItems.DRAGON_CELLS
         );
         ColorProviderRegistry.ITEM.register(ClientRenderers::getDragonBucketItemColour,
                 DragonItems.EMPTY_DRAGON_BUCKET,
@@ -116,11 +117,9 @@ public class ClientRenderers {
 
 
     public static int getDragonItemColour(ItemStack stack, int tintIndex) {
-        if (tintIndex == 0) {
-            return ((DragonItem)(stack.getItem())).getColor(stack);
-        } else {
-            return RGBColour.WHITE.asInt();
-        }
+        return tintIndex == 0
+            ? ((DragonItem)(stack.getItem())).getColor(stack)
+            : RGBColour.WHITE.asInt();
     }
     public static int getDragonBucketItemColour(ItemStack stack, int tintIndex) {
         return switch (tintIndex) {

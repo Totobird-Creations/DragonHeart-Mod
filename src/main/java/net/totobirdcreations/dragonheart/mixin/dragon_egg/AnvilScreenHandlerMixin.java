@@ -38,10 +38,9 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         AnvilScreenHandlerInterface ithis = ((AnvilScreenHandlerInterface) this);
 
         ItemStack stack = this.getSlot(0).getStack();
-        if (
-                ! stack.isEmpty() &&
-                stack.getItem() instanceof DragonEggItem egg &&
-                egg.isCreative(stack)
+        if (! stack.isEmpty()
+                && stack.getItem() instanceof DragonEggItem egg
+                && egg.isCreative(stack)
         ) {
             RGBColour colour = RGBColour.parseString(ithis.getNewItemName());
             if (colour == null) {
@@ -63,10 +62,9 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
     public void updateResultRedirectSetStack(CraftingResultInventory output, int slot, ItemStack stack) {
         AnvilScreenHandlerInterface   ithis  = ((AnvilScreenHandlerInterface) this);
         ForgingScreenHandlerInterface ipthis = ((ForgingScreenHandlerInterface) this);
-        if (
-                ! stack.isEmpty() &&
-                stack.getItem() instanceof DragonEggItem egg &&
-                egg.isCreative(stack)
+        if (! stack.isEmpty()
+                && stack.getItem() instanceof DragonEggItem egg
+                && egg.isCreative(stack)
         ) {
             RGBColour colour = RGBColour.parseString(ithis.getNewItemName());
             if (colour != null) {

@@ -32,9 +32,8 @@ public class DragonEntityModel<T extends DragonEntity> extends AnimatedGeoModel<
         AnimationProcessor       processor = this.getAnimationProcessor();
         DragonEntity.DragonState state     = entity.getState();
 
-        if (
-                state != DragonEntity.DragonState.SLEEP &&
-                state != DragonEntity.DragonState.ROAR
+        if (state != DragonEntity.DragonState.SLEEP
+                && state != DragonEntity.DragonState.ROAR
         ) {
             IBone body = processor.getBone("body0");
             IBone[] bones = {

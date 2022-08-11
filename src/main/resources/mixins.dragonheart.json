@@ -4,6 +4,7 @@
   "package": "net.totobirdcreations.dragonheart.mixin",
   "compatibilityLevel": "JAVA_18",
   "mixins": [
+    "block.AbstractBlockMixin",
     "block.CactusBlockMixin",
     "deafened_effect.LivingEntityMixin",
     "dragon_egg.AnvilScreenHandlerInterface",

@@ -192,7 +192,7 @@ public class DragonForgeCoreBlockEntity extends DragonForgeBlockEntity implement
 
     @Nullable
     public static DragonForgeCoreRecipe getRecipe(World world, BlockState state, DragonForgeCoreBlockEntity entity, SimpleInventory inventory) {
-        if (! state.contains(Properties.POWERED) || ! state.get(Properties.POWERED)) {
+        if (! state.get(Properties.POWERED)) {
             return null;
         }
         if (inventory.getStack(3).getItem() != Items.FIRE_CHARGE) {
@@ -201,9 +201,8 @@ public class DragonForgeCoreBlockEntity extends DragonForgeBlockEntity implement
         List<DragonForgeCoreRecipe> recipes = world.getRecipeManager().getAllMatches(RecipeResources.DRAGON_FORGE_CORE.type(), inventory, world);
         DragonForgeCoreRecipe       result  = null;
         for (DragonForgeCoreRecipe recipe : recipes) {
-            if (
-                    DataHelper.dragonTypeMatches(entity.dragon, recipe.dragonType) &&
-                    recipe.matches(inventory, entity)
+            if (DataHelper.dragonRecipeTypeMatches(entity.dragon, recipe.dragonType)
+                    && recipe.matches(inventory, entity)
             ) {
                 result = recipe;
                 break;
@@ -224,16 +223,15 @@ public class DragonForgeCoreBlockEntity extends DragonForgeBlockEntity implement
         if (stack.isEmpty()) {
             return true;
         }
-        if (! (
-                output.getItem() == stack.getItem() &&
-                stack.getCount() + output.getCount() <= stack.getMaxCount()
+        if (! (output.getItem() == stack.getItem()
+                && stack.getCount() + output.getCount() <= stack.getMaxCount()
         )) {
             return false;
         }
         int typeSource = recipe.getTypeSource();
         if (typeSource != -1) {
-            return NbtHelper.getItemDragonType(inventory.getStack(typeSource)) ==
-                    NbtHelper.getItemDragonType(output);
+            return NbtHelper.getItemDragonType(inventory.getStack(typeSource))
+                    == NbtHelper.getItemDragonType(output);
         }
         return true;
     }

@@ -33,10 +33,9 @@ public abstract class AnvilScreenMixin extends ForgingScreen<AnvilScreenHandler>
 
     private boolean isAnvilDragoneggCreative() {
         ItemStack stack = this.getScreenHandler().getSlot(0).getStack();
-        if (
-                ! stack.isEmpty() &&
-                stack.getItem() instanceof DragonEggItem egg &&
-                egg.isCreative(stack)
+        if (! stack.isEmpty()
+                && stack.getItem() instanceof DragonEggItem egg
+                && egg.isCreative(stack)
         ) {
             return true;
         }

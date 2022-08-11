@@ -66,7 +66,7 @@ import java.util.UUID;
 import java.util.function.BiConsumer;
 
 
-public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, VibrationListener.Callback {
+public class DragonEntity extends MobEntity implements Monster, IAnimatable, VibrationListener.Callback {
 
     public static TagKey<GameEvent>    VIBRATIONS            = TagKey.of(Registry.GAME_EVENT_KEY, new Identifier(DragonHeart.ID, "dragon_can_listen"));
     public static int                  ROAR_ANIMATION_LENGTH = 41;
@@ -96,8 +96,6 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
 
     public static float TARGET_MAX_DISTANCE  = 100.0f;
     public static int   TARGET_MAX_LAST_SEEN = 200;
-
-    //public DragonPartEntity head = new DragonPartEntity(this, EntityDimensions.changing(0.5f, 0.5f), 1.5f);
 
     public static int   BLINK_COOLDOWN_TICKS = 200; // 5s
     public static int   BLINK_TICKS          = 5;   // 0.25s
@@ -156,7 +154,7 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
     | Constructors |
      -------------*/
 
-    public DragonEntity(EntityType<? extends FlyingEntity> entityType, World world) {
+    public DragonEntity(EntityType<? extends MobEntity> entityType, World world) {
         super(entityType, world);
         this.ignoreCameraFrustum = true;
     }
@@ -232,8 +230,6 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
     @Override
     @Nullable
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        net.minecraft.util.math.random.Random rand;
-
         this.dataTracker.set(DRAGON,
                 entityNbt != null && entityNbt.contains("dragon", NbtElement.STRING_TYPE)
                         ? entityNbt.getString("dragon")
@@ -399,13 +395,16 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
         return this.dataTracker.get(NATURAL_SPAWN);
     }
 
-    public boolean isTamedOwner(PlayerEntity player) {
-        Optional<UUID> tamedOwner = this.dataTracker.get(TAMED_OWNER);
-        return (
-                isTamed() &&
-                tamedOwner.isPresent() &&
-                tamedOwner.get().equals(player.getUuid())
-        );
+    public boolean isTamedOwner(Entity entity) {
+        if (entity instanceof PlayerEntity player) {
+            Optional<UUID> tamedOwner = this.dataTracker.get(TAMED_OWNER);
+            return (isTamed()
+                    && tamedOwner.isPresent()
+                    && tamedOwner.get().equals(player.getUuid())
+            );
+        } else {
+            return false;
+        }
     }
 
     public int getAge() {
@@ -423,14 +422,18 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
     @Nullable
     public UUID getTargetUuid() {
         Optional<UUID> uuid = this.dataTracker.get(TARGET);
-        if (uuid != null && uuid.isPresent() &&
-                this.dataTracker.get(TARGET_POS).isWithinDistance(this.getPos(), TARGET_MAX_DISTANCE) &&
-                this.dataTracker.get(TARGET_LAST_SEEN) <= TARGET_MAX_LAST_SEEN
+        if (uuid != null && uuid.isPresent()
+                && this.dataTracker.get(TARGET_POS).isWithinDistance(this.getPos(), TARGET_MAX_DISTANCE)
+                && this.dataTracker.get(TARGET_LAST_SEEN) <= TARGET_MAX_LAST_SEEN
         ) {
             return uuid.get();
         } else {
             return null;
         }
+    }
+
+    public boolean isFlying() {
+        return this.getState() != DragonState.SLEEP && dataTracker.get(FLYING);
     }
 
 
@@ -446,8 +449,6 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
                 this.dataTracker.set(DragonEntity.WAKEUP_PROGRESS, 0);
             case PURSUE:
                 this.dataTracker.set(DragonEntity.FLYING, true);
-                Vec3d velocity = getVelocity();
-                setVelocity(velocity.x, JUMP_STRENGTH, velocity.z);
                 this.dataTracker.set(FLYING, true);
         }
         this.dataTracker.set(STATE, state.toInt());
@@ -610,7 +611,7 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
     @Override
     public boolean isPushedByFluids() {return false;}
     @Override
-    public boolean hasNoGravity() {return dataTracker.get(FLYING);}
+    public boolean hasNoGravity() {return this.isFlying();}
 
     // Despawn
     @Override
@@ -724,13 +725,16 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
      ---*/
 
     public boolean isValidTarget(@Nullable Entity entity) {
-        return (
-                entity instanceof LivingEntity livingEntity &&
-                EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR.test(entity) &&
-                ! this.isTeammate(entity) &&
-                ! entity.isInvulnerable() &&
-                ! livingEntity.isDead() &&
-                this.world.getWorldBorder().contains(entity.getBoundingBox())
+        return (! this.isAiDisabled()
+                && ! this.isRemoved()
+                && ! this.isDead()
+                && entity instanceof LivingEntity livingEntity
+                && this.world.getWorldBorder().contains(entity.getBoundingBox())
+                && EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR.test(entity)
+                && ! this.isTeammate(entity)
+                && ! entity.isInvulnerable()
+                && ! livingEntity.isDead()
+                && ! this.isTamedOwner(entity)
         );
     }
 
@@ -738,7 +742,9 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
     @Override
     public void onPlayerCollision(PlayerEntity player) {
         super.onPlayerCollision(player);
-        incrementWakeupProgress(true, player);
+        if (this.isNaturallySpawned()) {
+            incrementWakeupProgress(true, player);
+        }
     }
 
 
@@ -767,10 +773,10 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
                         float distance = entity.distanceTo(this);
                         if (distance <= Config.CONFIG.dragon.wakeup.roar_radius) {
                             // Throw & damage entity
-                            Vec3d vector = entity.getPos().add(this.getPos().multiply(-1)).multiply(1.0 / distance);
+                            //Vec3d vector = entity.getPos().add(this.getPos().multiply(-1)).multiply(1.0 / distance);
                             float power = 1.0f - distance / Config.CONFIG.dragon.wakeup.roar_radius;
-                            Vec3d velocity = vector.multiply(power * Config.CONFIG.dragon.wakeup.roar_knockback);
-                            entity.addVelocity(velocity.x, velocity.y, velocity.z);
+                            //Vec3d velocity = vector.multiply(power * Config.CONFIG.dragon.wakeup.roar_knockback);
+                            //entity.addVelocity(velocity.x, velocity.y, velocity.z);
                             entity.damage(DamageSources.ROAR, power * Config.CONFIG.dragon.wakeup.roar_damage);
                             // Add deafened effect
                             StatusEffectInstance effect = new StatusEffectInstance(StatusEffects.DEAFENED, 10, 0, false, false, true);
@@ -839,38 +845,26 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
     }
 
 
-    @Override
-    public void tickMovement() {
-        super.tickMovement();
-        //this.setPartPosition(head, new Vec3d(0.0f, 1.5f, 2.0f));
-    }
-
-
-    /*public void setPartPosition(DragonPartEntity part, Vec3d offset) {
-        offset = offset.rotateY(this.getHeadYaw());
-        part.setPosition(this.getPos().add(offset));
-    }*/
-
-
 
     public void incrementWakeupProgress(boolean all, @Nullable Entity alerter) {
         if (all) {
-            dataTracker.set(WAKEUP_PROGRESS, Config.CONFIG.dragon.wakeup.vibrations);
+            this.dataTracker.set(WAKEUP_PROGRESS, Config.CONFIG.dragon.wakeup.vibrations);
         } else {
-            dataTracker.set(WAKEUP_PROGRESS, dataTracker.get(WAKEUP_PROGRESS) + 1);
+            this.dataTracker.set(WAKEUP_PROGRESS, this.dataTracker.get(WAKEUP_PROGRESS) + 1);
         }
-        if (dataTracker.get(WAKEUP_PROGRESS) >= Config.CONFIG.dragon.wakeup.vibrations) {
-            alerted(alerter);
+        if (this.dataTracker.get(WAKEUP_PROGRESS) >= Config.CONFIG.dragon.wakeup.vibrations) {
+            this.alerted(alerter);
         }
     }
 
     public void alerted(@Nullable Entity ignored /*alerter*/) {
         if (getState() == DragonState.SLEEP) {
-            dataTracker.set(ROAR_TICKS, ROAR_ANIMATION_LENGTH);
-            /*if (alerter != null) {
-                dataTracker.set(TARGET, Optional.of(alerter.getUuid()));
-            }*/
-            setState(DragonState.ROAR);
+            this.dataTracker.set(ROAR_TICKS, ROAR_ANIMATION_LENGTH);
+            if (this.isNaturallySpawned()) {
+                this.setState(DragonState.ROAR);
+            } else {
+                this.setState(DragonState.NEST);
+            }
         }
     }
 
@@ -962,31 +956,22 @@ public class DragonEntity extends FlyingEntity implements Monster, IAnimatable, 
 
     @Override
     public boolean accepts(ServerWorld world, GameEventListener listener, BlockPos pos, GameEvent event, @Nullable GameEvent.Emitter emitter) {
-        if (
-                ! this.isAiDisabled() &&
-                ! this.isDead() &&
-                world.getWorldBorder().contains(pos) &&
-                ! this.isRemoved() &&
-                this.getState() == DragonState.SLEEP
+        if (emitter != null
+                && this.isValidTarget(emitter.sourceEntity())
+                && this.getState() == DragonState.SLEEP
         ) {
-            if (emitter != null) {
-                Entity entity = emitter.sourceEntity();
-                return (
-                        entity instanceof LivingEntity livingentity &&
-                        this.isValidTarget(livingentity)
-                );
-            }
+            Entity entity = emitter.sourceEntity();
+            return (entity instanceof LivingEntity livingentity &&
+                    this.isValidTarget(livingentity)
+            );
         }
         return false;
     }
 
     @Override
     public void accept(ServerWorld world, GameEventListener listener, BlockPos pos, GameEvent event, @Nullable Entity entity, @Nullable Entity sourceEntity, float distance) {
-        if (
-                ! this.isAiDisabled() &&
-                ! this.isDead() &&
-                world.getWorldBorder().contains(pos) &&
-                ! this.isRemoved()
+        if (this.isValidTarget(sourceEntity)
+                && this.getState() == DragonState.SLEEP
         ) {
             if (entity instanceof LivingEntity livingEntity) {
                 if (this.isValidTarget(livingEntity)) {

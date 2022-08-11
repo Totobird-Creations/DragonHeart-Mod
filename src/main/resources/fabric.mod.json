@@ -50,7 +50,7 @@
     "geckolib3": "3.x.x",
     "satin": ">=1.8",
     "cloth-config": ">=7",
-    "jigsawlogiclib": "1.0.x"
+    "jigsawlogiclib": "1.x.x"
   },
   "recommends": {
     "patchouli": ">=74"

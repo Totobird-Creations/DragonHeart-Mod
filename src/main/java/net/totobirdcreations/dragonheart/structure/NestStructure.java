@@ -25,7 +25,6 @@ public class NestStructure extends JigsawStructure {
             int maxDistanceFromCenter
     ) {
         super(config, startPool, startJigsawName, size, startHeight, useExpansionHack, projectStartToHeightmap, maxDistanceFromCenter);
-        //config.biomes = RegistryEntryList.of(RegistryEntry.of(TagResources.ALL_BIOMES));
     }
 
 

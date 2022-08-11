@@ -260,6 +260,8 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
             }
 
         }
+
+        super.tick();
     }
 
 
