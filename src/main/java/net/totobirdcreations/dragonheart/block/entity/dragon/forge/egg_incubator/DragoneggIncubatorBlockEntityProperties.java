@@ -20,7 +20,7 @@ public record DragoneggIncubatorBlockEntityProperties(
         return switch (property) {
             case    POWER     -> owner.power;
             case    MAX_POWER -> owner.maxPower;
-            case    COLOUR    -> DragonResourceLoader.getResource(owner.dragon).colourGlow().asInt();
+            case    COLOUR    -> DragonResourceLoader.getResource(owner.type).colourGlow().asInt();
             default              -> 0;
         };
     }

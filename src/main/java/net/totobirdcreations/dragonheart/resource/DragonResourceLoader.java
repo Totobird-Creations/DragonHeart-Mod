@@ -127,12 +127,12 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
     }
 
 
-    public ArrayList<RGBColour> getJsonRGBList(JsonObject object, String key) throws Exception {
+    public Collection<RGBColour> getJsonRGBList(JsonObject object, String key) throws Exception {
         if (object.has(key)) {
             if (object.get(key).isJsonArray()) {
                 JsonArray array = object.getAsJsonArray(key);
                 if (array.size() >= 1) {
-                    ArrayList<RGBColour> list = new ArrayList<>();
+                    Collection<RGBColour> list = new ArrayList<>();
                     for (int i = 0; i < array.size(); i++) {
                         list.add(this.getJsonRGB(array.get(i), key + "[" + i + "]"));
                     }
@@ -161,19 +161,19 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
                     JsonElement element = JsonParser.parseString(new String(stream.readAllBytes()));
                     if (element instanceof JsonObject object) {
 
-                        String               entityBreath             = this.getJsonString(object, "entity_breath");
-                        String               entitySpike              = this.getJsonString(object, "entity_spike");
-                        ArrayList<RGBColour> bodyColours              = this.getJsonRGBList(object, "body_colours");
-                        RGBColour            eyeColour                = this.getJsonRGB(object, "eye_colour");
-                        ArrayList<RGBColour> creativeEggColours       = this.getJsonRGBList(object, "creative_egg_colours");
-                        boolean              canBreatheInWater        = this.getJsonBoolean(object, "can_breathe_in_water");
-                        boolean              canFreeze                = this.getJsonBoolean(object, "can_freeze");
-                        boolean              hurtByWater              = this.getJsonBoolean(object, "hurt_by_water");
-                        boolean              fireImmune               = this.getJsonBoolean(object, "fire_immune");
-                        boolean              explosionImmuneWhenAwake = this.getJsonBoolean(object, "explosion_immune_when_awake");
-                        RGBColour            colourBricks             = this.getJsonRGB(object, "colour_bricks");
-                        RGBColour            colourCracks             = this.getJsonRGB(object, "colour_cracks");
-                        RGBColour            colourGlow               = this.getJsonRGB(object, "colour_glow");
+                        String                entityBreath             = this.getJsonString(object, "entity_breath");
+                        String                entitySpike              = this.getJsonString(object, "entity_spike");
+                        Collection<RGBColour> bodyColours              = this.getJsonRGBList(object, "body_colours");
+                        RGBColour             eyeColour                = this.getJsonRGB(object, "eye_colour");
+                        Collection<RGBColour> creativeEggColours       = this.getJsonRGBList(object, "creative_egg_colours");
+                        boolean               canBreatheInWater        = this.getJsonBoolean(object, "can_breathe_in_water");
+                        boolean               canFreeze                = this.getJsonBoolean(object, "can_freeze");
+                        boolean               hurtByWater              = this.getJsonBoolean(object, "hurt_by_water");
+                        boolean               fireImmune               = this.getJsonBoolean(object, "fire_immune");
+                        boolean               explosionImmuneWhenAwake = this.getJsonBoolean(object, "explosion_immune_when_awake");
+                        RGBColour             colourBricks             = this.getJsonRGB(object, "colour_bricks");
+                        RGBColour             colourCracks             = this.getJsonRGB(object, "colour_cracks");
+                        RGBColour             colourGlow               = this.getJsonRGB(object, "colour_glow");
 
                         String   idPath      = path.getPath();
                         String[] idPathParts;
@@ -229,29 +229,29 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
 
 
     public record DragonResource(
-            Identifier           id,
+            Identifier            id,
             @Nullable
-            Identifier           entityBreath,
+            Identifier            entityBreath,
             @Nullable
-            Identifier           entitySpike,
-            ArrayList<RGBColour> bodyColours,
-            RGBColour            eyeColour,
-            ArrayList<RGBColour> creativeEggColours,
+            Identifier            entitySpike,
+            Collection<RGBColour> bodyColours,
+            RGBColour             eyeColour,
+            Collection<RGBColour> creativeEggColours,
             @Nullable
-            Boolean              canBreatheInWater,
+            Boolean               canBreatheInWater,
             @Nullable
-            Boolean              canFreeze,
+            Boolean               canFreeze,
             @Nullable
-            Boolean              hurtByWater,
+            Boolean               hurtByWater,
             @Nullable
-            Boolean              fireImmune,
+            Boolean               fireImmune,
             @Nullable
-            Boolean              explosionImmuneWhenAwake,
-            RGBColour            colourBricks,
-            RGBColour            colourCracks,
-            RGBColour            colourGlow,
+            Boolean               explosionImmuneWhenAwake,
+            RGBColour             colourBricks,
+            RGBColour             colourCracks,
+            RGBColour             colourGlow,
             @Nullable
-            TagKey<Biome>        spawnsIn
+            TagKey<Biome>         spawnsIn
     ) {
 
         public Text getName() {
@@ -266,7 +266,7 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
         public RGBColour chooseBodyColour(UUID uuid) {
             return this.bodyColours.size() == 0
                     ? new RGBColour(1.0f, 0.0f, 0.0f)
-                    : this.bodyColours.get(
+                    : new ArrayList<>(this.bodyColours).get(
                             Random.create(DragonSalt.COLOUR + UuidOp.uuidToInt(uuid))
                                     .nextInt(this.bodyColours.size())
             );
@@ -282,10 +282,10 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
                 return fromString(bool ? "T" : "F");
             }
 
-        public static String fromRGBList(ArrayList<RGBColour> arrayList) {
-            ArrayList<String> parts = new ArrayList<>();
-            for (RGBColour rgbColour : arrayList) {
-                parts.add(fromRGB(rgbColour));
+        public static String fromRGBList(Collection<RGBColour> colours) {
+            Collection<String> parts = new ArrayList<>();
+            for (RGBColour colour : colours) {
+                parts.add(fromRGB(colour));
             }
                 return String.join(",", parts);
             }
@@ -318,12 +318,12 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
                     + fromRGB(this.colourGlow) + "/";
         }
 
-        public static ArrayList<String> getParts(String data) {
+        public static Collection<String> getParts(String data) {
             return getParts(data, '/', true);
         }
 
-        public static ArrayList<String> getParts(String data, char delimiter, boolean requireDelimiterEnd) {
-            ArrayList<String> parts = new ArrayList<>();
+        public static Collection<String> getParts(String data, char delimiter, boolean requireDelimiterEnd) {
+            Collection<String> parts = new ArrayList<>();
             StringBuilder builder = new StringBuilder();
             boolean escape = false;
             for (int i = 0; i < data.length(); i++) {
@@ -348,8 +348,8 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
             return parts;
         }
 
-        public static ArrayList<RGBColour> toRGBList(ArrayList<String> strings) {
-            ArrayList<RGBColour> colours = new ArrayList<>();
+        public static Collection<RGBColour> toRGBList(Collection<String> strings) {
+            Collection<RGBColour> colours = new ArrayList<>();
             for (String string : strings) {
                 colours.add(toRGB(string));
             }
@@ -372,23 +372,24 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
 
 
         @Nullable
-        public static DragonResource fromParts(ArrayList<String> parts) {
+        public static DragonResource fromParts(Collection<String> parts) {
             try {
+                Iterator<String> i = parts.iterator();
                 return new DragonResource(
-                        new Identifier(parts.get(1)),
+                        new Identifier(i.next()),
                         null,
                         null,
-                        toRGBList(getParts(parts.get(2), ',', false)),
-                        toRGB(parts.get(3)),
-                        toRGBList(getParts(parts.get(4), ',', false)),
+                        toRGBList(getParts(i.next(), ',', false)),
+                        toRGB(i.next()),
+                        toRGBList(getParts(i.next(), ',', false)),
                         null,
                         null,
                         null,
                         null,
                         null,
-                        toRGB(parts.get(5)),
-                        toRGB(parts.get(6)),
-                        toRGB(parts.get(7)),
+                        toRGB(i.next()),
+                        toRGB(i.next()),
+                        toRGB(i.next()),
                         null
                 );
             } catch (Exception ignored) {

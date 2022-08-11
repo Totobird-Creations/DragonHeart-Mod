@@ -68,7 +68,7 @@ public class DragonForgeBricksBlock extends DragonForgeBlock {
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         if (world.getBlockEntity(pos) instanceof DragonForgeBricksBlockEntity entity) {
             ItemStack stack = new ItemStack(this);
-            NbtHelper.setItemDragonType(stack, entity.dragon);
+            NbtHelper.setItemDragonType(stack, entity.type);
             return stack;
         } else {
             return super.getPickStack(world, pos, state);
@@ -81,10 +81,5 @@ public class DragonForgeBricksBlock extends DragonForgeBlock {
         return new DragonForgeBricksBlockEntity(pos, state);
     }
 
-
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, DragonBlockEntities.DRAGON_FORGE_BRICKS, DragonForgeBricksBlockEntity::tick);
-    }
 
 }

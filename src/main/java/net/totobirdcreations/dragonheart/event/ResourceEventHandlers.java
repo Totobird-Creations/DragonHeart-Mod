@@ -17,12 +17,13 @@ import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class ResourceEventHandlers {
 
 
-    public static ArrayList<ServerPlayNetworkHandler> handlers = new ArrayList<>();
+    public static Collection<ServerPlayNetworkHandler> handlers = new ArrayList<>();
 
 
     public static void serverside_add_player(ServerPlayNetworkHandler handler) {
@@ -63,12 +64,12 @@ public class ResourceEventHandlers {
     public static void clientside_receive_dragonresource_register_signal(PacketByteBuf buf) {
         String data = buf.readBytes(buf.readableBytes())
                 .toString(StandardCharsets.UTF_8);
-        ArrayList<String> parts = DragonResourceLoader.DragonResource.getParts(data);
+        Collection<String> parts = DragonResourceLoader.DragonResource.getParts(data);
         if (parts.size() == 8) {
             DragonResourceLoader.DragonResource resource = DragonResourceLoader.DragonResource.fromParts(parts);
             if (resource != null) {
                 DragonResourceLoader.INSTANCE.dragonResources.put(
-                        new Identifier(parts.get(0)),
+                        new Identifier(parts.iterator().next()),
                         resource
                 );
             }

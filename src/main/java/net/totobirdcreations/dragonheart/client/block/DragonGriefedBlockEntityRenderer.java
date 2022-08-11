@@ -9,7 +9,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonGriefedBlockEntity;
-import net.totobirdcreations.dragonheart.config.ConfigData;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 
 
@@ -32,9 +31,9 @@ public class DragonGriefedBlockEntityRenderer implements BlockEntityRenderer<Dra
     @Override
     public void render(DragonGriefedBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider provider, int light, int overlay) {
         // Get the texture and get the vertex consumer.
-        Identifier path = entity.dragon.equals(NbtHelper.EMPTY_TYPE)
+        Identifier path = entity.type.equals(NbtHelper.EMPTY_TYPE)
                 ? new Identifier(DragonHeart.ID, "textures/misc/empty.png")
-                : new Identifier(entity.dragon.getNamespace(), "textures/block/dragon_griefed/" + entity.dragon.getPath() + ".png");
+                : new Identifier(entity.type.getNamespace(), "textures/block/dragon_griefed/" + entity.type.getPath() + ".png");
         VertexConsumer consumer = provider.getBuffer(RenderLayer.getEntitySolid(path));
         // Generating the mesh.
         matrices.push();

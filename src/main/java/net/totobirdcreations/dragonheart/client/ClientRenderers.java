@@ -8,6 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
 import net.totobirdcreations.dragonheart.DragonHeart;
@@ -156,8 +157,11 @@ public class ClientRenderers {
         if (view != null) {
             BlockEntity blockEntity = view.getBlockEntity(pos);
             if (blockEntity instanceof DragonBlockEntity dragonBlockEntity) {
+                Identifier type = tintIndex == 3
+                        ? dragonBlockEntity.power
+                        : dragonBlockEntity.type;
                 return getDragonBlockColour(
-                        DragonResourceLoader.getResource(dragonBlockEntity.dragon),
+                        DragonResourceLoader.getResource(type),
                         tintIndex
                 ).asInt();
             }
@@ -170,7 +174,7 @@ public class ClientRenderers {
             BlockEntity blockEntity = view.getBlockEntity(pos);
             if (blockEntity instanceof DragonBlockEntity dragonBlockEntity) {
                 if (tintIndex == 3) {
-                    return DragonResourceLoader.getResource(dragonBlockEntity.dragon).colourGlow().asInt();
+                    return DragonResourceLoader.getResource(dragonBlockEntity.type).colourGlow().asInt();
                 } else {
                     return getDragonBlockColour(
                             DragonResourceLoader.getResource(NbtHelper.EMPTY_TYPE),

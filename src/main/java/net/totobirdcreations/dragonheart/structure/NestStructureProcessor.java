@@ -13,10 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.WorldView;
 import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
-import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 import net.totobirdcreations.dragonheart.util.helper.DataHelper;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -55,7 +53,7 @@ public class NestStructureProcessor extends StructureProcessor {
                 NbtCompound nbt = currentInfo.nbt != null
                         ? currentInfo.nbt
                         : new NbtCompound();
-                nbt.putString("dragon", id.toString());
+                nbt.putString("type", id.toString());
                 return new StructureTemplate.StructureBlockInfo(
                         currentInfo.pos,
                         DragonBlocks.DRAGON_GRIEFED

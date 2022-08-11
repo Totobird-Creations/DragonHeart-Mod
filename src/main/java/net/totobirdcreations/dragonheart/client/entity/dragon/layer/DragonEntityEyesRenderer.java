@@ -31,7 +31,7 @@ public class DragonEntityEyesRenderer<T extends DragonEntity> extends GeoLayerRe
         if (dragon.areEyesOpen() && dragon.blinkTicks <= 0) {
             GeoModel       model          = getEntityModel().getModel(DragonEntityRenderer.MODEL);
             VertexConsumer vertexConsumer = buffer.getBuffer(RenderLayer.getEyes(this.getTextureResource()));
-            RGBColour      colour         = new RGBColour(dragon.getDataTracker().get(DragonEntity.EYE_COLOUR));
+            RGBColour      colour         = dragon.getEyeColour();
 
             RenderLayer[] renderLayers = {
                     RenderLayer.getEntityTranslucent(getTextureResource()),

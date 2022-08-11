@@ -23,6 +23,7 @@ import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class DragonForgeHatchBlock extends DragonForgeBlock {
@@ -56,7 +57,7 @@ public class DragonForgeHatchBlock extends DragonForgeBlock {
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         if (world.getBlockEntity(pos) instanceof DragonForgeHatchBlockEntity entity) {
             ItemStack stack = new ItemStack(this);
-            NbtHelper.setItemDragonType(stack, entity.dragon);
+            NbtHelper.setItemDragonType(stack, entity.type);
             return stack;
         } else {
             return super.getPickStack(world, pos, state);
@@ -77,9 +78,9 @@ public class DragonForgeHatchBlock extends DragonForgeBlock {
 
     public static void open(World world, BlockPos pos, PlayerEntity player) {
         if (world.getBlockEntity(pos) instanceof DragonForgeHatchBlockEntity entity) {
-            ArrayList<DragonForgeCoreBlockEntity> relations = entity.getRelation(DragonForgeHatchBlockEntity.CORE_SIDE);
+            Collection<DragonForgeCoreBlockEntity> relations = entity.getRelation(DragonForgeHatchBlockEntity.CORE_SIDE);
             if (relations.size() == 1) {
-                DragonForgeCoreBlockEntity relation = relations.get(0);
+                DragonForgeCoreBlockEntity relation = relations.iterator().next();
                 DragonForgeCoreBlock.open(
                         world.getBlockState(relation.getPos()),
                         world,
@@ -96,10 +97,5 @@ public class DragonForgeHatchBlock extends DragonForgeBlock {
         return new DragonForgeHatchBlockEntity(pos, state);
     }
 
-
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, DragonBlockEntities.DRAGON_FORGE_HATCH, DragonForgeHatchBlockEntity::tick);
-    }
 
 }

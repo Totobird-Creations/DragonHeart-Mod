@@ -41,8 +41,10 @@ public class AllSideCuboid extends ModelPart.Cuboid {
                     Math.round(quad.direction.getZ())
             );
             // Cull covered sides.
-            boolean shouldCull = this.shouldCull(world, center, direction);
-            if (! shouldCull) {
+            boolean shouldCull = world != null
+                    && direction != null
+                    && this.shouldCull(world, center, direction);
+            if (! shouldCull && direction != null) {
                 // Do whatever ModelPart$Cuboid does.
                 Vec3f quadNormal     = quad.direction.copy();
                 Vec3f quadNormalCopy = quadNormal.copy();

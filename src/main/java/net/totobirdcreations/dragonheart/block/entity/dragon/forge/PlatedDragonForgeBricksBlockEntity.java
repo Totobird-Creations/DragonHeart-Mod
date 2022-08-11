@@ -16,7 +16,7 @@ public class PlatedDragonForgeBricksBlockEntity extends DragonBlockEntity {
     }
 
 
-    public static void tick(World world, BlockPos pos, BlockState state, PlatedDragonForgeBricksBlockEntity entity) {
+    public void tick(World world, BlockPos pos, BlockState state) {
         if (! world.isClient()) {
             boolean unbreakable = world.getGameRules().getBoolean(Gamerules.PLATED_DRAGON_FORGE_BRICKS_UNBREAKABLE);
             if (state.get(PlatedDragonForgeBricksBlock.UNBREAKABLE) != unbreakable) {

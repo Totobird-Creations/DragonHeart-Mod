@@ -62,11 +62,19 @@ public class DragonEntityModel<T extends DragonEntity> extends AnimatedGeoModel<
         }
 
         if (state == DragonEntity.DragonState.ROAR) {
-            float yaw     = entity.getHeadYaw();
-            Vec3d forward = new Vec3d(Math.sin(yaw), 0.0f, Math.cos(yaw)).multiply(4.0f);
+            float yaw = entity.getBodyYaw();
+            Vec3d pos = entity.getPos().add(
+                    new Vec3d(
+                            Math.sin(yaw * 180.0f / Math.PI),
+                            0.0f,
+                            Math.cos(yaw * 180.0f / Math.PI)
+                    )
+                            .multiply(-3.625f * entity.getModelScale())
+                            .add(0.0f, 1.0f, 0.0f)
+            );
             entity.world.addParticle(
                     new ShriekParticleEffect(0),
-                    entity.getX() + forward.x, entity.getY() + 0.75f, entity.getZ() + forward.z,
+                    pos.getX(), pos.getY(), pos.getZ(),
                     0.0f, 0.0f, 0.0f
             );
         }

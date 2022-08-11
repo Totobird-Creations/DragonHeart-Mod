@@ -2,9 +2,14 @@ package net.totobirdcreations.dragonheart.block.dragon.forge;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
+import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.block.dragon.DragonBlock;
+import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntity;
 
 
 public abstract class DragonForgeBlock extends DragonBlock {

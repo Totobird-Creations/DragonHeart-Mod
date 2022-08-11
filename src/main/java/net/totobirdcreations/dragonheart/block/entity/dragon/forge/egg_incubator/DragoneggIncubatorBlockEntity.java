@@ -18,6 +18,7 @@ import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.DragonForgeBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
 import net.totobirdcreations.dragonheart.item.dragon.DragonBreathItem;
 import net.totobirdcreations.dragonheart.particle.Particles;
 import net.totobirdcreations.dragonheart.screen_handler.DragonEggIncubatorScreenHandler;
@@ -79,26 +80,32 @@ public class DragoneggIncubatorBlockEntity extends DragonForgeBlockEntity implem
     }
 
 
-    public static void tick(World world, BlockPos pos, BlockState state, DragoneggIncubatorBlockEntity entity) {
-        if (entity.power > 0) {
-            entity.power -= 1;
-            if (entity.power <= 0) {
+    public void tick(World world, BlockPos pos, BlockState state) {
+        if (this.power > 0) {
+            this.power -= 1;
+            if (this.power <= 0) {
                 world.setBlockState(pos, state.with(Properties.POWERED, false));
             } else {
-                Particles.createDragonForgeFlame(world, pos, entity.dragon);
+                Particles.createDragonForgeFlame(world, pos, this.type);
             }
         }
-        if (entity.power <= 0) {
-            ItemStack stack = entity.getStack(0);
+        if (this.power <= 0) {
+            ItemStack stack = this.getStack(0);
             if (stack.getItem() instanceof DragonBreathItem) {
                 Identifier type = NbtHelper.getItemDragonType(stack);
-                entity.setDragon(type);
-                entity.maxPower = 1200;
-                entity.power    = entity.maxPower;
+                this.setType(type);
+                this.maxPower = 1200;
+                this.power    = this.maxPower;
                 world.setBlockState(pos, state.with(Properties.POWERED, true));
-                entity.removeStack(0, 1);
+                this.removeStack(0, 1);
             }
         }
+    }
+
+
+    @Nullable
+    public Relation<DragonForgeCoreBlockEntity> getCoreRelation() {
+        return null;
     }
 
 }

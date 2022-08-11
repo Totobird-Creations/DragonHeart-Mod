@@ -36,7 +36,7 @@
       "spawns": []
     }
   },
-  "terrain_adaptation": "beard_thin",
+  "terrain_adaptation": "bury",
   "start_pool": "${id}:nest/large",
   "size": 7,
   "start_height": {

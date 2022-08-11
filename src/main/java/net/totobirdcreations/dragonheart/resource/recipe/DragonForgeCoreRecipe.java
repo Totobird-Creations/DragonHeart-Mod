@@ -15,6 +15,7 @@ import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class DragonForgeCoreRecipe implements Recipe<SimpleInventory> {
@@ -64,7 +65,7 @@ public class DragonForgeCoreRecipe implements Recipe<SimpleInventory> {
                 return false;
             }
             if (ingredient.modifiers.contains(CoreIngredient.Modifier.MATCH_TYPE)
-                    && ! entity.dragon.equals(NbtHelper.getItemDragonType(stack))
+                    && ! entity.power.equals(NbtHelper.getItemDragonType(stack))
             ) {
                 return false;
             }
@@ -117,8 +118,8 @@ public class DragonForgeCoreRecipe implements Recipe<SimpleInventory> {
 
 
     public record CoreIngredient(
-            Ingredient          ingredient,
-            ArrayList<Modifier> modifiers
+            Ingredient           ingredient,
+            Collection<Modifier> modifiers
     ) {
         public enum Modifier {
             MATCH_TYPE,

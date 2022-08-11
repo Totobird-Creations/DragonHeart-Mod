@@ -88,7 +88,12 @@ public abstract class DragonBlock extends BlockWithEntity implements BlockEntity
     }
 
 
-    public abstract <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type);
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World ignoredWorld, BlockState ignoredState, BlockEntityType<T> ignoredType) {
+        return ((world, pos, state, entity) -> {
+            ((DragonBlockEntity)(entity)).tick(world, pos, state);
+        });
+    }
 
 
     // If powered, glow.

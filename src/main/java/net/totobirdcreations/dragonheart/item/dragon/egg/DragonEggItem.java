@@ -30,6 +30,7 @@ import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -83,7 +84,7 @@ public class DragonEggItem extends DragonItemImpl {
     public void appendStacks(DefaultedList<ItemStack> stacks) {}
     @Override
     public void appendStacks(DefaultedList<ItemStack> stacks, Identifier identifier, DragonResourceLoader.DragonResource resource) {
-        ArrayList<RGBColour> colours = resource.creativeEggColours();
+        Collection<RGBColour> colours = resource.creativeEggColours();
         this.appendStack(stacks, identifier, null);
         for (RGBColour colour : colours) {
             this.appendStack(stacks, identifier, colour);

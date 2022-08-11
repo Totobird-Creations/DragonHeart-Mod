@@ -7,10 +7,9 @@ import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.block.dragon.forge.DragonForgeBricksBlock;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
-import net.totobirdcreations.dragonheart.particle.DragonFlameParticleEffect;
 import net.totobirdcreations.dragonheart.particle.Particles;
-import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
-import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
+
+import javax.annotation.Nullable;
 
 
 public class DragonForgeBricksBlockEntity extends DragonForgeBlockEntity {
@@ -41,6 +40,10 @@ public class DragonForgeBricksBlockEntity extends DragonForgeBlockEntity {
             new BlockPos(0, 1, -1),
             new BlockPos(0, 1, 1)
     );
+    public static final Relation<DragonForgeCoreBlockEntity> CORE_ALL = Relation.join(
+            DragonBlockEntities.DRAGON_FORGE_CORE,
+            CORE_SIDE, CORE_DOWN, CORE_ALT
+    );
 
 
     public DragonForgeBricksBlockEntity(BlockPos pos, BlockState state) {
@@ -48,27 +51,30 @@ public class DragonForgeBricksBlockEntity extends DragonForgeBlockEntity {
     }
 
 
-    public static void tick(World world, BlockPos pos, BlockState state, DragonForgeBricksBlockEntity entity) {
+    public void tick(World world, BlockPos pos, BlockState state) {
         boolean vent    = false;
         boolean window  = false;
         boolean powered = false;
 
-        for (DragonForgeCoreBlockEntity relation : entity.getRelation(CORE_SIDE)) {
+        for (DragonForgeCoreBlockEntity relation : this.getRelation(CORE_SIDE)) {
             vent = true;
             if (world.getBlockState(relation.getPos()).get(Properties.POWERED)) {
+                this.setPower(relation.power);
                 powered = true;
                 break;
             }
         }
-        for (DragonForgeCoreBlockEntity relation : entity.getRelation(CORE_DOWN)) {
+        for (DragonForgeCoreBlockEntity relation : this.getRelation(CORE_DOWN)) {
             window = true;
             if (world.getBlockState(relation.getPos()).get(Properties.POWERED)) {
+                this.setPower(relation.power);
                 powered = true;
                 break;
             }
         }
-        for (DragonForgeCoreBlockEntity relation : entity.getRelation(CORE_ALT)) {
+        for (DragonForgeCoreBlockEntity relation : this.getRelation(CORE_ALT)) {
             if (world.getBlockState(relation.getPos()).get(Properties.POWERED)) {
+                this.setPower(relation.power);
                 powered = true;
                 break;
             }
@@ -82,8 +88,14 @@ public class DragonForgeBricksBlockEntity extends DragonForgeBlockEntity {
 
 
         if (window && powered && world.isClient()) {
-            Particles.createDragonForgeFlame(world, pos, entity.dragon);
+            Particles.createDragonForgeFlame(world, pos, this.power);
         }
+    }
+
+
+    @Nullable
+    public Relation<DragonForgeCoreBlockEntity> getCoreRelation() {
+        return CORE_ALL;
     }
 
 }

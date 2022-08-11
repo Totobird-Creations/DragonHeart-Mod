@@ -7,9 +7,11 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
+import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.effect.StatusEffects;
 import net.totobirdcreations.dragonheart.util.helper.DataHelper;
 import net.totobirdcreations.dragonheart.util.mixin.frozeneffect.FrozenEffectLivingEntityMixinInterface;
@@ -108,8 +110,8 @@ public abstract class LivingEntityMixin extends Entity implements FrozenEffectLi
 
     @Inject(method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", at = @At("RETURN"))
     public void damage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callback) {
-        if (this.isIced() && callback.getReturnValue()) {
-            ((LivingEntityInterface)this).removeStatusEffect(StatusEffects.FROZEN);
+        if (this.isIced() && source != DamageSource.FREEZE && callback.getReturnValue()) {
+            ((LivingEntity)(Object)this).removeStatusEffect(StatusEffects.FROZEN);
         }
     }
 

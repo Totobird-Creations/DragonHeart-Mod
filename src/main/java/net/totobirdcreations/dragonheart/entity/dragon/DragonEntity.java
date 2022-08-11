@@ -164,7 +164,7 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
     | Data Handling |
      --------------*/
 
-    public static final TrackedData<String>         DRAGON;
+    public static final TrackedData<String>         TYPE;
     public static final TrackedData<BlockPos>       SPAWN_POS;
     public static final TrackedData<Integer>        HUNGER_LEVEL;
     public static final TrackedData<Integer>        COLOUR;
@@ -176,14 +176,13 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
     public static final TrackedData<Optional<UUID>> TARGET;
     public static final TrackedData<BlockPos>       TARGET_POS;
     public static final TrackedData<Integer>        TARGET_LAST_SEEN;
-    public static final TrackedData<Integer>        EYE_COLOUR;
     public static final TrackedData<Optional<UUID>> TAMED_OWNER;
     public static final TrackedData<Boolean>        HAS_BREEDED;
     public static final TrackedData<Boolean>        NATURAL_SPAWN;
     public static final TrackedData<Boolean>        SITTING;
 
     static {
-        DRAGON           = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.STRING        );
+        TYPE             = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.STRING        );
         SPAWN_POS        = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BLOCK_POS     );
         HUNGER_LEVEL     = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
         COLOUR           = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
@@ -195,7 +194,6 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
         TARGET           = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.OPTIONAL_UUID );
         TARGET_POS       = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BLOCK_POS     );
         TARGET_LAST_SEEN = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
-        EYE_COLOUR       = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.INTEGER       );
         TAMED_OWNER      = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.OPTIONAL_UUID );
         HAS_BREEDED      = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
         NATURAL_SPAWN    = DataTracker.registerData( DragonEntity.class , TrackedDataHandlerRegistry.BOOLEAN       );
@@ -206,7 +204,7 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
     @Override
     public void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking( DRAGON           , ""                      );
+        this.dataTracker.startTracking( TYPE             , ""                      );
         this.dataTracker.startTracking( SPAWN_POS        , new BlockPos(0, 0, 0)   );
         this.dataTracker.startTracking( HUNGER_LEVEL     , 0                       );
         this.dataTracker.startTracking( COLOUR           , RGBColour.WHITE.asInt() );
@@ -219,7 +217,6 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
         this.dataTracker.startTracking( TARGET           , null                    );
         this.dataTracker.startTracking( TARGET_POS       , new BlockPos(0, 0, 0)   );
         this.dataTracker.startTracking( TARGET_LAST_SEEN , 0                       );
-        this.dataTracker.startTracking( EYE_COLOUR       , RGBColour.WHITE.asInt() );
         this.dataTracker.startTracking( TAMED_OWNER      , null                    );
         this.dataTracker.startTracking( HAS_BREEDED      , false                   );
         this.dataTracker.startTracking( NATURAL_SPAWN    , false                   );
@@ -230,9 +227,9 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
     @Override
     @Nullable
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        this.dataTracker.set(DRAGON,
-                entityNbt != null && entityNbt.contains("dragon", NbtElement.STRING_TYPE)
-                        ? entityNbt.getString("dragon")
+        this.dataTracker.set(TYPE,
+                entityNbt != null && entityNbt.contains("type", NbtElement.STRING_TYPE)
+                        ? entityNbt.getString("type")
                         : NbtHelper.EMPTY_TYPE.toString()
         );
         this.dataTracker.set( SPAWN_POS        , this.getBlockPos()        );
@@ -247,7 +244,6 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
         this.dataTracker.set( TARGET           , null                      );
         this.dataTracker.set( TARGET_POS       , new BlockPos(0, 0, 0)     );
         this.dataTracker.set( TARGET_LAST_SEEN , 0                         );
-        this.dataTracker.set( EYE_COLOUR       , RGBColour.WHITE.asInt()   );
         this.dataTracker.set( TAMED_OWNER      , Optional.empty()          );
         this.dataTracker.set( HAS_BREEDED      , false                     );
         this.dataTracker.set( NATURAL_SPAWN    , true                      );
@@ -260,7 +256,7 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
 
-        nbt.putString("dragon", this.dataTracker.get(DRAGON));
+        nbt.putString("type", this.dataTracker.get(TYPE));
 
         nbt.putBoolean("flying", this.dataTracker.get(FLYING));
 
@@ -296,8 +292,6 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
             nbt.remove("targetLastSeen");
         }
 
-        nbt.putInt("eyeColour", this.dataTracker.get(EYE_COLOUR));
-
         Optional<UUID> tamedOwner = this.dataTracker.get(TAMED_OWNER);
         if (tamedOwner != null && tamedOwner.isPresent()) {
             nbt.putUuid("tamedOwner", tamedOwner.get());
@@ -316,7 +310,7 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
 
-        this.dataTracker.set(DRAGON, nbt.getString("dragon"));
+        this.dataTracker.set(TYPE, nbt.getString("type"));
 
         this.dataTracker.set(FLYING, nbt.getBoolean("flying"));
 
@@ -357,8 +351,6 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
             }
         }
 
-        this.dataTracker.set(EYE_COLOUR, nbt.getInt("eyeColour"));
-
         this.dataTracker.set(TAMED_OWNER, nbt.contains("tamedOwner") ? Optional.of(nbt.getUuid("tamedOwner")) : Optional.empty());
 
         this.dataTracker.set(HAS_BREEDED, nbt.getBoolean("hasBreeded"));
@@ -370,7 +362,7 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
 
 
 
-    public String getDragon() {return this.dataTracker.get(DRAGON);}
+    public Identifier getDragonType() {return new Identifier(this.dataTracker.get(TYPE));}
 
     public DragonState getState() {
         return DragonState.fromInt(this.dataTracker.get(STATE));
@@ -384,7 +376,7 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
         return Math.max(Math.min(Math.floorDiv(this.getAge(), Config.CONFIG.dragon.age.stage_ticks), MAX_STAGES), 0);
     }
 
-    public int getColour() {return this.dataTracker.get(COLOUR);}
+    public RGBColour getColour() {return new RGBColour(this.dataTracker.get(COLOUR));}
 
     public boolean isTamed() {
         Optional<UUID> owner = this.dataTracker.get(TAMED_OWNER);
@@ -436,10 +428,14 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
         return this.getState() != DragonState.SLEEP && dataTracker.get(FLYING);
     }
 
+    public RGBColour getEyeColour() {
+        return DragonResourceLoader.getResource(this.getDragonType()).eyeColour();
+    }
 
 
-    public void setDragon(String dragon) {
-        this.dataTracker.set(DRAGON, dragon);
+
+    public void setDragonType(String dragon) {
+        this.dataTracker.set(TYPE, dragon);
     }
 
     public void setState(DragonState state) {
@@ -473,8 +469,6 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
     }
 
     public void setSpawnPos(BlockPos pos) {this.dataTracker.set(SPAWN_POS, pos);}
-
-    public void setEyeColour(int colour) {this.dataTracker.set(EYE_COLOUR, colour);}
 
     public void setNaturalSpawn(boolean natural) {this.dataTracker.set(NATURAL_SPAWN, natural);}
 
@@ -542,7 +536,7 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
     @Override
     public Text getName() {
         return Text.translatable("entity." + DragonHeart.ID + ".dragon",
-                DragonResourceLoader.getResource(new Identifier(this.getDragon())).getName().toString()
+                DragonResourceLoader.getResource(this.getDragonType()).getName().toString()
         );
     }
 

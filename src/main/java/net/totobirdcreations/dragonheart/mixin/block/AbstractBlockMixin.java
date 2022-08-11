@@ -25,7 +25,7 @@ public class AbstractBlockMixin {
         BlockEntity entity = world.getBlockEntity(pos);
         if (entity instanceof DragonGriefedBlockEntity griefedEntity) {
             if (griefedEntity.resetState != null) {
-                return griefedEntity.resetState.getHardness(world, pos) / 2.0f;
+                return 0.0f;//griefedEntity.resetState.getHardness(world, pos) * 2.0f;
             }
         }
         return state.getHardness(world, pos);

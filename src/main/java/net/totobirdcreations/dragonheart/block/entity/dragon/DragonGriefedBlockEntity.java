@@ -49,7 +49,7 @@ public class DragonGriefedBlockEntity extends DragonBlockEntity {
                         .with(DragonGriefedBlock.CAN_RESET, true)
                 );
                 if (world.getBlockEntity(pos) instanceof DragonGriefedBlockEntity entity) {
-                    entity.setDragon(type);
+                    entity.setType(type);
                     entity.resetId    = resetId;
                     entity.resetState = resetState;
                     entity.resetNbt   = resetNbt;
@@ -59,7 +59,7 @@ public class DragonGriefedBlockEntity extends DragonBlockEntity {
             // If is resettable dragon griefed block, set grief type and max reset timer.
             if (resetState.get(DragonGriefedBlock.CAN_RESET) && world.getBlockEntity(pos) instanceof DragonGriefedBlockEntity entity) {
                 entity.resetTime = MAX_RESET_TIME;
-                entity.setDragon(type);
+                entity.setType(type);
             }
         }
     }
@@ -105,11 +105,11 @@ public class DragonGriefedBlockEntity extends DragonBlockEntity {
     }
 
 
-    public static void tick(World world, BlockPos pos, BlockState state, DragonGriefedBlockEntity entity) {
+    public void tick(World world, BlockPos pos, BlockState state) {
         if (state.get(DragonGriefedBlock.CAN_RESET)) {
-            entity.resetTime -= 1;
-            if (entity.resetTime <= 0) {
-                entity.reset();
+            this.resetTime -= 1;
+            if (this.resetTime <= 0) {
+                this.reset();
             }
         }
     }

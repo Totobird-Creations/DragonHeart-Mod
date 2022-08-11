@@ -122,7 +122,7 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
 
-        nbt.putString ( "dragon"    , dataTracker.get( DRAGON     ));
+        nbt.putString ( "type"      , dataTracker.get( DRAGON     ));
         nbt.putInt    ( "colour"    , dataTracker.get( COLOUR     ));
         nbt.putInt    ( "age"       , dataTracker.get( AGE        ));
         nbt.putInt    ( "spawnAge"  , dataTracker.get( SPAWN_AGE  ));
@@ -133,7 +133,7 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
 
-        this.dataTracker.set( DRAGON     , nbt.getString ("dragon"    ));
+        this.dataTracker.set( DRAGON     , nbt.getString ("type"      ));
         this.dataTracker.set( COLOUR     , nbt.getInt    ("colour"    ));
         this.dataTracker.set( AGE        , nbt.getInt    ("age"       ));
         this.dataTracker.set( SPAWN_AGE  , nbt.getInt    ("spawnAge"  ));
@@ -292,12 +292,11 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
 
 
     public void createEntity(DragonEntity dragon) {
-        dragon.setDragon(this.dataTracker.get(DRAGON));
+        dragon.setDragonType(this.dataTracker.get(DRAGON));
         dragon.setAge(0);
         dragon.setState(DragonEntity.DragonState.WANDER);
         dragon.setColour(this.getColour());
         dragon.setSpawnPos(dragon.getBlockPos());
-        dragon.setEyeColour(this.getEyeColour());
         dragon.setNaturalSpawn(false);
     }
 

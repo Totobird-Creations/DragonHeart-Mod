@@ -1,7 +1,7 @@
 {
   "type" : "${id}:dragonforge",
-  "dragon_type" : "minecraft:empty",
-  "time" : 300,
+  "dragon_type" : "minecraft:",
+  "time" : 20,
   "ingredients" : [
     {
       "item" : "${id}:dragon_cells",

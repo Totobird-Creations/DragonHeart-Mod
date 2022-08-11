@@ -12,8 +12,7 @@ public record DragonForgeCoreBlockEntityProperties(
     public static final int PROGRESS     = 0;
     public static final int MAX_PROGRESS = 1;
     public static final int COLOUR       = 2;
-    public static final int HAS_TYPE     = 3;
-    public static final int SIZE         = 4;
+    public static final int SIZE         = 3;
 
 
     @Override
@@ -22,8 +21,7 @@ public record DragonForgeCoreBlockEntityProperties(
         return switch (property) {
             case    PROGRESS     -> owner.progress;
             case    MAX_PROGRESS -> owner.maxProgress;
-            case    COLOUR       -> DragonResourceLoader.getResource(owner.dragon).colourGlow().asInt();
-            case    HAS_TYPE     -> owner.dragon.equals(NbtHelper.EMPTY_TYPE) ? 0 : 1;
+            case    COLOUR       -> DragonResourceLoader.getResource(owner.power).colourGlow().asInt();
             default              -> 0;
         };
     }

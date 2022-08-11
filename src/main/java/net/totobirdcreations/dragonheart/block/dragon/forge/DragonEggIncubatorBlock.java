@@ -79,10 +79,4 @@ public class DragonEggIncubatorBlock extends DragonForgeBlock {
         super.onStateReplaced(state, world, pos, newState, moved);
     }
 
-
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, DragonBlockEntities.DRAGON_EGG_INCUBATOR, DragoneggIncubatorBlockEntity::tick);
-    }
-
 }

@@ -14,7 +14,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.totobirdcreations.dragonheart.DragonHeart;
 
 import java.util.ArrayList;
-
+import java.util.Collection;
 
 
 public class DragonForgeCoreRecipeSerializer implements RecipeSerializer<DragonForgeCoreRecipe> {
@@ -33,10 +33,10 @@ public class DragonForgeCoreRecipeSerializer implements RecipeSerializer<DragonF
         DefaultedList<DragonForgeCoreRecipe.CoreIngredient> ingredients = DefaultedList.of();
         boolean                                         typeSource       = false;
         for (int i = 0; i < 2; i++) {
-            JsonObject                                               object          = inputs.get(i).getAsJsonObject();
-            Ingredient ingredient      = Ingredient.fromJson(object);
-            ArrayList<DragonForgeCoreRecipe.CoreIngredient.Modifier> modifiers       = new ArrayList<>();
-            ArrayList<String>                                        modifierStrings = new ArrayList<>();
+            JsonObject                                                object          = inputs.get(i).getAsJsonObject();
+            Ingredient                                                ingredient      = Ingredient.fromJson(object);
+            Collection<DragonForgeCoreRecipe.CoreIngredient.Modifier> modifiers       = new ArrayList<>();
+            Collection<String>                                        modifierStrings = new ArrayList<>();
             if (JsonHelper.hasArray(object, "forge")) {
                 JsonArray array = JsonHelper.getArray(object, "forge");
                 for (JsonElement modifierElement : array) {
@@ -82,7 +82,7 @@ public class DragonForgeCoreRecipeSerializer implements RecipeSerializer<DragonF
         DefaultedList<DragonForgeCoreRecipe.CoreIngredient> ingredients = DefaultedList.ofSize(buf.readInt(), null);
         for (int i = 0; i < ingredients.size(); i++) {
             Ingredient input = Ingredient.fromPacket(buf);
-            ArrayList<DragonForgeCoreRecipe.CoreIngredient.Modifier> modifiers = new ArrayList<>();
+            Collection<DragonForgeCoreRecipe.CoreIngredient.Modifier> modifiers = new ArrayList<>();
             for (int j = 0; j < buf.readInt(); i++) {
                 DragonForgeCoreRecipe.CoreIngredient.Modifier modifier = DragonForgeCoreRecipe.CoreIngredient.Modifier.fromString(buf.readString(), new Identifier(DragonHeart.ID, "<networkRecipeType>"));
                 if (modifier != null) {

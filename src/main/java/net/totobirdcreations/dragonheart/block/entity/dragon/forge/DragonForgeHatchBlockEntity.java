@@ -6,6 +6,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
+import org.jetbrains.annotations.Nullable;
 
 
 public class DragonForgeHatchBlockEntity extends DragonForgeBlockEntity {
@@ -24,11 +25,12 @@ public class DragonForgeHatchBlockEntity extends DragonForgeBlockEntity {
     }
 
 
-    public static void tick(World world, BlockPos pos, BlockState state, DragonForgeHatchBlockEntity entity) {
+    public void tick(World world, BlockPos pos, BlockState state) {
         boolean powered = false;
 
-        for (DragonForgeCoreBlockEntity relation : entity.getRelation(CORE_SIDE)) {
+        for (DragonForgeCoreBlockEntity relation : this.getRelation(CORE_SIDE)) {
             if (world.getBlockState(relation.getPos()).get(Properties.POWERED)) {
+                this.setPower(relation.power);
                 powered = true;
                 break;
             }
@@ -37,6 +39,12 @@ public class DragonForgeHatchBlockEntity extends DragonForgeBlockEntity {
         world.setBlockState(pos, state
                 .with(Properties.POWERED, powered)
         );
+    }
+
+
+    @Nullable
+    public Relation<DragonForgeCoreBlockEntity> getCoreRelation() {
+        return CORE_SIDE;
     }
 
 }

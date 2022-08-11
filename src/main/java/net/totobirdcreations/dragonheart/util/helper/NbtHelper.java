@@ -1,5 +1,6 @@
 package net.totobirdcreations.dragonheart.util.helper;
 
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -26,18 +27,18 @@ public class NbtHelper {
 
 
     public static Identifier getItemDragonType(ItemStack stack) {
-        return new Identifier(getString(getItemDragonTypeCompound(stack), "dragon", EMPTY_TYPE.toString()));
+        return new Identifier(getString(getItemDragonTypeCompound(stack), "type", EMPTY_TYPE.toString()));
     }
 
     public static void setItemDragonType(ItemStack stack, Identifier type) {
         setItemDragonType(stack, type.toString());
     }
     public static void setItemDragonType(ItemStack stack, String type) {
-        getItemDragonTypeCompound(stack).putString("dragon", type);
+        getItemDragonTypeCompound(stack).putString("type", type);
     }
 
     public static NbtCompound getItemDragonTypeCompound(ItemStack stack) {
-        return (stack.getItem() instanceof DragonBlockItem
+        return (stack.getItem() instanceof BlockItem
                 ? stack.getOrCreateSubNbt("BlockEntityTag")
                 : stack.getOrCreateNbt()
         );

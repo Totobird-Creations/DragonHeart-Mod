@@ -17,8 +17,7 @@ import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
 
 public class DragonForgeCoreScreen extends HandledScreen<DragonForgeCoreScreenHandler> {
 
-    public static final Identifier TEXTURE_BASE = new Identifier(DragonHeart.ID, "textures/gui/dragon_forge_core_base.png" );
-    public static final Identifier TEXTURE_TYPE = new Identifier(DragonHeart.ID, "textures/gui/dragon_forge_core.png"      );
+    public static final Identifier TEXTURE = new Identifier(DragonHeart.ID, "textures/gui/dragon_forge_core.png");
 
 
     public DragonForgeCoreScreen(DragonForgeCoreScreenHandler handler, PlayerInventory inventory, Text title) {
@@ -37,11 +36,7 @@ public class DragonForgeCoreScreen extends HandledScreen<DragonForgeCoreScreenHa
     public void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-        RenderSystem.setShaderTexture(0, this.handler.properties.get(
-                DragonForgeCoreBlockEntityProperties.HAS_TYPE) > 0
-                ? TEXTURE_TYPE
-                : TEXTURE_BASE
-        );
+        RenderSystem.setShaderTexture(0, TEXTURE);
         int x = (this.width  - this.backgroundWidth  ) / 2;
         int y = (this.height - this.backgroundHeight ) / 2;
         this.drawTexture(matrices, x, y, 0, 0, this.backgroundWidth, this.backgroundHeight);

@@ -3,7 +3,6 @@ package net.totobirdcreations.dragonheart.block.dragon;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -12,7 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -71,12 +69,6 @@ public class DragonGriefedBlock extends DragonBlock {
 
 
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return checkType(type, DragonBlockEntities.DRAGON_GRIEFED, DragonGriefedBlockEntity::tick);
-    }
-
-
-    @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         return ItemStack.EMPTY;
     }
@@ -92,7 +84,7 @@ public class DragonGriefedBlock extends DragonBlock {
                     if (world.getBlockEntity(pos) instanceof DragonGriefedBlockEntity entity) {
                         stack.decrement(1);
                         ItemStack newStack = new ItemStack(DragonItems.DRAGON_BREATH);
-                        newStack.getOrCreateNbt().putString("dragon", entity.dragon.toString());
+                        newStack.getOrCreateNbt().putString("type", entity.type.toString());
                         if (stack.isEmpty()) {
                             player.setStackInHand(hand, newStack);
                         } else if (! player.getInventory().insertStack(newStack)) {

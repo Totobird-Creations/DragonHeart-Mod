@@ -45,7 +45,7 @@ public class StructureEventHandlers {
         assert entity != null;
         Random random = entity.getRandom();
         entity.setPosition(new Vec3d(blockPos.getX() + 0.5f, blockPos.getY(), blockPos.getZ() + 0.5f));
-        entity.setDragon(resource.id().toString());
+        entity.setDragonType(resource.id().toString());
         entity.setAge(random.nextBetween(min_age, max_age));
         entity.setColour(resource.chooseBodyColour(entity.getUuid()));
         entity.setSpawnPos(blockPos);
