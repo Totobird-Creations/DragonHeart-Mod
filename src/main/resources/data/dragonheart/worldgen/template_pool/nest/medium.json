@@ -1,5 +1,5 @@
 {
-  "name": "${id}:nest/small",
+  "name": "${id}:nest/medium",
   "fallback": "minecraft:empty",
   "elements": [
     {

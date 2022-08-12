@@ -20,15 +20,19 @@ import java.util.HashMap;
 
 public class NestStructureProcessor extends StructureProcessor {
 
-    public static final NestStructureProcessor INSTANCE = new NestStructureProcessor();
+    public static final NestStructureProcessor        INSTANCE = new NestStructureProcessor();
     public static final Codec<NestStructureProcessor> CODEC    = Codec.unit(() -> INSTANCE);
 
-    public static final HashMap<Block, Float>               CHANCES = new HashMap<>();
+    public static final HashMap<Block, Chance> CHANCES = new HashMap<>();
     static {
-        CHANCES.put(Blocks.WHITE_WOOL, 1.0f);
-        CHANCES.put(Blocks.ORANGE_WOOL, 0.75f);
-        CHANCES.put(Blocks.MAGENTA_WOOL, 0.5f);
-        CHANCES.put(Blocks.LIGHT_BLUE_WOOL, 0.25f);
+        CHANCES.put(Blocks. WHITE_WOOL            , new Chance( 1.0f  , false ));
+        CHANCES.put(Blocks. ORANGE_WOOL           , new Chance( 0.75f , false ));
+        CHANCES.put(Blocks. MAGENTA_WOOL          , new Chance( 0.5f  , false ));
+        CHANCES.put(Blocks. LIGHT_BLUE_WOOL       , new Chance( 0.25f , false ));
+        CHANCES.put(Blocks. WHITE_TERRACOTTA      , new Chance( 1.0f  , true  ));
+        CHANCES.put(Blocks. ORANGE_TERRACOTTA     , new Chance( 0.75f , true  ));
+        CHANCES.put(Blocks. MAGENTA_TERRACOTTA    , new Chance( 0.5f  , true  ));
+        CHANCES.put(Blocks. LIGHT_BLUE_TERRACOTTA , new Chance( 0.25f , true  ));
     }
 
     @Override
@@ -45,10 +49,10 @@ public class NestStructureProcessor extends StructureProcessor {
         }
 
         Random random = data.getRandom(currentInfo.pos);
-        Float  chance = CHANCES.get(currentInfo.state.getBlock());
+        Chance chance = CHANCES.get(currentInfo.state.getBlock());
         if (chance != null) {
             // Block is wool with chance attached.
-            if (random.nextFloat() <= chance) {
+            if (random.nextFloat() <= chance.threshold) {
                 // If chance is matched, place griefed block.
                 NbtCompound nbt = currentInfo.nbt != null
                         ? currentInfo.nbt
@@ -62,11 +66,15 @@ public class NestStructureProcessor extends StructureProcessor {
                 );
             } else {
                 // Chance not matched.
-                return new StructureTemplate.StructureBlockInfo(
-                        currentInfo.pos,
-                        Blocks.AIR.getDefaultState(),
-                        currentInfo.nbt
-                );
+                if (chance.failIsVoid) {
+                    return originalInfo;
+                } else {
+                    return new StructureTemplate.StructureBlockInfo(
+                            currentInfo.pos,
+                            Blocks.AIR.getDefaultState(),
+                            currentInfo.nbt
+                    );
+                }
             }
         } else if (currentInfo.state.isOf(Blocks.AIR) && originalInfo.state.isOf(Blocks.WATER)) {
             // Handle underwater spawning.
@@ -85,5 +93,8 @@ public class NestStructureProcessor extends StructureProcessor {
     public StructureProcessorType<?> getType() {
         return Structures.NEST_PROCESSOR_TYPE;
     }
+
+
+    public record Chance(float threshold, boolean failIsVoid) {}
 
 }
