@@ -4,8 +4,8 @@ import net.minecraft.screen.PropertyDelegate;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 
 
-public record DragoneggIncubatorBlockEntityProperties(
-        DragoneggIncubatorBlockEntity owner
+public record DragonEggIncubatorBlockEntityProperties(
+        DragonEggIncubatorBlockEntity owner
 ) implements PropertyDelegate {
 
     public static final int POWER     = 0;
@@ -18,9 +18,9 @@ public record DragoneggIncubatorBlockEntityProperties(
     public int get(int property) {
         if (owner == null) {return 0;}
         return switch (property) {
-            case    POWER     -> owner.power;
-            case    MAX_POWER -> owner.maxPower;
-            case    COLOUR    -> DragonResourceLoader.getResource(owner.type).colourGlow().asInt();
+            case    POWER     -> owner.time;
+            case    MAX_POWER -> owner.maxTime;
+            case    COLOUR    -> DragonResourceLoader.getResource(owner.power).colourGlow().asInt();
             default              -> 0;
         };
     }
@@ -29,8 +29,8 @@ public record DragoneggIncubatorBlockEntityProperties(
     public void set(int property, int value) {
         if (owner == null) {return;}
         switch (property) {
-            case POWER     -> owner.power    = value;
-            case MAX_POWER -> owner.maxPower = value;
+            case POWER     -> owner.time = value;
+            case MAX_POWER -> owner.maxTime = value;
         }
     }
 

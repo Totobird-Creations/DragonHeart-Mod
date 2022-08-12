@@ -22,6 +22,10 @@ public class StructureEventHandlers {
                 new Identifier(DragonHeart.ID, "spawn_dragon"),
                 StructureEventHandlers::spawnDragon
         );
+        LogicCommandManager.register(
+                new Identifier(DragonHeart.ID, "spawn_dragon_egg"),
+                StructureEventHandlers::spawnDragonEgg
+        );
     }
 
 
@@ -52,8 +56,17 @@ public class StructureEventHandlers {
         entity.setNaturalSpawn(true);
         DataHelper.randomiseEntityRotation(entity);
         world.spawnEntity(entity);
-        world.spawnEntity(entity);
 
+    }
+
+
+    public static void spawnDragonEgg(String metadata, World world, BlockPos blockPos, BlockPos structureOrigin) throws Exception {
+        Identifier id = DataHelper.chooseDragonTypeForPos(world, structureOrigin, world.getRandom());
+        if (id == null) {
+            throw new Exception("Could not find valid dragon egg type for biome at " + structureOrigin.toString() + ".");
+        }
+        DragonResourceLoader.DragonResource resource = DragonResourceLoader.getResource(id);
+        DragonHeart.LOGGER.warn("Dragon egg spawning is currently unimplemented.");
     }
 
 

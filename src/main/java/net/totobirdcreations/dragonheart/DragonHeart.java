@@ -11,7 +11,7 @@ import net.totobirdcreations.dragonheart.entity.Entities;
 import net.totobirdcreations.dragonheart.event.EventHandlers;
 import net.totobirdcreations.dragonheart.gamerule.Gamerules;
 import net.totobirdcreations.dragonheart.item.Items;
-import net.totobirdcreations.dragonheart.particle.Particles;
+import net.totobirdcreations.dragonheart.particle_effect.ParticleEffects;
 import net.totobirdcreations.dragonheart.resource.Resources;
 import net.totobirdcreations.dragonheart.screen_handler.ScreenHandlers;
 import net.totobirdcreations.dragonheart.sound.SoundEvents;
@@ -119,7 +119,7 @@ public class DragonHeart implements ModInitializer {
 		ScreenHandlers.register();
 		Resources.register();
 		EventHandlers.register();
-		Particles.register();
+		ParticleEffects.register();
 		Structures.register();
 
 		LOGGER.info("Initialized.");

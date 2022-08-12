@@ -18,10 +18,10 @@ import net.totobirdcreations.dragonheart.util.helper.DataHelper;
 import java.util.HashMap;
 
 
-public class NestStructureProcessor extends StructureProcessor {
+public class NestBaseStructureProcessor extends StructureProcessor {
 
-    public static final NestStructureProcessor        INSTANCE = new NestStructureProcessor();
-    public static final Codec<NestStructureProcessor> CODEC    = Codec.unit(() -> INSTANCE);
+    public static final NestBaseStructureProcessor INSTANCE = new NestBaseStructureProcessor();
+    public static final Codec<NestBaseStructureProcessor> CODEC    = Codec.unit(() -> INSTANCE);
 
     public static final HashMap<Block, Chance> CHANCES = new HashMap<>();
     static {
@@ -54,44 +54,43 @@ public class NestStructureProcessor extends StructureProcessor {
             // Block is wool with chance attached.
             if (random.nextFloat() <= chance.threshold) {
                 // If chance is matched, place griefed block.
-                NbtCompound nbt = currentInfo.nbt != null
-                        ? currentInfo.nbt
-                        : new NbtCompound();
+                NbtCompound nbt = new NbtCompound();
                 nbt.putString("type", id.toString());
-                return new StructureTemplate.StructureBlockInfo(
+                currentInfo = new StructureTemplate.StructureBlockInfo(
                         currentInfo.pos,
-                        DragonBlocks.DRAGON_GRIEFED
-                                .getDefaultState(),
+                        DragonBlocks.DRAGON_GRIEFED.getDefaultState(),
                         nbt
                 );
             } else {
                 // Chance not matched.
                 if (chance.failIsVoid) {
-                    return originalInfo;
+                    currentInfo = originalInfo;
                 } else {
-                    return new StructureTemplate.StructureBlockInfo(
+                    currentInfo = new StructureTemplate.StructureBlockInfo(
                             currentInfo.pos,
                             Blocks.AIR.getDefaultState(),
-                            currentInfo.nbt
+                            new NbtCompound()
                     );
                 }
             }
-        } else if (currentInfo.state.isOf(Blocks.AIR) && originalInfo.state.isOf(Blocks.WATER)) {
+        }
+        // Underwater check
+        if (currentInfo.state.isOf(Blocks.AIR) && originalInfo.state.isOf(Blocks.WATER)) {
             // Handle underwater spawning.
-            return new StructureTemplate.StructureBlockInfo(
+            currentInfo = new StructureTemplate.StructureBlockInfo(
                     currentInfo.pos,
                     Blocks.WATER.getDefaultState(),
-                    currentInfo.nbt
+                    new NbtCompound()
             );
         }
-        // Nothing matches, just allow pass through.
+        // Return
         return currentInfo;
     }
 
 
     @Override
     public StructureProcessorType<?> getType() {
-        return Structures.NEST_PROCESSOR_TYPE;
+        return Structures.NEST_BASE_PROCESSOR_TYPE;
     }
 
 

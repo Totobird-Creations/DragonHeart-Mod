@@ -1,0 +1,22 @@
+{
+  "name": "${id}:nest/pile",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "${id}:nest/pile",
+        "processors": "${id}:nest/pile"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:empty_pool_element",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

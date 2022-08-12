@@ -70,6 +70,9 @@ public class DragonGriefedBlock extends DragonBlock {
 
     @Override
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+        if (state.get(CAN_RESET) && world.getBlockEntity(pos) instanceof DragonGriefedBlockEntity entity) {
+            return entity.resetState.getBlock().getPickStack(world, pos, entity.resetState);
+        }
         return ItemStack.EMPTY;
     }
 

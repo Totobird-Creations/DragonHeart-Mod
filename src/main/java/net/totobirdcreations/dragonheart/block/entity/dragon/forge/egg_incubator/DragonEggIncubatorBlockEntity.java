@@ -20,26 +20,26 @@ import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.DragonForgeBlockEntity;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
 import net.totobirdcreations.dragonheart.item.dragon.DragonBreathItem;
-import net.totobirdcreations.dragonheart.particle.Particles;
+import net.totobirdcreations.dragonheart.particle_effect.ParticleEffects;
 import net.totobirdcreations.dragonheart.screen_handler.DragonEggIncubatorScreenHandler;
 import net.totobirdcreations.dragonheart.util.helper.InventoryHelper;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 import org.jetbrains.annotations.Nullable;
 
 
-public class DragoneggIncubatorBlockEntity extends DragonForgeBlockEntity implements NamedScreenHandlerFactory, InventoryHelper {
+public class DragonEggIncubatorBlockEntity extends DragonForgeBlockEntity implements NamedScreenHandlerFactory, InventoryHelper {
 
     public static int INVENTORY_SIZE = 1;
 
     public       DefaultedList<ItemStack> items      = DefaultedList.ofSize(INVENTORY_SIZE, ItemStack.EMPTY);
     public final PropertyDelegate         properties;
-    public       int                      power      = 0;
-    public       int                      maxPower   = 0;
+    public       int                      time    = 0;
+    public       int                      maxTime = 0;
 
 
-    public DragoneggIncubatorBlockEntity(BlockPos pos, BlockState state) {
+    public DragonEggIncubatorBlockEntity(BlockPos pos, BlockState state) {
         super(DragonBlockEntities.DRAGON_EGG_INCUBATOR, pos, state);
-        this.properties = new DragoneggIncubatorBlockEntityProperties(this);
+        this.properties = new DragonEggIncubatorBlockEntityProperties(this);
     }
 
 
@@ -64,8 +64,8 @@ public class DragoneggIncubatorBlockEntity extends DragonForgeBlockEntity implem
 
     @Override
     public void readNbt(NbtCompound nbt) {
-        this.power    = nbt.getInt( "power"    );
-        this.maxPower = nbt.getInt( "maxPower" );
+        this.time = nbt.getInt( "power"    );
+        this.maxTime = nbt.getInt( "maxPower" );
         Inventories.readNbt(nbt, this.items);
         super.readNbt(nbt);
     }
@@ -73,31 +73,39 @@ public class DragoneggIncubatorBlockEntity extends DragonForgeBlockEntity implem
 
     @Override
     public void writeNbt(NbtCompound nbt) {
-        nbt.putInt( "power"    , this.power    );
-        nbt.putInt( "maxPower" , this.maxPower );
+        nbt.putInt( "power"    , this.time);
+        nbt.putInt( "maxPower" , this.maxTime);
         Inventories.writeNbt(nbt, this.items);
         super.writeNbt(nbt);
     }
 
 
     public void tick(World world, BlockPos pos, BlockState state) {
-        if (this.power > 0) {
-            this.power -= 1;
-            if (this.power <= 0) {
-                world.setBlockState(pos, state.with(Properties.POWERED, false));
-            } else {
-                Particles.createDragonForgeFlame(world, pos, this.type);
+        if (world.isClient()) {
+            if (state.get(Properties.POWERED)) {
+                ParticleEffects.createDragonForgeFlame(world, pos, this.power);
             }
-        }
-        if (this.power <= 0) {
-            ItemStack stack = this.getStack(0);
-            if (stack.getItem() instanceof DragonBreathItem) {
-                Identifier type = NbtHelper.getItemDragonType(stack);
-                this.setType(type);
-                this.maxPower = 1200;
-                this.power    = this.maxPower;
-                world.setBlockState(pos, state.with(Properties.POWERED, true));
-                this.removeStack(0, 1);
+
+        } else {
+            if (! this.type.equals(NbtHelper.EMPTY_TYPE)) {
+                this.setType(NbtHelper.EMPTY_TYPE);
+            }
+            if (this.time > 0) {
+                this.time -= 1;
+                if (this.time <= 0) {
+                    world.setBlockState(pos, state.with(Properties.POWERED, false));
+                }
+            }
+            if (this.time <= 0) {
+                ItemStack stack = this.getStack(0);
+                if (stack.getItem() instanceof DragonBreathItem) {
+                    Identifier type = NbtHelper.getItemDragonType(stack);
+                    this.setPower(type);
+                    this.maxTime = 1200;
+                    this.time    = this.maxTime;
+                    world.setBlockState(pos, state.with(Properties.POWERED, true));
+                    this.removeStack(0, 1);
+                }
             }
         }
     }

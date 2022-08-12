@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.block.dragon.forge.DragonForgeBricksBlock;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
-import net.totobirdcreations.dragonheart.particle.Particles;
+import net.totobirdcreations.dragonheart.particle_effect.ParticleEffects;
 
 import javax.annotation.Nullable;
 
@@ -88,7 +88,7 @@ public class DragonForgeBricksBlockEntity extends DragonForgeBlockEntity {
 
 
         if (window && powered && world.isClient()) {
-            Particles.createDragonForgeFlame(world, pos, this.power);
+            ParticleEffects.createDragonForgeFlame(world, pos, this.power);
         }
     }
 

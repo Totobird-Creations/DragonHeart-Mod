@@ -37,7 +37,7 @@
     }
   },
   "terrain_adaptation": "beard_thin",
-  "start_pool": "${id}:nest/medium",
+  "start_pool": "${id}:nest/base/medium",
   "size": 7,
   "start_height": {
     "absolute": 0

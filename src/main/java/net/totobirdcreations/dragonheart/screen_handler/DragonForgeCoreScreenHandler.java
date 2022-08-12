@@ -7,7 +7,6 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntityProperties;
@@ -15,7 +14,7 @@ import net.totobirdcreations.dragonheart.screen_handler.util.FireChargeSlot;
 import net.totobirdcreations.dragonheart.screen_handler.util.OutputSlot;
 
 
-public class DragonForgeCoreScreenHandler extends ScreenHandler {
+public class DragonForgeCoreScreenHandler extends net.minecraft.screen.ScreenHandler {
 
     public final Inventory        inventory;
     public final PropertyDelegate properties;

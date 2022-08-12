@@ -2,8 +2,6 @@ package net.totobirdcreations.dragonheart.block.dragon.forge;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.NamedScreenHandlerFactory;
@@ -15,9 +13,8 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
-import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntities;
 import net.totobirdcreations.dragonheart.block.entity.dragon.DragonBlockEntity;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge.egg_incubator.DragoneggIncubatorBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.egg_incubator.DragonEggIncubatorBlockEntity;
 
 
 public class DragonEggIncubatorBlock extends DragonForgeBlock {
@@ -43,7 +40,7 @@ public class DragonEggIncubatorBlock extends DragonForgeBlock {
 
     @Override
     public DragonBlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new DragoneggIncubatorBlockEntity(pos, state);
+        return new DragonEggIncubatorBlockEntity(pos, state);
     }
 
 
@@ -71,7 +68,7 @@ public class DragonEggIncubatorBlock extends DragonForgeBlock {
         if (state.getBlock() != newState.getBlock()) {
             // Block broken, scatter items.
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof DragoneggIncubatorBlockEntity entity) {
+            if (blockEntity instanceof DragonEggIncubatorBlockEntity entity) {
                 ItemScatterer.spawn(world, pos, entity);
                 world.updateComparators(pos, this);
             }

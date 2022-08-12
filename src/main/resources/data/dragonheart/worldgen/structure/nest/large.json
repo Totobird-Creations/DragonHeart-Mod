@@ -37,7 +37,7 @@
     }
   },
   "terrain_adaptation": "bury",
-  "start_pool": "${id}:nest/large",
+  "start_pool": "${id}:nest/base/large",
   "size": 7,
   "start_height": {
     "type": "minecraft:uniform",

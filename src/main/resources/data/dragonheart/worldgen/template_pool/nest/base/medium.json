@@ -1,5 +1,5 @@
 {
-  "name": "${id}:nest/small",
+  "name": "${id}:nest/medium",
   "fallback": "minecraft:empty",
   "elements": [
     {
@@ -7,8 +7,8 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "${id}:nest/base/small",
-        "processors": "${id}:nest"
+        "location": "${id}:nest/base/medium",
+        "processors": "${id}:nest/base"
       }
     }
   ]

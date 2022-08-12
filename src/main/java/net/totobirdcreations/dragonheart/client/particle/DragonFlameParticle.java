@@ -1,19 +1,21 @@
-package net.totobirdcreations.dragonheart.particle;
+package net.totobirdcreations.dragonheart.client.particle;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
+import net.totobirdcreations.dragonheart.particle_effect.DragonFlameParticleEffect;
 
 
 public class DragonFlameParticle extends AbstractDustParticle<DragonFlameParticleEffect> {
 
     public DragonFlameParticle(ClientWorld world, double x, double y, double z, double vx, double vy, double vz, DragonFlameParticleEffect parameters, SpriteProvider spriteProvider) {
         super(world, x, y, z, vx, vy, vz, parameters, spriteProvider);
-        this.maxAge = (int)((random.nextFloat() * 0.125 + 0.125) * 60.0f);
-        this.velocityX = vx;
-        this.velocityY = vy;
-        this.velocityZ = vz;
+        this.maxAge            = (int)((random.nextFloat() * 0.125 + 0.125) * 60.0f);
+        this.velocityX         = vx;
+        this.velocityY         = vy;
+        this.velocityZ         = vz;
+        this.collidesWithWorld = true;
     }
 
 

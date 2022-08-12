@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.util.mixin.deafenedeffect;
+package net.totobirdcreations.dragonheart.util.mixin.deafened_effect;
 
 
 

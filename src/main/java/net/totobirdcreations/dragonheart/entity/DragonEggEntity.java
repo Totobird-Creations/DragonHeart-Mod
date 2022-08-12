@@ -1,10 +1,7 @@
-package net.totobirdcreations.dragonheart.entity.dragon_egg;
+package net.totobirdcreations.dragonheart.entity;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -14,26 +11,28 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ItemStackParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.dragon.forge.DragonEggIncubatorBlock;
-import net.totobirdcreations.dragonheart.entity.Entities;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.egg_incubator.DragonEggIncubatorBlockEntity;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
 import net.totobirdcreations.dragonheart.item.dragon.DragonItems;
 import net.totobirdcreations.dragonheart.item.util.DragonColouredItem;
+import net.totobirdcreations.dragonheart.particle_effect.ParticleEffects;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 import net.totobirdcreations.dragonheart.sound.SoundEvents;
+import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
+import net.totobirdcreations.dragonheart.util.helper.DataHelper;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -44,19 +43,20 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import java.util.Random;
+import java.util.Collection;
 
 
 public class DragonEggEntity extends MobEntity implements IAnimatable {
 
     public static EntityDimensions DIMENSIONS = EntityDimensions.changing(0.375f, 0.5f);
 
-    public static int MIN_SPAWN_AGE = 120000; // 100m
-    public static int MAX_SPAWN_AGE = 240000; // 200m
+    public static int MIN_SPAWN_AGE       = 120000; // 100m
+    public static int MAX_SPAWN_AGE       = 240000; // 200m
+    public static int MAX_WARMTH_DISTANCE = 2;
 
-    public static int   SHAKE_COOLDOWN_TICKS = 100; // 5s
-    public static int   SHAKE_TICKS          = 40;  // 2s
-    public static float SHAKE_CHANCE         = 0.01f;
+    public static int   SHAKE_COOLDOWN_TICKS = 20; // 1s
+    public static int   SHAKE_TICKS          = 40; // 2s
+    public static float SHAKE_CHANCE         = 0.125f;
 
     public int        shakeCooldownTicks = SHAKE_COOLDOWN_TICKS;
     public int        shakeTicks         = 0;
@@ -79,14 +79,14 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
     | Data Handling |
      --------------*/
 
-    public static final TrackedData<String>  DRAGON;
+    public static final TrackedData<String>  TYPE;
     public static final TrackedData<Integer> COLOUR;
     public static final TrackedData<Integer> AGE;
     public static final TrackedData<Integer> SPAWN_AGE;
     public static final TrackedData<Integer> EYE_COLOUR;
 
     static {
-        DRAGON     = DataTracker.registerData( DragonEggEntity.class , TrackedDataHandlerRegistry.STRING  );
+        TYPE       = DataTracker.registerData( DragonEggEntity.class , TrackedDataHandlerRegistry.STRING  );
         COLOUR     = DataTracker.registerData( DragonEggEntity.class , TrackedDataHandlerRegistry.INTEGER );
         AGE        = DataTracker.registerData( DragonEggEntity.class , TrackedDataHandlerRegistry.INTEGER );
         SPAWN_AGE  = DataTracker.registerData( DragonEggEntity.class , TrackedDataHandlerRegistry.INTEGER );
@@ -97,7 +97,7 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
     @Override
     public void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking( DRAGON     , "" );
+        this.dataTracker.startTracking( TYPE       , "" );
         this.dataTracker.startTracking( COLOUR     , 0  );
         this.dataTracker.startTracking( AGE        , 0  );
         this.dataTracker.startTracking( SPAWN_AGE  , 0  );
@@ -108,7 +108,7 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
     @Override
     @Nullable
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        this.dataTracker.set( DRAGON     , NbtHelper.EMPTY_TYPE.toString() );
+        this.dataTracker.set( TYPE       , NbtHelper.EMPTY_TYPE.toString() );
         this.dataTracker.set( COLOUR     , 8355711                         );
         this.dataTracker.set( AGE        , 0                               );
         this.dataTracker.set( SPAWN_AGE  , 0                               );
@@ -122,7 +122,7 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
 
-        nbt.putString ( "type"      , dataTracker.get( DRAGON     ));
+        nbt.putString ( "type"      , dataTracker.get( TYPE       ));
         nbt.putInt    ( "colour"    , dataTracker.get( COLOUR     ));
         nbt.putInt    ( "age"       , dataTracker.get( AGE        ));
         nbt.putInt    ( "spawnAge"  , dataTracker.get( SPAWN_AGE  ));
@@ -133,7 +133,7 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
 
-        this.dataTracker.set( DRAGON     , nbt.getString ("type"      ));
+        this.dataTracker.set( TYPE       , nbt.getString ("type"      ));
         this.dataTracker.set( COLOUR     , nbt.getInt    ("colour"    ));
         this.dataTracker.set( AGE        , nbt.getInt    ("age"       ));
         this.dataTracker.set( SPAWN_AGE  , nbt.getInt    ("spawnAge"  ));
@@ -141,9 +141,9 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
     }
 
 
-    public String getDragon() {return this.dataTracker.get(DRAGON);}
+    public Identifier getDragonType() {return new Identifier(this.dataTracker.get(TYPE));}
 
-    public int getColour() {return this.dataTracker.get(COLOUR);}
+    public RGBColour getColour() {return new RGBColour(this.dataTracker.get(COLOUR));}
 
     public int getAge() {return this.dataTracker.get(AGE);}
 
@@ -153,8 +153,9 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
 
 
     public void setDragon(Identifier dragon) {this.setDragon(dragon.toString());}
-    public void setDragon(String dragon) {this.dataTracker.set(DRAGON, dragon);}
+    public void setDragon(String dragon) {this.dataTracker.set(TYPE, dragon);}
 
+    public void setColour(RGBColour colour) {this.setColour(colour.asInt());}
     public void setColour(int colour) {this.dataTracker.set(COLOUR, colour);}
 
     public void setAge(int age) {this.dataTracker.set(AGE, age);}
@@ -217,12 +218,13 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
         ItemStack stack = new ItemStack(DragonItems.DRAGON_EGG);
         DragonColouredItem.setColour(stack, this.getColour());
         NbtCompound nbt = stack.getOrCreateNbt();
-        NbtHelper.setItemDragonType  (stack, this.getDragon());
+        NbtHelper.setItemDragonType  (stack, this.getDragonType());
         DragonColouredItem.setColour (stack, this.getColour());
         nbt.putInt    ("age"       , this.getAge()       );
         nbt.putInt    ("spawnAge"  , this.getSpawnAge()  );
         nbt.putInt    ("eyeColour" , this.getEyeColour() );
-        this.dropStack(stack);
+        ItemEntity entity = this.dropStack(stack);
+        entity.setNeverDespawn();
     }
 
 
@@ -232,28 +234,49 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
 
     @Override
     public void tick() {
-        if (! world.isClient()) {
+        if (! this.world.isClient()) {
 
             if (this.isIncubated()) {
                 this.addAge(1);
-                if (this.getAge() >= this.getSpawnAge()) {
-                    this.crack();
+            }
+            if (this.getAge() >= this.getSpawnAge()) {
+                this.crack();
+            }
+
+            if (this.world instanceof ServerWorld world) {
+                Collection<Entity> entities = world.getOtherEntities(this, this.getBoundingBox());
+                for (Entity entity : entities) {
+                    if (entity instanceof DragonEggEntity) {
+                        double angle;
+                        if (entity.getPos().equals(this.getPos())) {
+                            angle = Random.create().nextFloat() * Math.PI * 2.0f;
+                        } else {
+                            angle = Math.atan2(
+                                    entity.getZ() - this.getZ(),
+                                    entity.getX() - this.getX()
+                            );
+                        }
+                        double x = Math.cos(angle) * 0.01f;
+                        double z = Math.sin(angle) * 0.01f;
+                        this.addVelocity(x, 0.0f, z);
+                        entity.addVelocity(x, 0.0f, z);
+                    }
                 }
             }
 
         } else { // world.isClient()
 
-            if (shakeTicks > 0) {
-                shakeTicks -= 1;
+            if (this.shakeTicks > 0) {
+                this.shakeTicks -= 1;
 
             } else { // shakeTicks <= 0
-                if (shakeCooldownTicks > 0) {
-                    shakeCooldownTicks -= 1;
+                if (this.shakeCooldownTicks > 0) {
+                    this.shakeCooldownTicks -= 1;
                 } else { // shakeCooldownTicks <= 0
-                    Random rand = new Random();
+                    Random rand = Random.create();
                     if (this.isIncubated() && rand.nextFloat() <= SHAKE_CHANCE) {
-                        shakeCooldownTicks = SHAKE_COOLDOWN_TICKS;
-                        shakeTicks         = SHAKE_TICKS;
+                        this.shakeCooldownTicks = SHAKE_COOLDOWN_TICKS;
+                        this.shakeTicks         = SHAKE_TICKS;
                     }
                 }
 
@@ -266,8 +289,17 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
 
 
     public boolean isIncubated() {
-        BlockState state = world.getBlockState(getBlockPos().add(new Vec3i(0, -1, 0)));
-        return state.getBlock() instanceof DragonEggIncubatorBlock && state.get(Properties.POWERED);
+        for (int i = 0; i < MAX_WARMTH_DISTANCE + 1; i++) {
+            BlockPos   pos   = this.getBlockPos().down(i);
+            BlockState state = this.world.getBlockState(pos);
+            if (state.getBlock() instanceof DragonEggIncubatorBlock) {
+                if (state.get(Properties.POWERED) && this.world.getBlockEntity(pos) instanceof DragonEggIncubatorBlockEntity entity) {
+                    return entity.power.equals(this.getDragonType());
+                }
+                break;
+            }
+        }
+        return false;
     }
 
 
@@ -277,13 +309,11 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
             this.world.playSound(this.getX(), this.getY(), this.getZ(), hatchSound, this.getSoundCategory(), this.getSoundVolume(), this.getSoundPitch(), true);
         }
 
-        ((ServerWorld)world).spawnParticles(
-                new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(DragonItems.DRAGON_EGG_CREATIVE)),
-                this.getX(), this.getY() + getHeight() / 2.0f, this.getZ(),
-                25,
-                0.05, 0.1, 0.05,
-                0.075
-        );
+        if (this.world instanceof ServerWorld world) {
+            for (int i = 0; i < 25; i++) {
+                ParticleEffects.createDragonEggCrack(world, this.getPos(), this.getColour());
+            }
+        }
 
         DragonEntity dragon = this.convertTo(Entities.DRAGON, false);
         assert dragon != null;
@@ -292,12 +322,13 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
 
 
     public void createEntity(DragonEntity dragon) {
-        dragon.setDragonType(this.dataTracker.get(DRAGON));
+        dragon.setDragonType(this.dataTracker.get(TYPE));
         dragon.setAge(0);
         dragon.setState(DragonEntity.DragonState.WANDER);
         dragon.setColour(this.getColour());
         dragon.setSpawnPos(dragon.getBlockPos());
         dragon.setNaturalSpawn(false);
+        DataHelper.randomiseEntityRotation(dragon);
     }
 
 
@@ -309,23 +340,29 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
     @Override
     public Text getName() {
         return Text.translatable("entity." + DragonHeart.ID + ".dragon_egg",
-                DragonResourceLoader.getResource(new Identifier(this.getDragon())).getName()
+                DragonResourceLoader.getResource(this.getDragonType()).getName()
         );
+    }
+    @Override
+    public void pushAwayFrom(Entity entity) {
+        if (entity instanceof DragonEggEntity) {
+            super.pushAwayFrom(entity);
+        }
     }
 
     // Sounds
     @Nullable
-    public SoundEvent getPlaceSound() {return SoundEvents.DRAGON_EGG_PLACE;}
+    public net.minecraft.sound.SoundEvent getPlaceSound() {return SoundEvents.DRAGON_EGG_PLACE;}
     @Nullable
-    public SoundEvent getHatchSound() {return SoundEvents.DRAGON_EGG_HATCH;}
+    public net.minecraft.sound.SoundEvent getHatchSound() {return SoundEvents.DRAGON_EGG_HATCH;}
     @Override
     @Nullable
-    public SoundEvent getHurtSound(DamageSource source) {
+    public net.minecraft.sound.SoundEvent getHurtSound(DamageSource source) {
         return null;
     }
     @Override
     @Nullable
-    public SoundEvent getDeathSound() {
+    public net.minecraft.sound.SoundEvent getDeathSound() {
         return SoundEvents.DRAGON_EGG_BREAK;
     }
     @Override

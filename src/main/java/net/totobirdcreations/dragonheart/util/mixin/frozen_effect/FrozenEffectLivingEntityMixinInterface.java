@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.util.mixin.frozeneffect;
+package net.totobirdcreations.dragonheart.util.mixin.frozen_effect;
 
 
 public interface FrozenEffectLivingEntityMixinInterface {

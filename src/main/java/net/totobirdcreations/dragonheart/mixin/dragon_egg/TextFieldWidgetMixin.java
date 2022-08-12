@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.item.dragon.egg.DragonEggItem;
-import net.totobirdcreations.dragonheart.util.mixin.dragonegg.DragoneggTextFieldWidgetMixinInterface;
+import net.totobirdcreations.dragonheart.util.mixin.dragon_egg.DragonEggTextFieldWidgetMixinInterface;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 
 @Mixin(TextFieldWidget.class)
-public abstract class TextFieldWidgetMixin extends ClickableWidget implements DragoneggTextFieldWidgetMixinInterface {
+public abstract class TextFieldWidgetMixin extends ClickableWidget implements DragonEggTextFieldWidgetMixinInterface {
 
     @Nullable
     public AnvilScreen anvilScreen = null;

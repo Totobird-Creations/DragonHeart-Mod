@@ -13,7 +13,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.item.dragon.egg.DragonEggItem;
-import net.totobirdcreations.dragonheart.util.mixin.dragonegg.DragoneggTextFieldWidgetMixinInterface;
+import net.totobirdcreations.dragonheart.util.mixin.dragon_egg.DragonEggTextFieldWidgetMixinInterface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -48,7 +48,7 @@ public abstract class AnvilScreenMixin extends ForgingScreen<AnvilScreenHandler>
             at = @At("TAIL")
     )
     public void setupInjectTail(CallbackInfo callback) {
-        ((DragoneggTextFieldWidgetMixinInterface)(((AnvilScreenInterface)this).getNameField())).setAnvilScreen((AnvilScreen)(Object)this);
+        ((DragonEggTextFieldWidgetMixinInterface)(((AnvilScreenInterface)this).getNameField())).setAnvilScreen((AnvilScreen)(Object)this);
     }
 
 

@@ -7,7 +7,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.entity.dragon_egg.DragonEggEntity;
+import net.totobirdcreations.dragonheart.entity.DragonEggEntity;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
 import software.bernie.geckolib3.core.util.Color;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;

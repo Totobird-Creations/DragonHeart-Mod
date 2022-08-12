@@ -1,7 +1,7 @@
 package net.totobirdcreations.dragonheart.client.entity.dragon_egg;
 
 import net.minecraft.util.Identifier;
-import net.totobirdcreations.dragonheart.entity.dragon_egg.DragonEggEntity;
+import net.totobirdcreations.dragonheart.entity.DragonEggEntity;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 

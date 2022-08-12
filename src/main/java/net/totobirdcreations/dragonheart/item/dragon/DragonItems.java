@@ -7,7 +7,7 @@ import net.totobirdcreations.dragonheart.item.dragon.bucket.EmptyDragonBucketIte
 import net.totobirdcreations.dragonheart.item.dragon.egg.CreativeDragonEggItem;
 import net.totobirdcreations.dragonheart.item.dragon.egg.DragonEggItem;
 import net.totobirdcreations.dragonheart.item.dragon.tool.DragonToolItems;
-import net.totobirdcreations.dragonheart.item.group.ItemGroups;
+import net.totobirdcreations.dragonheart.item.ItemGroups;
 
 import static net.totobirdcreations.dragonheart.item.Items.registerItem;
 

@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRe
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.entity.Entities;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
-import net.totobirdcreations.dragonheart.entity.dragon_egg.DragonEggEntity;
+import net.totobirdcreations.dragonheart.entity.DragonEggEntity;
 
 
 public class ClientRegistries {

@@ -5,7 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
-import net.totobirdcreations.dragonheart.util.mixin.frozeneffect.FrozenEffectLivingEntityMixinInterface;
+import net.totobirdcreations.dragonheart.util.mixin.frozen_effect.FrozenEffectLivingEntityMixinInterface;
 
 
 public class FrozenStatusEffect extends StatusEffect {

@@ -9,7 +9,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
-import net.totobirdcreations.dragonheart.entity.dragon_egg.DragonEggEntity;
 
 
 public class Entities {

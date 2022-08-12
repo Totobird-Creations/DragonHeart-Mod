@@ -7,26 +7,25 @@ import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge.egg_incubator.DragoneggIncubatorBlockEntity;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge.egg_incubator.DragoneggIncubatorBlockEntityProperties;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.egg_incubator.DragonEggIncubatorBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.egg_incubator.DragonEggIncubatorBlockEntityProperties;
 import net.totobirdcreations.dragonheart.screen_handler.util.DragonBreathSlot;
 
 
-public class DragonEggIncubatorScreenHandler extends ScreenHandler {
+public class DragonEggIncubatorScreenHandler extends net.minecraft.screen.ScreenHandler {
 
     public final Inventory        inventory;
     public final PropertyDelegate properties;
 
 
     public DragonEggIncubatorScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, new SimpleInventory(DragoneggIncubatorBlockEntity.INVENTORY_SIZE), new ArrayPropertyDelegate(DragoneggIncubatorBlockEntityProperties.SIZE));
+        this(syncId, playerInventory, new SimpleInventory(DragonEggIncubatorBlockEntity.INVENTORY_SIZE), new ArrayPropertyDelegate(DragonEggIncubatorBlockEntityProperties.SIZE));
     }
 
     public DragonEggIncubatorScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate properties) {
         super(ScreenHandlers.DRAGONEGG_INCUBATOR, syncId);
-        checkSize(inventory, DragoneggIncubatorBlockEntity.INVENTORY_SIZE);
+        checkSize(inventory, DragonEggIncubatorBlockEntity.INVENTORY_SIZE);
 
         this.inventory  = inventory;
         this.properties = properties;

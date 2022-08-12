@@ -11,7 +11,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.totobirdcreations.dragonheart.DragonHeart;
-import net.totobirdcreations.dragonheart.util.mixin.deafenedeffect.DeafenedEffectLivingEntityMixinInterface;
+import net.totobirdcreations.dragonheart.util.mixin.deafened_effect.DeafenedEffectLivingEntityMixinInterface;
 
 
 @Environment(EnvType.CLIENT)

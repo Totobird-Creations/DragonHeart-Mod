@@ -5,10 +5,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.PillarBlock;
+import net.minecraft.sound.BlockSoundGroup;
 import net.totobirdcreations.dragonheart.block.dragon.forge.*;
 import net.totobirdcreations.dragonheart.block.util.BlockAndItem;
 import net.totobirdcreations.dragonheart.item.dragon.DragonBlockItem;
-import net.totobirdcreations.dragonheart.item.group.ItemGroups;
+import net.totobirdcreations.dragonheart.item.ItemGroups;
 
 import static net.totobirdcreations.dragonheart.block.Blocks.registerBlock;
 import static net.totobirdcreations.dragonheart.block.Blocks.registerBlockWithoutItem;
@@ -75,8 +76,10 @@ public class DragonBlocks {
 
     public static final Block DRAGON_GRIEFED = registerBlockWithoutItem(
             "dragon_griefed",
-            new DragonGriefedBlock(FabricBlockSettings.copy(Blocks.SAND)
-                    .requiresTool()
+            new DragonGriefedBlock(FabricBlockSettings.of(Material.AGGREGATE)
+                    .strength(0.5F)
+                    .sounds(BlockSoundGroup.SAND)
+                    .dropsNothing()
             )
     );
 

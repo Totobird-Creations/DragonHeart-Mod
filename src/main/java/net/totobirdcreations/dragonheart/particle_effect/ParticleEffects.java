@@ -1,9 +1,11 @@
-package net.totobirdcreations.dragonheart.particle;
+package net.totobirdcreations.dragonheart.particle_effect;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.particle.ParticleType;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.registry.Registry;
@@ -13,7 +15,7 @@ import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
 
 
-public class Particles {
+public class ParticleEffects {
 
     public static ParticleType<DragonFlameParticleEffect> DRAGON_FLAME = Registry.register(
             Registry.PARTICLE_TYPE,
@@ -25,10 +27,20 @@ public class Particles {
             }
     );
 
+    public static ParticleType<DragonEggParticleEffect> DRAGON_EGG = Registry.register(
+            Registry.PARTICLE_TYPE,
+            new Identifier(DragonHeart.ID, "dragon_egg"),
+            new ParticleType<>(false, DragonEggParticleEffect.PARAMETERS_FACTORY) {
+                public Codec<DragonEggParticleEffect> getCodec() {
+                    return DragonEggParticleEffect.CODEC;
+                }
+            }
+    );
+
 
     public static void createDragonForgeFlame(World world, BlockPos pos, Identifier type) {
         RGBColour colour = DragonResourceLoader.getResource(type).colourGlow();
-        Vec3f origin = new Vec3f(pos.getX() + 0.5f, pos.getY() + 0.875f, pos.getZ() + 0.5f);
+        Vec3f origin = new Vec3f(pos.getX() + 0.5f, pos.getY() + 0.625f, pos.getZ() + 0.5f);
 
         Random random     = Random.create();
         float  angle      = random.nextFloat() * ((float)(Math.PI) * 2.0f);
@@ -46,8 +58,19 @@ public class Particles {
     }
 
 
+    public static void createDragonEggCrack(ServerWorld world, Vec3d pos, RGBColour colour) {
+        world.spawnParticles(
+                new DragonEggParticleEffect(colour),
+                pos.x, pos.y + 0.25f, pos.z,
+                25,
+                0.05, 0.1, 0.05,
+                0.075
+        );
+    }
+
+
     public static void register() {
-        DragonHeart.LOGGER.debug("Registering particles.");
+        DragonHeart.LOGGER.debug("Registering particle effects.");
     }
 
 }

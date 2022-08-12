@@ -1,4 +1,4 @@
-package net.totobirdcreations.dragonheart.particle;
+package net.totobirdcreations.dragonheart.particle_effect;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -17,7 +17,7 @@ public class DragonFlameParticleEffect extends AbstractDustParticleEffect {
                     effect.color
             )).apply(instance, DragonFlameParticleEffect::new)
     );
-    public static final ParticleEffect.Factory<DragonFlameParticleEffect> PARAMETERS_FACTORY = new Factory();
+    public static final net.minecraft.particle.ParticleEffect.Factory<DragonFlameParticleEffect> PARAMETERS_FACTORY = new Factory();
 
 
     public DragonFlameParticleEffect(RGBColour colour) {
@@ -29,11 +29,11 @@ public class DragonFlameParticleEffect extends AbstractDustParticleEffect {
 
 
     public ParticleType<DragonFlameParticleEffect> getType() {
-        return Particles.DRAGON_FLAME;
+        return ParticleEffects.DRAGON_FLAME;
     }
 
 
-    public static class Factory implements ParticleEffect.Factory<DragonFlameParticleEffect> {
+    public static class Factory implements net.minecraft.particle.ParticleEffect.Factory<DragonFlameParticleEffect> {
 
         @Override
         public DragonFlameParticleEffect read(ParticleType<DragonFlameParticleEffect> type, StringReader reader) throws CommandSyntaxException {

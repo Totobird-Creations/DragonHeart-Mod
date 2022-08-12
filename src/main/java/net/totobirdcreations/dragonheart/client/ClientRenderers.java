@@ -101,10 +101,8 @@ public class ClientRenderers {
                 DragonBlocks.DRAGON_FORGE_HATCH.block(),
                 DragonBlocks.DRAGON_FORGE_SUPPORT.block(),
                 DragonBlocks.DRAGON_FORGE_CORE.block(),
+                DragonBlocks.DRAGON_EGG_INCUBATOR.block(),
                 DragonBlocks.PLATED_DRAGON_FORGE_BRICKS.block()
-        );
-        ColorProviderRegistry.BLOCK.register(ClientRenderers::getDragoneggIncubatorBlockColour,
-                DragonBlocks.DRAGON_EGG_INCUBATOR.block()
         );
 
         registerBlockEntities();
@@ -164,23 +162,6 @@ public class ClientRenderers {
                         DragonResourceLoader.getResource(type),
                         tintIndex
                 ).asInt();
-            }
-        }
-        return RGBColour.WHITE.asInt();
-    }
-
-    public static int getDragoneggIncubatorBlockColour(BlockState state, @Nullable BlockRenderView view, BlockPos pos, int tintIndex) {
-        if (view != null) {
-            BlockEntity blockEntity = view.getBlockEntity(pos);
-            if (blockEntity instanceof DragonBlockEntity dragonBlockEntity) {
-                if (tintIndex == 3) {
-                    return DragonResourceLoader.getResource(dragonBlockEntity.type).colourGlow().asInt();
-                } else {
-                    return getDragonBlockColour(
-                            DragonResourceLoader.getResource(NbtHelper.EMPTY_TYPE),
-                            tintIndex
-                    ).asInt();
-                }
             }
         }
         return RGBColour.WHITE.asInt();

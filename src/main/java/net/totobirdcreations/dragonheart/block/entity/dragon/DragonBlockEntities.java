@@ -8,17 +8,17 @@ import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.block.dragon.DragonBlocks;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.*;
 import net.totobirdcreations.dragonheart.block.entity.dragon.forge.core.DragonForgeCoreBlockEntity;
-import net.totobirdcreations.dragonheart.block.entity.dragon.forge.egg_incubator.DragoneggIncubatorBlockEntity;
+import net.totobirdcreations.dragonheart.block.entity.dragon.forge.egg_incubator.DragonEggIncubatorBlockEntity;
 
 
 public class DragonBlockEntities {
 
 
-    public static final BlockEntityType<DragoneggIncubatorBlockEntity> DRAGON_EGG_INCUBATOR = Registry.register(
+    public static final BlockEntityType<DragonEggIncubatorBlockEntity> DRAGON_EGG_INCUBATOR = Registry.register(
             Registry.BLOCK_ENTITY_TYPE,
             new Identifier(DragonHeart.ID, "dragon_egg_incubator"),
             FabricBlockEntityTypeBuilder.create(
-                    DragoneggIncubatorBlockEntity::new,
+                    DragonEggIncubatorBlockEntity::new,
                     DragonBlocks.DRAGON_EGG_INCUBATOR.block()
             ).build(null)
     );

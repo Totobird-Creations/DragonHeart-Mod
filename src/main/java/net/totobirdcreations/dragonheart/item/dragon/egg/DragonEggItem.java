@@ -19,7 +19,7 @@ import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.entity.Entities;
 import net.totobirdcreations.dragonheart.entity.dragon.util.DragonSalt;
 import net.totobirdcreations.dragonheart.entity.dragon.util.UuidOp;
-import net.totobirdcreations.dragonheart.entity.dragon_egg.DragonEggEntity;
+import net.totobirdcreations.dragonheart.entity.DragonEggEntity;
 import net.totobirdcreations.dragonheart.item.dragon.DragonItemImpl;
 import net.totobirdcreations.dragonheart.item.dragon.DragonItems;
 import net.totobirdcreations.dragonheart.item.util.DragonColouredItem;
@@ -29,7 +29,6 @@ import net.totobirdcreations.dragonheart.util.helper.DataHelper;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
