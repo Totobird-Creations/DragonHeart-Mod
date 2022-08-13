@@ -152,8 +152,7 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
     public int getEyeColour() {return this.dataTracker.get(EYE_COLOUR);}
 
 
-    public void setDragon(Identifier dragon) {this.setDragon(dragon.toString());}
-    public void setDragon(String dragon) {this.dataTracker.set(TYPE, dragon);}
+    public void setDragonType(Identifier dragon) {this.dataTracker.set(TYPE, dragon.toString());}
 
     public void setColour(RGBColour colour) {this.setColour(colour.asInt());}
     public void setColour(int colour) {this.dataTracker.set(COLOUR, colour);}
@@ -239,7 +238,7 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
             if (this.isIncubated()) {
                 this.addAge(1);
             }
-            if (this.getAge() >= this.getSpawnAge()) {
+            if (this.getSpawnAge() > 0 && this.getAge() >= this.getSpawnAge()) {
                 this.crack();
             }
 

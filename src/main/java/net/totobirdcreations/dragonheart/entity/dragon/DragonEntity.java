@@ -434,6 +434,9 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
 
 
 
+    public void setDragonType(Identifier dragon) {
+        this.setDragonType(dragon.toString());
+    }
     public void setDragonType(String dragon) {
         this.dataTracker.set(TYPE, dragon);
     }
@@ -763,7 +766,7 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
                 List<Entity> entities = world.getOtherEntities(this, Box.of(this.getPos(), Config.CONFIG.dragon.wakeup.roar_radius, Config.CONFIG.dragon.wakeup.roar_radius, Config.CONFIG.dragon.wakeup.roar_radius));
                 for (Entity entity : entities) {
 
-                    if (!entity.isRemoved() && entity instanceof LivingEntity livingEntity) {
+                    if (! entity.isRemoved() && entity instanceof LivingEntity livingEntity) {
                         float distance = entity.distanceTo(this);
                         if (distance <= Config.CONFIG.dragon.wakeup.roar_radius) {
                             // Throw & damage entity
@@ -771,7 +774,7 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
                             float power = 1.0f - distance / Config.CONFIG.dragon.wakeup.roar_radius;
                             //Vec3d velocity = vector.multiply(power * Config.CONFIG.dragon.wakeup.roar_knockback);
                             //entity.addVelocity(velocity.x, velocity.y, velocity.z);
-                            entity.damage(DamageSources.ROAR, power * Config.CONFIG.dragon.wakeup.roar_damage);
+                            livingEntity.applyDamage(DamageSources.ROAR, power);// Config.CONFIG.dragon.wakeup.roar_damage);
                             // Add deafened effect
                             StatusEffectInstance effect = new StatusEffectInstance(StatusEffects.DEAFENED, 10, 0, false, false, true);
                             livingEntity.addStatusEffect(effect, this);
@@ -964,15 +967,16 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
 
     @Override
     public void accept(ServerWorld world, GameEventListener listener, BlockPos pos, GameEvent event, @Nullable Entity entity, @Nullable Entity sourceEntity, float distance) {
-        if (this.isValidTarget(sourceEntity)
-                && this.getState() == DragonState.SLEEP
-        ) {
+        Entity target = this.isValidTarget(sourceEntity) ? sourceEntity
+                : this.isValidTarget(entity) ? entity
+                : null;
+        if (this.getState() == DragonState.SLEEP && target instanceof PlayerEntity) {
             if (entity instanceof LivingEntity livingEntity) {
                 if (this.isValidTarget(livingEntity)) {
-                    this.incrementWakeupProgress(false, sourceEntity instanceof LivingEntity ? sourceEntity : null);
+                    this.incrementWakeupProgress(false, target);
                 }
             } else {
-                this.incrementWakeupProgress(false, sourceEntity instanceof LivingEntity ? sourceEntity : null);
+                this.incrementWakeupProgress(false, target);
             }
         }
     }

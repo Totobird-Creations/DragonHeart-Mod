@@ -19,3 +19,5 @@ accessible method net/minecraft/world/gen/structure/Structure         isBiomeVal
 accessible field  net/minecraft/world/gen/structure/Structure$Config  biomes                  Lnet/minecraft/util/registry/RegistryEntryList;
 mutable    field  net/minecraft/world/gen/structure/Structure$Config  biomes                  Lnet/minecraft/util/registry/RegistryEntryList;
 accessible method net/minecraft/util/registry/RegistryEntry$Reference setTags                 (Ljava/util/Collection;)V
+# Entity
+accessible method net/minecraft/entity/LivingEntity applyDamage (Lnet/minecraft/entity/damage/DamageSource;F)V

@@ -61,7 +61,7 @@ public class DragonEntityModel<T extends DragonEntity> extends AnimatedGeoModel<
             }
         }
 
-        if (state == DragonEntity.DragonState.ROAR) {
+        /*if (state == DragonEntity.DragonState.ROAR) {
             float yaw = entity.getBodyYaw();
             Vec3d pos = entity.getPos().add(
                     new Vec3d(
@@ -77,7 +77,7 @@ public class DragonEntityModel<T extends DragonEntity> extends AnimatedGeoModel<
                     pos.getX(), pos.getY(), pos.getZ(),
                     0.0f, 0.0f, 0.0f
             );
-        }
+        }*/
     }
 
 

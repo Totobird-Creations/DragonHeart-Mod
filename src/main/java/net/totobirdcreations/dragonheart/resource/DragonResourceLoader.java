@@ -10,12 +10,12 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.entity.dragon.util.DragonSalt;
-import net.totobirdcreations.dragonheart.entity.dragon.util.UuidOp;
 import net.totobirdcreations.dragonheart.event.ResourceEventHandlers;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
@@ -263,12 +263,12 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
             }
         }
 
-        public RGBColour chooseBodyColour(UUID uuid) {
+        public RGBColour chooseBodyColour(BlockPos pos) {
             return this.bodyColours.size() == 0
                     ? new RGBColour(1.0f, 0.0f, 0.0f)
                     : new ArrayList<>(this.bodyColours).get(
-                            Random.create(DragonSalt.COLOUR + UuidOp.uuidToInt(uuid))
-                                    .nextInt(this.bodyColours.size())
+                    Random.create(DragonSalt.COLOUR + pos.hashCode())
+                            .nextInt(this.bodyColours.size())
             );
         }
 
@@ -276,10 +276,6 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
 
         public static String fromIdentifier(Identifier text) {
                 return fromString(text.toString());
-            }
-
-        public static String fromBoolean(boolean bool) {
-                return fromString(bool ? "T" : "F");
             }
 
         public static String fromRGBList(Collection<RGBColour> colours) {

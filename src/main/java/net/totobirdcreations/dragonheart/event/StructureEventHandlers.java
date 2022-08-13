@@ -7,6 +7,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.config.Config;
+import net.totobirdcreations.dragonheart.entity.DragonEggEntity;
 import net.totobirdcreations.dragonheart.entity.Entities;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
@@ -48,10 +49,10 @@ public class StructureEventHandlers {
         DragonEntity entity = Entities.DRAGON.create(world);
         assert entity != null;
         Random random = entity.getRandom();
-        entity.setPosition(new Vec3d(blockPos.getX() + 0.5f, blockPos.getY(), blockPos.getZ() + 0.5f));
-        entity.setDragonType(resource.id().toString());
+        entity.setPosition(Vec3d.ofBottomCenter(blockPos));
+        entity.setDragonType(resource.id());
         entity.setAge(random.nextBetween(min_age, max_age));
-        entity.setColour(resource.chooseBodyColour(entity.getUuid()));
+        entity.setColour(resource.chooseBodyColour(structureOrigin));
         entity.setSpawnPos(blockPos);
         entity.setNaturalSpawn(true);
         DataHelper.randomiseEntityRotation(entity);
@@ -61,12 +62,23 @@ public class StructureEventHandlers {
 
 
     public static void spawnDragonEgg(String metadata, World world, BlockPos blockPos, BlockPos structureOrigin) throws Exception {
-        Identifier id = DataHelper.chooseDragonTypeForPos(world, structureOrigin, world.getRandom());
-        if (id == null) {
-            throw new Exception("Could not find valid dragon egg type for biome at " + structureOrigin.toString() + ".");
+        Random random = Random.create(blockPos.hashCode());
+        if (random.nextBoolean()) {
+
+            Identifier id = DataHelper.chooseDragonTypeForPos(world, structureOrigin, world.getRandom());
+            if (id == null) {
+                throw new Exception("Could not find valid dragon egg type for biome at " + structureOrigin.toString() + ".");
+            }
+            DragonResourceLoader.DragonResource resource = DragonResourceLoader.getResource(id);
+
+            DragonEggEntity entity = Entities.DRAGON_EGG.create(world);
+            assert entity != null;
+            entity.setPosition(Vec3d.ofBottomCenter(blockPos));
+            entity.setDragonType(resource.id());
+            entity.setColour(resource.chooseBodyColour(structureOrigin));
+            DataHelper.randomiseEntityRotation(entity);
+            world.spawnEntity(entity);
         }
-        DragonResourceLoader.DragonResource resource = DragonResourceLoader.getResource(id);
-        DragonHeart.LOGGER.warn("Dragon egg spawning is currently unimplemented.");
     }
 
 

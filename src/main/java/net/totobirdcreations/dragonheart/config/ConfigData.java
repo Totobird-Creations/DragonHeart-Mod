@@ -31,7 +31,7 @@ public class ConfigData implements me.shedaniel.autoconfig.ConfigData {
             public int   roar_destroy   = 25;
 
             @ConfigEntry.Gui.Tooltip
-            public float roar_damage    = 30.0f;
+            public float roar_damage    = 10.0f;
 
         }
 
