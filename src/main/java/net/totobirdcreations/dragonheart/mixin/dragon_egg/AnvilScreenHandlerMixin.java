@@ -42,8 +42,9 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
                 && stack.getItem() instanceof DragonEggItem egg
                 && egg.isCreative(stack)
         ) {
-            RGBColour colour = RGBColour.parseString(ithis.getNewItemName());
-            if (colour == null) {
+            try {
+                new RGBColour(ithis.getNewItemName());
+            } catch (NumberFormatException ignored) {
                 this.output.setStack(0, ItemStack.EMPTY);
                 ithis.getLevelCost().set(0);
                 callback.cancel();
@@ -66,14 +67,17 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
                 && stack.getItem() instanceof DragonEggItem egg
                 && egg.isCreative(stack)
         ) {
-            RGBColour colour = RGBColour.parseString(ithis.getNewItemName());
-            if (colour != null) {
+            try {
+                RGBColour colour = new RGBColour(ithis.getNewItemName());
                 ItemStack newStack = new ItemStack(DragonItems.DRAGON_EGG);
-                DragonColouredItem.setColour(newStack, colour.asInt());
+                DragonColouredItem.setColour(newStack, colour.toInt());
                 NbtHelper.setItemDragonType(newStack,
                         NbtHelper.getItemDragonType(stack)
                 );
                 output.setStack(slot, newStack);
+
+            } catch (NumberFormatException ignored) {
+                output.setStack(slot, ItemStack.EMPTY);
             }
 
         } else {

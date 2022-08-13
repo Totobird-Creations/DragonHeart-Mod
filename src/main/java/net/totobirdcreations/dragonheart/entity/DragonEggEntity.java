@@ -154,7 +154,7 @@ public class DragonEggEntity extends MobEntity implements IAnimatable {
 
     public void setDragonType(Identifier dragon) {this.dataTracker.set(TYPE, dragon.toString());}
 
-    public void setColour(RGBColour colour) {this.setColour(colour.asInt());}
+    public void setColour(RGBColour colour) {this.setColour(colour.toInt());}
     public void setColour(int colour) {this.dataTracker.set(COLOUR, colour);}
 
     public void setAge(int age) {this.dataTracker.set(AGE, age);}

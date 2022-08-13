@@ -22,7 +22,7 @@ public interface DragonColouredItem extends DyeableItem {
 
     @Override
     default int getColor(ItemStack stack) {
-        return getColour(stack).asInt();
+        return getColour(stack).toInt();
     }
     static RGBColour getColour(ItemStack stack) {
         NbtCompound nbt = stack.getOrCreateNbt();
@@ -46,7 +46,7 @@ public interface DragonColouredItem extends DyeableItem {
         setColour(stack, colour);
     }
     static void setColour(ItemStack stack, RGBColour colour) {
-        setColour(stack, colour.asInt());
+        setColour(stack, colour.toInt());
     }
     static void setColour(ItemStack stack, int colour) {
         stack.getOrCreateNbt().putInt(COLOUR_KEY, colour);

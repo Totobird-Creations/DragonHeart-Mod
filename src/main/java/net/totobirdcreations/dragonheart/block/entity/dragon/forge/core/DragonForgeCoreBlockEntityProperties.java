@@ -2,7 +2,6 @@ package net.totobirdcreations.dragonheart.block.entity.dragon.forge.core;
 
 import net.minecraft.screen.PropertyDelegate;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
-import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 
 
 public record DragonForgeCoreBlockEntityProperties(
@@ -21,7 +20,7 @@ public record DragonForgeCoreBlockEntityProperties(
         return switch (property) {
             case    PROGRESS     -> owner.progress;
             case    MAX_PROGRESS -> owner.maxProgress;
-            case    COLOUR       -> DragonResourceLoader.getResource(owner.power).colourGlow().asInt();
+            case    COLOUR       -> DragonResourceLoader.getResource(owner.power).colourGlow().toInt();
             default              -> 0;
         };
     }

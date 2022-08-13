@@ -10,13 +10,13 @@ import net.minecraft.resource.ResourceManager;
 import net.minecraft.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.totobirdcreations.dragonheart.DragonHeart;
 import net.totobirdcreations.dragonheart.entity.dragon.util.DragonSalt;
 import net.totobirdcreations.dragonheart.event.ResourceEventHandlers;
+import net.totobirdcreations.dragonheart.util.data.colour.HSVColour;
 import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
 import net.totobirdcreations.dragonheart.util.helper.NbtHelper;
 
@@ -69,7 +69,7 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
     }
 
 
-    public String getJsonString(JsonObject object, String key) throws Exception {
+    private String getJsonString(JsonObject object, String key) throws Exception {
         if (object.has(key)) {
             if (object.get(key).isJsonPrimitive()) {
                 return object.get(key).getAsString();
@@ -82,7 +82,7 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
     }
 
 
-    public boolean getJsonBoolean(JsonObject object, String key) throws Exception {
+    private boolean getJsonBoolean(JsonObject object, String key) throws Exception {
         if (object.has(key)) {
             if (object.get(key).isJsonPrimitive()) {
                 return object.get(key).getAsBoolean();
@@ -95,7 +95,7 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
     }
 
 
-    public RGBColour getJsonRGB(JsonObject object, String key) throws Exception {
+    private RGBColour getJsonRGB(JsonObject object, String key) throws Exception {
         if (object.has(key)) {
             return this.getJsonRGB(object.get(key), key);
         } else {
@@ -104,7 +104,7 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
     }
 
 
-    public RGBColour getJsonRGB(JsonElement element, String key) throws Exception {
+    private RGBColour getJsonRGB(JsonElement element, String key) throws Exception {
         if (element.isJsonArray()) {
             JsonArray array = element.getAsJsonArray();
             if (array.size() == 3) {
@@ -127,7 +127,7 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
     }
 
 
-    public Collection<RGBColour> getJsonRGBList(JsonObject object, String key) throws Exception {
+    private Collection<RGBColour> getJsonRGBList(JsonObject object, String key) throws Exception {
         if (object.has(key)) {
             if (object.get(key).isJsonArray()) {
                 JsonArray array = object.getAsJsonArray(key);
@@ -263,22 +263,61 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
             }
         }
 
-        public RGBColour chooseBodyColour(BlockPos pos) {
-            return this.bodyColours.size() == 0
-                    ? new RGBColour(1.0f, 0.0f, 0.0f)
-                    : new ArrayList<>(this.bodyColours).get(
-                    Random.create(DragonSalt.COLOUR + pos.hashCode())
-                            .nextInt(this.bodyColours.size())
-            );
+        public RGBColour chooseBodyColour(Object baseSeed) {
+            if (this.bodyColours.size() == 0) {
+                return RGBColour.WHITE;
+            }
+            return new ArrayList<>(this.bodyColours).get(
+                    Random.create(DragonSalt.COLOUR + baseSeed.hashCode())
+                            .nextInt(this.bodyColours.size()));
+        }
+        public RGBColour variateBodyColour(RGBColour baseRgb, Object variateSeed) {
+            HSVColour base      = baseRgb.toHsv();
+            Random    random    = Random.create(DragonSalt.COLOUR + variateSeed.hashCode());
+            boolean   direction = random.nextBoolean();
+            for (int i = 0; i < random.nextBetween(25, 50); i++) {
+                float     amount  = random.nextFloat() * 0.1f * (direction ? 1 : -1);
+                HSVColour newBase = base.addHue(amount);
+                if (this.closestTypeIsThis(newBase)) {
+                    base = newBase;
+                } else {
+                    direction = ! direction;
+                }
+            }
+            base.s = Math.max(Math.min(base.s +
+                            (random.nextFloat() * 0.25f - 0.125f),
+                    1.0f
+            ), 0.0f);
+            base.v = Math.max(Math.min(base.v +
+                            (random.nextFloat() * 0.25f - 0.125f),
+                    1.0f
+            ), 0.0f);
+            return base.toRgb();
+        }
+        private boolean closestTypeIsThis(HSVColour colour) {
+            Identifier closestId   = this.id;
+            float      closestDist = -1.0f;
+            for (Identifier id : getIdentifiers()) {
+                DragonResource resource = getResource(id);
+                for (RGBColour rgb : resource.bodyColours) {
+                    HSVColour hsv  = rgb.toHsv();
+                    float     dist = colour.hueDistance(hsv.h);
+                    if (closestDist < 0.0f || dist < closestDist) {
+                        closestId   = id;
+                        closestDist = dist;
+                    }
+                }
+            }
+            return closestId.equals(this.id);
         }
 
 
 
-        public static String fromIdentifier(Identifier text) {
+        private static String fromIdentifier(Identifier text) {
                 return fromString(text.toString());
             }
 
-        public static String fromRGBList(Collection<RGBColour> colours) {
+        private static String fromRGBList(Collection<RGBColour> colours) {
             Collection<String> parts = new ArrayList<>();
             for (RGBColour colour : colours) {
                 parts.add(fromRGB(colour));
@@ -286,11 +325,11 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
                 return String.join(",", parts);
             }
 
-        public static String fromRGB(RGBColour rgbColour) {
-                return fromString(String.valueOf(rgbColour.asInt()));
+        private static String fromRGB(RGBColour rgbColour) {
+                return fromString(String.valueOf(rgbColour.toInt()));
             }
 
-        public static String fromString(String string) {
+        private static String fromString(String string) {
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < string.length(); i++) {
                 char ch = string.charAt(i);
@@ -318,7 +357,7 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
             return getParts(data, '/', true);
         }
 
-        public static Collection<String> getParts(String data, char delimiter, boolean requireDelimiterEnd) {
+        private static Collection<String> getParts(String data, char delimiter, boolean requireDelimiterEnd) {
             Collection<String> parts = new ArrayList<>();
             StringBuilder builder = new StringBuilder();
             boolean escape = false;
@@ -344,7 +383,7 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
             return parts;
         }
 
-        public static Collection<RGBColour> toRGBList(Collection<String> strings) {
+        private static Collection<RGBColour> toRGBList(Collection<String> strings) {
             Collection<RGBColour> colours = new ArrayList<>();
             for (String string : strings) {
                 colours.add(toRGB(string));
@@ -352,18 +391,8 @@ public class DragonResourceLoader implements SimpleSynchronousResourceReloadList
             return colours;
         }
 
-        public static RGBColour toRGB(String string) {
-                return new RGBColour(Integer.parseInt(string));
-            }
-
-        public static boolean toBoolean(String string) throws Exception {
-            if (string.equals("T")) {
-                return true;
-            } else if (string.equals("F")) {
-                return false;
-            } else {
-                throw new Exception();
-            }
+        private static RGBColour toRGB(String string) {
+            return new RGBColour(Integer.parseInt(string));
         }
 
 

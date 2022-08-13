@@ -20,7 +20,7 @@ public record DragonEggIncubatorBlockEntityProperties(
         return switch (property) {
             case    POWER     -> owner.time;
             case    MAX_POWER -> owner.maxTime;
-            case    COLOUR    -> DragonResourceLoader.getResource(owner.power).colourGlow().asInt();
+            case    COLOUR    -> DragonResourceLoader.getResource(owner.power).colourGlow().toInt();
             default              -> 0;
         };
     }

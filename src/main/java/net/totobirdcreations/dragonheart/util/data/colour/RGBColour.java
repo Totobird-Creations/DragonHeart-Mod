@@ -1,18 +1,18 @@
 package net.totobirdcreations.dragonheart.util.data.colour;
 
-
 import software.bernie.geckolib3.core.util.Color;
 
 import javax.annotation.Nullable;
 
+
 public class RGBColour {
 
-    public static RGBColour WHITE = new RGBColour( 1.0f   , 1.0f   , 1.0f   );
-    public static RGBColour OFF   = new RGBColour( 0.173f , 0.173f , 0.173f );
+    public static RGBColour WHITE = new RGBColour(1.0f, 1.0f, 1.0f);
 
     public float r;
     public float g;
     public float b;
+
 
     public RGBColour(float r, float g, float b) {
         this.r = r;
@@ -26,24 +26,20 @@ public class RGBColour {
         this.b = ((value      ) & 0xff) / 255.0f;
     }
 
-
-    @Nullable
-    public static RGBColour parseString(String name) {
-        if (name.startsWith("#") && name.length() == 7) { // Hexadecimal colour code
-            String code  = name.substring(1);
+    public RGBColour(String value) {
+        if (value.startsWith("#") && value.length() == 7) { // Hexadecimal colour code
+            String code  = value.substring(1);
             String rCode = code.substring(0, 2);
             String gCode = code.substring(2, 4);
             String bCode = code.substring(4, 6);
 
             try {
-                return new RGBColour(
-                        ((float)(Long.parseLong(rCode, 16))) / 255.0f,
-                        ((float)(Long.parseLong(gCode, 16))) / 255.0f,
-                        ((float)(Long.parseLong(bCode, 16))) / 255.0f
-                );
+                this.r = ((float)(Long.parseLong(rCode, 16))) / 255.0f;
+                this.g = ((float)(Long.parseLong(gCode, 16))) / 255.0f;
+                this.b = ((float)(Long.parseLong(bCode, 16))) / 255.0f;
             } catch (NumberFormatException ignored) {}
         }
-        return null;
+        throw new NumberFormatException("Invalid colour code `" + value + "`.");
     }
 
 
@@ -75,7 +71,7 @@ public class RGBColour {
         );
     }
 
-    public String padCode(String string) {
+    private String padCode(String string) {
         return new StringBuilder("00").substring(string.length()) + string;
     }
     public String toString() {
@@ -85,7 +81,7 @@ public class RGBColour {
         return "#" + rCode + gCode + bCode;
     }
 
-    public int asInt() {
+    public int toInt() {
         int scaledR = (int)(this.r * 255.0f);
         int scaledG = (int)(this.g * 255.0f);
         int scaledB = (int)(this.b * 255.0f);

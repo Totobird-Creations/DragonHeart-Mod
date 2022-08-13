@@ -207,7 +207,7 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
         this.dataTracker.startTracking( TYPE             , ""                      );
         this.dataTracker.startTracking( SPAWN_POS        , new BlockPos(0, 0, 0)   );
         this.dataTracker.startTracking( HUNGER_LEVEL     , 0                       );
-        this.dataTracker.startTracking( COLOUR           , RGBColour.WHITE.asInt() );
+        this.dataTracker.startTracking( COLOUR           , RGBColour.WHITE.toInt() );
         this.dataTracker.startTracking( STATE            , 0                       );
         this.dataTracker.startTracking( AGE              , 0                       );
         this.calculateDimensions();
@@ -234,7 +234,7 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
         );
         this.dataTracker.set( SPAWN_POS        , this.getBlockPos()        );
         this.dataTracker.set( HUNGER_LEVEL     , 20 * 60 * 15              );
-        this.dataTracker.set( COLOUR           , RGBColour.WHITE.asInt()   );
+        this.dataTracker.set( COLOUR           , RGBColour.WHITE.toInt()   );
         this.dataTracker.set( STATE            , DragonState.SLEEP.toInt() );
         this.dataTracker.set( AGE              , 0                         );
         this.calculateDimensions();
@@ -465,7 +465,7 @@ public class DragonEntity extends MobEntity implements Monster, IAnimatable, Vib
     }
 
     public void setColour(RGBColour colour) {
-        this.setColour(colour.asInt());
+        this.setColour(colour.toInt());
     }
     public void setColour(int colour) {
         this.dataTracker.set(COLOUR, colour);

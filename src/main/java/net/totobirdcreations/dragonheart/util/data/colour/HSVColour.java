@@ -35,6 +35,27 @@ public class HSVColour {
     }
 
 
+    public HSVColour addHue(float amount) {
+        return new HSVColour((this.h + amount) % 1.0f, this.s, this.v);
+    }
+
+
+    public float hueDistance(float hue) {
+        hue            = hue % 1.0f;
+        float distance = Math.abs(this.h - hue);
+        float d;
+        d = Math.abs(this.h + 1.0f - hue);
+        if (d < distance) {
+            distance = d;
+        }
+        d = Math.abs(this.h - 1.0f - hue);
+        if (d < distance) {
+            distance = d;
+        }
+        return distance;
+    }
+
+
     public HSVColour greyscale() {
         return new HSVColour(this.h, 0.0f, this.v);
     }

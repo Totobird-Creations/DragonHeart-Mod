@@ -61,10 +61,10 @@ public class DragonEggItem extends DragonItemImpl {
 
         Random random = Random.create(DragonSalt.AGE + egg.getUuid().hashCode());
         egg.setDragonType (NbtHelper.getItemDragonType(stack));
-        egg.setColour     (NbtHelper.getInt    (nbt, "colour"    , RGBColour.WHITE.asInt()                                                          ));
+        egg.setColour     (NbtHelper.getInt    (nbt, "colour"    , RGBColour.WHITE.toInt()                                                          ));
         egg.setAge        (NbtHelper.getInt    (nbt, "age"       , 0                                                                                ));
         egg.setSpawnAge   (NbtHelper.getInt    (nbt, "spawnAge"  , random.nextBetween(DragonEggEntity.MIN_SPAWN_AGE, DragonEggEntity.MAX_SPAWN_AGE) ));
-        egg.setEyeColour  (NbtHelper.getInt    (nbt, "eyeColour" , RGBColour.WHITE.asInt()                                                          ));
+        egg.setEyeColour  (NbtHelper.getInt    (nbt, "eyeColour" , RGBColour.WHITE.toInt()                                                          ));
         DataHelper.randomiseEntityRotation(egg);
 
         world.spawnEntity(egg);
@@ -96,7 +96,7 @@ public class DragonEggItem extends DragonItemImpl {
         ItemStack stack = new ItemStack(item);
         NbtHelper.setItemDragonType(stack, dragon);
         if (colour != null) {
-            DragonColouredItem.setColour(stack, colour.asInt());
+            DragonColouredItem.setColour(stack, colour.toInt());
         }
         stacks.add(stack);
     }

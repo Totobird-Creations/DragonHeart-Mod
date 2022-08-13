@@ -1,6 +1,8 @@
 {
   "replace" : false,
   "values" : [
-    "#minecraft:is_overworld"
+    "#${id}:dragons/fire",
+    "#${id}:dragons/ice",
+    "#${id}:dragons/lightning"
   ]
 }

@@ -118,13 +118,13 @@ public class ClientRenderers {
     public static int getDragonItemColour(ItemStack stack, int tintIndex) {
         return tintIndex == 0
             ? ((DragonItem)(stack.getItem())).getColor(stack)
-            : RGBColour.WHITE.asInt();
+            : RGBColour.WHITE.toInt();
     }
     public static int getDragonBucketItemColour(ItemStack stack, int tintIndex) {
         return switch (tintIndex) {
-            case    1 -> DragonResourceLoader.getResource(NbtHelper.getItemDragonType(stack)).colourGlow().asInt();
+            case    1 -> DragonResourceLoader.getResource(NbtHelper.getItemDragonType(stack)).colourGlow().toInt();
             case    2 -> ((DragonItem)(stack.getItem())).getColor(stack);
-            default   -> RGBColour.WHITE.asInt();
+            default   -> RGBColour.WHITE.toInt();
         };
     }
 
@@ -133,7 +133,7 @@ public class ClientRenderers {
         DragonResourceLoader.DragonResource resource = DragonResourceLoader.getResource(
                 NbtHelper.getItemDragonType(stack)
         );
-        return getDragonBlockColour(resource, tintIndex).asInt();
+        return getDragonBlockColour(resource, tintIndex).toInt();
     }
 
 
@@ -146,7 +146,7 @@ public class ClientRenderers {
             case    2 -> resource.colourCracks();
             case    3 -> resource.colourGlow();
             default   -> RGBColour.WHITE;
-        }).asInt();
+        }).toInt();
     }
 
 
@@ -161,10 +161,10 @@ public class ClientRenderers {
                 return getDragonBlockColour(
                         DragonResourceLoader.getResource(type),
                         tintIndex
-                ).asInt();
+                ).toInt();
             }
         }
-        return RGBColour.WHITE.asInt();
+        return RGBColour.WHITE.toInt();
     }
 
 

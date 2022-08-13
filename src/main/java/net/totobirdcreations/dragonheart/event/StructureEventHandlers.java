@@ -11,6 +11,7 @@ import net.totobirdcreations.dragonheart.entity.DragonEggEntity;
 import net.totobirdcreations.dragonheart.entity.Entities;
 import net.totobirdcreations.dragonheart.entity.dragon.DragonEntity;
 import net.totobirdcreations.dragonheart.resource.DragonResourceLoader;
+import net.totobirdcreations.dragonheart.util.data.colour.RGBColour;
 import net.totobirdcreations.dragonheart.util.helper.DataHelper;
 import net.totobirdcreations.jigsawlogiclib.api.LogicCommandManager;
 
@@ -52,7 +53,10 @@ public class StructureEventHandlers {
         entity.setPosition(Vec3d.ofBottomCenter(blockPos));
         entity.setDragonType(resource.id());
         entity.setAge(random.nextBetween(min_age, max_age));
-        entity.setColour(resource.chooseBodyColour(structureOrigin));
+        entity.setColour(resource.variateBodyColour(
+                resource.chooseBodyColour(structureOrigin),
+                structureOrigin
+        ));
         entity.setSpawnPos(blockPos);
         entity.setNaturalSpawn(true);
         DataHelper.randomiseEntityRotation(entity);
@@ -75,7 +79,10 @@ public class StructureEventHandlers {
             assert entity != null;
             entity.setPosition(Vec3d.ofBottomCenter(blockPos));
             entity.setDragonType(resource.id());
-            entity.setColour(resource.chooseBodyColour(structureOrigin));
+            entity.setColour(resource.variateBodyColour(resource.variateBodyColour(
+                    resource.chooseBodyColour(structureOrigin),
+                    structureOrigin
+            ), entity.getUuid()));
             DataHelper.randomiseEntityRotation(entity);
             world.spawnEntity(entity);
         }
