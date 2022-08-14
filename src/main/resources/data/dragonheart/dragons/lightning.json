@@ -26,5 +26,13 @@
   "explosion_immune_when_awake" : true,
   "colour_bricks" : [ 0.341 , 0.275 , 0.416 ],
   "colour_cracks" : [ 0.467 , 0.239 , 0.588 ],
-  "colour_glow"   : [ 1.0   , 0.0   , 0.875 ]
+  "colour_glow"   : [ 1.0   , 0.0   , 0.875 ],
+  "modifiers": {
+    "less_damage_to": [],
+    "more_damage_to": [],
+    "less_damage_from": [
+      "${id}:lightning"
+    ],
+    "more_damage_from": []
+  }
 }

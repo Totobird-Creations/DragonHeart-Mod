@@ -55,8 +55,9 @@ public class ClientRenderers {
                 DragonItems.DRAGON_CELLS
         );
         ColorProviderRegistry.ITEM.register(ClientRenderers::getDragonBucketItemColour,
-                DragonItems.EMPTY_DRAGON_BUCKET,
-                DragonItems.DRAGON_BUCKET
+                DragonItems.DRAGON_BUCKET,
+                DragonItems.DRAGON_DRAGON_BUCKET,
+                DragonItems.DRAGON_EGG_DRAGON_BUCKET
         );
 
         ColorProviderRegistry.ITEM.register(ClientRenderers::getDragonBlockItemColour,
@@ -155,7 +156,7 @@ public class ClientRenderers {
         if (view != null) {
             BlockEntity blockEntity = view.getBlockEntity(pos);
             if (blockEntity instanceof DragonBlockEntity dragonBlockEntity) {
-                Identifier type = tintIndex == 3
+                Identifier type = tintIndex == 3 && ! state.isOf(DragonBlocks.PLATED_DRAGON_FORGE_BRICKS.block())
                         ? dragonBlockEntity.power
                         : dragonBlockEntity.type;
                 return getDragonBlockColour(

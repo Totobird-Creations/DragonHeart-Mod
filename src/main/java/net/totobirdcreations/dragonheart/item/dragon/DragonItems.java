@@ -2,8 +2,9 @@ package net.totobirdcreations.dragonheart.item.dragon;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
+import net.totobirdcreations.dragonheart.item.dragon.bucket.DragonDragonBucketItem;
 import net.totobirdcreations.dragonheart.item.dragon.bucket.DragonBucketItem;
-import net.totobirdcreations.dragonheart.item.dragon.bucket.EmptyDragonBucketItem;
+import net.totobirdcreations.dragonheart.item.dragon.bucket.DragonEggDragonBucketItem;
 import net.totobirdcreations.dragonheart.item.dragon.egg.CreativeDragonEggItem;
 import net.totobirdcreations.dragonheart.item.dragon.egg.DragonEggItem;
 import net.totobirdcreations.dragonheart.item.dragon.tool.DragonToolItems;
@@ -35,18 +36,27 @@ public class DragonItems {
             )
     );
 
-    public static final Item EMPTY_DRAGON_BUCKET = registerItem(
-            "empty_dragon_bucket",
-            new EmptyDragonBucketItem(
+    public static final Item DRAGON_BUCKET = registerItem(
+            "dragon_bucket",
+            new DragonBucketItem(
                     new FabricItemSettings()
                             .group     (ItemGroups.DRAGON)
                             .maxCount  (1)
                             .fireproof ()
             )
     );
-    public static final Item DRAGON_BUCKET = registerItem(
-            "dragon_bucket",
-            new DragonBucketItem(
+    public static final Item DRAGON_DRAGON_BUCKET = registerItem(
+            "dragon_dragon_bucket",
+            new DragonDragonBucketItem(
+                    new FabricItemSettings()
+                            .group     (ItemGroups.DRAGON)
+                            .maxCount  (1)
+                            .fireproof ()
+            )
+    );
+    public static final Item DRAGON_EGG_DRAGON_BUCKET = registerItem(
+            "dragon_egg_dragon_bucket",
+            new DragonEggDragonBucketItem(
                     new FabricItemSettings()
                             .group     (ItemGroups.DRAGON)
                             .maxCount  (1)

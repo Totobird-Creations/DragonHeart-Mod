@@ -24,5 +24,15 @@
   "explosion_immune_when_awake" : false,
   "colour_bricks" : [ 0.424 , 0.29  , 0.29  ],
   "colour_cracks" : [ 0.6   , 0.267 , 0.267 ],
-  "colour_glow"   : [ 1.0   , 0.247 , 0.0   ]
+  "colour_glow"   : [ 1.0   , 0.247 , 0.0   ],
+  "modifiers": {
+    "less_damage_to": [],
+    "more_damage_to": [],
+    "less_damage_from": [
+      "${id}:fire"
+    ],
+    "more_damage_from": [
+      "${id}:ice"
+    ]
+  }
 }

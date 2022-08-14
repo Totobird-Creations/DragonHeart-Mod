@@ -7,7 +7,7 @@
         "item": "minecraft:netherite_ingot"
     },
     "result" : {
-      "item" : "${id}:empty_dragon_bucket",
+      "item" : "${id}:dragon_bucket",
       "count": 1
     }
   }

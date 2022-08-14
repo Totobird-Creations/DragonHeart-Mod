@@ -47,34 +47,40 @@ public class DragonEggItem extends DragonItemImpl {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        ItemStack stack = context.getStack();
-        if (this.isCreative(stack)) {
-            return super.useOnBlock(context);
+        World world = context.getWorld();
+        if (! world.isClient()) {
+            ItemStack stack = context.getStack();
+            if (! isCreative(stack)) {
+                DragonEggEntity egg   = Entities.DRAGON_EGG.create(world);
+                BlockPos        pos   = context.getBlockPos().add(context.getSide().getVector());
+                NbtCompound     nbt   = stack.getOrCreateNbt();
+                assert egg != null;
+                assert nbt != null;
+                egg.setPosition(Vec3d.ofBottomCenter(pos));
+                if (! egg.collidesWithStateAtPos(pos, world.getBlockState(pos))) {
+                    Random random = Random.create(DragonSalt.AGE + egg.getUuid().hashCode());
+                    egg.setDragonType (NbtHelper.getItemDragonType(stack));
+                    egg.setColour     (NbtHelper.getInt    (nbt, "colour"    , RGBColour.WHITE.toInt()                                                          ));
+                    egg.setAge        (NbtHelper.getInt    (nbt, "age"       , 0                                                                                ));
+                    egg.setSpawnAge   (NbtHelper.getInt    (nbt, "spawnAge"  , random.nextBetween(DragonEggEntity.MIN_SPAWN_AGE, DragonEggEntity.MAX_SPAWN_AGE) ));
+                    egg.setEyeColour  (NbtHelper.getInt    (nbt, "eyeColour" , RGBColour.WHITE.toInt()                                                          ));
+                    DataHelper.randomiseEntityRotation(egg);
+
+                    world.spawnEntity(egg);
+
+                    SoundEvent placeSound = egg.getPlaceSound();
+                    if (placeSound != null) {
+                        world.playSound(egg.getX(), egg.getY(), egg.getZ(), placeSound, egg.getSoundCategory(), egg.getSoundVolume(), egg.getSoundPitch(), true);
+                    }
+                    return ActionResult.CONSUME;
+                } else {
+                    egg.discard();
+                }
+            }
+            return ActionResult.FAIL;
+        } else {
+            return ActionResult.SUCCESS;
         }
-        World           world = context.getWorld();
-        DragonEggEntity egg   = Entities.DRAGON_EGG.create(world);
-        BlockPos        pos   = context.getBlockPos().add(context.getSide().getVector());
-        NbtCompound     nbt   = stack.getOrCreateNbt();
-        assert egg != null;
-        assert nbt != null;
-        egg.setPosition(Vec3d.ofBottomCenter(pos));
-
-        Random random = Random.create(DragonSalt.AGE + egg.getUuid().hashCode());
-        egg.setDragonType (NbtHelper.getItemDragonType(stack));
-        egg.setColour     (NbtHelper.getInt    (nbt, "colour"    , RGBColour.WHITE.toInt()                                                          ));
-        egg.setAge        (NbtHelper.getInt    (nbt, "age"       , 0                                                                                ));
-        egg.setSpawnAge   (NbtHelper.getInt    (nbt, "spawnAge"  , random.nextBetween(DragonEggEntity.MIN_SPAWN_AGE, DragonEggEntity.MAX_SPAWN_AGE) ));
-        egg.setEyeColour  (NbtHelper.getInt    (nbt, "eyeColour" , RGBColour.WHITE.toInt()                                                          ));
-        DataHelper.randomiseEntityRotation(egg);
-
-        world.spawnEntity(egg);
-
-        SoundEvent placeSound = egg.getPlaceSound();
-        if (placeSound != null) {
-            world.playSound(egg.getX(), egg.getY(), egg.getZ(), placeSound, egg.getSoundCategory(), egg.getSoundVolume(), egg.getSoundPitch(), true);
-        }
-
-        return ActionResult.CONSUME;
     }
 
 
